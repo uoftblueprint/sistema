@@ -8,7 +8,7 @@ Contributors:
 1. Emily Yu
 2. Ramy Zhang
 3. 
-4. 
+4. Baker Jackson
 5. 
 6. 
 7. 
