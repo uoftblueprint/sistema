@@ -12,5 +12,5 @@ Contributors:
 5. 
 6. 
 7. 
-8. 
+8. Min Gi
 9. 
