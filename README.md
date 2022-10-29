@@ -7,7 +7,7 @@ You can learn more about their organization here: https://www.sistema-toronto.ca
 Contributors:
 1. Emily Yu
 2. Ramy Zhang
-3. 
+3. Azamat Khamidov
 4. 
 5. 
 6. 
