@@ -10,7 +10,7 @@ Contributors:
 3. Azamat Khamidov
 4. Baker Jackson
 5. 
-6. 
+6. Helena Glowacki
 7. Kurtis Law
 8. 
 9. 
