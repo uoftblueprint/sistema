@@ -8,11 +8,13 @@ Ticket # (issue/ticket number)
 
 Please delete options that are not relevant.
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
-- [ ] This change requires a documentation update
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] Documentation changes 
+- [ ] Style (formatting, missing semi colons, etc; no production code change)
+- [ ] Refactor (refactoring production code, eg. renaming a variable)
+- [ ] Chore (updating grunt tasks etc; no production code change)
+- [ ] Build (changing build dependencies, updating packages, etc.)
 
 # Checklist:
 
