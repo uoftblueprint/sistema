@@ -7,10 +7,10 @@ You can learn more about their organization here: https://www.sistema-toronto.ca
 Contributors:
 1. Emily Yu
 2. Ramy Zhang
-3. 
-4. 
-5. Harmit Goswami
-6. 
-7. 
+3. Azamat Khamidov
+4. Baker Jackson
+5. 
+6. Helena Glowacki
+7. Kurtis Law
 8. 
 9. 

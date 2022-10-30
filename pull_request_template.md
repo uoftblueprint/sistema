@@ -8,14 +8,19 @@ Ticket # (issue/ticket number)
 
 Please delete options that are not relevant.
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] Documentation changes 
+- [ ] Style (formatting, missing semi colons, etc; no production code change)
+- [ ] Refactor (refactoring production code, eg. renaming a variable)
+- [ ] Chore (updating grunt tasks etc; no production code change)
+- [ ] Build (changing build dependencies, updating packages, etc.)
 
 # Checklist:
 
 - [ ] My PR title is formatted as [SIS-\<issue number\>] \<issue name\> (eg. [SIS-010] Create UI button)
+- [ ] I have linked my issue/ticket on the project board to this PR
+- [ ] I have sent my PR to #team-sistema-prs on Slack and requested two people to review
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
