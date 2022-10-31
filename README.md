@@ -12,5 +12,5 @@ Contributors:
 5. Harmit Goswami
 6. Helena Glowacki
 7. Kurtis Law
-8. 
+8. Min Gi
 9. Sarah Xu
