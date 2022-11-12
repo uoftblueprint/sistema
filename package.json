@@ -1,0 +1,30 @@
+{
+  "name": "sistema",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/react",
+      "**/react-dom",
+      "**/react-native",
+      "**/react-native/**"
+    ]
+  },
+  "dependencies": {
+    "react-native": "0.70.4"
+  },
+  "scripts": {
+    "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock",
+    "android:metro": "yarn workspace mobile start",
+    "android:start": "yarn workspace mobile android",
+    "android:studio": "yarn workspace mobile studio",
+    "ios:metro": "yarn workspace mobile start",
+    "ios:start": "yarn workspace mobile ios",
+    "ios:xcode": "yarn workspace mobile xcode"
+  },
+  "devDependencies": {
+    "react-native-monorepo-tools": "^1.2.0"
+  }
+}
