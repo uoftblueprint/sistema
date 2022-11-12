@@ -18,7 +18,7 @@ The [wiki](https://github.com/uoftblueprint/sistema/wiki) has a lot of relevant 
 - [Setup Local Environment (Windows/Linux)](#setup-local-environment-windowslinux)
   - [Windows](#windows)
   - [Linux](#linux)
-- [Common Setup Errors](#common-setup-errors)
+- [Contributors](#contributors)
 
 <a name="setup-mac"></a>
 # Setup Local Environment (Mac)
@@ -27,6 +27,7 @@ Prerequisites:
 
 Ensure you have the following prerequisites before trying to run the project locally:
 - Node.js and npm (https://nodejs.org/en/download/). Alternatively, check if you have this by using command ```node -v``` in your terminal console. It is recommended to install Node.js using [Homebrew](https://brew.sh/) via the ```brew install node``` command. Easy, right?
+- For **Mac**, make sure you install Watchman for file management: ```brew install watchman```
 - You will need an iOS simulator and an Android simulator.
     - **Mac**:
         1. Install [Xcode](https://apps.apple.com/ca/app/xcode/id497799835?mt=12). If your macOS version is too old to install the latest version, you can browse [this link](https://developer.apple.com/download/all/?q=xcode) to find a version that works for you, as long as it's 10 or newer.
@@ -47,37 +48,31 @@ Ensure you have the following prerequisites before trying to run the project loc
     - **Windows**: Unfortunately, you will have to install a [virtual machine](https://www.makeuseof.com/tag/macos-windows-10-virtual-machine/) to run the iOS simulator. Since this is an incredibly [long, painful, and potentially unfruitful process](https://www.reddit.com/r/hackintosh/), we don't want to inflict this on you—so let's just install the Android simulator for now. Do what works for you!
         1. Follow [this](https://reactnative.dev/docs/environment-setup) setup tutorial via the React Native CLI until the "React Native Command Line Interface" header, then stop there.
 
-Once installed, ```cd``` into the ```sistema/packages/mobile``` directory, then run ```rbenv local 2.7.5```
-In the same directory, run ```bundle install```. This will install all your required gems for this project.
-
 1. Clone this repository into your local directory of choice using ```git clone https://github.com/uoftblueprint/sistema.git```
 2. cd into folder sistema ```cd ./sistema```
 3. Run ```npm install```
 4. cd into folder mobile ```cd ./packages/mobile```
 5. If using Mac, run ```rbenv local 2.7.5```
     - Run ```bundle install```
-    - Install pods ```pod install```
+    - cd into ```cd ios```, then install pods ```pod install```
 6. cd back out to sistema folder ```cd ../..```
-7. Run the project using ```npm run ios```
-8. Install debugger with this [tutorial](https://github.com/uoftblueprint/the-period-purse/wiki/Installing-Debugger)
-9. The simulator should open automatically and you should see something like the following image, with the Sistema app on the home screen:
-
-<img width="378" alt="Screen Shot 2021-10-27 at 11 46 38 AM" src="https://user-images.githubusercontent.com/35851484/139100763-95605bfc-a224-401b-9f17-b3a5e0a3f3fb.png">
+7. Start the React Native server (Metro) by running ```yarn workspace start```. Make sure this process is complete and error-free before proceeding to the next step.
+8. Start the Android simulator by running ```yarn workspace android```. Make sure your Android simulator is all set up in Android Studio!
+9. Start the iOS simulator by running ```yarn workspace ios```. Make sure your iOS simnulator is all set up in Xcode!
+9. The simulator should open automatically and you should see the current working version of the Sistema app.
 
 <a name="setup-windows-linux"></a>
 # Setup Local Environment (Windows/Linux)
 
 ## Windows
-Menstruation Nation does not support development on Windows. You may choose to create a virtual machine with a tutorial like this: [video](https://www.youtube.com/watch?v=Q55e2Tz-818).
+Sistema does not support cross-platform development on Windows. You may choose to create a virtual machine with a tutorial like this: [video](https://www.youtube.com/watch?v=Q55e2Tz-818). If you don't, you'll only be able to code for Android.
+If you choose the latter, follow [this](https://reactnative.dev/docs/environment-setup) setup tutorial via the React Native CLI until the "React Native Command Line Interface" header, then stop there.
 
 ## Linux
-Follow this [tutorial](https://www.youtube.com/watch?v=c30RLycIpVY).
+Again, we'll need a Mac to enable native development for iOS. Follow this [tutorial](https://www.youtube.com/watch?v=c30RLycIpVY) to install MacOS.
+If you choose to only develop for Android, the Linux setup process for Android is essentially the same as that of Mac; however, since you don't have access to Homebrew, the [Node](https://nodejs.org/en/download/package-manager/), [JDK](http://openjdk.java.net/), and [Watchman](https://facebook.github.io/watchman/docs/install/#buildinstall) installations will look a little different. Just make sure to download the correct version for your Linux distribution.
 
-<a name="errors"></a>
-# Common Setup Errors
-Please check out the [wiki](https://github.com/uoftblueprint/the-period-purse/wiki/Common-Setup-Errors).
-
-Contributors:
+# Contributors:
 1. Emily Yu
 2. Ramy Zhang
 3. Azamat Khamidov
