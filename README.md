@@ -1,6 +1,7 @@
 # Sistema
 
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 Sistema Toronto provides musical and intellectual opportunities to children in vulnerable communities, with the goal of transformative social change. They build stronger communities by enabling children from marginalized neighbourhoods to overcome poverty, grow, and thrive as engaged citizens and future leaders. They are collaborating with us this year to create a mobile application that will help with their mission.
 
@@ -65,7 +66,6 @@ Setup:
 1. Follow [this](https://reactnative.dev/docs/environment-setup) setup tutorial to download necessary prerequisites up until and including the "React Native Command Line Interface" header, then stop there. Even if you have the prerequisites downloaded, make sure the versions are correct.
 2. From the root folder of the sistema project, run 
     ```powershell
-    cd .\packages\mobile\
     npm install
     ```
 3. Set up the Android simulator. Skip to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the Android section. Once that's set up, you're ready to run your app!
@@ -73,6 +73,8 @@ Setup:
 ## Running your React Native app (Windows)
 
 Run `npm run android`. Give a few minutes for Metro to start, Gradle to build, and the simulator to load. 
+
+To commit your added changes, run `npm run commit` to generate a standardized commit message.
 
 *What's Metro?* Metro is the JavaScript bundler that ships with React Native. Metro "takes in an entry file and various options, and returns a single JavaScript file that includes all your code and its dependencies."—Metro Docs. To start Metro without Android, run `npx react-native start` inside the root folder.
 
