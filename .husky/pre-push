@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Checking eslint..."
+npm run eslint . "$1"
+echo "Lint check complete."

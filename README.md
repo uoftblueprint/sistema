@@ -15,6 +15,7 @@ The [wiki](https://github.com/uoftblueprint/sistema/wiki) has a lot of relevant 
 - [Sistema](#sistema)
   - [For Developers](#for-developers)
 - [Table of Contents](#table-of-contents)
+- [Commmiting and Pushing](#commmiting-and-pushing)
 - [Setup Local Environment (Mac)](#setup-local-environment-mac)
 - [Setup Local Environment (Windows)](#setup-local-environment-windows)
   - [Running your React native app](#running-your-react-native-app-windows)
@@ -24,6 +25,27 @@ The [wiki](https://github.com/uoftblueprint/sistema/wiki) has a lot of relevant 
 - [Troubleshooting](#troubleshooting)
 - [Contributors](#contributors)
 
+# Commmiting and Pushing
+
+This repository uses [commitizen](https://www.npmjs.com/package/commitizen) (commit message generator) and [Husky](https://typicode.github.io/husky/#/) (lints and runs scripts triggered by git hooks).
+
+1. Add your changed files with `git add` as usual or through your IDE shortcut.
+1. To commit, run `npm run cm` to start commitizen and generate a standardized commit message.
+1. To push, run `git push` as usual or through your IDE shortcut.
+
+We use Husky to lint code and run other checks when you push. To bypass hooks:
+
+You can bypass `pre-commit` and `commit-msg` hooks using` Git -n/--no-verify` option:
+
+```bash
+git commit -m "yolo!" --no-verify
+```
+
+For Git commands that don't have a `--no-verify` option, you can use `HUSKY` environment variable:
+
+```bash
+HUSKY=0 git push # yolo!
+```
 
 # Setup Local Environment (Mac)
 
@@ -72,9 +94,7 @@ Setup:
 
 ## Running your React Native app (Windows)
 
-Run `npm run android`. Give a few minutes for Metro to start, Gradle to build, and the simulator to load. 
-
-To commit your added changes, run `npm run commit` to generate a standardized commit message.
+Run `npm run android`. Give a few minutes for Metro to start, Gradle to build, and the simulator to load.
 
 *What's Metro?* Metro is the JavaScript bundler that ships with React Native. Metro "takes in an entry file and various options, and returns a single JavaScript file that includes all your code and its dependencies."—Metro Docs. To start Metro without Android, run `npx react-native start` inside the root folder.
 
