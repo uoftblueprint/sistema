@@ -2,5 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "Checking eslint..."
+cd /
+cd ./packages/mobile/
 npm run eslint . "$1"
 echo "Lint check complete."
