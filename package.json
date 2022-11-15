@@ -17,9 +17,8 @@
   },
   "scripts": {
     "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock",
-    "android:metro": "yarn workspace mobile start",
-    "android:start": "yarn workspace mobile android",
-    "android:studio": "yarn workspace mobile studio",
+    "preandroid": "cd ./packages/mobile/android/",
+    "android": "npx react-native run-android",
     "ios:metro": "yarn workspace mobile start",
     "ios:start": "yarn workspace mobile ios",
     "ios:xcode": "yarn workspace mobile xcode"
