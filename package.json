@@ -21,9 +21,17 @@
     "android": "npx react-native run-android",
     "ios:metro": "yarn workspace mobile start",
     "ios:start": "yarn workspace mobile ios",
-    "ios:xcode": "yarn workspace mobile xcode"
+    "ios:xcode": "yarn workspace mobile xcode",
+    "commit": "cz"
   },
   "devDependencies": {
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0",
     "react-native-monorepo-tools": "^1.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
