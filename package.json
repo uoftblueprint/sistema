@@ -17,13 +17,15 @@
   },
   "scripts": {
     "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock",
-    "preandroid": "cd ./packages/mobile/android/",
-    "android": "npx react-native run-android",
+    "android:metro": "yarn workspace mobile start",
+    "android:start": "yarn workspace mobile android",
+    "android:studio": "yarn workspace mobile studio",
     "ios:metro": "yarn workspace mobile start",
     "ios:start": "yarn workspace mobile ios",
     "ios:xcode": "yarn workspace mobile xcode",
     "cm": "cz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "yarn workspace mobile lint"
   },
   "devDependencies": {
     "commitizen": "^4.2.5",

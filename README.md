@@ -30,7 +30,7 @@ The [wiki](https://github.com/uoftblueprint/sistema/wiki) has a lot of relevant 
 This repository uses [commitizen](https://www.npmjs.com/package/commitizen) (commit message generator) and [Husky](https://typicode.github.io/husky/#/) (lints and runs scripts triggered by git hooks).
 
 1. Add your changed files with `git add` as usual or through your IDE shortcut.
-1. To commit, run `npm run cm` to start commitizen and generate a standardized commit message.
+1. To commit, run `yarn run cm` to start commitizen and generate a standardized commit message.
 1. To push, run `git push` as usual or through your IDE shortcut.
 
 We use Husky to lint code and run other checks when you push. To bypass hooks:
@@ -86,17 +86,16 @@ Prerequisites:
 Setup: 
 
 1. Follow [this](https://reactnative.dev/docs/environment-setup) setup tutorial to download necessary prerequisites up until and including the "React Native Command Line Interface" header, then stop there. Even if you have the prerequisites downloaded, make sure the versions are correct.
-2. From the root folder of the sistema project, run 
-    ```powershell
-    npm install
-    ```
+2. From the root folder of the sistema project, run `yarn` to install packages.
 3. Set up the Android simulator. Skip to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the Android section. Once that's set up, you're ready to run your app!
 
 ## Running your React Native app (Windows)
 
-Run `npm run android`. Give a few minutes for Metro to start, Gradle to build, and the simulator to load.
+Open Android Studio and start your virtual device. Run `yarn run android:start`. Give a few minutes for Metro to start, Gradle to build, and the simulator to load.
 
-*What's Metro?* Metro is the JavaScript bundler that ships with React Native. Metro "takes in an entry file and various options, and returns a single JavaScript file that includes all your code and its dependencies."—Metro Docs. To start Metro without Android, run `npx react-native start` inside the root folder.
+*What's Metro?* Metro is the JavaScript bundler that ships with React Native. Metro "takes in an entry file and various options, and returns a single JavaScript file that includes all your code and its dependencies."—Metro Docs. To start Metro without Android, run `yarn run android:metro` inside the root folder.
+
+To start Android studio and the emulator without your app, run `yarn run android:studio`.
 
 # Setup Local Environment (Linux)
 Again, we'll need a Mac to enable native development for iOS. Follow this [tutorial](https://www.youtube.com/watch?v=c30RLycIpVY) to install MacOS.
@@ -128,7 +127,7 @@ A problem occurred evaluating settings 'sistema'.
 **Solution:**
 
 ```
-npm i @react-native-community/cli-platform-android
+yarn add @react-native-community/cli-platform-android
 ```
 
 ## 'adb' is not recognized (Android)
