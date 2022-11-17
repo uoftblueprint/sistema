@@ -75,7 +75,7 @@ Setup:
     ```
 10. Type ```source $HOME/.zprofile``` or ```source $HOME/.bashprofile``` to load the config. You're set!
 
-First run: 
+## Running your React Native app (Mac)
 
 1. Clone this repository into your local directory of choice using ```git clone https://github.com/uoftblueprint/sistema.git```
 2. cd into folder sistema ```cd ./sistema```
