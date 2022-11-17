@@ -55,6 +55,7 @@ Ensure you have the following prerequisites before trying to run the project loc
 - Node.js and npm (https://nodejs.org/en/download/). Alternatively, check if you have this by using command ```node -v``` in your terminal console. It is recommended to install Node.js using [Homebrew](https://brew.sh/) via the ```brew install node``` command. Easy, right?
 - For **Mac**, make sure you install Watchman for file management: ```brew install watchman```
 - You will need an iOS simulator and an Android simulator.
+- Install Yarn, another package manager that enables our monorepo to function: ```npm install --global yarn```
 
 Setup:
 
@@ -73,6 +74,21 @@ Setup:
     export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
     ```
 10. Type ```source $HOME/.zprofile``` or ```source $HOME/.bashprofile``` to load the config. You're set!
+
+First run: 
+
+1. Clone this repository into your local directory of choice using ```git clone https://github.com/uoftblueprint/sistema.git```
+2. cd into folder sistema ```cd ./sistema```
+3. Run ```npm install```
+4. cd into folder mobile ```cd ./packages/mobile```
+5. If using Mac, run ```rbenv local 2.7.5```
+    - Run ```bundle install```
+    - cd into ```cd ios```, then install pods ```pod install```
+6. cd back out to sistema folder ```cd ../..```
+7. Start the React Native server (Metro) by running ```yarn workspace start```. Make sure this process is complete and error-free before proceeding to the next step.
+8. Start the Android simulator by running ```yarn workspace android```. Make sure your Android simulator is all set up in Android Studio!
+9. Start the iOS simulator by running ```yarn workspace ios```. Make sure your iOS simnulator is all set up in Xcode!
+9. The simulator should open automatically and you should see the current working version of the Sistema app.
 
 # Setup Local Environment (Windows)
 Unfortunately, you will have to install a [virtual machine](https://www.makeuseof.com/tag/macos-windows-10-virtual-machine/) to run the iOS simulator. Since this is an incredibly [long, painful, and potentially unfruitful process](https://www.reddit.com/r/hackintosh/), we don't want to inflict this on you—so let's just install the Android simulator for now. Do what works for you!
@@ -98,6 +114,7 @@ Open Android Studio and start your virtual device. Run `yarn run android:start`.
 To start Android studio and the emulator without your app, run `yarn run android:studio`.
 
 # Setup Local Environment (Linux)
+
 Again, we'll need a Mac to enable native development for iOS. Follow this [tutorial](https://www.youtube.com/watch?v=c30RLycIpVY) to install MacOS.
 If you choose to only develop for Android, the Linux setup process for Android is essentially the same as that of Mac; however, since you don't have access to Homebrew, the [Node](https://nodejs.org/en/download/package-manager/), [JDK](http://openjdk.java.net/), and [Watchman](https://facebook.github.io/watchman/docs/install/#buildinstall) installations will look a little different. Just make sure to download the correct version for your Linux distribution.
 
