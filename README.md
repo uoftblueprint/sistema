@@ -80,15 +80,17 @@ First run:
 1. Clone this repository into your local directory of choice using ```git clone https://github.com/uoftblueprint/sistema.git```
 2. cd into folder sistema ```cd ./sistema```
 3. Run ```npm install```
-4. cd into folder mobile ```cd ./packages/mobile```
-5. If using Mac, run ```rbenv local 2.7.5```
+4. Run ```yarn```
+5. cd into folder mobile ```cd ./packages/mobile```
+6. If using Mac, run ```rbenv local 2.7.5```
     - Run ```bundle install```
     - cd into ```cd ios```, then install pods ```pod install```
-6. cd back out to sistema folder ```cd ../..```
-7. Start the React Native server (Metro) by running ```yarn workspace start```. Make sure this process is complete and error-free before proceeding to the next step.
-8. Start the Android simulator by running ```yarn workspace android```. Make sure your Android simulator is all set up in Android Studio!
-9. Start the iOS simulator by running ```yarn workspace ios```. Make sure your iOS simnulator is all set up in Xcode!
-9. The simulator should open automatically and you should see the current working version of the Sistema app.
+7. cd back out to sistema folder ```cd ../..```
+8. Start the React Native server (Metro) by running ```yarn workspace start```. Make sure this process is complete and error-free before proceeding to the next step.
+9. Navigate to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the steps. You can either start your simulator and run the build inside Android Studio/XCode, or you can do the follow steps:
+9. Start the Android simulator by running ```yarn workspace android```. Make sure your Android simulator is all set up in Android Studio!
+11. Start the iOS simulator by running ```yarn workspace ios```. Make sure your iOS simnulator is all set up in Xcode!
+12. The simulator should open automatically and you should see the current working version of the Sistema app.
 
 # Setup Local Environment (Windows)
 Unfortunately, you will have to install a [virtual machine](https://www.makeuseof.com/tag/macos-windows-10-virtual-machine/) to run the iOS simulator. Since this is an incredibly [long, painful, and potentially unfruitful process](https://www.reddit.com/r/hackintosh/), we don't want to inflict this on you—so let's just install the Android simulator for now. Do what works for you!
