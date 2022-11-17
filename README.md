@@ -54,8 +54,8 @@ Prerequisites:
 Ensure you have the following prerequisites before trying to run the project locally:
 - Node.js and npm (https://nodejs.org/en/download/). Alternatively, check if you have this by using command ```node -v``` in your terminal console. It is recommended to install Node.js using [Homebrew](https://brew.sh/) via the ```brew install node``` command. Easy, right?
 - For **Mac**, make sure you install Watchman for file management: ```brew install watchman```
-- You will need an iOS simulator and an Android simulator.
 - Install Yarn, another package manager that enables our monorepo to function: ```npm install --global yarn```
+- You will need an iOS simulator and an Android simulator. Details to follow!
 
 Setup:
 
