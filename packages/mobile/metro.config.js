@@ -5,6 +5,7 @@
  * @format
  */
 const path = require('path');
+const { getDefaultConfig } = require("metro-config");
 const exclusionList = require("metro-config/src/defaults/exclusionList");
 const {
     getMetroTools,
@@ -13,29 +14,35 @@ const {
 const monorepoMetroTools = getMetroTools();
 const androidAssetsResolutionFix = getMetroAndroidAssetsResolutionFix();
 
-module.exports = {
-  projectRoot: path.resolve(__dirname, '../../'),
-  transformer: {
-    publicPath: androidAssetsResolutionFix.publicPath,
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: false,
-      },
-    }),
-  },
-  server: {
-    // ...and to the server middleware.
-    enhanceMiddleware: (middleware) => {
-      return androidAssetsResolutionFix.applyMiddleware(middleware);
+module.exports = (async () => {
+  const {
+    resolver: { sourceExts, assetExts }
+  } = await getDefaultConfig();
+  return {
+    projectRoot: path.resolve(__dirname, '../../'),
+    transformer: {
+        publicPath: androidAssetsResolutionFix.publicPath,
+        getTransformOptions: async () => ({
+          transform: {
+            experimentalImportSupport: false,
+            inlineRequires: false,
+          },
+        }),
+        babelTransformerPath: require.resolve("react-native-svg-transformer")
     },
-  },
-  // Add additional Yarn workspace package roots to the module map.
-  // This allows importing importing from all the project's packages.
-  watchFolders: monorepoMetroTools.watchFolders,
-  resolver: {
-    // Ensure we resolve nohoist libraries from this directory.
-    blockList: exclusionList(monorepoMetroTools.blockList),
-    extraNodeModules: monorepoMetroTools.extraNodeModules,
-  },
-};
+    watchFolders: monorepoMetroTools.watchFolders,
+    resolver: {
+        // Ensure we resolve nohoist libraries from this directory.
+        blockList: exclusionList(monorepoMetroTools.blockList),
+        extraNodeModules: monorepoMetroTools.extraNodeModules,
+        assetExts: assetExts.filter(ext => ext !== "svg"),
+        sourceExts: [...sourceExts, "svg"]
+    },
+    server: {
+      // ...and to the server middleware.
+      enhanceMiddleware: (middleware) => {
+        return androidAssetsResolutionFix.applyMiddleware(middleware);
+      },
+    }
+  };
+})();
