@@ -132,6 +132,17 @@ If you choose to only develop for Android, the Linux setup process for Android i
 
 # Troubleshooting
 
+## The development server returned response error code: 500 in react native (Android Simulator Error)
+
+**Error:**
+When you try to run your build on your Android simulator, and the simulator returns an error 500.
+
+**Solution:**
+It's possible that it's a port problem. Try running this command in your terminal:
+```
+adb reverse tcp:8081 tcp:8082
+```
+
 ## `cli-platform-android` doesn't exist (Android)
 
 **Error:**
