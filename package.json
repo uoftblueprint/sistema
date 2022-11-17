@@ -22,9 +22,20 @@
     "android:studio": "yarn workspace mobile studio",
     "ios:metro": "yarn workspace mobile start",
     "ios:start": "yarn workspace mobile ios",
-    "ios:xcode": "yarn workspace mobile xcode"
+    "ios:xcode": "yarn workspace mobile xcode",
+    "cm": "cz",
+    "prepare": "husky install",
+    "lint": "yarn workspace mobile lint"
   },
   "devDependencies": {
-    "react-native-monorepo-tools": "^1.2.0"
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0",
+    "react-native-monorepo-tools": "^1.2.0",
+    "husky": "^8.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
