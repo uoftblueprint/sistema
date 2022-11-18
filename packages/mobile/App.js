@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './src/home/Home';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
+import HomeIcon from './assets/HomeIcon.js';
 
 
 const STACK_SCREENS = {
@@ -20,11 +21,6 @@ const STACK_SCREENS = {
 const Tab = createBottomTabNavigator();
 const active = '#685777';
 const inactive = '#000000';
-const HomeIconStyled = props => (
-  <View style={{top: 3}}>
-    {/* <HomeIcon fill={props.focused ? active : inactive} /> */}
-  </View>
-);
 
 const MainNavigator = () => {
   const navigationRef = useNavigationContainerRef();
@@ -38,7 +34,7 @@ const MainNavigator = () => {
           options={{
             headerShown: true,
             tabBarIcon: (props) => (
-              <HomeIconStyled {...props} />
+              <HomeIcon {...props} />
             ),
             tabBarActiveTintColor: active,
             tabBarInactiveTintColor: inactive,
