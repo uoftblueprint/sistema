@@ -19,8 +19,6 @@ const STACK_SCREENS = {
 }
 
 const Tab = createBottomTabNavigator();
-const active = '#685777';
-const inactive = '#000000';
 
 const MainNavigator = () => {
   const navigationRef = useNavigationContainerRef();
@@ -36,8 +34,6 @@ const MainNavigator = () => {
             tabBarIcon: (props) => (
               <HomeIcon {...props} />
             ),
-            tabBarActiveTintColor: active,
-            tabBarInactiveTintColor: inactive,
           }}
         />
         <Tab.Screen 
@@ -45,11 +41,6 @@ const MainNavigator = () => {
           component={EditorNavigator} 
           options={{
             headerShown: true,
-            // tabBarIcon: (props) => (
-            //   <InfoIconStyled {...props} />
-            // ),
-            tabBarActiveTintColor: active,
-            tabBarInactiveTintColor: inactive,
           }}
         />
         <Tab.Screen 
@@ -57,11 +48,6 @@ const MainNavigator = () => {
           component={Library} 
           options={{
             headerShown: true,
-            // tabBarIcon: (props) => (
-            //   <SettingsIconStyled {...props} />
-            // ),
-            tabBarActiveTintColor: active,
-            tabBarInactiveTintColor: inactive,
           }}
         />
       </Tab.Navigator>
