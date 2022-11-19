@@ -104,7 +104,7 @@ Prerequisites:
 Setup: 
 
 1. Follow [this](https://reactnative.dev/docs/environment-setup) setup tutorial to download necessary prerequisites up until and including the "React Native Command Line Interface" header, then stop there. Even if you have the prerequisites downloaded, make sure the versions are correct.
-2. From the root folder of the sistema project, run `yarn` to install packages.
+2. From the root folder of the sistema project, run `yarn --frozen-lockfile` to install packages.
 3. Set up the Android simulator. Skip to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the Android section. Once that's set up, you're ready to run your app!
 
 ## Running your React Native app (Windows)
