@@ -80,7 +80,7 @@ Setup:
 1. Clone this repository into your local directory of choice using ```git clone https://github.com/uoftblueprint/sistema.git```
 2. cd into folder sistema ```cd ./sistema```
 3. Run ```npm install```
-4. Run ```yarn```
+4. Run ```yarn --frozen-lockfile```
 5. cd into folder mobile ```cd ./packages/mobile```
 6. If using Mac, run ```rbenv local 2.7.5```
     - Run ```bundle install```
