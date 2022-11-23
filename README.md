@@ -49,7 +49,7 @@ HUSKY=0 git push # yolo!
 
 # Setup Local Environment (Mac)
 
-Prerequisites:
+**Prerequisites:**
 
 Ensure you have the following prerequisites before trying to run the project locally:
 - Node.js and npm (https://nodejs.org/en/download/). Alternatively, check if you have this by using command ```node -v``` in your terminal console. It is recommended to install Node.js using [Homebrew](https://brew.sh/) via the ```brew install node``` command. Easy, right?
@@ -57,7 +57,7 @@ Ensure you have the following prerequisites before trying to run the project loc
 - Install Yarn, another package manager that enables our monorepo to function: ```npm install --global yarn```
 - You will need an iOS simulator and an Android simulator. Details to follow!
 
-Setup:
+**Setup:**
 
 1. Install [Xcode](https://apps.apple.com/ca/app/xcode/id497799835?mt=12). If your macOS version is too old to install the latest version, you can browse [this link](https://developer.apple.com/download/all/?q=xcode) to find a version that works for you, as long as it's 10 or newer.
 2. You'll need Ruby version 2.7.5 for iOS development. Use command ```ruby --version``` to check what version you're currently on. Follow the installation instructions for [rbenv](https://github.com/rbenv/rbenv)—this manages your Ruby version for different projects. Install the correct version: ```rbenv install 2.7.5```. Restart your terminal console.
@@ -101,7 +101,7 @@ Prerequisites:
 - a JDK
 - Android Studio
 
-Setup: 
+Setup:
 
 1. Follow [this](https://reactnative.dev/docs/environment-setup) setup tutorial to download necessary prerequisites up until and including the "React Native Command Line Interface" header, then stop there. Even if you have the prerequisites downloaded, make sure the versions are correct.
 2. From the root folder of the sistema project, run `yarn` to install packages.
@@ -125,8 +125,8 @@ If you choose to only develop for Android, the Linux setup process for Android i
 ## Android
 
 1. Open `./sistema/packages/mobile/android` inside Android Studio. If it's your first time opening up the project, Android Studio will automatically start the build. _Make sure the gradle build is successful._ Check [Troubleshooting](#troubleshooting) for common errors.
-1. Next, we're going to create the AVD (Android Virtual Device). Click on Device Manager in the top right tool bar (next to gradle build). If you have recently installed Android Studio, you will likely need to create a new AVD. Select Virtual > Create Device. 
-1. Pick the Pixel 6 Pro or any other modern phone and from the list and click "Next". Then select the system image: x86 Images > S (API Level = 31, Target = Android 12.0). Click "Next" then "Finish" to create your AVD. 
+1. Next, we're going to create the AVD (Android Virtual Device). Click on Device Manager in the top right tool bar (next to gradle build). If you have recently installed Android Studio, you will likely need to create a new AVD. Select Virtual > Create Device.
+1. Pick the Pixel 6 Pro or any other modern phone and from the list and click "Next". Then select the system image: x86 Images > S (API Level = 31, Target = Android 12.0). Click "Next" then "Finish" to create your AVD.
 1. At this point you should be able to click on the green triangle button next to your AVD to launch it. It might take a few minutes for the Emulator to start.
 1. Run your React Native app.
 
@@ -174,7 +174,7 @@ Error: Command failed: adb shell am start -n com.sistema/com.sistema.MainActivit
 
 **Solution (Windows only):**
 
-1. Type in "env" in your Windows search bar. System Properties > Environment Variables. Make sure that `%LOCALAPPDATA%\Android\Sdk\platform-tools` is in your PATH system variables. Replace "%LOCALAPPDATA%" with your local app data path. 
+1. Type in "env" in your Windows search bar. System Properties > Environment Variables. Make sure that `%LOCALAPPDATA%\Android\Sdk\platform-tools` is in your PATH system variables. Replace "%LOCALAPPDATA%" with your local app data path.
 2. Open a new terminal and confirm with the `$Env:Path` command that platform-tools is in the variable. You might have to restart your IDE.
 
 ## Can't find package (Android)
@@ -188,7 +188,7 @@ Unable to install C:\%LOCALAPPDATA%\sistema\packages\mobile\android\app\build\ou
 com.android.ddmlib.InstallException: Unknown failure: cmd: Can't find service: package
 ```
 
-**Solution:** 
+**Solution:**
 
 Open Android Studio > Device Manager. Run "Cold Boot Now" on the specific emulator to get it back up.
 
