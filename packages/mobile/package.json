@@ -7,13 +7,20 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint .",
+    "lint": "yarn eslint --fix \"src/\"",
     "studio": "studio android",
     "xcode": "xed ios"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.4.0",
+    "@react-navigation/native": "^6.0.13",
+    "@react-navigation/stack": "^6.3.4",
     "react": "18.1.0",
-    "react-native": "0.70.4"
+    "react-native": "0.70.4",
+    "react-native-gesture-handler": "^2.8.0",
+    "react-native-safe-area-context": "^4.4.1",
+    "react-native-screens": "^3.18.2",
+    "react-native-svg": "^13.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "Checking eslint..."
+echo "Fixing any lint errors..."
 yarn run lint
 echo "Lint check complete."
