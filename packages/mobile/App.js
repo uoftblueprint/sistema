@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { View } from 'react-native';
 import 'react-native-gesture-handler';
 import {
-  NavigationContainer, 
-  useNavigationContainerRef 
+  NavigationContainer,
+  useNavigationContainerRef,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './src/home/Home';
@@ -15,8 +16,8 @@ import HomeIcon from './assets/HomeIcon.js';
 const STACK_SCREENS = {
   HOME: 'HomePage',
   EDITOR: 'LessonPlanEditor',
-  LIBRARY: 'Library'
-}
+  LIBRARY: 'Library',
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -26,9 +27,9 @@ const MainNavigator = () => {
   return (
     <NavigationContainer ref={navigationRef} independent={true}>
       <Tab.Navigator initialRouteName={STACK_SCREENS.HOME}>
-        <Tab.Screen 
-          name={STACK_SCREENS.HOME} 
-          component={Home} 
+        <Tab.Screen
+          name={STACK_SCREENS.HOME}
+          component={Home}
           options={{
             headerShown: true,
             tabBarIcon: (props) => (
@@ -36,16 +37,16 @@ const MainNavigator = () => {
             ),
           }}
         />
-        <Tab.Screen 
-          name={STACK_SCREENS.EDITOR} 
-          component={EditorNavigator} 
+        <Tab.Screen
+          name={STACK_SCREENS.EDITOR}
+          component={EditorNavigator}
           options={{
             headerShown: true,
           }}
         />
-        <Tab.Screen 
-          name={STACK_SCREENS.LIBRARY} 
-          component={Library} 
+        <Tab.Screen
+          name={STACK_SCREENS.LIBRARY}
+          component={Library}
           options={{
             headerShown: true,
           }}
@@ -53,7 +54,7 @@ const MainNavigator = () => {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 const App = () => {
   return <MainNavigator />;
