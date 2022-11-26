@@ -52,7 +52,7 @@ HUSKY=0 git push # yolo!
 **Prerequisites:**
 
 Ensure you have the following prerequisites before trying to run the project locally:
-- Node.js and npm (https://nodejs.org/en/download/). Alternatively, check if you have this by using command ```node -v``` in your terminal console. It is recommended to install Node.js using [Homebrew](https://brew.sh/) via the ```brew install node``` command. Easy, right?
+- Node.js and npm (https://nodejs.org/en/download/). Alternatively, check if you have this by using command ```node -v``` in your terminal console. It is recommended to install Node.js using [Homebrew](https://brew.sh/) via the ```brew install node``` command.
 - For **Mac**, make sure you install Watchman for file management: ```brew install watchman```
 - Install Yarn, another package manager that enables our monorepo to function: ```npm install --global yarn```
 - You will need an iOS simulator and an Android simulator. Details to follow!
@@ -73,24 +73,24 @@ Ensure you have the following prerequisites before trying to run the project loc
     export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
     export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
     ```
-10. Type ```source $HOME/.zprofile``` or ```source $HOME/.bashprofile``` to load the config. You're set!
+10. Type ```source $HOME/.zprofile``` or ```source $HOME/.bashprofile``` to load the config.
+11. Go back into Android Studio, and see [this link](https://developer.android.com/studio/run/emulator#avd) to set up your Android Simulator. Alternatively, if you have an Android phone, you can connect it via USB to your computer with the phone set on debugging mode in the developer options, and it'll build the app directly on your phone.
 
 ## Running your React Native app (Mac)
 
 1. Clone this repository into your local directory of choice using ```git clone https://github.com/uoftblueprint/sistema.git```
 2. cd into folder sistema ```cd ./sistema```
-3. Run ```npm install```
-4. Run ```yarn --frozen-lockfile```
-5. cd into folder mobile ```cd ./packages/mobile```
-6. If using Mac, run ```rbenv local 2.7.5```
+3. Run ```yarn --frozen-lockfile```
+4. cd into folder mobile ```cd ./packages/mobile```
+5. If using Mac, run ```rbenv local 2.7.5```
     - Run ```bundle install```
     - cd into ```cd ios```, then install pods ```pod install```
-7. cd back out to sistema folder ```cd ../..```
-8. Start the React Native server (Metro) by running ```yarn workspace start```. Make sure this process is complete and error-free before proceeding to the next step.
-9. Navigate to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the steps. You can either start your simulator and run the build inside Android Studio/XCode, or you can do the follow steps:
-9. Start the Android simulator by running ```yarn workspace android```. Make sure your Android simulator is all set up in Android Studio!
-11. Start the iOS simulator by running ```yarn workspace ios```. Make sure your iOS simnulator is all set up in Xcode!
-12. The simulator should open automatically and you should see the current working version of the Sistema app.
+6. cd back out to sistema folder ```cd ../..```
+7. Start the React Native server (Metro) by running ```yarn workspace start```. Make sure this process is complete and error-free before proceeding to the next step.
+8. Navigate to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the steps. You can either start your simulator and run the build inside Android Studio/XCode, or you can do the follow steps:
+9. Start the Android simulator by running ```yarn run android:start```. Make sure your Android simulator is all set up in Android Studio!
+10. Start the iOS simulator by running ```yarn run ios:start```. Make sure your iOS simnulator is all set up in Xcode!
+11. The simulators should open automatically and you should see the current working version of the Sistema app.
 
 # Setup Local Environment (Windows)
 Unfortunately, you will have to install a [virtual machine](https://www.makeuseof.com/tag/macos-windows-10-virtual-machine/) to run the iOS simulator. Since this is an incredibly [long, painful, and potentially unfruitful process](https://www.reddit.com/r/hackintosh/), we don't want to inflict this on you—so let's just install the Android simulator for now. Do what works for you!
@@ -129,6 +129,10 @@ If you choose to only develop for Android, the Linux setup process for Android i
 1. Pick the Pixel 6 Pro or any other modern phone and from the list and click "Next". Then select the system image: x86 Images > S (API Level = 31, Target = Android 12.0). Click "Next" then "Finish" to create your AVD.
 1. At this point you should be able to click on the green triangle button next to your AVD to launch it. It might take a few minutes for the Emulator to start.
 1. Run your React Native app.
+
+## ios
+
+1. Once you have your simulator downloaded via the Preferences menu in Xcode, you can directly build and run your app by running ```yarn run ios:start``` from the root directory of your project.
 
 # Troubleshooting
 
