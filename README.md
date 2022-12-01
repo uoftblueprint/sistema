@@ -54,7 +54,7 @@ HUSKY=0 git push # yolo!
 Ensure you have the following prerequisites before trying to run the project locally:
 - Node.js and npm (https://nodejs.org/en/download/). Alternatively, check if you have this by using command ```node -v``` in your terminal console. It is recommended to install Node.js using [Homebrew](https://brew.sh/) via the ```brew install node``` command.
 - For **Mac**, make sure you install Watchman for file management: ```brew install watchman```
-- Install Yarn, another package manager that enables our monorepo to function: ```npm install --global yarn```
+- Install Yarn, the package manager we'll be using for our project: ```npm install --global yarn```
 - You will need an iOS simulator and an Android simulator. Details to follow!
 
 **Setup:**
@@ -81,16 +81,15 @@ Ensure you have the following prerequisites before trying to run the project loc
 1. Clone this repository into your local directory of choice using ```git clone https://github.com/uoftblueprint/sistema.git```
 2. cd into folder sistema ```cd ./sistema```
 3. Run ```yarn --frozen-lockfile```
-4. cd into folder mobile ```cd ./packages/mobile```
-5. If using Mac, run ```rbenv local 2.7.5```
+4. If using Mac, run ```rbenv local 2.7.5```
     - Run ```bundle install```
     - cd into ```cd ios```, then install pods ```pod install```
-6. cd back out to sistema folder ```cd ../..```
-7. Start the React Native server (Metro) by running ```yarn workspace start```. Make sure this process is complete and error-free before proceeding to the next step.
-8. Navigate to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the steps. You can either start your simulator and run the build inside Android Studio/XCode, or you can do the follow steps:
-9. Start the Android simulator by running ```yarn run android:start```. Make sure your Android simulator is all set up in Android Studio!
-10. Start the iOS simulator by running ```yarn run ios:start```. Make sure your iOS simnulator is all set up in Xcode!
-11. The simulators should open automatically and you should see the current working version of the Sistema app.
+5. cd back out to sistema folder ```cd ..```
+6. Start the React Native server (Metro) by running ```npx react-native start```. Make sure this process is complete and error-free before proceeding to the next step.
+7. Navigate to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the steps. You can either start your simulator and run the build inside Android Studio/XCode, or you can do the follow steps:
+8. Start the Android simulator by running ```npx react-native run-android```. Make sure your Android simulator is all set up in Android Studio!
+9. Start the iOS simulator by running ```npx react-native run-ios```. Make sure your iOS simulator is all set up in Xcode!
+10. The simulators should open automatically and you should see the current working version of the Sistema app.
 
 # Setup Local Environment (Windows)
 Unfortunately, you will have to install a [virtual machine](https://www.makeuseof.com/tag/macos-windows-10-virtual-machine/) to run the iOS simulator. Since this is an incredibly [long, painful, and potentially unfruitful process](https://www.reddit.com/r/hackintosh/), we don't want to inflict this on you—so let's just install the Android simulator for now. Do what works for you!
@@ -124,7 +123,7 @@ If you choose to only develop for Android, the Linux setup process for Android i
 
 ## Android
 
-1. Open `./sistema/packages/mobile/android` inside Android Studio. If it's your first time opening up the project, Android Studio will automatically start the build. _Make sure the gradle build is successful._ Check [Troubleshooting](#troubleshooting) for common errors.
+1. Open `./sistema/android` inside Android Studio. If it's your first time opening up the project, Android Studio will automatically start the build. _Make sure the gradle build is successful._ Check [Troubleshooting](#troubleshooting) for common errors.
 1. Next, we're going to create the AVD (Android Virtual Device). Click on Device Manager in the top right tool bar (next to gradle build). If you have recently installed Android Studio, you will likely need to create a new AVD. Select Virtual > Create Device.
 1. Pick the Pixel 6 Pro or any other modern phone and from the list and click "Next". Then select the system image: x86 Images > S (API Level = 31, Target = Android 12.0). Click "Next" then "Finish" to create your AVD.
 1. At this point you should be able to click on the green triangle button next to your AVD to launch it. It might take a few minutes for the Emulator to start.
@@ -152,7 +151,7 @@ adb reverse tcp:8081 tcp:8082
 **Error:**
 
 ```
-Settings file 'C:\%LOCALPATH%\sistema\packages\mobile\android\settings.gradle' line: 2
+Settings file 'C:\%LOCALPATH%\sistema\android\settings.gradle' line: 2
 
 A problem occurred evaluating settings 'sistema'.
 > Could not read script 'C:\Users\%LOCALPATH%\sistema\packages\mobile\node_modules\@react-native-community\cli-platform-android\native_modules.gradle' as it does not exist.
@@ -188,7 +187,7 @@ Error: Command failed: adb shell am start -n com.sistema/com.sistema.MainActivit
 ```
 error Failed to install the app. Make sure you have the Android development environment set up: https://reactnative.dev/docs/environment-setup.
 Error: Command failed: gradlew.bat app:installDebug -PreactNativeDevServerPort=8081
-Unable to install C:\%LOCALAPPDATA%\sistema\packages\mobile\android\app\build\outputs\apk\debug\app-debug.apk
+Unable to install C:\%LOCALAPPDATA%\sistema\android\app\build\outputs\apk\debug\app-debug.apk
 com.android.ddmlib.InstallException: Unknown failure: cmd: Can't find service: package
 ```
 
@@ -216,7 +215,7 @@ E/unknown:DeviceInfo: Unhandled SoftException
 From the root folder:
 
 ```powershell
-cd ./packages/mobile/android/
+cd ./android/
 ./gradlew clean
 ```
 
