@@ -40,7 +40,7 @@ const MainNavigator = () => {
           name={STACK_SCREENS.EDITOR} 
           component={EditorNavigator} 
           options={{
-            headerShown: true,
+            headerShown: false,
           }}
         />
         <Tab.Screen 
