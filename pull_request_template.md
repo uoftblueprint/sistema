@@ -26,4 +26,4 @@ Please delete options that are not relevant.
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation (if required)
 - [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] I have tested that my feature works as expected on Android and iOS. If you are a Windows dev, please request a Mac dev to run your branch. If it's a front-end change, I have attached screenshots of what the result looks like on both platforms. 
