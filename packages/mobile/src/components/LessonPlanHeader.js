@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   View,
   Text,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 
 const LessonPlanHeader = () => {
@@ -37,22 +37,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   arrowContainer: {
-    //container for setting icon
     flex: 0.5,
     height: '100%',
     flexDirection: 'column',
     marginVertical: 9
   },
   IconContainer: {
-    //container for setting icon
+    //container for edit and menu icon
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   rightIconsContainer: {
-    //container for setting icon
+    //container for edit and menu icons together
     flex: 2,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   title: {
     flexDirection: 'row',

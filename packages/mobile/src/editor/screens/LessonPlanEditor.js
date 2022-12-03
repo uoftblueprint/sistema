@@ -7,7 +7,8 @@ import SaveButton from '../../components/SaveButton.js';
 
 const LessonPlanEditor = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFAF5', paddingBottom: 25 }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: '#FFFAF5', paddingBottom: 25 }}>
       <View style={{ flex: 2.5 }}>
         <LessonPlanHeader />
       </View>

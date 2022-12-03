@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     borderRadius: 7.69,
     shadowColor: '#453E3D',
     elevation: 4,
-    marginVertical: 6,
-  },
+    marginVertical: 6
+  }
 });
 
 export default LessonPlanTextField;

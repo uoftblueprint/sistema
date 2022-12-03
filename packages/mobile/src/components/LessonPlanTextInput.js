@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import AddIcon from '../../assets/AddIcon';
 
@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     elevation: 4,
     marginVertical: 6,
-    paddingLeft: 12,
+    paddingLeft: 12
   },
   ImageStyle: {
     height: 25,
-    width: 25,
-  },
+    width: 25
+  }
 });
 
 export default LessonPlanTextInput;

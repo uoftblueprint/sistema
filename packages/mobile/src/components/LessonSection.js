@@ -22,11 +22,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Light',
     letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28,
+    lineHeight: 28
   },
   sectionContainer: {
-    marginBottom: 25,
-  },
+    marginBottom: 25
+  }
 });
 
 export default LessonSection;

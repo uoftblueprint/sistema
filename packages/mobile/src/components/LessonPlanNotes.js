@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28,
+    lineHeight: 28
   },
   sectionContainer: {
-    marginBottom: 30,
-  },
+    marginBottom: 30
+  }
 });
 
 export default LessonPlanNotes;

@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
     width: 109,
     borderWidth: 0.77,
     borderRadius: 6,
-    paddingHorizontal: 12,
+    paddingHorizontal: 12
   },
   textContainer: {
     paddingLeft: 8.6,
     color: '#000',
     fontWeight: '400',
-    fontSize: 13,
+    fontSize: 13
   }
 });
 export default SaveButton;
