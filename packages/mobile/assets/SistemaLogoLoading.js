@@ -15,5 +15,4 @@ import { SvgXml } from 'react-native-svg';
 
 `;
 
-
 export default () => <SvgXml xml={xml} width={171} height={99} />;
