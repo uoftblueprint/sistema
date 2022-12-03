@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     letterSpacing: 0.05,
     lineHeight: 34
-  },
+  }
 });
 export default Loading;
