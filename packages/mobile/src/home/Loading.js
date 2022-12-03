@@ -17,9 +17,9 @@ const Loading = () => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#FFFAF5',
-    height: '100%',
-    flexDirection: 'column',
-    alignItems: 'center',
+    height: '100%', // full screen is filled with color
+    flexDirection: 'column', // organize items vertically
+    alignItems: 'center',  // center items
     justifyContent: 'center'
   },
   imageContainer: {
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   //add 'Poppins' font
   appname: {
-    paddingTop: '4%',
+    paddingTop: '4%', // add space above the text
     color: '#000000',
     fontSize: 42,
     fontWeight: '400',
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     lineHeight: 63
   },
   visionStatement: {
-    paddingTop: '4%',
+    paddingTop: '4%', // add space above the text
     color: '#000000',
     fontSize: 23,
     fontWeight: '400',
