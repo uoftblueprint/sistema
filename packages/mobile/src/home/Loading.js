@@ -1,13 +1,13 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet, View } from 'react-native';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
 import SistemaLogo from '../../assets/SistemaLogoLoading';
 
 const Loading = () => {
   return (
     <SafeAreaView style={styles.background}>
-      <View style={styles.imageContainer}>
+      <SafeAreaView style={styles.imageContainer}>
         <SistemaLogo />
-      </View>
+      </SafeAreaView>
       <Text style={styles.appname}>App Name</Text>
       <Text style={styles.visionStatement}>Vision Statement</Text>
     </SafeAreaView>
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5',
     height: '100%', // full screen is filled with color
     flexDirection: 'column', // organize items vertically
-    alignItems: 'center',  // center items
+    alignItems: 'center', // center items
     justifyContent: 'center'
   },
   imageContainer: {
