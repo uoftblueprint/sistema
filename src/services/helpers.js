@@ -1,12 +1,8 @@
 import { AxiosError } from 'axios';
 
 /**
- * Create a helper function which passes in the key from the json file, decrypts the corresponding value, and returns it
- */
-
-/**
- * Depending on the type of error, appropriately print/log the AxiosError information. 
- * @param {AxiosError} error 
+ * Depending on the type of error, appropriately print/log the AxiosError information.
+ * @param {AxiosError} error
  */
 export function printAxiosError(error) {
   if (error.response) {
