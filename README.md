@@ -30,7 +30,7 @@ The [wiki](https://github.com/uoftblueprint/sistema/wiki) has a lot of relevant 
 This repository uses [commitizen](https://www.npmjs.com/package/commitizen) (commit message generator) and [Husky](https://typicode.github.io/husky/#/) (lints and runs scripts triggered by git hooks).
 
 1. Add your changed files with `git add` as usual or through your IDE shortcut.
-1. To commit, run `yarn run cm` to start commitizen and generate a standardized commit message.
+1. To commit, run `yarn run cm` or `git cz` or `npx cz` to start commitizen and generate a standardized commit message.
 1. To push, run `git push` as usual or through your IDE shortcut.
 
 We use Husky to lint code and run other checks when you push. To bypass hooks:

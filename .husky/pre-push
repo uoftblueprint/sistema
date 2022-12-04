@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Fixing any lint errors..."
+eslint .
+echo "Lint check complete."
