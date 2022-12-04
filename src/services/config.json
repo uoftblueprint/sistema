@@ -1,0 +1,11 @@
+{
+    "OAUTH_API_URL": "https://oauth2.googleapis.com/token",
+    "OAUTH_HEADER": {
+        "alg": "RS256",
+        "typ": "JWT"
+    },
+    "ACCESS_TOKEN_SCOPE": "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
+    "DRIVE_API_URLS": {
+        "SEARCH_FILES": "https://www.googleapis.com/drive/v3/files/"
+    }
+}
