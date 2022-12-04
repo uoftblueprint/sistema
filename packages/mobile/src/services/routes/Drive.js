@@ -4,11 +4,12 @@ import axios from 'axios';
  * Test function to make sure access token works. Console logs list of files in drive.
  */
 export async function listDriveFiles() {
-  axios.get('https://www.googleapis.com/drive/v3/files/')
-    .then((response) => {
+  axios
+    .get('https://www.googleapis.com/drive/v3/files/')
+    .then(response => {
       console.log(response.data);
     })
-    .catch((error) => {
+    .catch(error => {
       if (error.response) {
         // The request was made and the server responded with a status code that falls out of the range of 2xx
         console.error(`STATUS ${error.response.status}`, error.response.data);
