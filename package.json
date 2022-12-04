@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
