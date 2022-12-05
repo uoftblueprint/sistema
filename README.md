@@ -85,10 +85,10 @@ Ensure you have the following prerequisites before trying to run the project loc
     - Run ```bundle install```
     - cd into ```cd ios```, then install pods ```pod install```
 5. cd back out to sistema folder ```cd ..```
-6. Start the React Native server (Metro) by running ```npx react-native start```. Make sure this process is complete and error-free before proceeding to the next step.
-7. Navigate to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the steps. You can either start your simulator and run the build inside Android Studio/XCode, or you can do the follow steps:
-8. Start the Android simulator by running ```npx react-native run-android```. Make sure your Android simulator is all set up in Android Studio!
-9. Start the iOS simulator by running ```npx react-native run-ios```. Make sure your iOS simulator is all set up in Xcode!
+6. Start the React Native server (Metro) by running ```yarn run start```. Make sure this process is complete and error-free before proceeding to the next step.
+7. Navigate to [Setting up Simulators/Virtual Devices](#setting-up-simulatorsvirtual-devices) and follow the steps. You can either start your simulator and run the build inside Android Studio/XCode, or you can do the follow steps from the root directory:
+8. Start the Android simulator by running ```yarn run android```. Make sure your Android simulator is all set up in Android Studio!
+9. Start the iOS simulator by running ```yarn run ios```. Make sure your iOS simulator is all set up in Xcode!
 10. The simulators should open automatically and you should see the current working version of the Sistema app.
 
 # Setup Local Environment (Windows)
@@ -217,6 +217,23 @@ From the root folder:
 ```powershell
 cd ./android/
 ./gradlew clean
+```
+
+## Git hook is not executable
+
+**Error:**
+When pushing, git tells you the following:
+```
+hint: The '.husky/pre-commit' hook was ignored because it's not set as executable.
+hint: You can disable this warning with git config advice.ignoredHook false.
+```
+
+**Solution:**
+From the root folder:
+
+```powershell
+chmod ug+x .husky/*
+chmod ug+x .git/hooks/*
 ```
 
 # Contributors:
