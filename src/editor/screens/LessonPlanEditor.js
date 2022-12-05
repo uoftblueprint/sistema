@@ -26,6 +26,9 @@ const LessonPlanEditor = () => {
 };
 
 const styles = StyleSheet.create({
+  baseText: {
+    fontFamily: "Poppins"
+  },
   scrollView: {
     marginHorizontal: 20,
     height: 600

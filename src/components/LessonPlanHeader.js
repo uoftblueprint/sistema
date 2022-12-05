@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   },
   title: {
     flexDirection: 'row',
+    fontFamily: 'Poppins',
     color: '#20232a',
     textAlign: 'left',
     fontSize: 24,
