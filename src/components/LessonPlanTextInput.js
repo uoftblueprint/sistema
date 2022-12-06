@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     elevation: 7,
     marginVertical: 6,
-    paddingLeft: "3%"
+    paddingLeft: '3%'
   },
   ImageStyle: {
     height: 25,
-    width: 25,
+    width: 25
   }
 });
 

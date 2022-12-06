@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     lineHeight: 28
   },
   sectionContainer: {
-    marginBottom: 30,
+    marginBottom: 30
   },
   shadow: {
     shadowColor: '#453E3D',
-    elevation: 10,
+    elevation: 10
   }
 });
 

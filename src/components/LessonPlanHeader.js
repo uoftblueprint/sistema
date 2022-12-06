@@ -3,12 +3,7 @@ import EditIcon from '../../assets/EditIcon';
 import BackArrow from '../../assets/BackArrow';
 import Menu from '../../assets/Menu';
 
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  TouchableOpacity
-} from 'react-native';
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 
 const LessonPlanHeader = () => {
   return (
@@ -17,7 +12,7 @@ const LessonPlanHeader = () => {
         <BackArrow />
       </TouchableOpacity>
       <Text style={styles.title}>Lesson Plan Name</Text>
-      <TouchableOpacity >
+      <TouchableOpacity>
         <EditIcon />
       </TouchableOpacity>
       <TouchableOpacity>

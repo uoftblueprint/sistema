@@ -7,4 +7,6 @@ const xml = `<svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="
 <path d="M2 2H20.0833" stroke="#333333" stroke-width="2.58333" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
 
-export default () => <SvgXml xml={xml} width={24} height={16} color={"#453E3D"}/>;
+export default () => (
+  <SvgXml xml={xml} width={24} height={16} color={'#453E3D'} />
+);
