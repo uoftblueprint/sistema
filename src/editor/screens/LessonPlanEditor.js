@@ -1,9 +1,9 @@
 import React from 'react';
-import LessonPlanHeader from '../../components/LessonPlanHeader.js';
+import LessonPlanHeader from '../components/LessonPlanHeader.js';
 import { StyleSheet, SafeAreaView, View, ScrollView } from 'react-native';
-import LessonSection from '../../components/LessonSection.js';
-import LessonPlanNotes from '../../components/LessonPlanNotes.js';
-import SaveButton from '../../components/SaveButton.js';
+import LessonSection from '../components/LessonSection.js';
+import LessonPlanNotes from '../components/LessonPlanNotes.js';
+import SaveButton from '../components/SaveButton.js';
 
 const LessonPlanEditor = () => {
   return (
