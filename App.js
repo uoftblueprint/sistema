@@ -29,7 +29,7 @@ const MainNavigator = () => {
           name={STACK_SCREENS.HOME}
           component={Home}
           options={{
-            headerShown: true,
+            headerShown: false,
             tabBarIcon: props => <HomeIcon {...props} />
           }}
         />
@@ -44,7 +44,7 @@ const MainNavigator = () => {
           name={STACK_SCREENS.LIBRARY}
           component={Library}
           options={{
-            headerShown: true
+            headerShown: false
           }}
         />
       </Tab.Navigator>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
-import SaveIcon from '../../assets/SaveIcon';
+import SaveIcon from '../assets/SaveIcon';
 
 const SaveButton = () => {
   return (
