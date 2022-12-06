@@ -5,13 +5,11 @@ import LessonSection from '../../components/LessonSection.js';
 import LessonPlanNotes from '../../components/LessonPlanNotes.js';
 import SaveButton from '../../components/SaveButton.js';
 
-const LessonPlanEditor = () => {
+const LessonPlanEditor = ({navigation}) => {
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: '#FFFAF5', paddingBottom: 25 }}>
-      <View style={{ flex: 2.5 }}>
-        <LessonPlanHeader />
-      </View>
+      style={{backgroundColor: '#FFFAF5' }}>
+        <LessonPlanHeader/>
       <ScrollView style={styles.scrollView}>
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
           <LessonSection subtitle={'Warm Up'} />
@@ -31,7 +29,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginHorizontal: 20,
-    height: 600
+    marginVertical: 5,
+    marginBottom: "20%"
   }
 });
 

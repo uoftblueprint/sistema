@@ -18,7 +18,6 @@ const LessonPlanTextField = ({ placeholder }) => {
 
 const styles = StyleSheet.create({
   input: {
-    shadowColor: '#453E3D',
     paddingHorizontal: 15,
     fontStyle: 'italic',
     fontSize: 16
@@ -32,8 +31,7 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderRadius: 7.69,
     shadowColor: '#453E3D',
-    elevation: 4,
-    marginVertical: 6
+    elevation: 7,
   }
 });
 

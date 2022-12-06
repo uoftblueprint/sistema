@@ -1,3 +1,4 @@
+import { Hidden } from '@mui/material';
 import React from 'react';
 import { Text, SafeAreaView, StyleSheet } from 'react-native';
 import LessonPlanTextField from './LessonPlanTextField';
@@ -23,7 +24,11 @@ const styles = StyleSheet.create({
     lineHeight: 28
   },
   sectionContainer: {
-    marginBottom: 30
+    marginBottom: 30,
+  },
+  shadow: {
+    shadowColor: '#453E3D',
+    elevation: 10,
   }
 });
 

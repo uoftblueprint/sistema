@@ -29,9 +29,9 @@ const LessonPlanTextInput = ({ placeholder }) => {
 
 const styles = StyleSheet.create({
   input: {
-    flex: 2,
+    flex: 1,
     shadowColor: '#453E3D',
-    paddingLeft: 16,
+    paddingLeft: 12,
     fontSize: 16
   },
   SectionStyle: {
@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderRadius: 7.69,
     shadowColor: '#453E3D',
-    elevation: 4,
+    elevation: 7,
     marginVertical: 6,
-    paddingLeft: 12
+    paddingLeft: "3%"
   },
   ImageStyle: {
     height: 25,
-    width: 25
+    width: 25,
   }
 });
 
