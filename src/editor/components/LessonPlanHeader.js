@@ -1,7 +1,7 @@
 import React from 'react-native';
-import EditIcon from '../../assets/EditIcon';
-import BackArrow from '../../assets/BackArrow';
-import Menu from '../../assets/Menu';
+import EditIcon from '../../../assets/EditIcon';
+import BackArrow from '../../../assets/BackArrow';
+import Menu from '../../../assets/Menu';
 
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 
