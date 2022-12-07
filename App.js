@@ -11,12 +11,11 @@ import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 import HomeIcon from './assets/HomeIcon.js';
 
-
 const STACK_SCREENS = {
   HOME: 'HomePage',
   EDITOR: 'LessonPlanEditor',
   LIBRARY: 'Library'
-}
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -30,30 +29,28 @@ const MainNavigator = () => {
           name={STACK_SCREENS.HOME}
           component={Home}
           options={{
-            headerShown: true,
-            tabBarIcon: (props) => (
-              <HomeIcon {...props} />
-            ),
+            headerShown: false,
+            tabBarIcon: props => <HomeIcon {...props} />
           }}
         />
         <Tab.Screen
           name={STACK_SCREENS.EDITOR}
           component={EditorNavigator}
           options={{
-            headerShown: true,
+            headerShown: false
           }}
         />
         <Tab.Screen
           name={STACK_SCREENS.LIBRARY}
           component={Library}
           options={{
-            headerShown: true,
+            headerShown: false
           }}
         />
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 const App = () => {
   return <MainNavigator />;
