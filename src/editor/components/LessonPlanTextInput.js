@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity
 } from 'react-native';
-import AddIcon from '../../assets/AddIcon';
+import AddIcon from '../../../assets/AddIcon';
 
 const LessonPlanTextInput = ({ placeholder }) => {
   const [text, onChangeText] = React.useState(placeholder);
