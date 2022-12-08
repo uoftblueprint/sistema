@@ -1,11 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,
   useNavigationContainerRef
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSafeAreaInsets, SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Home from './src/home/Home';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
@@ -20,10 +21,23 @@ const STACK_SCREENS = {
   LIBRARY: 'Library'
 };
 
+const tabIcon = (iconSVG, isFocused) => {
+  const tabColor = isFocused ? '#685777' : '#000000';
+  const icon = React.createElement(iconSVG, {width: 32, height: 32, marginBottom: 5, color: tabColor});
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {icon}
+      {isFocused && <View style={[styles.underline, {backgroundColor: tabColor}]} />}
+    </SafeAreaView>
+  );
+};
+
 const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
   const navigationRef = useNavigationContainerRef();
+  const insets = useSafeAreaInsets();
 
   return (
     <NavigationContainer ref={navigationRef} independent={true}>
@@ -31,7 +45,8 @@ const MainNavigator = () => {
         initialRouteName={STACK_SCREENS.HOME}
         screenOptions={{
           tabBarActiveBackgroundColor: '#B8CFE4',
-          tabBarInactiveBackgroundColor: '#B8CFE4'
+          tabBarInactiveBackgroundColor: '#B8CFE4',
+          tabBarStyle: { height: 75 + insets.bottom }
         }}>
         <Tab.Screen
           name={STACK_SCREENS.HOME}
@@ -40,11 +55,7 @@ const MainNavigator = () => {
             tabBarShowLabel: false,
             headerShown: true,
             tabBarIcon: ({ focused }) => (
-              <HomeNavIcon
-                width={32}
-                height={32}
-                color={focused ? '#685777' : 'black'}
-              />
+              tabIcon(HomeNavIcon, focused)
             )
           }}
         />
@@ -55,11 +66,7 @@ const MainNavigator = () => {
             tabBarShowLabel: false,
             headerShown: true,
             tabBarIcon: ({ focused }) => (
-              <LessonPlanEditorNavIcon
-                width={32}
-                height={32}
-                color={focused ? '#685777' : 'black'}
-              />
+              tabIcon(LessonPlanEditorNavIcon, focused)
             )
           }}
         />
@@ -70,11 +77,7 @@ const MainNavigator = () => {
             tabBarShowLabel: false,
             headerShown: true,
             tabBarIcon: ({ focused }) => (
-              <LibraryNavIcon
-                width={32}
-                height={32}
-                color={focused ? '#685777' : 'black'}
-              />
+              tabIcon(LibraryNavIcon, focused)
             )
           }}
         />
@@ -83,8 +86,24 @@ const MainNavigator = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  underline: {
+    width: 50,
+    height: 2
+  },
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }
+});
+
 const App = () => {
-  return <MainNavigator />;
+  return (
+    <SafeAreaProvider>
+      <MainNavigator />
+    </SafeAreaProvider>
+  );
 };
 
 export default App;
