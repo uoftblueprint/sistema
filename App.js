@@ -15,7 +15,7 @@ import HomeIcon from './assets/HomeIcon.js';
 const STACK_SCREENS = {
   HOME: 'HomePage',
   EDITOR: 'LessonPlanEditor',
-  LIBRARY: 'asdfas'
+  LIBRARY: 'Library'
 }
 
 const Tab = createBottomTabNavigator();
