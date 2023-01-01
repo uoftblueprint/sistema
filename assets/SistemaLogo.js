@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { SvgXml } from 'react-native-svg';
 
-
-    const xml = `
+const xml = `
     <svg width="70" height="41" viewBox="0 0 70 41" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="70" height="40.5263" fill="url(#pattern0)"/>
 <defs>
@@ -13,6 +12,5 @@ import { SvgXml } from 'react-native-svg';
 </defs>
 </svg>
 `;
-
 
 export default () => <SvgXml xml={xml} width={100} height={50} />;

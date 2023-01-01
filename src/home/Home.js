@@ -6,7 +6,7 @@ import Header from '../Components/Header';
 const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <Header/>
+      <Header />
       <ScrollView>
         <SafeAreaView>
           <Text style={styles.title}>Recently added activity cards</Text>

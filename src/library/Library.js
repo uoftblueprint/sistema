@@ -5,7 +5,7 @@ import Header from '../Components/Header';
 const Library = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header></Header>
+      <Header />
       <Text>Library of user's lesson plans here!</Text>
     </SafeAreaView>
   );
