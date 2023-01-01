@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, Text } from 'react-native';
 import RecentCard from '../home/components/RecentCard';
+import Header from '../Components/Header';
 
 const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
+      <Header></Header>
       <SafeAreaView>
         <SafeAreaView>
           <Text style={styles.title}>Recently added activity cards</Text>
