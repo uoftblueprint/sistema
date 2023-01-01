@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   View,
   Text,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import SistemaLogo from '../../assets/SistemaLogo';
 import HomeIcon from '../../assets/HomeIcon';
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     marginRight: '2%',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   settingIcon: {
     margin: 'auto'
