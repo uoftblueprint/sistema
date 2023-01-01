@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     header:{
         height: '100%',
         alignItems: 'center',
-        backgroundColor:'blue',
         flexDirection: 'row-reverse'
     },
     logoContainer: {
@@ -47,9 +46,9 @@ const styles = StyleSheet.create({
     },
     settingContainer: {
         //container for setting icon
-        backgroundColor: 'pink',
         height: '100%',
         alignItems:'center',
+        marginRight:'2%',
         justifyContent: 'center',
     },
     settingIcon:{
