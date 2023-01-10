@@ -4,7 +4,7 @@ import SaveIcon from '../../../assets/SaveIcon';
 
 const SaveButton = () => {
   return (
-    <SafeAreaView>
+              <SafeAreaView>
       <TouchableOpacity style={[styles.buttonContainer]}>
         <SaveIcon />
         <Text style={styles.textContainer}>Save plan</Text>
