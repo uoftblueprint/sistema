@@ -1,6 +1,10 @@
-import React from "react";
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import * as React from "react";
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, useState } from 'react-native';
 import TagFilter from '../components/TagFilter'
+import BackArrow from '../../../assets/BackArrow'
+import {Searchbar} from "react-native-paper";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { mdiMagnify } from '@mdi/js';
 
 const TAGS = [
     'Warm Up',
@@ -14,20 +18,33 @@ const TAGS = [
 ]
 
 const AddActivityCard = function () {
+    const [searchQuery, setSearchQuery] = React.useState('');
+    
+    const onChangeSearch = query => setSearchQuery(query);
+    
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity>
-                <Text style={styles.back}> Back </Text>
+            <TouchableOpacity style={styles.backButton}>
+                <BackArrow></BackArrow>
+                <Text style={styles.backText}> Back </Text>
             </TouchableOpacity>
             <Text style={styles.header}> Main Lesson Activity Card </Text>
             <Text style={styles.tags}> Tags: </Text>
             <View style={styles.tagContainer}>
                 {TAGS.map((tag, index) => (
-                    <TagFilter key = {index} tagContent={tag} />
-                    )
+                    <TagFilter key={index} tagContent={tag} />
+                )
                 )}
-
             </View>
+            <Searchbar
+                placeholder="Search by title or keyword"
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+                icon={require('../../../assets/search.png')}
+                style={{backgroundColor: 'white', marginTop: '3%'}}
+            />
+
+
 
         </SafeAreaView>
     );
@@ -44,7 +61,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap'
     },
-    header:{
+    header: {
         color: 'black',
         fontSize: 22,
         fontFamily: 'Poppins-ExtraBold',
@@ -57,10 +74,18 @@ const styles = StyleSheet.create({
         marginTop: '-1%',
         marginBottom: '2%'
     },
-    back: {
+    backText: {
         color: 'black',
         fontSize: 18,
         fontFamily: 'Roboto-Regular'
+    },
+    backButton: {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: '30%',
+        width: '20%',
+        justifyContent: 'space-evenly'
     }
 })
 
