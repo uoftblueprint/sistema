@@ -108,11 +108,9 @@ Setup:
 
 ## Running your React Native app (Windows)
 
-Open Android Studio and start your virtual device. Run `yarn run android:start`. Give a few minutes for Metro to start, Gradle to build, and the simulator to load.
+Open Android Studio and start your virtual device. Run `yarn run android`. Give a few minutes for Metro to start, Gradle to build, and the simulator to load.
 
-*What's Metro?* Metro is the JavaScript bundler that ships with React Native. Metro "takes in an entry file and various options, and returns a single JavaScript file that includes all your code and its dependencies."—Metro Docs. To start Metro without Android, run `yarn run android:metro` inside the root folder.
-
-To start Android studio and the emulator without your app, run `yarn run android:studio`.
+*What's Metro?* Metro is the JavaScript bundler that ships with React Native. Metro "takes in an entry file and various options, and returns a single JavaScript file that includes all your code and its dependencies."—Metro Docs. 
 
 # Setup Local Environment (Linux)
 
@@ -131,7 +129,7 @@ If you choose to only develop for Android, the Linux setup process for Android i
 
 ## ios
 
-1. Once you have your simulator downloaded via the Preferences menu in Xcode, you can directly build and run your app by running ```yarn run ios:start``` from the root directory of your project.
+1. Once you have your simulator downloaded via the Preferences menu in Xcode, you can directly build and run your app by running ```yarn run ios``` from the root directory of your project.
 
 # Troubleshooting
 
