@@ -1,4 +1,3 @@
-// import { Hidden } from '@mui/material';
 import React from 'react';
 import { Text, SafeAreaView, StyleSheet } from 'react-native';
 import LessonPlanTextField from './LessonPlanTextField';
