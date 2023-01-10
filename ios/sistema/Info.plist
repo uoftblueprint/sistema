@@ -71,6 +71,9 @@
 		<string>Poppins-SemiBoldItalic.ttf</string>
 		<string>Poppins-Thin.ttf</string>
 		<string>Poppins-ThinItalic.ttf</string>
+		<string>Mulish-Italic.ttf</string>
+		<string>Mulish-Regular.ttf</string>
+		<string>Roboto-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -2,6 +2,14 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "assets/fonts/Mulish-Italic.ttf",
+      "sha1": "66e55be465f3faefbccda836b94eef6aa862d0ac"
+    },
+    {
+      "path": "assets/fonts/Mulish-Regular.ttf",
+      "sha1": "94df6abb8e414095f6af59d936d7a581fe58d468"
+    },
+    {
       "path": "assets/fonts/Poppins-Black.ttf",
       "sha1": "645e04c53c6b5b35bce654a811ebce16af8aa721"
     },
@@ -72,6 +80,10 @@
     {
       "path": "assets/fonts/Poppins-ThinItalic.ttf",
       "sha1": "fb8fccca21550e71135f92bbaf8a2e8a12c90465"
+    },
+    {
+      "path": "assets/fonts/Roboto-Regular.ttf",
+      "sha1": "56c5c0d38bde4c1f1549dda43db37b09c608aad3"
     }
   ]
 }
