@@ -47,12 +47,15 @@ const styles = StyleSheet.create({
     header:{
         color: 'black',
         fontSize: 22,
-        fontFamily: 'Poppins-ExtraBold'
+        fontFamily: 'Poppins-ExtraBold',
+        marginTop: '5%'
     },
     tags: {
         color: 'black',
-        fontSize: 15,
-        fontFamily: 'Mulish-Regular'
+        fontSize: 18,
+        fontFamily: 'Mulish-Regular',
+        marginTop: '-1%',
+        marginBottom: '2%'
     },
     back: {
         color: 'black',

@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
         marginVertical: 4
     },
     text: {
-        fontWeight: 'bold',
-        FontFamily: 'Roboto-Regular'
+        FontFamily: 'Roboto-Regular',
+        color: 'black'
 
     }
 })
