@@ -6,11 +6,6 @@ import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 
 const LessonPlanEditor = ({ navigation }) => {
-  // State: newest lesson plan content
-
-  // Action: code that causes an update to the state when something happens
-  
-  // View: the UI definition
   return (
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
       <LessonPlanHeader />
