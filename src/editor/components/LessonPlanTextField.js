@@ -2,9 +2,8 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
 
 const LessonPlanTextField = ({ placeholder }) => {
-  const [text, onChangeText] = useState(placeholder);
+  const [text, onChangeText] = React.useState(placeholder);
 
-  // TODO: make sure that height of textbox expands, not keep typing to the right
   return (
     <SafeAreaView style={styles.SectionStyle}>
       <TextInput
