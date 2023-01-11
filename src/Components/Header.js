@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import SistemaLogo from '../../assets/SistemaLogo';
+import SistemaLogo from '../../assets/sistemaLogo.svg';
 import HomeIcon from '../../assets/HomeIcon';
 import OptionIcon from '../../assets/OptionIcon';
 
@@ -14,7 +14,7 @@ const Header = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <SistemaLogo />
+        <SistemaLogo width={50} height={50} />
       </View>
 
       <TouchableOpacity style={styles.settingContainer}>
