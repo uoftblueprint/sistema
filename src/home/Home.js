@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, ScrollView } from 'react-native';
 import RecentCard from '../home/components/RecentCard';
+import Header from '../Components/Header';
 
 const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <SafeAreaView>
+      <Header />
+      <ScrollView>
         <SafeAreaView>
           <Text style={styles.title}>Recently added activity cards</Text>
         </SafeAreaView>
@@ -15,7 +17,7 @@ const Home = ({ navigation }) => {
           <RecentCard />
           <RecentCard />
         </SafeAreaView>
-      </SafeAreaView>
+      </ScrollView>
     </SafeAreaView>
   );
 };
