@@ -32,7 +32,7 @@ const AddActivityCard = function () {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.backButton}>
-        <BackArrow height={15} width={15}/>
+        <BackArrow height={15} width={15} />
         <Text style={styles.backText}> Back </Text>
       </TouchableOpacity>
       <Text style={styles.header}> Main Lesson Activity Card </Text>
