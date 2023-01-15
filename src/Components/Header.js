@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import SistemaLogo from '../../assets/SistemaLogo.svg';
+import SistemaLogo from '../../assets/sistemaLogo.svg';
 import OptionIcon from '../../assets/OptionIcon.svg';
 
 const Header = ({ navigation }) => {
