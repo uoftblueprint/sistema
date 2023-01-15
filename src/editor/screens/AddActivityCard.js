@@ -8,7 +8,7 @@ import {
   useState
 } from 'react-native';
 import TagFilter from '../components/TagFilter';
-import BackArrow from '../../../assets/BackArrow';
+import BackArrow from '../../../assets/backArrow.svg';
 import { Searchbar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { mdiMagnify } from '@mdi/js';
@@ -32,7 +32,7 @@ const AddActivityCard = function () {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.backButton}>
-        <BackArrow />
+        <BackArrow height={15} width={15}/>
         <Text style={styles.backText}> Back </Text>
       </TouchableOpacity>
       <Text style={styles.header}> Main Lesson Activity Card </Text>
