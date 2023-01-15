@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity
-} from 'react-native';
-import SistemaLogo from '../../assets/SistemaLogo.svg';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import SistemaLogo from '../../assets/sistemaLogo';
 import OptionIcon from '../../assets/OptionIcon.svg';
 
 const Header = ({ navigation }) => {
