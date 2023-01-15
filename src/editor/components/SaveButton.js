@@ -1,30 +1,18 @@
 import React from 'react';
-import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import SaveIcon from '../../../assets/save.svg';
+import Button from '../../Components/Button';
 
 const SaveButton = () => {
   return (
-    <SafeAreaView>
-      <TouchableOpacity style={[styles.buttonContainer]}>
-        <SaveIcon />
-        <Text style={styles.textContainer}>Save plan</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <Button color="purple">
+      <SaveIcon />
+      <Text style={styles.textContainer}>Save plan</Text>
+    </Button>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#68577766',
-    height: 32.68,
-    width: 109,
-    borderWidth: 0.77,
-    borderRadius: 6,
-    paddingHorizontal: 12
-  },
   textContainer: {
     paddingLeft: 8.6,
     color: '#000',
