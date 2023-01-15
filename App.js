@@ -9,7 +9,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   useSafeAreaInsets,
   SafeAreaProvider,
-  SafeAreaView
 } from 'react-native-safe-area-context';
 import Home from './src/home/Home';
 import EditorNavigator from './src/editor/EditorNavigator';
@@ -109,7 +108,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 20
+    paddingTop: 20,
+    paddingBottom: Platform.OS === 'ios' ? 0 : 17,
   }
 });
 
