@@ -2,27 +2,27 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  TextInput,
+  View,
+  Text,
   TouchableOpacity
 } from 'react-native';
 import AddIcon from '../../../assets/AddIcon';
 
-const LessonPlanTextInput = ({ placeholder }) => {
-  const [text, onChangeText] = React.useState(placeholder);
-  const [number, onChangeNumber] = React.useState(null);
+const LessonPlanAddItem = ({ placeholder }) => {
 
   return (
     <SafeAreaView style={styles.SectionStyle}>
-      <TouchableOpacity>
-        <AddIcon style={styles.ImageStyle} />
+      <TouchableOpacity style={styles.SectionStyle}>
+        <TouchableOpacity>
+          <AddIcon style={styles.ImageStyle} />
+        </TouchableOpacity>
+        <View
+          style={styles.addBox}
+          underlineColorAndroid="transparent"
+        >
+          <Text style={{paddingLeft: "3%"}}>{placeholder}</Text>
+        </View>
       </TouchableOpacity>
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder={placeholder}
-      />
     </SafeAreaView>
   );
 };
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   SectionStyle: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
     height: 49,
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LessonPlanTextInput;
+export default LessonPlanAddItem;

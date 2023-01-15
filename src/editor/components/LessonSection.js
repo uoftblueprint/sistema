@@ -1,5 +1,5 @@
 import React from 'react';
-import LessonPlanTextInput from './LessonPlanTextInput';
+import LessonPlanAddItem from './LessonPlanAddItem';
 import { Text, View, SafeAreaView, StyleSheet } from 'react-native';
 
 const LessonSection = ({ subtitle }) => {
@@ -7,8 +7,8 @@ const LessonSection = ({ subtitle }) => {
     <SafeAreaView style={styles.sectionContainer}>
       <Text style={styles.title}>{subtitle}</Text>
       <View>
-        <LessonPlanTextInput placeholder={'Input text'} />
-        <LessonPlanTextInput placeholder={'Add activity cards'} />
+        <LessonPlanAddItem placeholder={'Input text'} />
+        <LessonPlanAddItem placeholder={'Add activity cards'} />
       </View>
     </SafeAreaView>
   );
