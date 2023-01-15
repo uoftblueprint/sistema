@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform, StatusBar } from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,
-  useNavigationContainerRef
+  useNavigationContainerRef,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useSafeAreaInsets, SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import {
+  useSafeAreaInsets,
+  SafeAreaProvider,
+  SafeAreaView
+} from 'react-native-safe-area-context';
 import Home from './src/home/Home';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
@@ -18,18 +22,30 @@ import LessonPlanEditorNavIcon from './assets/LessonPlanEditorNavIcon.svg';
 const STACK_SCREENS = {
   HOME: 'HomePage',
   EDITOR: 'LessonPlanEditor',
-  LIBRARY: 'Library'
+  LIBRARY: 'Library',
 };
 
 const tabIcon = (iconSVG, isFocused) => {
   const tabColor = isFocused ? '#685777' : '#000000';
-  const icon = React.createElement(iconSVG, {width: 32, height: 32, marginBottom: 5, color: tabColor});
+  const icon = React.createElement(iconSVG, {
+    width: 32,
+    height: 32,
+    marginBottom: 5,
+    color: tabColor
+  });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {icon}
-      {isFocused && <View style={[styles.underline, {backgroundColor: tabColor}]} />}
-    </SafeAreaView>
+      {
+        <View
+          style={[
+            styles.underline,
+            { backgroundColor: isFocused ? tabColor : '#B8CFE4' },
+          ]}
+        />
+      }
+    </View>
   );
 };
 
@@ -46,7 +62,10 @@ const MainNavigator = () => {
         screenOptions={{
           tabBarActiveBackgroundColor: '#B8CFE4',
           tabBarInactiveBackgroundColor: '#B8CFE4',
-          tabBarStyle: { height: 75 + insets.bottom }
+          tabBarStyle: {
+            height: 60 + insets.bottom,
+            backgroundColor: '#B8CFE4'
+          },
         }}>
         <Tab.Screen
           name={STACK_SCREENS.HOME}
@@ -54,9 +73,7 @@ const MainNavigator = () => {
           options={{
             tabBarShowLabel: false,
             headerShown: true,
-            tabBarIcon: ({ focused }) => (
-              tabIcon(HomeNavIcon, focused)
-            )
+            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
           }}
         />
         <Tab.Screen
@@ -65,9 +82,8 @@ const MainNavigator = () => {
           options={{
             tabBarShowLabel: false,
             headerShown: true,
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({ focused }) =>
               tabIcon(LessonPlanEditorNavIcon, focused)
-            )
           }}
         />
         <Tab.Screen
@@ -76,9 +92,7 @@ const MainNavigator = () => {
           options={{
             tabBarShowLabel: false,
             headerShown: true,
-            tabBarIcon: ({ focused }) => (
-              tabIcon(LibraryNavIcon, focused)
-            )
+            tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused),
           }}
         />
       </Tab.Navigator>
@@ -89,12 +103,13 @@ const MainNavigator = () => {
 const styles = StyleSheet.create({
   underline: {
     width: 50,
-    height: 2
+    height: 2,
   },
   container: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: 20
   }
 });
 
