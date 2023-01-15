@@ -1185,12 +1185,11 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-<<<<<<< HEAD
 "@mdi/js@^7.1.96":
   version "7.1.96"
   resolved "https://registry.yarnpkg.com/@mdi/js/-/js-7.1.96.tgz#9c5a7f8a20ea63c03b09a0dba1768fe8b70eeaf9"
   integrity sha512-wlrJs6Ryhaa5CqhK3FjTfMRnb/s7HeLkKMFqwQySkK86cdN1TGdzpSM3O4tsmzCA1dYBeTbXvOwSE/Y42cUrvA==
-=======
+
 "@mui/base@5.0.0-alpha.113":
   version "5.0.0-alpha.113"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.113.tgz#51ab20c3a4cf31db4a5540ecf17d7ea6f73b3001"
@@ -1281,7 +1280,6 @@
   version "2.11.6"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
   integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
->>>>>>> dc591723dace5a1860d8181d3b5ca36c828713a7
 
 "@react-native-community/cli-clean@^9.2.1":
   version "9.2.1"
@@ -3103,6 +3101,7 @@ dom-helpers@^5.0.1:
   dependencies:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
+
 dom-serializer@^1.0.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-1.4.1.tgz#de5d41b1aea290215dc45a6dae8adcf1d32e2d30"
