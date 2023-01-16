@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { Overlay } from '@rneui/themed';
 import SistemaLogo from '../../assets/SistemaLogo.svg';
 import OptionIcon from '../../assets/OptionIcon.svg';
 import QuestionMark from '../../assets/questionMark.svg'
@@ -13,9 +14,21 @@ import QuestionMark from '../../assets/questionMark.svg'
 const Header = ({ isHome, navigation }) => {
   
   const [isHomePage, setHomePage] = useState(isHome);
-  console.log(isHome)
+  const [isVisible, setVisible] = useState(false);
+
+  const toggleOverlay = () => {
+      setVisible(!isVisible);
+  }
+
   return (
+
+    
     <View style={styles.container}>
+          <>
+    <Overlay isVisible={isVisible} onBackdropPress={toggleOverlay}>
+      <Text> YOYOYOYOYO </Text>
+    </Overlay>
+    </>
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
@@ -24,8 +37,8 @@ const Header = ({ isHome, navigation }) => {
       </TouchableOpacity>
       {
         isHomePage ? 
-          <TouchableOpacity style={styles.questionMarkIcon}>
-            <QuestionMark/>
+          <TouchableOpacity style={styles.questionMarkIcon} onPress={toggleOverlay}>
+            <QuestionMark height={30  } width={30}/>
           </TouchableOpacity>
         : <></>
         }
