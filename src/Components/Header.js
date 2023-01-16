@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { useState } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -10,25 +10,27 @@ import { Overlay } from '@rneui/themed';
 import SistemaLogo from '../../assets/SistemaLogo.svg';
 import OptionIcon from '../../assets/OptionIcon.svg';
 import QuestionMark from '../../assets/questionMark.svg'
+import SistemaOverlay from './SistemaOverlay';
 
 const Header = ({ isHome, navigation }) => {
-  
+
   const [isHomePage, setHomePage] = useState(isHome);
   const [isVisible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
-      setVisible(!isVisible);
+    setVisible(!isVisible);
   }
 
   return (
 
-    
+
     <View style={styles.container}>
-          <>
-    <Overlay isVisible={isVisible} onBackdropPress={toggleOverlay}>
-      <Text> YOYOYOYOYO </Text>
-    </Overlay>
-    </>
+      <SistemaOverlay 
+        visible={isVisible} 
+        onBackdropPress={toggleOverlay}
+        header={"How activity cards are named"}
+        body={"x, y, z - Ask Alex to write this"}
+        />
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
@@ -36,12 +38,12 @@ const Header = ({ isHome, navigation }) => {
         <OptionIcon width={30} height={30} style={styles.settingIcon} />
       </TouchableOpacity>
       {
-        isHomePage ? 
+        isHomePage ?
           <TouchableOpacity style={styles.questionMarkIcon} onPress={toggleOverlay}>
-            <QuestionMark height={30  } width={30}/>
+            <QuestionMark height={30} width={30} />
           </TouchableOpacity>
-        : <></>
-        }
+          : <></>
+      }
     </View>
   );
 };
