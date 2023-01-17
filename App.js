@@ -6,7 +6,7 @@ import {
   useNavigationContainerRef
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './src/home/Home';
+import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 import HomeIcon from './assets/HomeIcon.js';
@@ -27,7 +27,7 @@ const MainNavigator = () => {
       <Tab.Navigator initialRouteName={STACK_SCREENS.HOME}>
         <Tab.Screen
           name={STACK_SCREENS.HOME}
-          component={Home}
+          component={HomeNavigator}
           options={{
             headerShown: false,
             tabBarIcon: props => <HomeIcon {...props} />

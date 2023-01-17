@@ -18,19 +18,12 @@ const Header = ({ isHome, navigation }) => {
   const [isVisible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
-    setVisible(!isVisible);
+    navigation.navigate('Home_Overlay')
   }
-
+  console.log(navigation)
   return (
-
-
+    
     <View style={styles.container}>
-      <SistemaOverlay 
-        visible={isVisible} 
-        onBackdropPress={toggleOverlay}
-        header={"How activity cards are named"}
-        body={"x, y, z - Ask Alex to write this"}
-        />
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
@@ -68,7 +61,7 @@ const styles = StyleSheet.create({
     //container for setting icon
     height: '100%',
     alignItems: 'center',
-    marginRight: '2%',
+    marginRight: '3%',
     justifyContent: 'center'
   },
   settingIcon: {

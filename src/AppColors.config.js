@@ -8,3 +8,5 @@ const AppColors = {
     senary: '#F6A957', // Rajah (some kind of orangey color), idk what is used for lmao
 
 }
+
+export default AppColors;
