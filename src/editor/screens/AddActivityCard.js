@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     width: '20%',
     justifyContent: 'space-evenly'
   },
-  paddingHorizontal:{
+  paddingHorizontal: {
     paddingHorizontal: '3%'
   }
 });
