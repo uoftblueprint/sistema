@@ -9,16 +9,15 @@ import AppColors from '../AppColors.config';
 
 /**
  * 
- * @param {onClick: function that listens to click event} props 
+ * @param {onPress: function that listens to click event} props 
  * @returns 
  */
 
 const SistemaButton = (props) => {
-    console.log(props.onClick)
     return (
         <View>
-            <TouchableOpacity style={styles.buttonContainer} onClick={props.onClick}>
-                <Text>
+            <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
+                <Text style={{color: 'black'}}>
                     Okay
                 </Text>
             </TouchableOpacity>
@@ -29,7 +28,7 @@ const SistemaButton = (props) => {
 const styles = StyleSheet.create({
     buttonContainer: {
         borderRadius: 5,
-        backgroundColor: AppColors.quaternary,
+        backgroundColor: 'rgba(	134, 87, 119, 0.3)',
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: '4%',
         paddingVertical: '2%',
         borderColor: 'black',           
-        borderWidth: 1,
+        borderWidth: 0.5,
     }
 })
 

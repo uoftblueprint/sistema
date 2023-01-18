@@ -6,21 +6,24 @@ import SistemaButton from './SistemaButton';
 const SistemaOverlay = ({navigation}) => {
 
     const toggleOut = () => {
+        console.log(navigation);
+        console.log("work")
         navigation.goBack();
     }
 
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container} >
+            
             <View style={styles.overlay}>
-                <Text style={styles.header}> How activity cards are named</Text>
+            <Text style={styles.header}> How activity cards are named</Text>
 
                 <Text style={styles.marginTop7}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </Text>
 
                 <View style={styles.marginTop7}>
-                    <SistemaButton onClick={toggleOut}></SistemaButton>
+                    <SistemaButton onPress={toggleOut}></SistemaButton>
                 </View>
 
             </View>
