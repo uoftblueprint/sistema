@@ -10,8 +10,6 @@ import {
 import TagFilter from '../components/TagFilter';
 import BackArrow from '../../../assets/backArrow.svg';
 import { Searchbar } from 'react-native-paper';
-import { mdiMagnify } from '@mdi/js';
-import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 
 const TAGS = [
   'Warm Up',
@@ -31,7 +29,7 @@ const AddActivityCard = function () {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ paddingHorizontal: '3%' }}>
+      <View style={styles.paddingHorizontal}>
         <TouchableOpacity style={styles.backButton}>
           <BackArrow height={15} width={15} />
           <Text style={styles.backText}> Back </Text>
@@ -68,8 +66,9 @@ const styles = StyleSheet.create({
   header: {
     color: 'black',
     fontSize: 22,
-    fontFamily: 'Poppins-ExtraBold',
-    marginTop: '5%'
+    fontFamily: 'Poppins',
+    marginTop: '5%',
+    fontWeight: '900'
   },
   tags: {
     color: 'black',
@@ -90,6 +89,9 @@ const styles = StyleSheet.create({
     marginTop: '30%',
     width: '20%',
     justifyContent: 'space-evenly'
+  },
+  paddingHorizontal:{
+    paddingHorizontal: '3%'
   }
 });
 
