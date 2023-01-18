@@ -1,8 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
 
 const LessonPlanTextField = ({ placeholder }) => {
-  const [text, onChangeText] = React.useState(placeholder);
+  const [text, onChangeText] = useState(placeholder);
 
   return (
     <SafeAreaView style={styles.SectionStyle}>
