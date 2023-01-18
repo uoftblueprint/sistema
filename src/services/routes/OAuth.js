@@ -1,7 +1,10 @@
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import { AccessToken } from '../models';
 import { OAUTH_API_URL } from '../config.json';
 import { printAxiosError } from '../helpers';
+
+axiosRetry(axios, { retries: 3 });
 
 /**
  * Get a Drive API access token. Token expires in an hour.
