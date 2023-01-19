@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native';
 import RecentCard from '../home/components/RecentCard';
 import Header from '../Components/Header';
 import RefreshIcon from '../../assets/refreshIcon.svg';
@@ -12,33 +18,30 @@ const Home = ({ navigation }) => {
       <ScrollView>
         <SafeAreaView>
           <Text style={styles.title}>Recently added activity cards</Text>
-          <SafeAreaView style={{
-            flexDirection: 'row', 
-            justifyContent: "flex-start",
-            alignItems: "center"}}>
+          <SafeAreaView
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center'
+            }}>
             <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
-            <RefreshIcon style={styles.refreshIcon}/>
+            <RefreshIcon style={styles.refreshIcon} />
           </SafeAreaView>
         </SafeAreaView>
 
-
         {/* Will eventually convert this into .map for x amount of cards in cache */}
         <SafeAreaView style={{ height: '100%' }}>
-          
           {/* PROPS TO PASS IN: Title, Card image, Card id */}
-          <TouchableOpacity onPress={() => navigation.navigate('CardView')}> 
-            <RecentCard/>
+          <TouchableOpacity onPress={() => navigation.navigate('CardView')}>
+            <RecentCard />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('CardView')}>
-            <RecentCard/>
+            <RecentCard />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('CardView')}>
-            <RecentCard/>
+            <RecentCard />
           </TouchableOpacity>
-
         </SafeAreaView>
-            
-        
       </ScrollView>
     </SafeAreaView>
   );

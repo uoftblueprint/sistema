@@ -3,7 +3,7 @@ import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 
 const AddToLessonButton = () => {
   return (
-    <SafeAreaView style={{paddingVertical: 30}}>
+    <SafeAreaView style={{ paddingVertical: 30 }}>
       <TouchableOpacity style={styles.buttonContainer}>
         <Text style={styles.textContainer}>Add to lesson plan</Text>
       </TouchableOpacity>

@@ -17,17 +17,18 @@ const windowHeight = Dimensions.get('window').height;
 const ExpandedCard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-    
-      <Header showBackButton={true}/>
-      
-      <TouchableOpacity style={styles.backArrowContainer} onPress={() => navigation.goBack()}>
-        <BackArrow style={styles.backArrow}/>
+      <Header showBackButton={true} />
+
+      <TouchableOpacity
+        style={styles.backArrowContainer}
+        onPress={() => navigation.goBack()}>
+        <BackArrow style={styles.backArrow} />
       </TouchableOpacity>
 
       <ScrollView>
-        <SafeAreaView style={{justifyContent: 'center', alignItems: 'center'}}>
-
-            <Text style={styles.title}> </Text>
+        <SafeAreaView
+          style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={styles.title}> </Text>
           {/* <Text style={styles.title}> props.cardTitle </Text> */}
 
           <SafeAreaView style={styles.box}>
@@ -35,10 +36,8 @@ const ExpandedCard = ({ navigation }) => {
           </SafeAreaView>
 
           <AddButton />
-
         </SafeAreaView>
       </ScrollView>
-      
     </SafeAreaView>
   );
 };
@@ -66,11 +65,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   title: {
-    color: '#453E3D', 
+    color: '#453E3D',
     fontSize: 20,
     fontWeight: '700',
     width: '60%',
-    textAlign:"center",
+    textAlign: 'center',
     marginBottom: 40
   },
   backArrowContainer: {
