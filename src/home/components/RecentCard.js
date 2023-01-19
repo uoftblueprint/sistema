@@ -14,15 +14,15 @@ const RecentCard = ({ navigation }) => {
   return (
     <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center' }}>
       <SafeAreaView style={styles.box}>
+        
         <ScrollView>{/* <Text>CARD GOES HERE</Text> */}</ScrollView>
-
+        
         <SafeAreaView style={styles.titleBar}>
-          <SafeAreaView style={{ marginHorizontal: 20 }}>
-            <Text style={styles.title} numberOfLines={1}>
-              Listening - Knowledge - Listening Spinners
-            </Text>
+          <SafeAreaView style={{marginHorizontal: 20}}>
+            <Text style={styles.title} numberOfLines={1}>Listening - Knowledge - Listening Spinners</Text>
           </SafeAreaView>
         </SafeAreaView>
+
       </SafeAreaView>
     </SafeAreaView>
   );
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: 17,
     marginTop: 7,
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   }
 });
 
