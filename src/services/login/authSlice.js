@@ -20,7 +20,4 @@ export const authSlice = createSlice({
 // Dispatch actions to "write" to redux
 export const { setNewToken } = authSlice.actions;
 
-// Selector functions to "read" from redux
-export const selectTokenExpiry = state => state.auth.tokenExpiry;
-
 export default authSlice.reducer;

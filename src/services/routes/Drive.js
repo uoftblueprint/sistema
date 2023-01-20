@@ -10,7 +10,7 @@ export async function listDriveFiles() {
     .then(response => {
       console.log(response.data);
     })
-    .catch((error) => {
-      console.error("listDriveFiles");
+    .catch(error => {
+      console.error('listDriveFiles');
     });
 }
