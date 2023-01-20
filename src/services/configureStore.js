@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './login/authSlice';
 
-export default store = configureStore({
+export default configureStore({
   reducer: {
-    auth: authReducer,
+    auth: authReducer
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['auth/setNewToken'],  
+        ignoredActions: ['auth/setNewToken'],
         ignoredActionPaths: ['auth.driveToken'],
-        ignoredPaths: ['auth.driveToken'],
+        ignoredPaths: ['auth.driveToken']
       }
     })
 });
