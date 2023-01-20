@@ -1,10 +1,9 @@
-import React from 'react';
 import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import SaveIcon from '../../../assets/save.svg';
 
 const SaveButton = () => {
   return (
-              <SafeAreaView>
+    <SafeAreaView>
       <TouchableOpacity style={[styles.buttonContainer]}>
         <SaveIcon />
         <Text style={styles.textContainer}>Save plan</Text>

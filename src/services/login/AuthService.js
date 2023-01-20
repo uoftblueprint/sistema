@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { KJUR } from 'jsrsasign';
 import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -12,6 +11,7 @@ import {
 } from '../config.json';
 import jwt_info from './jwt.keys.json';
 import getOAuthToken from '../routes/OAuth';
+import store from '../configureStore';
 
 // TODO: delete later once final service account is generated and this function is manually used
 const encryptSecret = testKey => {
@@ -45,7 +45,11 @@ const decryptSecret = key => {
     : null;
 };
 
-const refreshAccessToken = async () => {
+/**
+ * Get a new valid to access Drive API. 
+ * @returns Access token entity
+ */
+export const refreshAccessToken = async () => {
   // Create header
   const header = {
     ...OAUTH_HEADER,
@@ -74,16 +78,17 @@ const refreshAccessToken = async () => {
     decryptSecret('private_key')
   );
 
-  // Send request to get access token
-  const accessToken = await getOAuthToken(sJWT, now);
-
-  if (accessToken) {
-    // Sets access token in auth headers in every axios request moving forward TODO: LOWKEY NOT SAFE... - Emily
-    axios.defaults.headers.common.Authorization = `${accessToken.type} ${accessToken.token}`;
-    return true; // Succeeded
-  } else {
-    return false; // Failed to set a new access token
-  }
+  return await getOAuthToken(sJWT, now);                  // Send request to get access token
 };
 
-export default refreshAccessToken;
+/**
+ * Check if token in redux is valid or not for the next 5 minutes at least. 
+ * If no token currently exists, will always return false because default expiry is smallest Date possible.
+ * @returns True if token is still valid or false if token is expired (or will expire in 5mins) 
+ */
+export function isTokenValid() {
+  const currTokenExpiry = store.getState().auth.driveToken.expiryTime;
+  const inFiveMinutes = new Date( Date.now() + 1000 * (60 * 5) ) // 5 minutes converted to MS
+
+  return currTokenExpiry > inFiveMinutes;
+}
