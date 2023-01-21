@@ -1,4 +1,4 @@
-const SectionName = {
+export const SectionName = {
     warmUp: "warmUp",
     mainLesson: "mainLesson",
     coolDown: "coolDown",

@@ -8,6 +8,8 @@ import Home from './src/home/Home';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 import HomeIcon from './assets/HomeIcon.js';
+import { Provider } from 'react-redux';
+import configureStore from './src/services/configureStore';
 
 const STACK_SCREENS = {
   HOME: 'HomePage',
@@ -51,7 +53,11 @@ const MainNavigator = () => {
 };
 
 const App = () => {
-  return <MainNavigator />;
+  return (
+    <Provider store={configureStore}>
+    <MainNavigator />
+    </Provider>
+  )
 };
 
 export default App;

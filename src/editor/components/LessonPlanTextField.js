@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React from 'react';
 import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
 
 const LessonPlanTextField = ({ placeholder }) => {
-  const [text, onChangeText] = useState(placeholder);
+  const [text, onChangeText] = React.useState(placeholder);
 
   return (
     <SafeAreaView style={styles.SectionStyle}>
@@ -20,9 +20,11 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 15,
     fontStyle: 'italic',
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'Poppins-Medium'
   },
   SectionStyle: {
+    fontFamily: 'Poppins-Bold',
     flexDirection: 'column',
     backgroundColor: '#FFFAF5',
     height: 112,

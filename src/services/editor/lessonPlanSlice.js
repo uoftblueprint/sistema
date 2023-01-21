@@ -1,11 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AccessToken } from '../models';
-import SectionName from 'constants';
+import SectionName from '../constants';
 
 export const authSlice = createSlice({
   name: 'lessonPlan',
+  // initialState: {
+  //   warmUp: [{type: "text", content: "C-minor, F-sharp"}, {type: "activityCard", content:"/path/to/activityCard"}] 
+  //   mainLesson: [],
+  //   coolDown: [],
+  //   notes: "Remember to take attendance",
+  //   isDirty: false
+  // }
   initialState: {
-    warmUp: [], // [{type: "", content: ""}, {}] // TODO: create an entity/model
+    warmUp: [], // [{type: "", content: ""}
     mainLesson: [],
     coolDown: [],
     notes: "",
@@ -14,12 +21,11 @@ export const authSlice = createSlice({
   reducers: {
     // addToSection - take in section name, and 
     addToSection: (state, action) => {  // payload is string (text or activity card path) 
-        // {
+        // action.payload: {
         //     section: SectionName.coolDown,
-        //     type: text or activity card
+        //     type: "text" or "activityCard"
         //     content: "",
-        // } // TODO: make as model maybe?
-
+        // } 
         return { 
             ...state,
             isDirty: true,
@@ -28,15 +34,22 @@ export const authSlice = createSlice({
                 content: action.payload.content
             }]
         }
+    },
+    removeFromSection: (state, action) => {
+      const section = action.payload.section;
+      const indx = state[section].findIndex(e => e.content === action.payload.content);
+      return {
+          ...state,
+          [action.payload.section]: state[section].splice(indx, indx >= 0 ? 1 : 0)
+      }
     }
-    // removeFromSection:
   }
 });
 
 // Dispatch actions to "write" to redux
-export const { addToSection } = authSlice.actions;
+export const { addToSection, removeFromSection } = authSlice.actions;
 
 // Selector actions to "read" from redux
-export const selectLessonPlan = (state, sectionName) => state[sectionName]
+export const selectLessonPlan = (state, sectionName) => state[sectionName]//give state and section name to get the section content
 
 export default authSlice.reducer;
