@@ -10,6 +10,7 @@ import Home from './src/home/Home';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 import HomeIcon from './assets/HomeIcon.js';
+import { readMainDirectory, writeTestFile, deleteTestFile } from './src/services/routes/Local';
 
 const STACK_SCREENS = {
   HOME: 'HomePage',
@@ -21,7 +22,6 @@ const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
   const navigationRef = useNavigationContainerRef();
-
   return (
     <NavigationContainer ref={navigationRef} independent={true}>
       <Tab.Navigator initialRouteName={STACK_SCREENS.HOME}>
