@@ -14,13 +14,13 @@ const Library = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
+      <SafeAreaView style={styles.inlinetitle}>
+        <Text style={styles.title}>Lesson Plans</Text>
+        <TouchableOpacity>
+          <FilterGraphic height={25} width={25} />
+        </TouchableOpacity>
+      </SafeAreaView>
       <ScrollView style={styles.content}>
-        <SafeAreaView style={styles.inlinetitle}>
-          <Text style={styles.title}>Lesson Plans</Text>
-          <TouchableOpacity>
-            <FilterGraphic height={25} width={25} />
-          </TouchableOpacity>
-        </SafeAreaView>
         <LessonPlanButton name={'Lesson Plan A'} />
       </ScrollView>
     </SafeAreaView>
@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
   inlinetitle: {
     display: 'flex',
     justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingHorizontal: 30,
+    paddingBottom: 22
   },
   content: {
     paddingHorizontal: 30,
