@@ -1,6 +1,6 @@
 export const SectionName = {
-    warmUp: "warmUp",
-    mainLesson: "mainLesson",
-    coolDown: "coolDown",
-    notes: "notes"
-}
+  warmUp: 'warmUp',
+  mainLesson: 'mainLesson',
+  coolDown: 'coolDown',
+  notes: 'notes',
+};

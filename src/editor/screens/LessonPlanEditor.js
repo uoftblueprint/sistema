@@ -7,7 +7,6 @@ import SaveButton from '../components/SaveButton.js';
 import { LessonPlan } from '../../services/models';
 
 const LessonPlanEditor = ({ navigation }) => {
-
   // const [object, setObject] = useState({
   //   warmup: [],
   //   mainlesson: [],
@@ -17,17 +16,12 @@ const LessonPlanEditor = ({ navigation }) => {
   //   {...object, warmup: ['first warmup', 'second warmup']}
   // )
 
-  
-
   return (
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
       <LessonPlanHeader />
       <ScrollView style={styles.scrollView}>
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-          <LessonSection
-            section={'warmUp'}
-            subtitle={'Warm Up'}
-          />
+          <LessonSection section={'warmUp'} subtitle={'Warm Up'} />
           <LessonSection section={'mainLesson'} subtitle={'Main Lesson'} />
           <LessonSection section={'coolDown'} subtitle={'Cool Down'} />
           <LessonPlanNotes subtitle={'Notes'} />

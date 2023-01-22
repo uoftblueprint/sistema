@@ -16,10 +16,7 @@ const LessonPlanTextInput = ({ placeholder, handleClick }) => {
     <TouchableOpacity onPress={handleClick}>
       <SafeAreaView style={styles.SectionStyle}>
         <AddIcon style={styles.ImageStyle} />
-        <View
-          style={styles.input}
-          onChangeText={onChangeNumber}
-        >
+        <View style={styles.input} onChangeText={onChangeNumber}>
           <Text>{placeholder}</Text>
         </View>
       </SafeAreaView>

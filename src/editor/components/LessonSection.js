@@ -16,82 +16,75 @@ const LessonSection = ({ section, subtitle }) => {
   // ]
 
   const ContentCard = () => {
-
     return (
       clicked && (
         <View style={styles.ContentCardStyle}>
           <TextInput
             multiline
-            placeholder={"Add Text"}
+            placeholder={'Add Text'}
             returnKeyType="next"
             onSubmitEditing={e => {
-              if(e.nativeEvent.text){
-                setSectionContent([
-                  ...sectionContent,
-                  e.nativeEvent.text 
-                ]);
+              if (e.nativeEvent.text) {
+                setSectionContent([...sectionContent, e.nativeEvent.text]);
               }
-            
+
               setClicked(false);
-              console.log(sectionContent)
+              console.log(sectionContent);
             }}
           />
         </View>
       )
-    )};
+    );
+  };
 
-    const StoredContent = ({ text, index }) => {
-      const [newText, setnewText] = useState(text)
-      return (
-          <View style={styles.ContentCardStyle}>
-            <TextInput
-            multiline
-            defaultValue={text}
-            onChangeText={txt => setnewText(txt)}
-            returnKeyType="submit"
-            onSubmitEditing={e => {
-              if (!e.nativeEvent.text) { 
-                setSectionContent(state => {
-                  newContent = [...state]
-                  newContent = newContent.filter((_, i) => i != index)
-                  return newContent
-                })
-              }
-              else {
-                setSectionContent(state => {
-                  newContent = [...state]
-                  newContent[index] = e.nativeEvent.text
-                  return newContent
-                });
-              }
-              }}
-            />
-          </View>
-      )};
+  const StoredContent = ({ text, index }) => {
+    const [newText, setnewText] = useState(text);
+    return (
+      <View style={styles.ContentCardStyle}>
+        <TextInput
+          multiline
+          defaultValue={text}
+          onChangeText={txt => setnewText(txt)}
+          returnKeyType="submit"
+          onSubmitEditing={e => {
+            if (!e.nativeEvent.text) {
+              setSectionContent(state => {
+                newContent = [...state];
+                newContent = newContent.filter((_, i) => i != index);
+                return newContent;
+              });
+            } else {
+              setSectionContent(state => {
+                newContent = [...state];
+                newContent[index] = e.nativeEvent.text;
+                return newContent;
+              });
+            }
+          }}
+        />
+      </View>
+    );
+  };
 
-  
   return (
     <SafeAreaView style={styles.sectionContainer}>
       <Text style={styles.title}>{subtitle}</Text>
       <View>
-              <ContentCard/>
-              <LessonPlanTextInput
-                placeholder={'Input text'}
-                handleClick={handleClick}
-              />
-              <LessonPlanTextInput placeholder={'Add activity cards'} />
-        {
-          sectionContent.map((c, i) => {
-            if (c) {
-              return (
-                <View key={i}>
-                <StoredContent text={c} index={i}/>
+        <ContentCard />
+        <LessonPlanTextInput
+          placeholder={'Input text'}
+          handleClick={handleClick}
+        />
+        <LessonPlanTextInput placeholder={'Add activity cards'} />
+        {sectionContent.map((c, i) => {
+          if (c) {
+            return (
+              <View key={i}>
+                <StoredContent text={c} index={i} />
               </View>
-              )
-            }
-                  
-                })
-        }
+            );
+          }
+        })}
       </View>
     </SafeAreaView>
   );
