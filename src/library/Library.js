@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    paddingHorizontal: 30,
-    paddingBottom: 22
+    marginHorizontal: 30,
+    marginBottom: 22
   },
   content: {
-    paddingHorizontal: 30,
+    marginHorizontal: 30,
     display: 'flex',
     flexDirection: 'column',
     gap: 22
