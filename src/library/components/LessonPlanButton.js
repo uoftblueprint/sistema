@@ -6,7 +6,7 @@ import HeartGraphic from '../../../assets/heart-outline.svg';
 const LessonPlanButton = props => {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={{ maxWidth: '60%' }}>
+      <TouchableOpacity style={styles.titleContainer}>
         <Text style={styles.title}>{props.name}</Text>
       </TouchableOpacity>
       <SafeAreaView style={styles.icons}>
@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 17
+  },
+  titleContainer: {
+    maxWidth: '60%'
   }
 });
 
