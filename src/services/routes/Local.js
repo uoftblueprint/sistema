@@ -3,8 +3,7 @@ var RNFS = require('react-native-fs');
 
 // get a list of files and directories in the main bundle
 export async function readMainDirectory() {
-  return RNFS
-    .readDir(RNFS.DocumentDirectoryPath)
+  return RNFS.readDir(RNFS.DocumentDirectoryPath)
     .then(result => {
       console.log('GOT RESULT', result);
 
@@ -29,24 +28,24 @@ export async function readMainDirectory() {
 }
 
 export async function writeFile(filepath, content, encoding) {
-  return RNFS
-    .writeFile(filepath, content, encoding)
-    .then((success) => {
+  return RNFS.writeFile(filepath, content, encoding)
+    .then(success => {
       console.log('FILE WRITTEN!');
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err.message);
     });
 }
 
 export async function deleteFile(filepath) {
-  return RNFS
-    .unlink(filepath)
-    .then(() => {
-      console.log('FILE DELETED');
-    })
-    // `unlink` will throw an error, if the item to unlink does not exist
-    .catch((err) => {
-      console.log(err.message);
-    });
+  return (
+    RNFS.unlink(filepath)
+      .then(() => {
+        console.log('FILE DELETED');
+      })
+      // `unlink` will throw an error, if the item to unlink does not exist
+      .catch(err => {
+        console.log(err.message);
+      })
+  );
 }
