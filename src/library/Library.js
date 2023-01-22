@@ -20,8 +20,13 @@ const Library = ({ navigation }) => {
           <FilterGraphic height={25} width={25} />
         </TouchableOpacity>
       </SafeAreaView>
-      <ScrollView style={styles.content}>
-        <LessonPlanButton name={'Lesson Plan A'} />
+      <ScrollView>
+        <SafeAreaView style={styles.content}>
+          <LessonPlanButton name={'Lesson Plan A'} />
+          <LessonPlanButton name={'Lesson Plan B'} />
+          <LessonPlanButton name={'Lesson Plan C'} />
+          <LessonPlanButton name={'Lesson Plan D'} />
+        </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
   );
