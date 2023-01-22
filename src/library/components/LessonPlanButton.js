@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     borderRadius: 7.7,
     borderWidth: 0.77,
     borderStyle: 'solid',
-    padding: 14,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -44,10 +43,12 @@ const styles = StyleSheet.create({
   icons: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 17
+    gap: 17,
+    margin: 14
   },
   titleContainer: {
-    maxWidth: '60%'
+    maxWidth: '60%',
+    margin: 14
   }
 });
 
