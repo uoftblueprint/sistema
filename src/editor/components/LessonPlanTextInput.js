@@ -3,27 +3,27 @@ import {
   SafeAreaView,
   StyleSheet,
   TextInput,
+  Text,
+  View,
   TouchableOpacity
 } from 'react-native';
 import AddIcon from '../../../assets/AddIcon';
 
-const LessonPlanTextInput = ({ placeholder }) => {
-  const [text, onChangeText] = React.useState(placeholder);
+const LessonPlanTextInput = ({ placeholder, handleClick }) => {
   const [number, onChangeNumber] = React.useState(null);
 
   return (
-    <SafeAreaView style={styles.SectionStyle}>
-      <TouchableOpacity>
+    <TouchableOpacity onPress={handleClick}>
+      <SafeAreaView style={styles.SectionStyle}>
         <AddIcon style={styles.ImageStyle} />
-      </TouchableOpacity>
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder={placeholder}
-      />
-    </SafeAreaView>
+        <View
+          style={styles.input}
+          onChangeText={onChangeNumber}
+        >
+          <Text>{placeholder}</Text>
+        </View>
+      </SafeAreaView>
+    </TouchableOpacity>
   );
 };
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   SectionStyle: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
     height: 49,

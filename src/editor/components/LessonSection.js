@@ -1,41 +1,97 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import LessonPlanTextInput from './LessonPlanTextInput';
 import { Text, View, SafeAreaView, StyleSheet, TextInput } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
 
-const LessonSection = ({ section, subtitle, setText }) => {
-  const [clicked, setClicked] = useState(false)
-  const isFocused = useIsFocused();
-
+const LessonSection = ({ section, subtitle }) => {
+  const [sectionContent, setSectionContent] = useState([]);
+  const [clicked, setClicked] = useState(false);
   const handleClick = () => {
-    setClicked(true)
-  }
+    setClicked(true);
+  };
   // const courseContent = [
   //   {
   //     section: section,
   //     content: text,
   //   }
   // ]
-    
+
   const ContentCard = () => {
-    return(
-        clicked && <View style={styles.ContentCardStyle} >
-          <TextInput multiline 
-          placeholder={"Add text here"} 
-          returnKeyType="search"
-          onSubmitEditing={(e) => {setText(e.nativeEvent.text)}}
+
+    return (
+      clicked && (
+        <View style={styles.ContentCardStyle}>
+          <TextInput
+            multiline
+            placeholder={"Add Text"}
+            returnKeyType="next"
+            onSubmitEditing={e => {
+              if(e.nativeEvent.text){
+                setSectionContent([
+                  ...sectionContent,
+                  e.nativeEvent.text 
+                ]);
+              }
+            
+              setClicked(false);
+              console.log(sectionContent)
+            }}
           />
-    </View>
-    )
-  }
+        </View>
+      )
+    )};
+
+    const StoredContent = ({ text, index }) => {
+      const [newText, setnewText] = useState(text)
+      return (
+          <View style={styles.ContentCardStyle}>
+            <TextInput
+            multiline
+            defaultValue={text}
+            onChangeText={txt => setnewText(txt)}
+            returnKeyType="submit"
+            onSubmitEditing={e => {
+              if (!e.nativeEvent.text) { 
+                setSectionContent(state => {
+                  newContent = [...state]
+                  newContent = newContent.filter((_, i) => i != index)
+                  return newContent
+                })
+              }
+              else {
+                setSectionContent(state => {
+                  newContent = [...state]
+                  newContent[index] = e.nativeEvent.text
+                  return newContent
+                });
+              }
+              }}
+            />
+          </View>
+      )};
+
   
   return (
     <SafeAreaView style={styles.sectionContainer}>
       <Text style={styles.title}>{subtitle}</Text>
       <View>
-        <ContentCard/>
-        <LessonPlanTextInput placeholder={'Input text'} handleClick={handleClick}/>
-        <LessonPlanTextInput placeholder={'Add activity cards'} />
+              <ContentCard/>
+              <LessonPlanTextInput
+                placeholder={'Input text'}
+                handleClick={handleClick}
+              />
+              <LessonPlanTextInput placeholder={'Add activity cards'} />
+        {
+          sectionContent.map((c, i) => {
+            if (c) {
+              return (
+                <View key={i}>
+                <StoredContent text={c} index={i}/>
+              </View>
+              )
+            }
+                  
+                })
+        }
       </View>
     </SafeAreaView>
   );
@@ -50,11 +106,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Light',
     letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28
+    lineHeight: 28,
   },
   sectionContainer: {
     fontFamily: 'Poppins-ExtraBold',
-    marginBottom: 25
+    marginBottom: 25,
   },
   ContentCardStyle: {
     fontFamily: 'Poppins-Bold',
@@ -70,8 +126,8 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     elevation: 7,
     marginVertical: 10,
-    paddingLeft: '3%'
-  },
+    paddingLeft: '3%',
+  }
 });
 
 export default LessonSection;
