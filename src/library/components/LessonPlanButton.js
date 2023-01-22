@@ -11,10 +11,10 @@ const LessonPlanButton = props => {
       </TouchableOpacity>
       <SafeAreaView style={styles.icons}>
         <TouchableOpacity>
-          <HeartGraphic />
+          <HeartGraphic width={17} height={17} style={styles.heart} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <DotsGraphic />
+          <DotsGraphic width={23} height={23} />
         </TouchableOpacity>
       </SafeAreaView>
     </SafeAreaView>
@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
   titleContainer: {
     maxWidth: '60%',
     margin: 14
+  },
+  heart: {
+    // center heart SVG
+    marginTop: 2.5
   }
 });
 
