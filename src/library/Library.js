@@ -14,18 +14,18 @@ const Library = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <SafeAreaView style={styles.inlinetitle}>
+      <SafeAreaView style={styles.inlineTitle}>
         <Text style={styles.title}>Lesson Plans</Text>
         <TouchableOpacity>
-          <FilterGraphic height={25} width={25} />
+          <FilterGraphic height={25} width={25} style={styles.filterButton} />
         </TouchableOpacity>
       </SafeAreaView>
       <ScrollView>
         <SafeAreaView style={styles.content}>
-          <LessonPlanButton name={'Lesson Plan A'} />
-          <LessonPlanButton name={'Lesson Plan B'} />
-          <LessonPlanButton name={'Lesson Plan C'} />
-          <LessonPlanButton name={'Lesson Plan D'} />
+          <LessonPlanButton name={'Lesson Plan A'} style={styles.lessonPlan} />
+          <LessonPlanButton name={'Lesson Plan B'} style={styles.lessonPlan} />
+          <LessonPlanButton name={'Lesson Plan C'} style={styles.lessonPlan} />
+          <LessonPlanButton name={'Lesson Plan D'} style={styles.lessonPlan} />
         </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
@@ -38,24 +38,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5'
   },
   title: {
-    fontFamily: 'Poppins',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     fontSize: 28,
     letterSpacing: 0.3,
     color: '#453E3D'
   },
-  inlinetitle: {
+  inlineTitle: {
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginHorizontal: 30,
-    marginBottom: 22
+    marginBottom: 10
   },
   content: {
     marginHorizontal: 30,
     display: 'flex',
-    flexDirection: 'column',
-    gap: 22
+    flexDirection: 'column'
+  },
+  lessonPlan: {
+    marginBottom: 22
+  },
+  filterButton: {
+    marginTop: 8
   }
 });
 export default Library;

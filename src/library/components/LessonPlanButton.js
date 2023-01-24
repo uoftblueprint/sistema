@@ -5,7 +5,7 @@ import HeartGraphic from '../../../assets/heart-outline.svg';
 
 const LessonPlanButton = props => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, props.style]}>
       <TouchableOpacity style={styles.titleContainer}>
         <Text style={styles.title}>{props.name}</Text>
       </TouchableOpacity>
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   title: {
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
+    // fontWeight: '400',
     fontSize: 16,
     letterSpacing: 0.3,
     color: 'black'
@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
   },
   heart: {
     // center heart SVG
-    marginTop: 2.5
+    marginTop: 2.5,
+    marginRight: 16
   }
 });
 
