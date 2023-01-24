@@ -30,8 +30,8 @@ const EditorNavigator = () => {
         initialParams={{
           isLessonPlanEditor: false,
           lessonPlanName: 'Lesson Plan Name'
-        }} />
-
+        }}
+      />
     </Stack.Navigator>
   );
 };
