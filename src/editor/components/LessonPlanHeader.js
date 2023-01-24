@@ -1,4 +1,3 @@
-
 import EditIcon from '../../../assets/edit.svg';
 import BackArrow from '../../../assets/backArrow.svg';
 import Menu from '../../../assets/menu.svg';
@@ -15,7 +14,12 @@ const LessonPlanHeader = ({ navigation }) => {
       <TouchableOpacity>
         <EditIcon />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Lesson_Plan_Editor_Menu', {isLessonPlanEditor: true})}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Lesson_Plan_Editor_Menu', {
+            isLessonPlanEditor: true,
+          })
+        }>
         <Menu />
       </TouchableOpacity>
     </SafeAreaView>

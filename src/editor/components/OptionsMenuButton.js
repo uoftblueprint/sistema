@@ -1,18 +1,28 @@
-import { createElement } from 'react';
-import { Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import {
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions
+} from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
-
-const OptionsMenuButton = ({text, icon }) => {
+const OptionsMenuButton = ({ text, icon }) => {
   return (
-    <SafeAreaView style={styles.container} >
-        <TouchableOpacity style={[styles.buttonContainer]}>
-          <SafeAreaView style={{width:22, height:22, alignItems: 'center',  justifyContent: 'center'}}>
-            {icon}
-          </SafeAreaView>
-          <Text style={styles.textContainer}>{text}</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <TouchableOpacity style={[styles.buttonContainer]}>
+        <SafeAreaView
+          style={{
+            width: 22,
+            height: 22,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+          {icon}
+        </SafeAreaView>
+        <Text style={styles.textContainer}>{text}</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -26,7 +36,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingLeft: '5%',
-    alignSelf:'stretch',
+    alignSelf: 'stretch',
     justifyContent: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
@@ -41,6 +51,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16
   },
-
 });
 export default OptionsMenuButton;
