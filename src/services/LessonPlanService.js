@@ -15,7 +15,7 @@ const LessonPlanService = {
   deleteLessonPlan: async function (name) {
     try {
       // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the delete() function
-      var path = RNFS.DocumentDirectoryPath + '/' + lessonPlanName + '/';
+      var path = RNFS.DocumentDirectoryPath + '/' + name + '/';
       const v = await Local.deleteFile(path);
       console.log(v);
       return v;
