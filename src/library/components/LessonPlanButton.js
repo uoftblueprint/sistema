@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Mulish-Regular',
-    // fontWeight: '400',
     fontSize: 16,
     letterSpacing: 0.3,
     color: 'black'
