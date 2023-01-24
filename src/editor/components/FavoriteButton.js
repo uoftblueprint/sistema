@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     width: windowWidth,
     borderColor: '#000000',
     borderWidth: 0.25,
-    justifyContent: 'flex-start'
   },
   buttonContainer: {
     paddingLeft: '5%',
@@ -58,42 +57,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16
   },
-  containerAdded: {
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#DEFCDF',
-    height: 55,
-    width: '100%'
-  },
-  containerRemoved: {
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FCE5E3',
-    height: 55,
-    width: '100%'
-  },
-  textContainerAdded: {
-    fontWeight: '400',
-    fontSize: 14,
-    color: '#375238'
-  },
-  textContainerRemoved: {
-    fontWeight: '400',
-    fontSize: 14,
-    color: '#471612'
-  },
   icon: {
     width: 22,
     height: 22,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  iconBanner: {
-    width: 18.33,
-    height: 18.33,
-    paddingLeft: '20%'
   }
 });
 

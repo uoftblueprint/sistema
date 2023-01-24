@@ -17,7 +17,7 @@ const LessonPlanHeader = ({ navigation }) => {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate('Lesson_Plan_Editor_Menu', {
-            isLessonPlanEditor: true,
+            isLessonPlanEditor: true
           })
         }>
         <Menu />

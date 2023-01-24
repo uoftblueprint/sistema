@@ -26,7 +26,7 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
     },
     {
         name: "Delete Lesson Plan",
-      icon: <TrashIcon />
+        icon: <TrashIcon />
     }
   ];
 
@@ -41,7 +41,7 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
     },
     {
         name: "Delete Lesson Plan",
-      icon: <TrashIcon />
+        icon: <TrashIcon />
     }
   ];
 
@@ -53,11 +53,12 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
           <OptionHeader 
           isLessonEditor={isLessonPlanEditorCheck} 
           lessonName={lessonPlanNameForOptions} 
-          navigation={navigation}/>
+          nav={navigation}/>
 
         {buttons.map((button, i) => {
             if (button.name == "Favorites") {
               return (<FavoriteButton 
+                key={i}
                 setBanner={setBannerVisible} 
                 setFavor={setFavorited} 
                 isFavor={isFavorited}/>);
@@ -79,7 +80,6 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flexDirection: 'column-reverse',
-    alignContent: 'flex-start',
     alignItems: 'stretch',
     width: '100%',
     height: '100%'
@@ -90,15 +90,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
     width: '100%'
-  },
-  textContainer: {
-    justifyContent: 'center',
-    alignSelf: 'flex-start',
-    paddingLeft: '7%',
-    color: 'rgba(0,0,0, 0.87)',
-    fontWeight: '700',
-    fontSize: 20,
-    lineHeight: 32
   }
 });
 export default OptionsMenu;

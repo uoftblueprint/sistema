@@ -9,7 +9,7 @@ import {
 import XButton from '../../../assets/xButton.svg';
 
 const windowWidth = Dimensions.get('window').width;
-const OptionHeader = ({ isLessonEditor, lessonName, navigation }) => {
+const OptionHeader = ({ isLessonEditor, lessonName, nav }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.textContainer}>
@@ -18,11 +18,10 @@ const OptionHeader = ({ isLessonEditor, lessonName, navigation }) => {
       <TouchableOpacity
         style={{
           alignSelf: 'center',
-          justifyContent: 'flex-end',
           postion: 'absolute',
           width: '30%'
         }}
-        onPress={() => navigation.goBack()}>
+        onPress={() => nav.goBack()}>
         <XButton style={styles.icon} />
       </TouchableOpacity>
     </SafeAreaView>
@@ -37,10 +36,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textContainer: {
-    width: '70%',
     postion: 'absolute',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    width: '70%',
     paddingLeft: '5%',
     color: 'rgba(0,0,0, 0.87)',
     fontWeight: '700',

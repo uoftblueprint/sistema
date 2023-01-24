@@ -32,24 +32,22 @@ const styles = StyleSheet.create({
     width: windowWidth,
     borderColor: '#000000',
     borderWidth: 0.25,
-    justifyContent: 'flex-start'
   },
   buttonContainer: {
     paddingLeft: '5%',
     alignSelf: 'stretch',
     justifyContent: 'flex-start',
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     backgroundColor: '#FFFAF5',
     width: '100%',
     height: 45
   },
   textContainer: {
     paddingLeft: '5%',
-    justifyContent: 'flex-start',
     color: 'rgba(0,0,0, 0.87)',
     fontWeight: '700',
     fontSize: 16
-  },
+  }
 });
 export default OptionsMenuButton;
