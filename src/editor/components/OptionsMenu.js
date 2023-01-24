@@ -17,31 +17,31 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
 
   const editorButtons = [
     {
-        name: "Export Lesson Plan",
-        icon: <ExportIcon/>
+      name: 'Export Lesson Plan',
+      icon: <ExportIcon />
     },
     {
-        name: "Favorites",
-        icon: <HeartIcon/>
+      name: 'Favorites',
+      icon: <HeartIcon />
     },
     {
-        name: "Delete Lesson Plan",
-        icon: <TrashIcon />
+      name: 'Delete Lesson Plan',
+      icon: <TrashIcon />
     }
   ];
 
   const libraryButtons = [
     {
-        name: "Export Lesson Plan",
-        icon: <ExportIcon/>
+      name: 'Export Lesson Plan',
+      icon: <ExportIcon />
     },
     {
-        name: "Copy Lesson Plan",
-        icon: <CopyIcon/>
+      name: 'Copy Lesson Plan',
+      icon: <CopyIcon />
     },
     {
-        name: "Delete Lesson Plan",
-        icon: <TrashIcon />
+      name: 'Delete Lesson Plan',
+      icon: <TrashIcon />
     }
   ];
 
@@ -50,27 +50,32 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <SafeAreaView style={styles.menu}>
-          <OptionHeader 
-          isLessonEditor={isLessonPlanEditorCheck} 
-          lessonName={lessonPlanNameForOptions} 
-          nav={navigation}/>
+        <OptionHeader
+          isLessonEditor={isLessonPlanEditorCheck}
+          lessonName={lessonPlanNameForOptions}
+          nav={navigation}
+        />
 
         {buttons.map((button, i) => {
-            if (button.name == "Favorites") {
-              return (<FavoriteButton 
+          if (button.name == 'Favorites') {
+            return (
+              <FavoriteButton
                 key={i}
-                setBanner={setBannerVisible} 
-                setFavor={setFavorited} 
-                isFavor={isFavorited}/>);
+                setBanner={setBannerVisible}
+                setFavor={setFavorited}
+                isFavor={isFavorited}
+              />
+            );
           } else {
-              return (<OptionsMenuButton
+            return (
+              <OptionsMenuButton
                 key={i}
                 text={button.name}
                 icon={button.icon}
               />
-              )}
+            );
+          }
         })}
-
       </SafeAreaView>
       {isBannerVisible && <OptionsMenuBanner isFav={isFavorited} />}
     </SafeAreaView>

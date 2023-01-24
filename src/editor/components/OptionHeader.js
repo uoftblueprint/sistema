@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
+  Dimensions
 } from 'react-native';
 import XButton from '../../../assets/xButton.svg';
 

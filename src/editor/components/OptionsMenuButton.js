@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     borderColor: '#000000',
-    borderWidth: 0.25,
+    borderWidth: 0.25
   },
   buttonContainer: {
     paddingLeft: '5%',

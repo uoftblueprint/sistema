@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 const STACK_SCREENS = {
   LESSON_PLAN_EDITOR: 'Lesson Plan Editor Home',
-  LESSON_PLAN_MENU_OVERLAY: 'Lesson_Plan_Editor_Menu',
+  LESSON_PLAN_MENU_OVERLAY: 'Lesson_Plan_Editor_Menu'
 };
 
 const EditorNavigator = () => {
@@ -31,7 +31,7 @@ const EditorNavigator = () => {
           isLessonPlanEditor: false,
           lessonPlanName: 'Lesson Plan Name'
         }} />
-      
+
     </Stack.Navigator>
   );
 };

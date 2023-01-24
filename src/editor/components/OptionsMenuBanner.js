@@ -18,7 +18,8 @@ const OptionsMenuBanner = ({ isFav }) => {
         style={
           !isFav ? styles.textContainerRemoved : styles.textContainerAdded
         }>
-        {!isFav ? 'Lesson Plan Removed from Favorites'
+        {!isFav
+          ? 'Lesson Plan Removed from Favorites'
           : 'Lesson Plan Added to Favorites'}
       </Text>
     </SafeAreaView>
