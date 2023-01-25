@@ -9,7 +9,7 @@ import {
 import XButton from '../../../assets/xButton.svg';
 
 const windowWidth = Dimensions.get('window').width;
-const OptionHeader = ({ isLessonEditor, lessonName, nav }) => {
+const OptionHeader = ({ isLessonEditor, lessonName, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.textContainer}>
@@ -21,7 +21,7 @@ const OptionHeader = ({ isLessonEditor, lessonName, nav }) => {
           postion: 'absolute',
           width: '30%'
         }}
-        onPress={() => nav.goBack()}>
+        onPress={() => navigation.goBack()}>
         <XButton style={styles.icon} />
       </TouchableOpacity>
     </SafeAreaView>

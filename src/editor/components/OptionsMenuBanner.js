@@ -5,22 +5,23 @@ import AlertErrorIcon from '../../../assets/errorAlert.svg';
 
 const windowWidth = Dimensions.get('window').width;
 
-const OptionsMenuBanner = ({ isFav }) => {
+const OptionsMenuBanner = ({ isFavoritedPlan }) => {
   return (
     <SafeAreaView
-      style={!isFav ? styles.containerRemoved : styles.containerAdded}>
-      {!isFav ? (
-        <AlertErrorIcon style={styles.iconBanner} />
+      style={isFavoritedPlan ? styles.containerAdded : styles.containerRemoved}>
+      {isFavoritedPlan ? (
+        <CheckMarkIcon style={styles.iconBanner} /> 
       ) : (
-        <CheckMarkIcon style={styles.iconBanner} />
+        <AlertErrorIcon style={styles.iconBanner} />
       )}
       <Text
         style={
-          !isFav ? styles.textContainerRemoved : styles.textContainerAdded
+          isFavoritedPlan ? styles.textContainerAdded : styles.textContainerRemoved
         }>
-        {!isFav
-          ? 'Lesson Plan Removed from Favorites'
-          : 'Lesson Plan Added to Favorites'}
+        {isFavoritedPlan
+          ? 'Lesson Plan Added to Favorites' :
+          'Lesson Plan Removed from Favorites'
+        }
       </Text>
     </SafeAreaView>
   );

@@ -53,7 +53,7 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
         <OptionHeader
           isLessonEditor={isLessonPlanEditorCheck}
           lessonName={lessonPlanNameForOptions}
-          nav={navigation}
+          navigation={navigation}
         />
 
         {buttons.map((button, i) => {
@@ -62,9 +62,10 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
               <FavoriteButton
                 key={i}
                 setBanner={setBannerVisible}
-                setFavor={setFavorited}
-                isFavor={isFavorited}
+                setFavoritedPlan={setFavorited}
+                isFavoritedPlan={isFavorited}
               />
+              
             );
           } else {
             return (
@@ -77,7 +78,7 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
           }
         })}
       </SafeAreaView>
-      {isBannerVisible && <OptionsMenuBanner isFav={isFavorited} />}
+      {isBannerVisible && <OptionsMenuBanner isFavoritedPlan={isFavorited} />}
     </SafeAreaView>
   );
 };

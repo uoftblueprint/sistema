@@ -12,10 +12,12 @@ import FavoriteIcon from '../../../assets/favoriteIcon.svg';
 
 const windowWidth = Dimensions.get('window').width;
 
-const FavoriteButton = ({ setBanner, setFavor, isFavor }) => {
+const FavoriteButton = ({ setBanner, setFavoritedPlan, isFavoritedPlan }) => {
   const onPress = () => {
-    setFavor(!isFavor);
+    
+    setFavoritedPlan(!isFavoritedPlan);
     setBanner(true);
+
     setTimeout(() => {
       setBanner(false);
     }, 2000);
@@ -25,10 +27,10 @@ const FavoriteButton = ({ setBanner, setFavor, isFavor }) => {
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={[styles.buttonContainer]} onPress={onPress}>
         <SafeAreaView style={styles.icon}>
-          {!isFavor ? <HeartIcon /> : <FavoriteIcon />}
+          {!isFavoritedPlan ? <HeartIcon /> : <FavoriteIcon />}
         </SafeAreaView>
         <Text style={styles.textContainer}>
-          {!isFavor ? 'Add to Favorites' : 'Remove from Favorites'}{' '}
+          {!isFavoritedPlan ? 'Add to Favorites' : 'Remove from Favorites'}{' '}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
