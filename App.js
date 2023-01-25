@@ -21,6 +21,7 @@ const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
   const navigationRef = useNavigationContainerRef();
+  var fileArray = await Local.readDirectory(RNFS.DocumentDirectoryPath);
   return (
     <NavigationContainer ref={navigationRef} independent={true}>
       <Tab.Navigator initialRouteName={STACK_SCREENS.HOME}>

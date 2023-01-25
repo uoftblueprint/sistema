@@ -10,11 +10,10 @@ const LessonPlanService = {
    * Delete a Lesson Plan (a.k.a a directory in RNFS.DocumentDirectoryPath and
    * its contents).
    * @param {String} name Name of the lesson plan to delete
-   * @return {Bool} Whether or not the lesson plan was successfully deleted
    */
   deleteLessonPlan: async function (name) {
     try {
-      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the delete() function
+      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
       var path = RNFS.DocumentDirectoryPath + '/' + name + '/';
       const v = await Local.deleteFile(path);
       console.log(v);
@@ -32,7 +31,6 @@ const LessonPlanService = {
    * Be sure to think about how to save activity card .pngs later down the line
    * as well!
    * @param {LessonPlan} lesson LessonPlan object to save to local storage
-   * @return {Bool} Whether or not the lesson plan was successfully saved
    */
   saveLessonPlan: async function (lesson) {
     try {
@@ -80,7 +78,6 @@ const LessonPlanService = {
    * Use RNFS.moveFile() with the original filename and the new filename!
    * @param {String} old_name Old name of lesson plan
    * @param {String} new_name New name of lesson plan
-   * @return {Bool} Whether the operation failed or succeeded
    */
   setLessonPlanName: async function (oldName, newName) {
     try {
