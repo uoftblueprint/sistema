@@ -65,7 +65,6 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
                 setFavoritedPlan={setFavorited}
                 isFavoritedPlan={isFavorited}
               />
-              
             );
           } else {
             return (

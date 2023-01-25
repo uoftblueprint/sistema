@@ -10,18 +10,19 @@ const OptionsMenuBanner = ({ isFavoritedPlan }) => {
     <SafeAreaView
       style={isFavoritedPlan ? styles.containerAdded : styles.containerRemoved}>
       {isFavoritedPlan ? (
-        <CheckMarkIcon style={styles.iconBanner} /> 
+        <CheckMarkIcon style={styles.iconBanner} />
       ) : (
         <AlertErrorIcon style={styles.iconBanner} />
       )}
       <Text
         style={
-          isFavoritedPlan ? styles.textContainerAdded : styles.textContainerRemoved
+          isFavoritedPlan
+            ? styles.textContainerAdded
+            : styles.textContainerRemoved
         }>
         {isFavoritedPlan
-          ? 'Lesson Plan Added to Favorites' :
-          'Lesson Plan Removed from Favorites'
-        }
+          ? 'Lesson Plan Added to Favorites'
+          : 'Lesson Plan Removed from Favorites'}
       </Text>
     </SafeAreaView>
   );

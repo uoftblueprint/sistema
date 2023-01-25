@@ -14,7 +14,6 @@ const windowWidth = Dimensions.get('window').width;
 
 const FavoriteButton = ({ setBanner, setFavoritedPlan, isFavoritedPlan }) => {
   const onPress = () => {
-    
     setFavoritedPlan(!isFavoritedPlan);
     setBanner(true);
 
@@ -30,7 +29,7 @@ const FavoriteButton = ({ setBanner, setFavoritedPlan, isFavoritedPlan }) => {
           {!isFavoritedPlan ? <HeartIcon /> : <FavoriteIcon />}
         </SafeAreaView>
         <Text style={styles.textContainer}>
-          {!isFavoritedPlan ? 'Add to Favorites' : 'Remove from Favorites'}{' '}
+          {!isFavoritedPlan ? 'Add to Favorites' : 'Remove from Favorites'}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
