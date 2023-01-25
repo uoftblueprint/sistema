@@ -1,5 +1,3 @@
-import { useState, props } from 'react';
-
 import {
   Text,
   SafeAreaView,
