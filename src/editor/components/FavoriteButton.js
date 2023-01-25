@@ -5,8 +5,8 @@ import {
   StyleSheet,
   Dimensions
 } from 'react-native';
-import HeartIcon from '../../../assets/HeartIcon.svg';
-import FavoriteIcon from '../../../assets/FavoriteIcon.svg';
+import HeartIcon from '../../../assets/heartIcon.svg';
+import FavoriteIcon from '../../../assets/favoriteIcon.svg';
 
 const windowWidth = Dimensions.get('window').width;
 

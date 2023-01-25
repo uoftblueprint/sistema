@@ -2,10 +2,10 @@ import FavoriteButton from './FavoriteButton.js';
 import OptionHeader from './OptionHeader';
 import { useState } from 'react';
 import OptionsMenuBanner from './OptionsMenuBanner.js';
-import ExportIcon from '../../../assets/ExportIcon.svg';
-import TrashIcon from '../../../assets/TrashIcon.svg';
-import HeartIcon from '../../../assets/HeartIcon.svg';
-import CopyIcon from '../../../assets/CopyIcon.svg';
+import ExportIcon from '../../../assets/exportIcon.svg';
+import TrashIcon from '../../../assets/trashIcon.svg';
+import HeartIcon from '../../../assets/heartIcon.svg';
+import CopyIcon from '../../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton.js';
 import { StyleSheet, SafeAreaView } from 'react-native';
 
