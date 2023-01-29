@@ -118,7 +118,7 @@ const App = () => {
     <SafeAreaProvider>
       <Provider store={configureStore}>
         <MainNavigator />
-        </Provider>
+      </Provider>
     </SafeAreaProvider>
   );
 };
