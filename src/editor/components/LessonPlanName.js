@@ -1,15 +1,11 @@
 import React from 'react';
-// import React from 'react'
-// import 
-import LessonPlanTextInput from './LessonPlanTextInput';
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import LessonPlanNameInput from './LessonPlanNameInput';
 
-const LessonPlanName = ({ subtitle }) => {
+const LessonPlanName = () => {
   return (
     <SafeAreaView style={styles.sectionContainer}>
       <View>
-        {/* <LessonPlanNameInput placeholder={todayDate + ": Lesson Plan Name"} /> */}
         <LessonPlanNameInput placeholder={todayDate} />
       </View>
     </SafeAreaView>

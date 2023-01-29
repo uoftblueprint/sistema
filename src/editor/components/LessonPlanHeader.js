@@ -4,18 +4,15 @@ import BackArrow from '../../../assets/backArrow.svg';
 import Menu from '../../../assets/menu.svg';
 
 import LessonPlanName from './LessonPlanName.js';
-// import TextInputExample from './LessonPlanName.js';
 
-import { StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 
 const LessonPlanHeader = () => (
   <SafeAreaView style={styles.container}>
     <TouchableOpacity>
       <BackArrow />
     </TouchableOpacity>
-    {/* <Text style={styles.title}>Lesson Plan Name</Text> */}
-    <LessonPlanName subtitle={'LessonPlanHeader'}/>
-    {/* <TextInputExample/> */}
+    <LessonPlanName subtitle={'LessonPlanHeader'} />
     <TouchableOpacity>
       <EditIcon onClick />
     </TouchableOpacity>

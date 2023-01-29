@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   StyleSheet,
   TextInput,
-  TouchableOpacity
 } from 'react-native';
 
 const LessonPlanNameInput = ({ placeholder }) => {
@@ -18,7 +17,6 @@ const LessonPlanNameInput = ({ placeholder }) => {
         onChangeText={onChangeNumber}
         value={number}
         placeholder={placeholder}
-        // placeholderTextColor="#000"
       />
     </SafeAreaView>
   );
@@ -41,8 +39,6 @@ const styles = StyleSheet.create({
     height: 49,
     width: 250,
     color: '#000',
-    // borderWidth: 0.77,
-    // borderColor: '#000',
     borderColor: 'transparent',
     borderRadius: 7.69,
     paddingLeft: '3%'
