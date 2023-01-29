@@ -24,15 +24,13 @@ const LessonPlanMenuOverlay = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   overlay: {
-    alignItems: 'center',
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(217,217,217, 0.8)',
     justifyContent: 'flex-end'
   },
   menu: {
-    alignSelf: 'flex-end',
-    justifyContent: 'flex-end'
+    alignSelf: 'stretch'
   }
 });
 
