@@ -4,8 +4,6 @@ import OptionsMenu from '../components/OptionsMenu.js';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const LessonPlanMenuOverlay = ({ navigation, route }) => {
   const isLessonPlanEditor = route.params.isLessonPlanEditor;
@@ -30,8 +28,8 @@ const LessonPlanMenuOverlay = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   overlay: {
     alignItems: 'center',
-    width: windowWidth,
-    height: windowHeight,
+    width: '100%',
+    height: 'auto',
     backgroundColor: 'rgba(217,217,217, 0.8)',
     justifyContent: 'flex-end'
   },
