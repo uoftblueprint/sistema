@@ -10,7 +10,7 @@ import {
   useSafeAreaInsets,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
-import Home from './src/home/Home';
+import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 
@@ -19,7 +19,7 @@ import HomeNavIcon from './assets/HomeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/LessonPlanEditorNavIcon.svg';
 
 const STACK_SCREENS = {
-  HOME: 'HomePage',
+  HOME: 'Home Page',
   EDITOR: 'LessonPlanEditor',
   LIBRARY: 'Library',
 };
@@ -69,7 +69,7 @@ const MainNavigator = () => {
         }}>
         <Tab.Screen
           name={STACK_SCREENS.HOME}
-          component={Home}
+          component={HomeNavigator}
           options={{
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
