@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   menu: {
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    justifyContent: 'flex-end'
   }
 });
 
