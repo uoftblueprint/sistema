@@ -1,4 +1,4 @@
-var RNFS = require('react-native-fs');
+import RNFS from 'react-native-fs';
 
 // LessonPlanService.js
 export const MAINDIRECTORY = RNFS.DocumentDirectoryPath;

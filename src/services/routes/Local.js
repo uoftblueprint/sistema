@@ -1,5 +1,4 @@
-// require the module
-var RNFS = require('react-native-fs');
+import RNFS from 'react-native-fs';
 
 /**
  * Reads the file names in the entirety of the given directory.
@@ -13,7 +12,7 @@ export async function readDirectory(dirpath) {
       return result;
     })
     .catch((err) => {
-      console.log(err.message);
+      console.error(`RNFS readDirectory: ${err.message}`);
     });
 }
 
@@ -30,7 +29,7 @@ export async function readFile(filepath) {
       return result;
     })
     .catch((err) => {
-      console.log(err.message);
+      console.error(`RNFS readFile: ${err.message}`);
     })
 }
 
@@ -45,7 +44,7 @@ export async function writeFile(filepath, content) {
       console.log('FILE WRITTEN!');
     })
     .catch((err) => {
-      console.log(err.message);
+      console.error(`RNFS writeFile: ${err.message}`);
     });
 }
 
@@ -62,7 +61,7 @@ export async function deleteFile(filepath) {
     })
     // `unlink` will throw an error, if the item to unlink does not exist
     .catch((err) => {
-      console.log(err.message);
+      console.error(`RNFS deleteFile: ${err.message}`);
     });
 }
 
@@ -77,7 +76,7 @@ export async function moveFile(oldpath, newpath) {
       console.log(`FILE MOVED TO: ${newpath}`);
     })
     .catch((err) => {
-      console.log(err.message);
+      console.error(`RNFS moveFile: ${err.message}`);
     });
 }
 
@@ -93,6 +92,6 @@ export async function checkFileExists(path) {
       return result
     })
     .catch((err) => {
-      console.log(err.message);
+      console.error(`RNFS checkFileExists: ${err.message}`);
     });
 }
