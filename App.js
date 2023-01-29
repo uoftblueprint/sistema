@@ -14,7 +14,8 @@ import Home from './src/home/Home';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 import HomeIcon from './assets/HomeIcon.js';
-
+import { Provider } from 'react-redux';
+import configureStore from './src/services/configureStore';
 import LibraryNavIcon from './assets/LibraryNavIcon.svg';
 import HomeNavIcon from './assets/HomeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/LessonPlanEditorNavIcon.svg';
@@ -117,7 +118,9 @@ const styles = StyleSheet.create({
 const App = () => {
   return (
     <SafeAreaProvider>
-      <MainNavigator />
+      <Provider store={configureStore}>
+        <MainNavigator />
+        </Provider>
     </SafeAreaProvider>
   );
 };

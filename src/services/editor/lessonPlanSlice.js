@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AccessToken } from '../models';
-import SectionName from '../constants';
 
-export const authSlice = createSlice({
+export const lessonPlanSlice = createSlice({
   name: 'lessonPlan',
   // initialState: {
   //   warmUp: [{type: "text", content: "C-minor, F-sharp"}, {type: "activityCard", content:"/path/to/activityCard"}]
@@ -15,13 +13,12 @@ export const authSlice = createSlice({
     warmUp: [], // [{type: "", content: ""}
     mainLesson: [],
     coolDown: [],
-    notes: '',
+    notes: "",
     isDirty: false // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {
-    // addToSection - take in section name, and
+    // addToSection - take in section name, type of content, and content
     addToSection: (state, action) => {
-      // payload is string (text or activity card path)
       // action.payload: {
       //     section: SectionName.coolDown,
       //     type: "text" or "activityCard"
@@ -29,14 +26,14 @@ export const authSlice = createSlice({
       // }
       return {
         ...state,
-        isDirty: true,
         [action.payload.section]: [
           ...state[action.payload.section],
           {
             type: action.payload.type,
             content: action.payload.content
           },
-        ]
+        ],
+        isDirty: true,
       };
     },
     removeFromSection: (state, action) => {
@@ -46,16 +43,30 @@ export const authSlice = createSlice({
       );
       return {
         ...state,
-        [action.payload.section]: state[section].splice(indx, indx >= 0 ? 1 : 0)
+        isDirty: true,
+        [action.payload.section]: state[section].filter((_, i) => i != indx)
       };
-    }
+    },
+    addToNote: (state, action) => {
+      return {
+        ...state,
+        [action.payload.section]: action.payload.content
+      }
+    },
+    // editNote: (state, action) => {
+    //   return {
+    //     ...state,
+    //     [action.payload.section]: action.payload.content
+    //   }
+    // }
   }
 });
 
 // Dispatch actions to "write" to redux
-export const { addToSection, removeFromSection } = authSlice.actions;
+export const { addToSection, addToNote, removeFromSection } = lessonPlanSlice.actions;
 
-// Selector actions to "read" from redux
-export const selectLessonPlan = (state, sectionName) => state[sectionName]; //give state and section name to get the section content
+// Selector actions to "read" from redux'
+export const getLessonSection = (state, sectionName) => { return state[sectionName] }
 
-export default authSlice.reducer;
+export default lessonPlanSlice.reducer;
+

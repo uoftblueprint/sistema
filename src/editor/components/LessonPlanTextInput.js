@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  TextInput,
   Text,
   View,
   TouchableOpacity
@@ -53,3 +52,4 @@ const styles = StyleSheet.create({
 });
 
 export default LessonPlanTextInput;
+

@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+
+
 import authReducer from './login/authSlice';
+import lessonPlanReducer from './editor/lessonPlanSlice';
 
 export default configureStore({
   reducer: {
-    auth: authReducer
+    auth: authReducer,
+    lessonPlan: lessonPlanReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

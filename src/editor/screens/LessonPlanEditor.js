@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LessonPlanHeader from '../components/LessonPlanHeader.js';
-import { StyleSheet, SafeAreaView, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, SafeAreaView, View, ScrollView } from 'react-native';
 import LessonSection from '../components/LessonSection.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
-import { LessonPlan } from '../../services/models';
 
 const LessonPlanEditor = ({ navigation }) => {
   // const [object, setObject] = useState({
@@ -21,10 +20,10 @@ const LessonPlanEditor = ({ navigation }) => {
       <LessonPlanHeader />
       <ScrollView style={styles.scrollView}>
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-          <LessonSection section={'warmUp'} subtitle={'Warm Up'} />
-          <LessonSection section={'mainLesson'} subtitle={'Main Lesson'} />
-          <LessonSection section={'coolDown'} subtitle={'Cool Down'} />
-          <LessonPlanNotes subtitle={'Notes'} />
+          <LessonSection sectionType={'warmUp'} subtitle={'Warm Up'} />
+          <LessonSection sectionType={'mainLesson'} subtitle={'Main Lesson'} />
+          <LessonSection sectionType={'coolDown'} subtitle={'Cool Down'} />
+          <LessonPlanNotes sectionType={"notes"} subtitle={'Notes'} />
           <SaveButton />
         </View>
       </ScrollView>
@@ -41,3 +40,4 @@ const styles = StyleSheet.create({
 });
 
 export default LessonPlanEditor;
+

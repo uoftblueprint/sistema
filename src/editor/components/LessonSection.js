@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import LessonPlanTextInput from './LessonPlanTextInput';
 import { Text, View, SafeAreaView, StyleSheet, TextInput } from 'react-native';
+import {useDispatch } from 'react-redux';
+import { addToSection, removeFromSection } from '../../services/editor/lessonPlanSlice';
+import store from '../../services/configureStore';
 
-const LessonSection = ({ section, subtitle }) => {
+
+const LessonSection = ({ sectionType, subtitle }) => {
+
   const [sectionContent, setSectionContent] = useState([]);
+    // const sectionContent = [
+  //   {
+  //     section: "warmup",
+  //     content: "warmup content",
+  //   }
+  // ]
+  const [sectionActivityCards,
+    setSectionActivityCards] = useState([]);
   const [clicked, setClicked] = useState(false);
+  const dispatch = useDispatch();
   const handleClick = () => {
     setClicked(true);
   };
-  // const courseContent = [
-  //   {
-  //     section: section,
-  //     content: text,
-  //   }
-  // ]
 
   const ContentCard = () => {
     return (
@@ -26,10 +34,9 @@ const LessonSection = ({ section, subtitle }) => {
             onSubmitEditing={e => {
               if (e.nativeEvent.text) {
                 setSectionContent([...sectionContent, e.nativeEvent.text]);
+                store.dispatch(addToSection({type: "text", section: sectionType, content: e.nativeEvent.text}))
               }
-
               setClicked(false);
-              console.log(sectionContent);
             }}
           />
         </View>
@@ -47,46 +54,47 @@ const LessonSection = ({ section, subtitle }) => {
           onChangeText={txt => setnewText(txt)}
           returnKeyType="submit"
           onSubmitEditing={e => {
-            if (!e.nativeEvent.text) {
-              setSectionContent(state => {
-                newContent = [...state];
-                newContent = newContent.filter((_, i) => i != index);
-                return newContent;
-              });
-            } else {
-              setSectionContent(state => {
-                newContent = [...state];
+            //if (!e.nativeEvent.text) {
+            setSectionContent(state => {
+              newContent = [...state];
+              //delete the content from section content state when empty
+              newContent = newContent.filter((_, i) => i != index);
+              store.dispatch(removeFromSection({ type: "text", section: sectionType, content: text }))
+              // if the content isn't empty, add the edited content to store and newContent
+              if (e.nativeEvent.text) {
                 newContent[index] = e.nativeEvent.text;
-                return newContent;
-              });
+                store.dispatch(addToSection({ type: "text", section: sectionType, content: e.nativeEvent.text }))
+              }
+              return newContent;
+            });
             }
-          }}
+          }
         />
       </View>
     );
   };
 
   return (
-    <SafeAreaView style={styles.sectionContainer}>
-      <Text style={styles.title}>{subtitle}</Text>
-      <View>
-        <ContentCard />
-        <LessonPlanTextInput
-          placeholder={'Input text'}
-          handleClick={handleClick}
-        />
-        <LessonPlanTextInput placeholder={'Add activity cards'} />
-        {sectionContent.map((c, i) => {
-          if (c) {
-            return (
-              <View key={i}>
-                <StoredContent text={c} index={i} />
-              </View>
-            );
-          }
-        })}
-      </View>
-    </SafeAreaView>
+      <SafeAreaView style={styles.sectionContainer}>
+        <Text style={styles.title}>{subtitle}</Text>
+        <View>
+          <ContentCard />
+          <LessonPlanTextInput
+            placeholder={'Input text'}
+            handleClick={handleClick}
+          />
+          <LessonPlanTextInput placeholder={'Add activity cards'} />
+          {sectionContent.map((c, i) => {
+            if (c) {
+              return (
+                <View key={i}>
+                  <StoredContent text={c} index={i} />
+                </View>
+              );
+            }
+          })}
+        </View>
+        </SafeAreaView>
   );
 };
 
