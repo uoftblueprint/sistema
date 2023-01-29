@@ -13,7 +13,7 @@ export const lessonPlanSlice = createSlice({
     warmUp: [], // [{type: "", content: ""}
     mainLesson: [],
     coolDown: [],
-    notes: "",
+    notes: '',
     isDirty: false // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {
@@ -51,22 +51,18 @@ export const lessonPlanSlice = createSlice({
       return {
         ...state,
         [action.payload.section]: action.payload.content
-      }
-    },
-    // editNote: (state, action) => {
-    //   return {
-    //     ...state,
-    //     [action.payload.section]: action.payload.content
-    //   }
-    // }
+      };
+    }
   }
 });
 
 // Dispatch actions to "write" to redux
-export const { addToSection, addToNote, removeFromSection } = lessonPlanSlice.actions;
+export const { addToSection, addToNote, removeFromSection } =
+  lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
-export const getLessonSection = (state, sectionName) => { return state[sectionName] }
+export const getLessonSection = (state, sectionName) => {
+  return state[sectionName];
+};
 
 export default lessonPlanSlice.reducer;
-
