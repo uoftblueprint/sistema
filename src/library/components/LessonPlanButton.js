@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   icons: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 17,
     margin: 14
   },
   titleContainer: {
