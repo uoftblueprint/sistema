@@ -85,6 +85,21 @@ const LessonPlanService = {
     } catch (e) {
       // ...
     }
+  },
+
+  /**
+   * Favorite a lesson plan. This should place it at the top of the collection
+   * in the UI. Hint: retrieve the
+   * Use RNFS.moveFile() with the original filename and the new filename!
+   * @param {String} old_name Old name of lesson plan
+   * @param {String} new_name New name of lesson plan
+   */
+  favouriteLessonPlan: async function (name) {
+    try {
+      // ...
+    } catch (e) {
+      // ...
+    }
   }
 };
 
