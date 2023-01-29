@@ -65,13 +65,13 @@ const MainNavigator = () => {
             height: 60 + insets.bottom,
             backgroundColor: '#B8CFE4'
           },
+          headerShown: false
         }}>
         <Tab.Screen
           name={STACK_SCREENS.HOME}
           component={Home}
           options={{
             tabBarShowLabel: false,
-            headerShown: true,
             tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
           }}
         />
@@ -80,7 +80,6 @@ const MainNavigator = () => {
           component={EditorNavigator}
           options={{
             tabBarShowLabel: false,
-            headerShown: true,
             tabBarIcon: ({ focused }) =>
               tabIcon(LessonPlanEditorNavIcon, focused)
           }}
@@ -90,7 +89,6 @@ const MainNavigator = () => {
           component={Library}
           options={{
             tabBarShowLabel: false,
-            headerShown: true,
             tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused),
           }}
         />
