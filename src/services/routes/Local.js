@@ -7,11 +7,11 @@ import RNFS from 'react-native-fs';
  */
 export async function readDirectory(dirpath) {
   return RNFS.readdir(dirpath)
-    .then((result) => {
+    .then(result => {
       console.log('GOT RESULT', result);
       return result;
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(`RNFS readDirectory: ${err.message}`);
     });
 }
@@ -23,14 +23,14 @@ export async function readDirectory(dirpath) {
  */
 export async function readFile(filepath) {
   return RNFS.readFile(filepath)
-    .then((result) => {
+    .then(result => {
       console.log('GOT FILE: ', filepath);
       console.log(result);
       return result;
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(`RNFS readFile: ${err.message}`);
-    })
+    });
 }
 
 /**
@@ -39,11 +39,11 @@ export async function readFile(filepath) {
  * @param {String} content Content to write to given file path
  */
 export async function writeFile(filepath, content) {
-  return RNFS.writeFile(filepath, content, "utf8")
-    .then((success) => {
+  return RNFS.writeFile(filepath, content, 'utf8')
+    .then(success => {
       console.log('FILE WRITTEN!');
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(`RNFS writeFile: ${err.message}`);
     });
 }
@@ -55,14 +55,16 @@ export async function writeFile(filepath, content) {
  * @param {String} filepath Full file path to delete
  */
 export async function deleteFile(filepath) {
-  return RNFS.unlink(filepath)
-    .then(() => {
-      console.log('FILE DELETED');
-    })
-    // `unlink` will throw an error, if the item to unlink does not exist
-    .catch((err) => {
-      console.error(`RNFS deleteFile: ${err.message}`);
-    });
+  return (
+    RNFS.unlink(filepath)
+      .then(() => {
+        console.log('FILE DELETED');
+      })
+      // `unlink` will throw an error, if the item to unlink does not exist
+      .catch(err => {
+        console.error(`RNFS deleteFile: ${err.message}`);
+      })
+  );
 }
 
 /**
@@ -75,7 +77,7 @@ export async function moveFile(oldpath, newpath) {
     .then(() => {
       console.log(`FILE MOVED TO: ${newpath}`);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(`RNFS moveFile: ${err.message}`);
     });
 }
@@ -87,11 +89,11 @@ export async function moveFile(oldpath, newpath) {
  */
 export async function checkFileExists(path) {
   return RNFS.exists(path)
-    .then((result) => {
-      console.log(`FILE EXISTS`);
-      return result
+    .then(result => {
+      console.log('FILE EXISTS');
+      return result;
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(`RNFS checkFileExists: ${err.message}`);
     });
 }
