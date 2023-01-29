@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 
 const AddToLessonButton = () => {

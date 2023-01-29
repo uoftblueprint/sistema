@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -66,15 +65,13 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     fontStyle: 'italic',
-    marginLeft: 30,
+    marginLeft:  '8%',
     letterSpacing: 0.3,
     width: '55%',
-    paddingBottom: 4
+    paddingBottom: '1%'
   },
   refreshIcon: {
-    fill: '#453E3D',
-    width: '3%',
-    height: '3%'
+    fill: '#453E3D'
   }
 });
 
