@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginVertical: 15,
-    marginHorizontal: 33,
+    marginHorizontal: 25,
     justifyContent: 'space-between',
     alignItems: 'center'
   },
@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     paddingRight: 15,
-    letterSpacing: 0.3
+    letterSpacing: 0.3,
+    fontFamily: "Poppins-ExtraBold"
   }
 });
 

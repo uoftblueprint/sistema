@@ -17,13 +17,13 @@ const LessonPlanEditor = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
-      <LessonPlanHeader />
+      <LessonPlanHeader/>
       <ScrollView style={styles.scrollView}>
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
           <LessonSection sectionType={'warmUp'} subtitle={'Warm Up'} />
           <LessonSection sectionType={'mainLesson'} subtitle={'Main Lesson'} />
           <LessonSection sectionType={'coolDown'} subtitle={'Cool Down'} />
-          <LessonPlanNotes sectionType={"notes"} subtitle={'Notes'} />
+          <LessonPlanNotes sectionType={'notes'} subtitle={'Notes'} />
           <SaveButton />
         </View>
       </ScrollView>
@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 5,
     marginBottom: '20%'
-  },
+  }
 });
 
 export default LessonPlanEditor;
-

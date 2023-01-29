@@ -43,13 +43,13 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     elevation: 7,
     marginVertical: 6,
-    paddingLeft: '3%'
+    paddingHorizontal: 10,
+    
   },
   ImageStyle: {
-    height: 25,
-    width: 25
+    paddingLeft: 50,
+    backgroundColor: 'black'
   }
 });
 
 export default LessonPlanTextInput;
-
