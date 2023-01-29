@@ -8,13 +8,11 @@ var RNFS = require('react-native-fs');
  */
 export async function readDirectory(dirpath) {
   return RNFS.readdir(dirpath)
-    .then(result => {
+    .then((result) => {
       console.log('GOT RESULT', result);
-
-      // stat the first file
       return result;
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err.message);
     });
 }
@@ -26,11 +24,12 @@ export async function readDirectory(dirpath) {
  */
 export async function readFile(filepath) {
   return RNFS.readFile(filepath)
-    .then(result => {
+    .then((result) => {
       console.log('GOT FILE: ', filepath);
+      console.log(result);
       return result;
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err.message);
     })
 }
@@ -41,11 +40,11 @@ export async function readFile(filepath) {
  * @param {String} content Content to write to given file path
  */
 export async function writeFile(filepath, content) {
-  return RNFS.writeFile(filepath, content)
-    .then(success => {
+  return RNFS.writeFile(filepath, content, "utf8")
+    .then((success) => {
       console.log('FILE WRITTEN!');
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err.message);
     });
 }
@@ -62,7 +61,7 @@ export async function deleteFile(filepath) {
       console.log('FILE DELETED');
     })
     // `unlink` will throw an error, if the item to unlink does not exist
-    .catch(err => {
+    .catch((err) => {
       console.log(err.message);
     });
 }
@@ -77,7 +76,23 @@ export async function moveFile(oldpath, newpath) {
     .then(() => {
       console.log(`FILE MOVED TO: ${newpath}`);
     })
-    .catch(err => {
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+
+/**
+ * Check if a file exists.
+ * @param {String} path Full file path to directory to check
+ * @return {Bool} result Whether file exists or not
+ */
+export async function checkFileExists(path) {
+  return RNFS.exists(path)
+    .then((result) => {
+      console.log(`FILE EXISTS`);
+      return result
+    })
+    .catch((err) => {
       console.log(err.message);
     });
 }

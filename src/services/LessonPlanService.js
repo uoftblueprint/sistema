@@ -1,20 +1,19 @@
 import Local from './routes/Local';
-var RNFS = require('react-native-fs');
+import { MAINDIRECTORY } from './constants';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
-  // Don't call RNFS directly here (unless it's for one of the path constants!)
-  // Instead, call a function from Local.js
+  // Don't call RNFS directly here!
+  // Instead, call a function from Local.js :~]
 
   /**
-   * Delete a Lesson Plan (a.k.a a directory in RNFS.DocumentDirectoryPath and
-   * its contents).
+   * Delete a Lesson Plan (a.k.a a directory in MAINDIRECTORY and its contents).
    * @param {String} name Name of the lesson plan to delete
    */
   deleteLessonPlan: async function (name) {
     try {
       // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
-      var path = RNFS.DocumentDirectoryPath + '/' + name + '/';
+      var path = MAINDIRECTORY + '/' + name + '/';
       const v = await Local.deleteFile(path);
       console.log(v);
       return v;
@@ -47,10 +46,9 @@ const LessonPlanService = {
    * into its directory, checking for the .json file, and later down the line,
    * also its associated .png activity cards.
    * @param {String} name Name of the lesson plan to retrieve
-   * @param {String} filepath Full path of the directory
    * @return {LessonPlan} The requested LessonPlan object
    */
-  getLessonPlan: async function (name, filepath) {
+  getLessonPlan: async function (name) {
     try {
       // ...
     } catch (e) {
@@ -61,10 +59,9 @@ const LessonPlanService = {
   /**
    * Reach into the lesson plan directory in local storage and return an array
    * of all the names.
-   * @param {String} filepath Full path of the directory
    * @return {String[]} The list of lesson plan names
    */
-  getAllLessonPlanNames: async function (filepath) {
+  getAllLessonPlanNames: async function () {
     try {
       // ...
     } catch (e) {
@@ -88,13 +85,23 @@ const LessonPlanService = {
   },
 
   /**
-   * Favorite a lesson plan. This should place it at the top of the collection
-   * in the UI. Hint: retrieve the
-   * Use RNFS.moveFile() with the original filename and the new filename!
-   * @param {String} old_name Old name of lesson plan
-   * @param {String} new_name New name of lesson plan
+   * Favorite a lesson plan. This would place it at the top of the collection
+   * in the UI.
+   * @param {String} name Old name of lesson plan
    */
   favouriteLessonPlan: async function (name) {
+    try {
+      // ...
+    } catch (e) {
+      // ...
+    }
+  },
+
+  /**
+   * Un-favorite a lesson plan. This would put it back in the Default directory.
+   * @param {String} name Old name of lesson plan
+   */
+  unfavouriteLessonPlan: async function (name) {
     try {
       // ...
     } catch (e) {
