@@ -9,14 +9,14 @@ const LessonPlanMenuOverlay = ({ navigation, route }) => {
   const lessonPlanName = route.params.lessonPlanName;
 
   return (
-    <TouchableWithoutFeedback onPress={() => navigation.goBack()} >
-      <SafeAreaView  style={styles.overlay}>
-          <OptionsMenu
-            isLessonPlanEditor={isLessonPlanEditor}
-            lessonPlanName={lessonPlanName}
-            navigation={navigation}
-            style={styles.menu}
-          />
+    <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+      <SafeAreaView style={styles.overlay}>
+        <OptionsMenu
+          isLessonPlanEditor={isLessonPlanEditor}
+          lessonPlanName={lessonPlanName}
+          navigation={navigation}
+          style={styles.menu}
+        />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   menu: {
-    alignSelf: 'end'
+    alignSelf: 'flex-end'
   }
 });
 
