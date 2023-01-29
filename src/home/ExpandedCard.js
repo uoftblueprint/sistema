@@ -27,8 +27,8 @@ const ExpandedCard = ({ navigation }) => {
       <ScrollView>
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={styles.title}> </Text>
-          {/* <Text style={styles.title}> props.cardTitle </Text> */}
+          {/* pass in props.cardTitle eventually */}
+          <Text style={styles.title}> TITLE </Text>
 
           <SafeAreaView style={styles.box}>
             {/* CARD CONTENT GOES HERE */}
