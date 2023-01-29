@@ -11,7 +11,7 @@ const SistemaButton = props => {
   return (
     <View>
       <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
-        <Text style={{ color: 'black' }}>Okay</Text>
+        {props.children}
       </TouchableOpacity>
     </View>
   );

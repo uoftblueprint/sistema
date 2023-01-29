@@ -13,10 +13,12 @@ import {
 } from 'react-native-safe-area-context';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
+import Home from './src/home/Home';
 
 import LibraryNavIcon from './assets/LibraryNavIcon.svg';
 import HomeNavIcon from './assets/HomeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/LessonPlanEditorNavIcon.svg';
+
 
 const STACK_SCREENS = {
   HOME: 'HomePage',
@@ -68,10 +70,10 @@ const MainNavigator = () => {
         }}>
         <Tab.Screen
           name={STACK_SCREENS.HOME}
-          component={HomeNavigator}
+          component={Home}
           options={{
             tabBarShowLabel: false,
-            headerShown: true,
+            headerShown: false,
             tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
           }}
         />

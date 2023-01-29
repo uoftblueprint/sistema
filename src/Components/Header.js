@@ -6,21 +6,22 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import SistemaLogo from '../../assets/sistemaLogo.svg';
+import SistemaLogo from '../../assets/SistemaLogo.svg';
 import OptionIcon from '../../assets/OptionIcon.svg';
 import QuestionMark from '../../assets/questionMark.svg';
-import SistemaOverlay from './SistemaOverlay';
+import Overlay from './Overlay';
 
 const Header = ({ isHome, navigation }) => {
   const [isHomePage, setHomePage] = useState(isHome);
   const [isVisible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
-    navigation.navigate('Home_Overlay');
+    setVisible(!isVisible);
   };
+
   console.log(navigation);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
@@ -36,7 +37,10 @@ const Header = ({ isHome, navigation }) => {
       ) : (
         <></>
       )}
-    </View>
+      <Overlay close={toggleOverlay} visible={isVisible}>
+          <Text>Hello</Text>
+      </Overlay>
+    </SafeAreaView>
   );
 };
 
