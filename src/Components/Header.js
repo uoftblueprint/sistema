@@ -38,7 +38,7 @@ const Header = ({ isHome, navigation }) => {
         <></>
       )}
       <Overlay close={toggleOverlay} visible={isVisible}>
-          <Text>Hello</Text>
+        <Text>Hello</Text>
       </Overlay>
     </SafeAreaView>
   );
