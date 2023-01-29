@@ -6,8 +6,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import { Overlay } from '@rneui/themed';
-import SistemaLogo from '../../assets/SistemaLogo.svg';
+import SistemaLogo from '../../assets/sistemaLogo.svg';
 import OptionIcon from '../../assets/OptionIcon.svg';
 import QuestionMark from '../../assets/questionMark.svg';
 import SistemaOverlay from './SistemaOverlay';
