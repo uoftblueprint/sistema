@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'black',
-    fontSize: 26,
+    fontSize: 24,
     fontFamily: 'Poppins',
     marginTop: '5%',
     fontWeight: '900'
