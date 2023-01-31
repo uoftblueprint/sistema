@@ -6,15 +6,11 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeNavigator from './src/home/HomeNavigator';
 import {
   useSafeAreaInsets,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
-<<<<<<< HEAD
-=======
 import HomeNavigator from './src/home/HomeNavigator';
->>>>>>> 54b5ce3084d135d1485a9059e801d30c58c955c0
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 import Home from './src/home/Home';
@@ -78,10 +74,7 @@ const MainNavigator = () => {
           component={HomeNavigator}
           options={{
             tabBarShowLabel: false,
-<<<<<<< HEAD
             headerShown: false,
-=======
->>>>>>> 54b5ce3084d135d1485a9059e801d30c58c955c0
             tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
           }}
         />

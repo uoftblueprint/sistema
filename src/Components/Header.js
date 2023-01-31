@@ -38,7 +38,8 @@ const Header = ({ isHome, navigation }) => {
         <></>
       )}
       <Overlay close={toggleOverlay} visible={isVisible}>
-        <Text>Hello</Text>
+        <Text style={styles.textHeader}>How activity cards are named</Text>
+        <Text>x, y, z - Ask Alex to write this</Text>
       </Overlay>
     </SafeAreaView>
   );
@@ -72,6 +73,10 @@ const styles = StyleSheet.create({
   },
   questionMarkIcon: {
     marginRight: '3%'
+  },
+  textHeader: {
+    fontFamily: 'Poppins',
+    fontWeight: 'bold'
   }
 });
 
