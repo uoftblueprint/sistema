@@ -11,6 +11,10 @@ import {
   useSafeAreaInsets,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
+<<<<<<< HEAD
+=======
+import HomeNavigator from './src/home/HomeNavigator';
+>>>>>>> 54b5ce3084d135d1485a9059e801d30c58c955c0
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 import Home from './src/home/Home';
@@ -21,7 +25,7 @@ import LessonPlanEditorNavIcon from './assets/LessonPlanEditorNavIcon.svg';
 
 
 const STACK_SCREENS = {
-  HOME: 'HomePage',
+  HOME: 'Home Page',
   EDITOR: 'LessonPlanEditor',
   LIBRARY: 'Library',
 };
@@ -67,13 +71,17 @@ const MainNavigator = () => {
             height: 60 + insets.bottom,
             backgroundColor: '#B8CFE4'
           },
+          headerShown: false
         }}>
         <Tab.Screen
           name={STACK_SCREENS.HOME}
-          component={Home}
+          component={HomeNavigator}
           options={{
             tabBarShowLabel: false,
+<<<<<<< HEAD
             headerShown: false,
+=======
+>>>>>>> 54b5ce3084d135d1485a9059e801d30c58c955c0
             tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
           }}
         />
@@ -82,7 +90,6 @@ const MainNavigator = () => {
           component={EditorNavigator}
           options={{
             tabBarShowLabel: false,
-            headerShown: true,
             tabBarIcon: ({ focused }) =>
               tabIcon(LessonPlanEditorNavIcon, focused)
           }}
@@ -92,7 +99,6 @@ const MainNavigator = () => {
           component={Library}
           options={{
             tabBarShowLabel: false,
-            headerShown: true,
             tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused),
           }}
         />
