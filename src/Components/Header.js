@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
+import SistemaButton from '../Components/SistemaButton'
 import SistemaLogo from '../../assets/SistemaLogo.svg';
 import OptionIcon from '../../assets/OptionIcon.svg';
 import QuestionMark from '../../assets/questionMark.svg';
@@ -37,9 +38,14 @@ const Header = ({ isHome, navigation }) => {
       ) : (
         <></>
       )}
-      <Overlay close={toggleOverlay} visible={isVisible}>
+      <Overlay close={toggleOverlay} visible={isVisible} style={styles.overlayStyle}>
         <Text style={styles.textHeader}>How activity cards are named</Text>
-        <Text>x, y, z - Ask Alex to write this</Text>
+        <Text style={styles.textBody}>x, y, z - Ask Alex to write this</Text>
+        <View style={styles.buttonStyle}>
+          <SistemaButton onPress={toggleOverlay} style={{minWidth: '30%'}}>
+            <Text> Okay </Text>
+          </SistemaButton>
+        </View>
       </Overlay>
     </SafeAreaView>
   );
@@ -76,7 +82,24 @@ const styles = StyleSheet.create({
   },
   textHeader: {
     fontFamily: 'Poppins',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginBottom: '5%'
+  },
+  textBody: {
+    fontFamily: 'Mulish-Regular',
+    marginBottom: '5%'
+  },
+  overlayStyle: {
+    minHeight: '30%',
+    paddingHorizontal: '5%'
+  },
+  buttonStyle: {
+    position: 'absolute',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    left: 0,
+    right: 0,
+    top: '95%'
   }
 });
 

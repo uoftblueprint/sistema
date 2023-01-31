@@ -14,7 +14,7 @@ const Button = props => {
       break;
   }
   return (
-    <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
+    <TouchableOpacity style={[styles.buttonContainer, props.style]} onPress={props.onPress}>
       {props.children}
     </TouchableOpacity>
   );
