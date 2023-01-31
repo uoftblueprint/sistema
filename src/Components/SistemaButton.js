@@ -1,35 +1,38 @@
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import AppColors from '../AppColors.config';
+import React from 'react';
+import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-/**
- *
- * @param {onPress: function that listens to click event} props
- * @returns
- */
-
-const SistemaButton = props => {
+const Button = props => {
+  switch (props.color) {
+    case 'blue':
+      styles.buttonContainer.backgroundColor = '#B8CFE4';
+      break;
+    case 'purple':
+      styles.buttonContainer.backgroundColor = '#68577760';
+      break;
+    default:
+      styles.buttonContainer.backgroundColor = '#68577760';
+      break;
+  }
   return (
-    <View>
-      <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
-        {props.children}
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
+      {props.children}
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    borderRadius: 5,
-    backgroundColor: 'rgba(	134, 87, 119, 0.3)',
-    alignContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignSelf: 'center',
-    paddingHorizontal: '4%',
-    paddingVertical: '2%',
-    borderColor: 'black',
-    borderWidth: 0.5
+    alignItems: 'center',
+    backgroundColor: '',
+    borderWidth: 0.77,
+    borderRadius: 6,
+    borderColor: '#453E3D',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    alignSelf: 'center'
   }
 });
 
-export default SistemaButton;
+export default Button;
