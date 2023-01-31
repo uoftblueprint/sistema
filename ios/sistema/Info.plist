@@ -71,11 +71,6 @@
 		<string>Poppins-SemiBoldItalic.ttf</string>
 		<string>Poppins-Thin.ttf</string>
 		<string>Poppins-ThinItalic.ttf</string>
-<<<<<<< HEAD
-		<string>Mulish-Italic.ttf</string>
-		<string>Mulish-Regular.ttf</string>
-		<string>Roboto-Regular.ttf</string>
-=======
 		<string>Mulish-Black.ttf</string>
 		<string>Mulish-BlackItalic.ttf</string>
 		<string>Mulish-Bold.ttf</string>
@@ -92,7 +87,6 @@
 		<string>Mulish-Regular.ttf</string>
 		<string>Mulish-SemiBold.ttf</string>
 		<string>Mulish-SemiBoldItalic.ttf</string>
->>>>>>> 483dea8372c50af7c23e45ac3be3cc77367bb198
 	</array>
 </dict>
 </plist>

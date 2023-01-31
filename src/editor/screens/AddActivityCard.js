@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import TagFilter from '../components/TagFilter';
 import BackArrow from '../../../assets/backArrow.svg';
-import { Searchbar } from 'react-native-paper';
+// import { Searchbar } from 'react-native-paper';
+import Searchbar from '../components/Searchbar';
 
 const TAGS = [
   'Warm Up',
@@ -45,8 +46,7 @@ const AddActivityCard = function () {
           placeholder="Search by title or keyword"
           onChangeText={onChangeSearch}
           value={searchQuery}
-          icon={require('../../../assets/search.png')}
-          style={{ backgroundColor: 'white', marginTop: '3%' }}
+          placeholderText
         />
       </View>
     </SafeAreaView>
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    width: '100%'
+    width: '100%',
+    backgroundColor: '#FFFAF5'
   },
   tagContainer: {
     flexDirection: 'row',
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'black',
-    fontSize: 22,
+    fontSize: 26,
     fontFamily: 'Poppins',
     marginTop: '5%',
     fontWeight: '900'
@@ -80,18 +81,18 @@ const styles = StyleSheet.create({
   backText: {
     color: 'black',
     fontSize: 18,
-    fontFamily: 'Roboto-Regular'
+    fontFamily: 'Mulish-Regular'
   },
   backButton: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: '30%',
+    marginTop: '10%',
     width: '20%',
     justifyContent: 'space-evenly'
   },
   paddingHorizontal: {
-    paddingHorizontal: '3%'
+    paddingHorizontal: '5%'
   }
 });
 
