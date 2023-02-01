@@ -9,14 +9,14 @@ const LessonPlanHeader = () => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity>
-        <BackArrow />
+        <BackArrow height={25} width={25}/>
       </TouchableOpacity>
       <Text style={styles.title}>Lesson Plan Name</Text>
       <TouchableOpacity>
-        <EditIcon />
+        <EditIcon height={25} width={25} />
       </TouchableOpacity>
       <TouchableOpacity>
-        <Menu />
+        <Menu height={25} width={25}/>
       </TouchableOpacity>
     </SafeAreaView>
   );

@@ -14,9 +14,9 @@ import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
 
-import LibraryNavIcon from './assets/LibraryNavIcon.svg';
-import HomeNavIcon from './assets/HomeNavIcon.svg';
-import LessonPlanEditorNavIcon from './assets/LessonPlanEditorNavIcon.svg';
+import LibraryNavIcon from './assets/libraryNavIcon.svg';
+import HomeNavIcon from './assets/homeNavIcon.svg';
+import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
 
 const STACK_SCREENS = {
   HOME: 'Home Page',

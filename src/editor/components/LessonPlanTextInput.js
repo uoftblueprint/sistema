@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity
 } from 'react-native';
-import AddIcon from '../../../assets/AddIcon';
+import AddIcon from '../../../assets/add';
 
 const LessonPlanTextInput = ({ placeholder }) => {
   const [text, onChangeText] = React.useState(placeholder);
@@ -14,7 +14,7 @@ const LessonPlanTextInput = ({ placeholder }) => {
   return (
     <SafeAreaView style={styles.SectionStyle}>
       <TouchableOpacity>
-        <AddIcon style={styles.ImageStyle} />
+        <AddIcon height={25} width={25} style={styles.ImageStyle} />
       </TouchableOpacity>
       <TextInput
         style={styles.input}

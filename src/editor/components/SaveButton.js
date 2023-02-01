@@ -6,7 +6,7 @@ const SaveButton = () => {
   return (
     <SafeAreaView>
       <TouchableOpacity style={[styles.buttonContainer]}>
-        <SaveIcon />
+        <SaveIcon height={20} width={20}/>
         <Text style={styles.textContainer}>Save plan</Text>
       </TouchableOpacity>
     </SafeAreaView>
