@@ -1,16 +1,16 @@
-import * as React from 'react';
+import { useState } from 'react';
 import {
   SafeAreaView,
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  useState
 } from 'react-native';
 import TagFilter from '../components/TagFilter';
 import BackArrow from '../../../assets/backArrow.svg';
 // import { Searchbar } from 'react-native-paper';
 import Searchbar from '../components/Searchbar';
+import { act } from 'react-test-renderer';
 
 const TAGS = [
   'Warm Up',
@@ -23,8 +23,13 @@ const TAGS = [
   'Scale'
 ];
 
+
+
 const AddActivityCard = function () {
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTags, setActiveTags] = useState([
+    false, false, false, false, false, false, false, false
+  ])
 
   const onChangeSearch = query => setSearchQuery(query);
 
@@ -39,7 +44,16 @@ const AddActivityCard = function () {
         <Text style={styles.tags}> Tags: </Text>
         <View style={styles.tagContainer}>
           {TAGS.map((tag, index) => (
-            <TagFilter key={index} tagContent={tag} />
+            <TagFilter
+              key={index}
+              tagContent={tag}
+              active={activeTags[index]}
+              onPress={() => {
+                // make a copy of the active tags
+                const newActiveTags = activeTags.slice();
+                newActiveTags[index] = !newActiveTags[index];
+                setActiveTags(newActiveTags);
+              }} />
           ))}
         </View>
         <Searchbar
