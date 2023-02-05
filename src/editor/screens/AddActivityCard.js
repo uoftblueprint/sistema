@@ -25,7 +25,7 @@ const TAGS = [
 
 
 
-const AddActivityCard = function () {
+const AddActivityCard = function ({navigation}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTags, setActiveTags] = useState([
     false, false, false, false, false, false, false, false
@@ -36,7 +36,7 @@ const AddActivityCard = function () {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.paddingHorizontal}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <BackArrow height={15} width={15} />
           <Text style={styles.backText}> Back </Text>
         </TouchableOpacity>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     fontFamily: 'Mulish-Regular',
-    marginTop: '-1%',
+    marginTop: '1%',
     marginBottom: '2%'
   },
   backText: {
