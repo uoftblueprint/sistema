@@ -16,7 +16,7 @@ const LessonPlanTextInput = ({ placeholder, isButton }) => {
   console.log(isButton);
   return (
     <SafeAreaView style={styles.SectionStyle}>
-      <TouchableOpacity>
+      <TouchableOpacity style={{marginLeft: '2%'}}>
         <AddIcon style={styles.ImageStyle} />
       </TouchableOpacity>
       {isButton ?
