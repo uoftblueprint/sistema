@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import SistemaButton from '../Components/SistemaButton'
+import SistemaButton from '../Components/SistemaButton';
 import SistemaLogo from '../../assets/SistemaLogo.svg';
 import OptionIcon from '../../assets/OptionIcon.svg';
 import QuestionMark from '../../assets/questionMark.svg';
@@ -38,11 +38,14 @@ const Header = ({ isHome, navigation }) => {
       ) : (
         <></>
       )}
-      <Overlay close={toggleOverlay} visible={isVisible} style={styles.overlayStyle}>
+      <Overlay
+        close={toggleOverlay}
+        visible={isVisible}
+        style={styles.overlayStyle}>
         <Text style={styles.textHeader}>How activity cards are named</Text>
         <Text style={styles.textBody}>x, y, z - Ask Alex to write this</Text>
         <View style={styles.buttonStyle}>
-          <SistemaButton onPress={toggleOverlay} style={{minWidth: '30%'}}>
+          <SistemaButton onPress={toggleOverlay} style={{ minWidth: '30%' }}>
             <Text> Okay </Text>
           </SistemaButton>
         </View>
