@@ -59,7 +59,6 @@ const AddActivityCard = function ({navigation, route}) {
           placeholder="Search by title or keyword"
           onChangeText={onChangeSearch}
           value={searchQuery}
-          placeholderText
         />
       </View>
     </SafeAreaView>

@@ -1,8 +1,7 @@
-import React from 'react';
 import { StyleSheet, TextInput, View, Platform } from 'react-native';
 import SearchLogo from '../../../assets/Search.svg';
 
-const Searchbar = ({ props }) => {
+const Searchbar = ({ onChangeText }) => {
   return (
     <View style={styles.container}>
       <SearchLogo style={styles.IconStyle} width={25} height={25} />
@@ -10,6 +9,7 @@ const Searchbar = ({ props }) => {
         style={styles.TextStyle}
         placeholder="Search by title or keyword"
         placeholderTextColor={'black'}
+        onChangeText={onChangeText}
       />
     </View>
   );
