@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import TagFilter from '../components/TagFilter';
 import BackArrow from '../../../assets/backArrow.svg';
-// import { Searchbar } from 'react-native-paper';
 import Searchbar from '../components/Searchbar';
 import { act } from 'react-test-renderer';
 
@@ -25,7 +24,7 @@ const TAGS = [
 
 
 
-const AddActivityCard = function ({navigation}) {
+const AddActivityCard = function ({navigation, route}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTags, setActiveTags] = useState([
     false, false, false, false, false, false, false, false
@@ -40,7 +39,7 @@ const AddActivityCard = function ({navigation}) {
           <BackArrow height={15} width={15} />
           <Text style={styles.backText}> Back </Text>
         </TouchableOpacity>
-        <Text style={styles.header}> Main Lesson Activity Card </Text>
+        <Text style={styles.header}> {route.params.header} Activity Card </Text>
         <Text style={styles.tags}> Tags: </Text>
         <View style={styles.tagContainer}>
           {TAGS.map((tag, index) => (

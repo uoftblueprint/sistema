@@ -1,14 +1,19 @@
 import React from 'react';
 import LessonPlanTextInput from './LessonPlanTextInput';
 import { Text, View, SafeAreaView, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const LessonSection = ({ subtitle }) => {
+const LessonSection = ({ subtitle, navigation }) => {
   return (
     <SafeAreaView style={styles.sectionContainer}>
       <Text style={styles.title}>{subtitle}</Text>
       <View>
         <LessonPlanTextInput placeholder={'Input text'} />
-        <LessonPlanTextInput placeholder={'Add activity cards'} />
+        <TouchableOpacity onPress={() => navigation.navigate('Add Activity Card', {
+          header: subtitle
+        })}>
+          <LessonPlanTextInput placeholder={'Add activity cards'} isButton={true} />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

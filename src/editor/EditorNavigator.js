@@ -16,12 +16,12 @@ const EditorNavigator = () => {
       intialRouteName={STACK_SCREENS.LESSON_PLAN_EDITOR}
       screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name={STACK_SCREENS.ADD_ACTIVITY_CARD}
-        component={AddActivityCard}
-      />
-      <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_EDITOR}
         component={LessonPlanEditor}
+      />
+      <Stack.Screen
+        name={STACK_SCREENS.ADD_ACTIVITY_CARD}
+        component={AddActivityCard}
       />
     </Stack.Navigator>
   );
