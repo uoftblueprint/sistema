@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(217,217,217, 0.8)',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    flex: 1
   },
   menu: {
     alignSelf: 'stretch'

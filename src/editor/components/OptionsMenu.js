@@ -1,12 +1,12 @@
 import FavoriteButton from './FavoriteButton.js';
 import OptionHeader from './OptionHeader';
 import { useState } from 'react';
-import OptionsMenuBanner from './OptionsMenuBanner.js';
+import OptionsMenuBanner from './OptionsMenuBanner';
 import ExportIcon from '../../../assets/exportIcon.svg';
 import TrashIcon from '../../../assets/trashIcon.svg';
 import HeartIcon from '../../../assets/heartIcon.svg';
 import CopyIcon from '../../../assets/copyIcon.svg';
-import OptionsMenuButton from './OptionsMenuButton.js';
+import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView } from 'react-native';
 
 const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
     alignItems: 'stretch',
     width: '100%',
-    height: '100%'
+    justifyContent: 'space-between',
+    position: 'absolute',
+    bottom: 0
   },
   menu: {
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
-    width: '100%'
+    width: '100%',
   }
 });
 export default OptionsMenu;
