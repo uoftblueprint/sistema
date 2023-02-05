@@ -9,10 +9,16 @@ const LessonSection = ({ subtitle, navigation }) => {
       <Text style={styles.title}>{subtitle}</Text>
       <View>
         <LessonPlanTextInput placeholder={'Input text'} />
-        <TouchableOpacity onPress={() => navigation.navigate('Add Activity Card', {
-          header: subtitle
-        })}>
-          <LessonPlanTextInput placeholder={'Add activity cards'} isButton={true} />
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Add Activity Card', {
+              header: subtitle
+            })
+          }>
+          <LessonPlanTextInput
+            placeholder={'Add activity cards'}
+            isButton={true}
+          />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

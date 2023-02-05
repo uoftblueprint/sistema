@@ -4,7 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import TagFilter from '../components/TagFilter';
 import BackArrow from '../../../assets/backArrow.svg';
@@ -22,20 +22,27 @@ const TAGS = [
   'Scale'
 ];
 
-
-
-const AddActivityCard = function ({navigation, route}) {
+const AddActivityCard = function ({ navigation, route }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTags, setActiveTags] = useState([
-    false, false, false, false, false, false, false, false
-  ])
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]);
 
   const onChangeSearch = query => setSearchQuery(query);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.paddingHorizontal}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
           <BackArrow height={15} width={15} />
           <Text style={styles.backText}> Back </Text>
         </TouchableOpacity>
@@ -52,7 +59,8 @@ const AddActivityCard = function ({navigation, route}) {
                 const newActiveTags = activeTags.slice();
                 newActiveTags[index] = !newActiveTags[index];
                 setActiveTags(newActiveTags);
-              }} />
+              }}
+            />
           ))}
         </View>
         <Searchbar

@@ -12,31 +12,28 @@ const LessonPlanTextInput = ({ placeholder, isButton }) => {
   const [text, onChangeText] = React.useState(placeholder);
   const [number, onChangeNumber] = React.useState(null);
 
-
   console.log(isButton);
   return (
     <SafeAreaView style={styles.SectionStyle}>
-      <TouchableOpacity style={{marginLeft: '2%'}}>
+      <TouchableOpacity style={{ marginLeft: '2%' }}>
         <AddIcon style={styles.ImageStyle} />
       </TouchableOpacity>
-      {isButton ?
+      {isButton ? (
         <Text
           style={styles.input}
           underlineColorAndroid="transparent"
-          value={number}
-          
-        >
+          value={number}>
           {placeholder}
         </Text>
-        :
+      ) : (
         <TextInput
           style={styles.input}
           underlineColorAndroid="transparent"
           onChangeText={onChangeNumber}
           value={number}
           placeholder={placeholder}
-        />}
-
+        />
+      )}
     </SafeAreaView>
   );
 };

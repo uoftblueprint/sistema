@@ -13,7 +13,7 @@ const LessonPlanEditor = ({ navigation }) => {
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
           <LessonSection navigation={navigation} subtitle={'Warm Up'} />
           <LessonSection navigation={navigation} subtitle={'Main Lesson'} />
-          <LessonSection navigation={navigation}  subtitle={'Cool Down'} />
+          <LessonSection navigation={navigation} subtitle={'Cool Down'} />
           <LessonPlanNotes subtitle={'Notes'} />
           <SaveButton />
         </View>
