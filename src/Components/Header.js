@@ -11,10 +11,7 @@ import OptionIcon from '../../assets/optionIcon.svg';
 import InfoIcon from '../../assets/infoIcon.svg';
 import GearIcon from '../../assets/gearIcon.svg';
 
-
-
-const Header = ({ navigation, showInfoIcon}) => {
-
+const Header = ({ navigation, showInfoIcon }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -22,9 +19,9 @@ const Header = ({ navigation, showInfoIcon}) => {
       </View>
 
       <TouchableOpacity style={styles.settingContainer}>
-        {showInfoIcon &&
-         <InfoIcon width={30} height={30} style={styles.settingIcon} 
-         />}
+        {showInfoIcon && (
+          <InfoIcon width={30} height={30} style={styles.settingIcon} />
+        )}
         <GearIcon width={30} height={30} style={styles.settingIcon} />
       </TouchableOpacity>
     </View>

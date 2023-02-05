@@ -13,7 +13,7 @@ import LessonPlanButton from './components/LessonPlanButton';
 const Library = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header showInfoIcon={false}/>
+      <Header showInfoIcon={false} />
       <SafeAreaView style={styles.inlineTitle}>
         <Text style={styles.title}>Lesson Plans</Text>
         <TouchableOpacity>
