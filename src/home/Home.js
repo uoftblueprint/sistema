@@ -13,7 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <Header />
+      <Header showInfoIcon={true}/>
       <ScrollView>
         <SafeAreaView>
           <Text style={styles.title}>Recently added activity cards</Text>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     fontStyle: 'italic',
-    marginLeft:  '8%',
+    marginLeft: '8%',
     letterSpacing: 0.3,
     width: '55%',
     paddingBottom: '1%'
