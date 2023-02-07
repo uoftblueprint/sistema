@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity
-} from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import SistemaLogo from '../../assets/sistemaLogo.svg';
 import OptionIcon from '../../assets/OptionIcon.svg';
 
