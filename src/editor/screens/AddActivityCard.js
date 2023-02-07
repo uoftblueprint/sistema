@@ -9,7 +9,7 @@ import {
 import TagFilter from '../components/TagFilter';
 import BackArrow from '../../../assets/backArrow.svg';
 import Searchbar from '../components/Searchbar';
-import { act } from 'react-test-renderer';
+// import { act } from 'react-test-renderer';
 
 const TAGS = [
   'Warm Up',

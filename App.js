@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Platform, StatusBar } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,
-  useNavigationContainerRef,
+  useNavigationContainerRef
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   useSafeAreaInsets,
-  SafeAreaProvider,
+  SafeAreaProvider
 } from 'react-native-safe-area-context';
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
@@ -21,7 +21,7 @@ import LessonPlanEditorNavIcon from './assets/LessonPlanEditorNavIcon.svg';
 const STACK_SCREENS = {
   HOME: 'Home Page',
   EDITOR: 'LessonPlanEditor',
-  LIBRARY: 'Library',
+  LIBRARY: 'Library'
 };
 
 const tabIcon = (iconSVG, isFocused) => {
@@ -40,7 +40,7 @@ const tabIcon = (iconSVG, isFocused) => {
         <View
           style={[
             styles.underline,
-            { backgroundColor: isFocused ? tabColor : '#B8CFE4' },
+            { backgroundColor: isFocused ? tabColor : '#B8CFE4' }
           ]}
         />
       }
@@ -72,7 +72,7 @@ const MainNavigator = () => {
           component={HomeNavigator}
           options={{
             tabBarShowLabel: false,
-            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
+            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused)
           }}
         />
         <Tab.Screen
@@ -89,7 +89,7 @@ const MainNavigator = () => {
           component={Library}
           options={{
             tabBarShowLabel: false,
-            tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused),
+            tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused)
           }}
         />
       </Tab.Navigator>
@@ -100,14 +100,14 @@ const MainNavigator = () => {
 const styles = StyleSheet.create({
   underline: {
     width: 50,
-    height: 2,
+    height: 2
   },
   container: {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingTop: 20,
-    paddingBottom: Platform.OS === 'ios' ? 0 : 17,
+    paddingBottom: Platform.OS === 'ios' ? 0 : 17
   }
 });
 
