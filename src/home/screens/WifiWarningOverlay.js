@@ -40,7 +40,9 @@ const styles = StyleSheet.create({
     fontSize: 17
   },
   buttonText: {
-    color: 'black'
+    color: 'black',
+    fontSize: 13,
+    fontFamily: 'Mulish-Regular'
   },
   container: {
     display: 'flex',
