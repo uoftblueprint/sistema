@@ -17,9 +17,9 @@ export class AccessToken {
  * @property {Module[]} warmUp warmUp module of the lesson
  * @property {Module[]} mainLesson mainLesson module of the lesson
  * @property {Module[]} coolDown coolDown module of the lesson
- * @property {string} notes notes, containing strings 
+ * @property {string} notes notes, containing strings
  */
- export class LessonPlan {
+export class LessonPlan {
   constructor(name, warmUp, mainLesson, coolDown, notes) {
     this.name = name;
     this.warmUp = warmUp;
@@ -33,7 +33,7 @@ export class AccessToken {
  * @property {string} type type of module content: "text" or "activity card"
  * @property {string} content text: string of content, activity card: "string of path to image"
  */
- export class Module {
+export class Module {
   constructor(type, content) {
     this.type = type;
     this.content = content;

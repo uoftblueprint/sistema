@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   menu: {
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
-    width: '100%',
+    width: '100%'
   }
 });
 export default OptionsMenu;
