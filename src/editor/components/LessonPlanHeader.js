@@ -1,11 +1,10 @@
-import React from 'react-native';
 import EditIcon from '../../../assets/edit.svg';
 import BackArrow from '../../../assets/backArrow.svg';
 import Menu from '../../../assets/menu.svg';
 
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 
-const LessonPlanHeader = () => {
+const LessonPlanHeader = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity>
@@ -15,7 +14,12 @@ const LessonPlanHeader = () => {
       <TouchableOpacity>
         <EditIcon height={25} width={25} />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Lesson_Plan_Editor_Menu', {
+            isLessonPlanEditor: true
+          })
+        }>
         <Menu height={25} width={25} />
       </TouchableOpacity>
     </SafeAreaView>
