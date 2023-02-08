@@ -7,13 +7,13 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Header from '../Components/Header';
-import FilterGraphic from '../../assets/filter-outline.svg';
+import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 
 const Library = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
+      <Header showInfoIcon={false} />
       <SafeAreaView style={styles.inlineTitle}>
         <Text style={styles.title}>Lesson Plans</Text>
         <TouchableOpacity>

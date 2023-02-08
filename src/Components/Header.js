@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import SistemaLogo from '../../assets/sistemaLogo.svg';
-import OptionIcon from '../../assets/OptionIcon.svg';
+import OptionIcon from '../../assets/optionIcon.svg';
+import InfoIcon from '../../assets/infoIcon.svg';
+import GearIcon from '../../assets/gearIcon.svg';
 
-const Header = ({ navigation }) => {
+const Header = ({ navigation, showInfoIcon }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -11,7 +13,10 @@ const Header = ({ navigation }) => {
       </View>
 
       <TouchableOpacity style={styles.settingContainer}>
-        <OptionIcon width={30} height={30} style={styles.settingIcon} />
+        {showInfoIcon && (
+          <InfoIcon width={30} height={30} style={styles.settingIcon} />
+        )}
+        <GearIcon width={30} height={30} style={styles.settingIcon} />
       </TouchableOpacity>
     </View>
   );
@@ -38,10 +43,13 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     marginRight: '2%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   settingIcon: {
-    margin: 'auto'
+    margin: 'auto',
+    marginHorizontal: 7,
+    marginBottom: 8
   }
 });
 
