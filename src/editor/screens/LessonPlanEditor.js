@@ -8,12 +8,12 @@ import SaveButton from '../components/SaveButton.js';
 const LessonPlanEditor = ({ navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
-      <LessonPlanHeader />
+      <LessonPlanHeader navigation={navigation} />
       <ScrollView style={styles.scrollView}>
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-          <LessonSection subtitle={'Warm Up'} />
-          <LessonSection subtitle={'Main Lesson'} />
-          <LessonSection subtitle={'Cool Down'} />
+          <LessonSection navigation={navigation} subtitle={'Warm Up'} />
+          <LessonSection navigation={navigation} subtitle={'Main Lesson'} />
+          <LessonSection navigation={navigation} subtitle={'Cool Down'} />
           <LessonPlanNotes subtitle={'Notes'} />
           <SaveButton />
         </View>
