@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     fontStyle: 'italic',
-    marginLeft:  '8%',
+    marginLeft: '8%',
     letterSpacing: 0.3,
     width: '55%',
     paddingBottom: '1%'
