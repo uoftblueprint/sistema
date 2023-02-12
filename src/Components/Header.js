@@ -21,7 +21,6 @@ const Header = ({ isHome, navigation }) => {
   };
 
   console.log(navigation);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
