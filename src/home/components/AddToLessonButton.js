@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8
   },
   textContainer: {
+    fontFamily: 'Mulish',
     color: '#000',
     fontWeight: '400',
     fontSize: 13

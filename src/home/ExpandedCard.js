@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#453E3D',
+    fontFamily: 'Poppins',
     fontSize: 20,
     fontWeight: '700',
     width: '60%',

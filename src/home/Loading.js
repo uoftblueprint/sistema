@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   },
   //add 'Poppins' font
   appname: {
+    fontFamily: 'Poppins',
     paddingTop: '4%', // add space above the text
     color: '#000000',
     fontSize: 42,
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     lineHeight: 63
   },
   visionStatement: {
+    fontFamily: 'Poppins',
     paddingTop: '4%', // add space above the text
     color: '#000000',
     fontSize: 23,

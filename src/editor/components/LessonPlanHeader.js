@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   title: {
     color: '#000',
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '700',
+    fontFamily: 'Poppins',
     paddingRight: 15,
     letterSpacing: 0.3
   }

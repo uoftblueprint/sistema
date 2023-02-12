@@ -46,7 +46,9 @@ const styles = StyleSheet.create({
     // background color must be set
   },
   TextStyle: {
-    fontFamily: 'Mulish-Italic',
+    fontFamily: 'Mulish',
+    fontWeight: '400',
+    fontStyle: 'italic',
     width: '100%',
     fontSize: 17
   },

@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
   title: {
     color: '#20232a',
     fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'Poppins-Light',
+    fontWeight: '700',
+    fontFamily: 'Poppins',
     letterSpacing: 0.3,
     marginBottom: 10,
     lineHeight: 28

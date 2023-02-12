@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     width: '70%',
     paddingLeft: '5%',
     color: 'rgba(0,0,0, 0.87)',
+    fontFamily: 'Poppins',
     fontWeight: '700',
     fontSize: 20,
     lineHeight: 60

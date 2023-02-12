@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#453E3D',
+    fontFamily: 'Poppins',
     fontWeight: '700',
     fontSize: 25,
     marginHorizontal: 30,
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: '#453E3D',
+    fontFamily: 'Mulish',
     fontWeight: '400',
     fontSize: 16,
     fontStyle: 'italic',
