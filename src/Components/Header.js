@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import SistemaButton from '../Components/SistemaButton';
 import SistemaLogo from '../../assets/sistemaLogo.svg';
-import OptionIcon from '../../assets/optionIcon.svg';
 import InfoIcon from '../../assets/infoIcon.svg';
 import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';
@@ -28,11 +27,12 @@ const Header = ({ isHome, navigation }) => {
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
+      <TouchableOpacity style={styles.settingContainer}>
+        <GearIcon width={30} height={30} style={styles.settingIcon}/>
+      </TouchableOpacity>
       {isHomePage ? (
-        <TouchableOpacity
-          style={styles.helpIcon}
-          onPress={toggleOverlay}>
-          <GearIcon height={30} width={30} />
+        <TouchableOpacity style={styles.helpIcon} onPress={toggleOverlay}>
+          <InfoIcon height={33} width={33} />
         </TouchableOpacity>
       ) : (
         <></>
@@ -74,8 +74,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     marginRight: '3%',
-    justifyContent: 'center',
-    flexDirection: 'row'
+    justifyContent: 'center'
   },
   settingIcon: {
     margin: 'auto'
@@ -103,11 +102,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: '95%'
-  }
-  settingIcon: {
-    margin: 'auto',
-    marginHorizontal: 7,
-    marginBottom: 8
   }
 });
 
