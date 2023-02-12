@@ -13,7 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <Header isHome={true} navigation={navigation} showInfoIcon={true} />
+      <Header isHome={true} navigation={navigation} />
       <ScrollView>
         <SafeAreaView>
           <Text style={styles.title}>Recently added activity cards</Text>
