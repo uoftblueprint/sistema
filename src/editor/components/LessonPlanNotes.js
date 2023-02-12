@@ -20,12 +20,9 @@ const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
               store.dispatch(
                 addToNote({ section: sectionType, content: e.nativeEvent.text })
               );
-            }
-            else {
+            } else {
               setSectionContent(placeholder);
-              store.dispatch(
-                removeNote()
-              );
+              store.dispatch(removeNote());
             }
           }}
         />
@@ -76,7 +73,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
-    elevation: 5,  
+    elevation: 5,
     marginBottom: 20,
   },
 });

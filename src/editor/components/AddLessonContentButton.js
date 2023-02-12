@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     elevation: 7,
     marginVertical: 6,
     paddingHorizontal: 10,
-    
   },
   ImageStyle: {
     paddingLeft: 50,

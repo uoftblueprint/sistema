@@ -6,16 +6,19 @@ import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 
 const LessonPlanEditor = ({ navigation }) => {
-
   return (
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
-      <LessonPlanHeader/>
+      <LessonPlanHeader />
       <ScrollView style={styles.scrollView}>
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
           <LessonSection sectionType={'warmUp'} subtitle={'Warm Up'} />
           <LessonSection sectionType={'mainLesson'} subtitle={'Main Lesson'} />
           <LessonSection sectionType={'coolDown'} subtitle={'Cool Down'} />
-          <LessonPlanNotes sectionType={'notes'} subtitle={'Notes'} placeholder={""}/>
+          <LessonPlanNotes
+            sectionType={'notes'}
+            subtitle={'Notes'}
+            placeholder={''}
+          />
           <SaveButton />
         </View>
       </ScrollView>

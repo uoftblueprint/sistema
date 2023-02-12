@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingRight: 15,
     letterSpacing: 0.3,
-    fontFamily: "Poppins-ExtraBold"
+    fontFamily: 'Poppins-ExtraBold',
   }
 });
 

@@ -55,7 +55,8 @@ export const lessonPlanSlice = createSlice({
 });
 
 // Dispatch actions to "write" to redux
-export const { addToSection, removeFromSection, addToNote, removeNote} = lessonPlanSlice.actions;
+export const { addToSection, removeFromSection, addToNote, removeNote } =
+  lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
 export const getLessonSection = (state, sectionName) => {

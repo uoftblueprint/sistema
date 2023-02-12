@@ -14,37 +14,40 @@ const LessonSection = ({ sectionType, subtitle }) => {
   };
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <Text style={styles.title}>{subtitle}</Text>
       <View style={styles.sectionContainer}>
-
         {/* New textbox with prompted to insert text */}
-        {
-          isTextinputOpen &&
-          <ContentCard setisTextinputOpen={setisTextinputOpen} setSectionContent={setSectionContent} sectionContent={sectionContent} sectionType={sectionType} />
-        }
-        
+        {isTextinputOpen && (
+          <ContentCard
+            setisTextinputOpen={setisTextinputOpen}
+            setSectionContent={setSectionContent}
+            sectionContent={sectionContent}
+            sectionType={sectionType}
+          />
+
         <AddLessonContentButton
           placeholder={'Input text'}
           handleClick={handleClick}
-          style={{fontFamily: 'Poppins-Light'}}
+          style={{ fontFamily: 'Poppins-Light' }}
         />
-        <AddLessonContentButton
-          placeholder={'Add activity cards'} />
-        
+        <AddLessonContentButton placeholder={'Add activity cards'} />
+
         {/* Stack of content already inserted, available for further editing/removing */}
-        {
-          store.getState(sectionType).lessonPlan[sectionType].map((arr, i) => {
-            if (arr.content.length > 0) {
-              return (
-                <View key={i}>
-                  <StoredContent text={arr.content} index={i} setSectionContent={setSectionContent} sectionType={sectionType} />
-                </View>
-              );
-            }
+        {store.getState(sectionType).lessonPlan[sectionType].map((arr, i) => {
+          if (arr.content.length > 0) {
+            return (
+              <View key={i}>
+                <StoredContent
+                  text={arr.content}
+                  index={i}
+                  setSectionContent={setSectionContent}
+                  sectionType={sectionType}
+                />
+              </View>
+            );
           }
-        )}
-        
+        })}
       </View>
     </SafeAreaView>
   );
@@ -58,19 +61,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28,
+    lineHeight: 28
   },
   sectionContainer: {
     marginBottom: 20,
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
-    elevation: 5,  
-  }, 
+    elevation: 5
+  },
   ContentCardStyle: {
     fontFamily: 'Poppins-Light',
     flexDirection: 'row',
@@ -85,27 +88,27 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
-    elevation: 5,  
+    elevation: 5,
     ...Platform.select({
       ios: {
-        paddingVertical: 10,
+        paddingVertical: 10
       },
       android: {
-        paddingVertical: 0,
+        paddingVertical: 0
       },
       default: {
         ios: {
-          paddingVertical: 4,
-        }
-      }
+          paddingVertical: 4
+        },
+      },
     }),
     paddingHorizontal: 10,
-    marginVertical: 5,
-  },
+    marginVertical: 5
+  }
 });
 
 export default LessonSection;

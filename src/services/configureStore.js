@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-
 import authReducer from './login/authSlice';
 import lessonPlanReducer from './editor/lessonPlanSlice';
 
