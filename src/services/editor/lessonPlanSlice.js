@@ -36,7 +36,7 @@ export const lessonPlanSlice = createSlice({
       return {
         ...state,
         isDirty: true,
-        [action.payload.section]: state[section].filter((_, i) => i != indx)
+        [action.payload.section]: state[section].filter((_, i) => i !== indx)
       };
     },
     addToNote: (state, action) => {

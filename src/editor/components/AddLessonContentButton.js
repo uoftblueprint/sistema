@@ -9,13 +9,12 @@ import {
 import AddIcon from '../../../assets/AddIcon';
 
 const AddLessonContentButton = ({ placeholder, handleClick }) => {
-  const [number, onChangeNumber] = React.useState(null);
 
   return (
     <TouchableOpacity onPress={handleClick}>
       <SafeAreaView style={styles.SectionStyle}>
         <AddIcon style={styles.ImageStyle} />
-        <View style={styles.input} onChangeText={onChangeNumber}>
+        <View style={styles.input}>
           <Text>{placeholder}</Text>
         </View>
       </SafeAreaView>
@@ -31,6 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   SectionStyle: {
+    fontFamily: 'Poppins-Light',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

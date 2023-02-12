@@ -30,7 +30,6 @@ const LessonSection = ({ sectionType, subtitle }) => {
         <AddLessonContentButton
           placeholder={'Input text'}
           handleClick={handleClick}
-          style={{ fontFamily: 'Poppins-Light' }}
         />
         <AddLessonContentButton placeholder={'Add activity cards'} />
 
