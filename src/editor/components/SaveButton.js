@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   textContainer: {
     paddingLeft: 8.6,
     color: '#000',
-    fontFamily:'Mulish',
+    fontFamily: 'Mulish',
     fontWeight: '400',
     fontSize: 13
   }

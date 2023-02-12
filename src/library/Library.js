@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Poppins',
-    fontWeight: '700', 
+    fontWeight: '700',
     fontSize: 28,
     letterSpacing: 0.3,
     color: '#453E3D'
