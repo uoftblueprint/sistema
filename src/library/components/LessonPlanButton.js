@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import DotsGraphic from '../../../assets/dots.svg';
-import HeartGraphic from '../../../assets/heart-outline.svg';
+import HeartGraphic from '../../../assets/heartOutline.svg';
 
 const LessonPlanButton = props => {
   return (

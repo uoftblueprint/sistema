@@ -13,7 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <Header />
+      <Header showInfoIcon={true} />
       <ScrollView>
         <SafeAreaView>
           <Text style={styles.title}>Recently added activity cards</Text>
@@ -24,7 +24,7 @@ const Home = ({ navigation }) => {
               alignItems: 'center'
             }}>
             <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
-            <RefreshIcon style={styles.refreshIcon} />
+            <RefreshIcon height={25} width={25} style={styles.refreshIcon} />
           </SafeAreaView>
         </SafeAreaView>
 

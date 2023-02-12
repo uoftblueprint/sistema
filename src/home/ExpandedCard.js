@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import AddButton from './components/AddToLessonButton';
-import BackArrow from '../../assets/BackArrow';
+import BackArrow from '../../assets/backArrow';
 import Header from '../Components/Header';
 
 const windowWidth = Dimensions.get('window').width;
@@ -16,12 +16,12 @@ const windowHeight = Dimensions.get('window').height;
 const ExpandedCard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <Header showBackButton={true} />
+      <Header showInfoIcon={true} />
 
       <TouchableOpacity
         style={styles.backArrowContainer}
         onPress={() => navigation.goBack()}>
-        <BackArrow style={styles.backArrow} />
+        <BackArrow height={30} width={15} style={styles.backArrow} />
       </TouchableOpacity>
 
       <ScrollView>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   backArrowContainer: {
     position: 'absolute',
-    top: 30,
+    top: 20,
     bottom: 0,
     left: 25,
     right: 0

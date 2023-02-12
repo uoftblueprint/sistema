@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import AddIcon from '../../../assets/AddIcon';
+import AddIcon from '../../../assets/add';
 
 const LessonPlanTextInput = ({ placeholder, isButton }) => {
   const [text, onChangeText] = React.useState(placeholder);
@@ -16,7 +16,7 @@ const LessonPlanTextInput = ({ placeholder, isButton }) => {
   return (
     <SafeAreaView style={styles.SectionStyle}>
       <TouchableOpacity style={{ marginLeft: '2%' }}>
-        <AddIcon style={styles.ImageStyle} />
+        <AddIcon height={25} width={25} style={styles.ImageStyle} />
       </TouchableOpacity>
       {isButton ? (
         <Text
