@@ -4,7 +4,9 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
+  Platform
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import EditIcon from '../../../assets/edit.svg';
@@ -23,32 +25,33 @@ const LessonPlanName = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.SectionStyle}>
-      {isEditable ? (
-        <TextInput
-          style={styles.input}
-          value={lessonPlanName}
-          onChangeText={newText => {
-            setLessonPlanName(newText);
-          }}
-          onBlur={() => {
-            setIsEditable(false);
-          }}
-          autoFocus={true}
-        />
-      ) : (
-        <Text style={styles.input} numberOfLines={1}>
-          {lessonPlanName}
-        </Text>
-      )}
-      <TouchableOpacity>
-        <EditIcon
+      <SafeAreaView style={styles.SectionStyle}>
+        {isEditable ? (
+          <TextInput
+            style={styles.input}
+            value={lessonPlanName}
+            onChangeText={newText => {
+              setLessonPlanName(newText);
+            }}
+            onBlur={() => {
+              setIsEditable(false);
+              console.log("i'm onblur!");
+            }}
+            autoFocus={true}
+          />
+        ) : (
+          <Text style={styles.input} numberOfLines={1}>
+            {lessonPlanName}
+          </Text>
+        )}
+        <TouchableOpacity 
           onPress={() => {
             setIsEditable(true);
-          }}
-        />
-      </TouchableOpacity>
-    </SafeAreaView>
+            console.log("i'm onpress");
+        }}>
+          <EditIcon />
+        </TouchableOpacity>
+      </SafeAreaView>
   );
 };
 
@@ -59,7 +62,18 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 15,
     fontSize: 24,
-    color: '#000'
+    color: '#000',
+    ...Platform.select({
+      ios: {
+        paddingVertical: 10,
+      },
+      android: {
+        paddingVertical: 0,
+      },
+      default: {
+        paddingVertical: 4,
+      }
+    })
   },
   SectionStyle: {
     flexDirection: 'row',
