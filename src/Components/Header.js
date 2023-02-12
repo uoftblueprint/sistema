@@ -7,12 +7,13 @@ import {
   TouchableOpacity
 } from 'react-native';
 import SistemaButton from '../Components/SistemaButton';
-import SistemaLogo from '../../assets/SistemaLogo.svg';
-import OptionIcon from '../../assets/OptionIcon.svg';
-import QuestionMark from '../../assets/questionMark.svg';
+import SistemaLogo from '../../assets/sistemaLogo.svg';
+import OptionIcon from '../../assets/optionIcon.svg';
+import InfoIcon from '../../assets/infoIcon.svg';
+import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';
 
-const Header = ({ isHome, navigation }) => {
+const Header = ({ isHome, navigation, showInfoIcon }) => {
   const [isHomePage, setHomePage] = useState(isHome);
   const [isVisible, setVisible] = useState(false);
 
@@ -21,13 +22,17 @@ const Header = ({ isHome, navigation }) => {
   };
 
   console.log(navigation);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
       <TouchableOpacity style={styles.settingContainer}>
-        <OptionIcon width={30} height={30} style={styles.settingIcon} />
+        {showInfoIcon && (
+          <InfoIcon width={30} height={30} style={styles.settingIcon} />
+        )}
+        <GearIcon width={30} height={30} style={styles.settingIcon} />
       </TouchableOpacity>
       {isHomePage ? (
         <TouchableOpacity
@@ -75,7 +80,8 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     marginRight: '3%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   settingIcon: {
     margin: 'auto'
@@ -103,6 +109,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: '95%'
+  }
+  settingIcon: {
+    margin: 'auto',
+    marginHorizontal: 7,
+    marginBottom: 8
   }
 });
 
