@@ -16,8 +16,8 @@ import Library from './src/library/Library';
 import Home from './src/home/Home';
 
 import LibraryNavIcon from './assets/libraryNavIcon.svg';
-import HomeNavIcon from './assets/homeNavIcon.svg';
-import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
+import HomeNavIcon from './assets/HomeIcon';
+import LessonPlanEditorNavIcon from './assets/add.svg';
 
 
 const STACK_SCREENS = {
