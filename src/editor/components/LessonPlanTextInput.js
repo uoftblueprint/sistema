@@ -3,26 +3,37 @@ import {
   SafeAreaView,
   StyleSheet,
   TextInput,
+  Text,
   TouchableOpacity
 } from 'react-native';
-import AddIcon from '../../../assets/AddIcon';
+import AddIcon from '../../../assets/add';
 
-const LessonPlanTextInput = ({ placeholder }) => {
+const LessonPlanTextInput = ({ placeholder, isButton }) => {
   const [text, onChangeText] = React.useState(placeholder);
   const [number, onChangeNumber] = React.useState(null);
 
+  console.log(isButton);
   return (
     <SafeAreaView style={styles.SectionStyle}>
-      <TouchableOpacity>
-        <AddIcon style={styles.ImageStyle} />
+      <TouchableOpacity style={{ marginLeft: '2%' }}>
+        <AddIcon height={25} width={25} style={styles.ImageStyle} />
       </TouchableOpacity>
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder={placeholder}
-      />
+      {isButton ? (
+        <Text
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          value={number}>
+          {placeholder}
+        </Text>
+      ) : (
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          onChangeText={onChangeNumber}
+          value={number}
+          placeholder={placeholder}
+        />
+      )}
     </SafeAreaView>
   );
 };
