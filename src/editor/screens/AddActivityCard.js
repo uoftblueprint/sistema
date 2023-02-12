@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontWeight: '400'
   },
   backButton: {
     flexWrap: 'wrap',
