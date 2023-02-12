@@ -1,116 +1,50 @@
 import React, { useState } from 'react';
-import LessonPlanTextInput from './LessonPlanTextInput';
-import { Text, View, SafeAreaView, Platform, StyleSheet, TextInput } from 'react-native';
-import { useDispatch } from 'react-redux';
-import {
-  addToSection,
-  removeFromSection,
-} from '../../services/editor/lessonPlanSlice';
+import AddLessonContentButton from './AddLessonContentButton';
+import { Text, View, SafeAreaView, Platform, StyleSheet } from 'react-native';
 import store from '../../services/configureStore';
+import ContentCard from './ContentCard';
+import StoredContent from './StoredContent';
 
 const LessonSection = ({ sectionType, subtitle }) => {
   const [sectionContent, setSectionContent] = useState([]);
-  // const sectionContent = [
-  //   {
-  //     section: "warmup",
-  //     content: "warmup content",
-  //   }
-  // ]
   const [sectionActivityCards, setSectionActivityCards] = useState([]);
-  const [clicked, setClicked] = useState(false);
-  const dispatch = useDispatch();
+  const [isTextinputOpen, setisTextinputOpen] = useState(false);
   const handleClick = () => {
-    setClicked(true);
-  };
-
-  const ContentCard = () => {
-    return (
-      clicked && (
-        <View style={styles.ContentCardStyle}>
-          <TextInput
-            multiline
-            placeholder={'Add Text'}
-            returnKeyType="next"
-            onSubmitEditing={e => {
-              if (e.nativeEvent.text) {
-                setSectionContent([...sectionContent, e.nativeEvent.text]);
-                store.dispatch(
-                  addToSection({
-                    type: 'text',
-                    section: sectionType,
-                    content: e.nativeEvent.text,
-                  })
-                );
-              }
-              setClicked(false);
-            }}
-          />
-        </View>
-      )
-    );
-  };
-
-  const StoredContent = ({ text, index }) => {
-    const [newText, setnewText] = useState(text);
-    return (
-      <View style={styles.ContentCardStyle}>
-        <TextInput
-          multiline
-          defaultValue={text}
-          onChangeText={txt => setnewText(txt)}
-          returnKeyType="next"
-          onSubmitEditing={e => {
-            //if (!e.nativeEvent.text) {
-            setSectionContent(state => {
-              newContent = [...state];
-              //delete the content from section content state when empty
-              newContent = newContent.filter((_, i) => i != index);
-              store.dispatch(
-                removeFromSection({
-                  type: 'text',
-                  section: sectionType,
-                  content: text,
-                })
-              );
-              // if the content isn't empty, add the edited content to store and newContent
-              if (e.nativeEvent.text) {
-                newContent[index] = e.nativeEvent.text;
-                store.dispatch(
-                  addToSection({
-                    type: 'text',
-                    section: sectionType,
-                    content: e.nativeEvent.text,
-                  })
-                );
-              }
-              return newContent;
-            });
-          }}
-        />
-      </View>
-    );
+    setisTextinputOpen(true);
   };
 
   return (
     <SafeAreaView >
       <Text style={styles.title}>{subtitle}</Text>
       <View style={styles.sectionContainer}>
-        <ContentCard />
-        <LessonPlanTextInput
+
+        {/* New textbox with prompted to insert text */}
+        {
+          isTextinputOpen &&
+          <ContentCard setisTextinputOpen={setisTextinputOpen} setSectionContent={setSectionContent} sectionContent={sectionContent} sectionType={sectionType} />
+        }
+        
+        <AddLessonContentButton
           placeholder={'Input text'}
           handleClick={handleClick}
           style={{fontFamily: 'Poppins-Light'}}
         />
-        <LessonPlanTextInput placeholder={'Add activity cards'} />
-        {sectionContent.map((c, i) => {
-          if (c) {
-            return (
-              <View key={i}>
-                <StoredContent text={c} index={i} />
-              </View>
-            );
+        <AddLessonContentButton
+          placeholder={'Add activity cards'} />
+        
+        {/* Stack of content already inserted, available for further editing/removing */}
+        {
+          store.getState(sectionType).lessonPlan[sectionType].map((arr, i) => {
+            if (arr.content.length > 0) {
+              return (
+                <View key={i}>
+                  <StoredContent text={arr.content} index={i} setSectionContent={setSectionContent} sectionType={sectionType} />
+                </View>
+              );
+            }
           }
-        })}
+        )}
+        
       </View>
     </SafeAreaView>
   );
@@ -136,7 +70,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 5,  
-  },
+  }, 
   ContentCardStyle: {
     fontFamily: 'Poppins-Light',
     flexDirection: 'row',

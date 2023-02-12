@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Text, SafeAreaView, StyleSheet, TextInput } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { addToNote } from '../../services/editor/lessonPlanSlice';
+import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 
-const LessonPlanNotes = ({ sectionType, subtitle }) => {
-  const [sectionContent, setSectionContent] = useState();
-  const dispatch = useDispatch();
+const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
+  const [sectionContent, setSectionContent] = useState(placeholder);
 
   return (
     <SafeAreaView>
@@ -15,13 +13,18 @@ const LessonPlanNotes = ({ sectionType, subtitle }) => {
         <TextInput
           multiline
           placeholder={'Add lesson notes here'}
-          defaultValue={sectionContent}
           returnKeyType="next"
-          onSubmitEditing={e => {
+          onEndEditing={e => {
             if (e.nativeEvent.text) {
               setSectionContent(e.nativeEvent.text);
               store.dispatch(
                 addToNote({ section: sectionType, content: e.nativeEvent.text })
+              );
+            }
+            else {
+              setSectionContent(placeholder);
+              store.dispatch(
+                removeNote()
               );
             }
           }}

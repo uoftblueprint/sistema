@@ -6,14 +6,6 @@ import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 
 const LessonPlanEditor = ({ navigation }) => {
-  // const [object, setObject] = useState({
-  //   warmup: [],
-  //   mainlesson: [],
-  //   cooldown: []
-  // })
-  // setObject(
-  //   {...object, warmup: ['first warmup', 'second warmup']}
-  // )
 
   return (
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
@@ -23,7 +15,7 @@ const LessonPlanEditor = ({ navigation }) => {
           <LessonSection sectionType={'warmUp'} subtitle={'Warm Up'} />
           <LessonSection sectionType={'mainLesson'} subtitle={'Main Lesson'} />
           <LessonSection sectionType={'coolDown'} subtitle={'Cool Down'} />
-          <LessonPlanNotes sectionType={'notes'} subtitle={'Notes'} />
+          <LessonPlanNotes sectionType={'notes'} subtitle={'Notes'} placeholder={""}/>
           <SaveButton />
         </View>
       </ScrollView>

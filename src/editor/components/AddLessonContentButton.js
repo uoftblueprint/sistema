@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import AddIcon from '../../../assets/AddIcon';
 
-const LessonPlanTextInput = ({ placeholder, handleClick }) => {
+const AddLessonContentButton = ({ placeholder, handleClick }) => {
   const [number, onChangeNumber] = React.useState(null);
 
   return (
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LessonPlanTextInput;
+export default AddLessonContentButton;

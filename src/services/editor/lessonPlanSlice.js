@@ -2,22 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const lessonPlanSlice = createSlice({
   name: 'lessonPlan',
-  // initialState: {
-  //   warmUp: [{type: "text", content: "C-minor, F-sharp"}, {type: "activityCard", content:"/path/to/activityCard"}]
-  //   mainLesson: [],
-  //   coolDown: [],
-  //   notes: "Remember to take attendance",
-  //   isDirty: false
-  // }
   initialState: {
-    warmUp: [], // [{type: "", content: ""}
+    warmUp: [], // [{type: "text", content: "..."} where type: "text" or "activityCard"
     mainLesson: [],
     coolDown: [],
     notes: '',
     isDirty: false // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {
-    // addToSection - take in section name, type of content, and content
     addToSection: (state, action) => {
       // action.payload: {
       //     section: SectionName.coolDown,
@@ -50,15 +42,20 @@ export const lessonPlanSlice = createSlice({
     addToNote: (state, action) => {
       return {
         ...state,
-        [action.payload.section]: action.payload.content
+        notes: action.payload.content
+      };
+    },
+    removeNote: (state, _) => {
+      return {
+        ...state,
+        notes: ''
       };
     }
   }
 });
 
 // Dispatch actions to "write" to redux
-export const { addToSection, addToNote, removeFromSection } =
-  lessonPlanSlice.actions;
+export const { addToSection, removeFromSection, addToNote, removeNote} = lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
 export const getLessonSection = (state, sectionName) => {
