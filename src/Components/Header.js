@@ -13,7 +13,7 @@ import InfoIcon from '../../assets/infoIcon.svg';
 import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';
 
-const Header = ({ isHome, navigation, showInfoIcon }) => {
+const Header = ({ isHome, navigation }) => {
   const [isHomePage, setHomePage] = useState(isHome);
   const [isVisible, setVisible] = useState(false);
 
@@ -28,17 +28,11 @@ const Header = ({ isHome, navigation, showInfoIcon }) => {
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
-      <TouchableOpacity style={styles.settingContainer}>
-        {showInfoIcon && (
-          <InfoIcon width={30} height={30} style={styles.settingIcon} />
-        )}
-        <GearIcon width={30} height={30} style={styles.settingIcon} />
-      </TouchableOpacity>
       {isHomePage ? (
         <TouchableOpacity
-          style={styles.questionMarkIcon}
+          style={styles.helpIcon}
           onPress={toggleOverlay}>
-          <QuestionMark height={30} width={30} />
+          <GearIcon height={30} width={30} />
         </TouchableOpacity>
       ) : (
         <></>
@@ -86,7 +80,7 @@ const styles = StyleSheet.create({
   settingIcon: {
     margin: 'auto'
   },
-  questionMarkIcon: {
+  helpIcon: {
     marginRight: '3%'
   },
   textHeader: {
