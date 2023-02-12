@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Text,
-  View,
   SafeAreaView,
   Platform,
   StyleSheet,
   TextInput,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import {
   addToSection,
   removeFromSection,
@@ -16,7 +13,7 @@ import store from '../../services/configureStore';
 
 const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
   return (
-    <View style={styles.ContentCardStyle}>
+    <SafeAreaView style={styles.ContentCardStyle}>
       <TextInput
         multiline
         defaultValue={text}
@@ -47,7 +44,7 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
           });
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

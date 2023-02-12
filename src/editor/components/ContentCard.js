@@ -26,7 +26,6 @@ const ContentCard = ({
             );
           }
           setisTextinputOpen(false);
-          console.log(store.getState(sectionType).lessonPlan[sectionType]);
         }}
       />
     </SafeAreaView>

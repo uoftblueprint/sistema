@@ -25,6 +25,7 @@ const LessonSection = ({ sectionType, subtitle }) => {
             sectionContent={sectionContent}
             sectionType={sectionType}
           />
+        )}
 
         <AddLessonContentButton
           placeholder={'Input text'}
