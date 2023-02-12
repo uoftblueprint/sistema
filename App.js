@@ -13,10 +13,12 @@ import {
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
+import Home from './src/home/Home';
 
 import LibraryNavIcon from './assets/libraryNavIcon.svg';
 import HomeNavIcon from './assets/homeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
+
 
 const STACK_SCREENS = {
   HOME: 'Home Page',
@@ -72,7 +74,8 @@ const MainNavigator = () => {
           component={HomeNavigator}
           options={{
             tabBarShowLabel: false,
-            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused)
+            headerShown: false,
+            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
           }}
         />
         <Tab.Screen
