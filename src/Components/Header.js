@@ -27,7 +27,7 @@ const Header = ({ isHome, navigation }) => {
         <SistemaLogo width={100} height={50} />
       </View>
       <TouchableOpacity style={styles.settingContainer}>
-        <GearIcon width={30} height={30} style={styles.settingIcon}/>
+        <GearIcon width={30} height={30} style={styles.settingIcon} />
       </TouchableOpacity>
       {isHomePage ? (
         <TouchableOpacity style={styles.helpIcon} onPress={toggleOverlay}>

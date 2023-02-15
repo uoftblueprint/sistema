@@ -25,33 +25,33 @@ const LessonPlanName = () => {
   }, []);
 
   return (
-      <SafeAreaView style={styles.SectionStyle}>
-        {isEditable ? (
-          <TextInput
-            style={styles.input}
-            value={lessonPlanName}
-            onChangeText={newText => {
-              setLessonPlanName(newText);
-            }}
-            onBlur={() => {
-              setIsEditable(false);
-              console.log("i'm onblur!");
-            }}
-            autoFocus={true}
-          />
-        ) : (
-          <Text style={styles.input} numberOfLines={1}>
-            {lessonPlanName}
-          </Text>
-        )}
-        <TouchableOpacity 
-          onPress={() => {
-            setIsEditable(true);
-            console.log("i'm onpress");
+    <SafeAreaView style={styles.SectionStyle}>
+      {isEditable ? (
+        <TextInput
+          style={styles.input}
+          value={lessonPlanName}
+          onChangeText={newText => {
+            setLessonPlanName(newText);
+          }}
+          onBlur={() => {
+            setIsEditable(false);
+            console.log("i'm onblur!");
+          }}
+          autoFocus={true}
+        />
+      ) : (
+        <Text style={styles.input} numberOfLines={1}>
+          {lessonPlanName}
+        </Text>
+      )}
+      <TouchableOpacity
+        onPress={() => {
+          setIsEditable(true);
+          console.log("i'm onpress");
         }}>
-          <EditIcon />
-        </TouchableOpacity>
-      </SafeAreaView>
+        <EditIcon />
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };
 
@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
     color: '#000',
     ...Platform.select({
       ios: {
-        paddingVertical: 10,
+        paddingVertical: 10
       },
       android: {
-        paddingVertical: 0,
+        paddingVertical: 0
       },
       default: {
-        paddingVertical: 4,
+        paddingVertical: 4
       }
     })
   },
