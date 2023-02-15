@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     marginBottom: 9
   },
-  textContainer: { marginLeft: 5 },
+  textContainer: { marginLeft: 10 },
   svg: { marginTop: 4 }
 });
 
