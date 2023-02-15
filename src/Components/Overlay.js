@@ -1,6 +1,7 @@
 import { Modal, SafeAreaView, StyleSheet, View } from 'react-native';
 
 const Overlay = props => {
+  console.log(props.style);
   return (
     <Modal
       transparent={true}
@@ -9,7 +10,7 @@ const Overlay = props => {
         props.close();
       }}>
       <SafeAreaView style={styles.container}>
-        <View style={styles.overlay}>{props.children}</View>
+        <View style={[styles.overlay, props.style]}>{props.children}</View>
       </SafeAreaView>
     </Modal>
   );
