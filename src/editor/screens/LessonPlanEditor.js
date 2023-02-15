@@ -19,13 +19,14 @@ const LessonPlanEditor = ({ navigation }) => {
       <ScrollView style={styles.scrollView}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} flex={1}>
           <View style={styles.viewStyle}>
-            <LessonSection sectionType={'warmUp'} subtitle={'Warm Up'} />
+            <LessonSection navigation={navigation} sectionType={'warmUp'} subtitle={'Warm Up'} />
             <LessonSection
               sectionType={'mainLesson'}
               subtitle={'Main Lesson'}
             />
-            <LessonSection sectionType={'coolDown'} subtitle={'Cool Down'} />
+            <LessonSection navigation={navigation} sectionType={'coolDown'} subtitle={'Cool Down'} />
             <LessonPlanNotes
+              navigation={navigation}
               sectionType={'notes'}
               subtitle={'Notes'}
               placeholder={''}

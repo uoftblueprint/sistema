@@ -5,13 +5,18 @@ import store from '../../services/configureStore';
 import ContentCard from './ContentCard';
 import StoredContent from './StoredContent';
 
-const LessonSection = ({ sectionType, subtitle }) => {
+const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const [sectionContent, setSectionContent] = useState([]);
   const [sectionActivityCards, setSectionActivityCards] = useState([]);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
   const handleClick = () => {
     setisTextinputOpen(true);
   };
+  const addActivityCard = () =>
+    navigation.navigate('Add Activity Card', {
+      header: subtitle
+    }
+  )
 
   return (
     <SafeAreaView>
@@ -31,7 +36,21 @@ const LessonSection = ({ sectionType, subtitle }) => {
           placeholder={'Input text'}
           handleClick={handleClick}
         />
-        <AddLessonContentButton placeholder={'Add activity cards'} />
+        {/* <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Add Activity Card', {
+              header: subtitle
+            })
+          }>
+          <LessonPlanTextInput
+            placeholder={'Add activity cards'}
+            isButton={true}
+          />
+        </TouchableOpacity> */}
+        <AddLessonContentButton 
+          placeholder={'Add activity cards'} 
+          handleClick={addActivityCard}
+        />
 
         {/* Stack of content already inserted, available for further editing/removing */}
         {store.getState(sectionType).lessonPlan[sectionType].map((arr, i) => {
