@@ -1,7 +1,5 @@
-import { StyleSheet, TouchableWithoutFeedback, Dimensions } from 'react-native';
-
-import OptionsMenu from '../components/OptionsMenu.js';
-
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import OptionsMenu from '../editor/components/OptionsMenu.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LessonPlanMenuOverlay = ({ navigation, route }) => {

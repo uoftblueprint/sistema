@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import SistemaButton from '../Components/SistemaButton';
-import SistemaLogo from '../../assets/sistemaLogo.svg';
+import SistemaLogo from '../../assets/SistemaLogo.svg';
 import InfoIcon from '../../assets/infoIcon.svg';
 import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';

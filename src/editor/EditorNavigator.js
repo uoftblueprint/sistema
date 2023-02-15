@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LessonPlanEditor from './screens/LessonPlanEditor';
 import AddActivityCard from './screens/AddActivityCard';
-import LessonPlanMenuOverlay from './screens/LessonPlanMenuOverlay';
+import LessonPlanMenuOverlay from '../Components/LessonPlanMenuOverlay';
 
 const Stack = createStackNavigator();
 
@@ -19,8 +19,7 @@ const EditorNavigator = () => {
       detachInactiveScreens={false}
       screenOptions={{
         headerShown: false,
-        detachPreviousScreen: false,
-        presentation: 'transparentModal'
+        detachPreviousScreen: false
       }}>
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_EDITOR}
@@ -33,6 +32,9 @@ const EditorNavigator = () => {
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}
+        options={{
+          presentation: 'transparentModal'
+        }}
         initialParams={{
           isLessonPlanEditor: false,
           lessonPlanName: 'Lesson Plan Name'

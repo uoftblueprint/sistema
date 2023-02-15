@@ -12,18 +12,17 @@ import {
 } from 'react-native-safe-area-context';
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
-import Library from './src/library/Library';
-import Home from './src/home/Home';
 
 import LibraryNavIcon from './assets/libraryNavIcon.svg';
 import HomeNavIcon from './assets/homeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
+import LibraryNavigator from './src/library/LibraryNavigator';
 
 
 const STACK_SCREENS = {
-  HOME: 'Home Page',
-  EDITOR: 'LessonPlanEditor',
-  LIBRARY: 'Library'
+  HOME: 'HomeNavigator',
+  EDITOR: 'LessonPlanEditorNavigator',
+  LIBRARY: 'LibraryNavigator'
 };
 
 const tabIcon = (iconSVG, isFocused) => {
@@ -89,7 +88,7 @@ const MainNavigator = () => {
         />
         <Tab.Screen
           name={STACK_SCREENS.LIBRARY}
-          component={Library}
+          component={LibraryNavigator}
           options={{
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused)
