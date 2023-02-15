@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5'
   },
   title: {
-    fontFamily: 'Poppins',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     fontSize: 28,
     letterSpacing: 0.3,
     color: '#453E3D'

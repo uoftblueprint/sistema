@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
   textContainer: {
     paddingLeft: '5%',
     color: 'rgba(0,0,0, 0.87)',
-    fontFamily: 'Mulish',
-    fontWeight: '700',
+    fontFamily: 'Mulish-Bold',
     fontSize: 16
   },
   icon: {

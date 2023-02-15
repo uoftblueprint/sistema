@@ -81,8 +81,7 @@ const styles = StyleSheet.create({
     marginRight: '3%'
   },
   textHeader: {
-    fontFamily: 'Poppins',
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
     marginBottom: '5%'
   },
   textBody: {

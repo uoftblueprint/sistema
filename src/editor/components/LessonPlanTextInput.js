@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     shadowColor: '#453E3D',
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     paddingLeft: 12,
     fontSize: 16
   },

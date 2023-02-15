@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
     marginVertical: 4
   },
   text: {
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     color: 'black'
   }
 });

@@ -46,14 +46,12 @@ const styles = StyleSheet.create({
     width: windowWidth
   },
   textContainerAdded: {
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     fontSize: 14,
     color: '#375238'
   },
   textContainerRemoved: {
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     fontSize: 14,
     color: '#471612'
   },

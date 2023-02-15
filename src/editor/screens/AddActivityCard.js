@@ -87,23 +87,20 @@ const styles = StyleSheet.create({
   header: {
     color: 'black',
     fontSize: 24,
-    fontFamily: 'Poppins',
-    marginTop: '5%',
-    fontWeight: '700'
+    fontFamily: 'Poppins-Bold',
+    marginTop: '5%'
   },
   tags: {
     color: 'black',
     fontSize: 18,
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     marginTop: '1%',
     marginBottom: '2%'
   },
   backText: {
     color: 'black',
     fontSize: 18,
-    fontFamily: 'Mulish',
-    fontWeight: '400'
+    fontFamily: 'Mulish-Regular'
   },
   backButton: {
     flexWrap: 'wrap',

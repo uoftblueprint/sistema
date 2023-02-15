@@ -29,8 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   sectionStyle: {
-    fontFamily: 'Poppins',
-    fontWeight: '300',
+    fontFamily: 'Poppins-Light',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -51,8 +50,7 @@ const styles = StyleSheet.create({
     paddingLeft: '10%'
   },
   text: {
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     fontSize: 15
   }
 });

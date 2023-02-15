@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   title: {
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     fontSize: 16,
     letterSpacing: 0.3,
     color: 'black'

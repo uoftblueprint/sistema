@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   container: {
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'flex-start'
   },
   title: {
     color: '#453E3D',
-    fontFamily: 'Poppins',
-    fontWeight: '700',
-    fontSize: 25,
+    fontFamily: 'Poppins-Bold',
+    fontSize: 20,
     marginHorizontal: 30,
     letterSpacing: 0.3,
     width: '100%',
@@ -66,14 +66,12 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: '#453E3D',
-    fontFamily: 'Mulish',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     fontSize: 15,
     fontStyle: 'italic',
     marginLeft: '8%',
     letterSpacing: 0.3,
     width: '55%',
-    // paddingBottom: '1%'
   },
   refreshIcon: {
     fill: '#453E3D'

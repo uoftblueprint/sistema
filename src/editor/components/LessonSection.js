@@ -76,8 +76,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#20232a',
     fontSize: 20,
-    fontWeight: '700',
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Bold',
     letterSpacing: 0.3,
     marginBottom: 10,
     lineHeight: 28
@@ -94,8 +93,7 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   ContentCardStyle: {
-    fontFamily: 'Poppins',
-    fontWeight: '300',
+    fontFamily: 'Poppins-Light',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',

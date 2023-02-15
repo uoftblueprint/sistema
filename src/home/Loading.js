@@ -28,20 +28,18 @@ const styles = StyleSheet.create({
   },
   //add 'Poppins' font
   appname: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Regular',
     paddingTop: '4%', // add space above the text
     color: '#000000',
     fontSize: 42,
-    fontWeight: '400',
     letterSpacing: 0.05,
     lineHeight: 63
   },
   visionStatement: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Regular',
     paddingTop: '4%', // add space above the text
     color: '#000000',
     fontSize: 23,
-    fontWeight: '400',
     letterSpacing: 0.05,
     lineHeight: 34
   }

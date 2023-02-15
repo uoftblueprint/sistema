@@ -45,9 +45,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingLeft: '5%',
-    fontFamily: 'Mulish',
+    fontFamily: 'Mulish-Bold',
     color: 'rgba(0,0,0, 0.87)',
-    fontWeight: '700',
     fontSize: 16
   }
 });
