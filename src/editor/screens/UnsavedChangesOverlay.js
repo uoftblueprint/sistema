@@ -1,4 +1,3 @@
-import React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
 import Overlay from '../../Components/Overlay';
 import SistemaButton from '../../Components/SistemaButton';

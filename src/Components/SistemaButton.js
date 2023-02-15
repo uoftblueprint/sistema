@@ -1,7 +1,6 @@
-import React from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 
-const Button = props => {
+const SistemaButton = props => {
   switch (props.color) {
     case 'blue':
       styles.buttonContainer.backgroundColor = '#B8CFE4';
@@ -37,4 +36,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Button;
+export default SistemaButton;
