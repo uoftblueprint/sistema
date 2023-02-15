@@ -15,7 +15,7 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={styles.background}>
       <Header isHome={true} navigation={navigation} />
       <ScrollView>
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
           <Text style={styles.title}>Recently added activity cards</Text>
           <SafeAreaView
             style={{
@@ -24,7 +24,7 @@ const Home = ({ navigation }) => {
               alignItems: 'center'
             }}>
             <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
-            <RefreshIcon height={25} width={25} style={styles.refreshIcon} />
+            <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
           </SafeAreaView>
         </SafeAreaView>
 
@@ -51,6 +51,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5',
     height: '100%'
   },
+  container: {
+    justifyContent: 'center'
+  },
   title: {
     color: '#453E3D',
     fontFamily: 'Poppins',
@@ -65,12 +68,12 @@ const styles = StyleSheet.create({
     color: '#453E3D',
     fontFamily: 'Mulish',
     fontWeight: '400',
-    fontSize: 16,
+    fontSize: 15,
     fontStyle: 'italic',
     marginLeft: '8%',
     letterSpacing: 0.3,
     width: '55%',
-    paddingBottom: '1%'
+    // paddingBottom: '1%'
   },
   refreshIcon: {
     fill: '#453E3D'

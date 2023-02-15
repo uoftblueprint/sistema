@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   ContentCardStyle: {
-    fontFamily: 'Poppins-Light',
+    fontFamily: 'Poppins',
+    fontWeight: '300',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',

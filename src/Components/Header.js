@@ -20,7 +20,6 @@ const Header = ({ isHome, navigation }) => {
     setVisible(!isVisible);
   };
 
-  console.log(navigation);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>

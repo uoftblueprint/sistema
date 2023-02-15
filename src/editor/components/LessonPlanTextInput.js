@@ -12,7 +12,6 @@ const LessonPlanTextInput = ({ placeholder, isButton }) => {
   const [text, onChangeText] = React.useState(placeholder);
   const [number, onChangeNumber] = React.useState(null);
 
-  console.log(isButton);
   return (
     <SafeAreaView style={styles.SectionStyle}>
       <TouchableOpacity style={{ marginLeft: '2%' }}>
