@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal, SafeAreaView, StyleSheet, View } from 'react-native';
 
 const Overlay = props => {

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { DRIVE_API_URLS } from '../config.json';
-import { printAxiosError } from '../helpers';
 
 /**
  * Test function to make sure access token works. Console logs list of files in drive.
@@ -12,6 +11,6 @@ export async function listDriveFiles() {
       console.log(response.data);
     })
     .catch(error => {
-      printAxiosError(error);
+      console.error('listDriveFiles');
     });
 }

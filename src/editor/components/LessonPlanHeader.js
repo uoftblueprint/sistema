@@ -18,11 +18,12 @@ const LessonPlanHeader = () => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginVertical: 15,
-    marginHorizontal: 33,
+    marginHorizontal: 25,
     justifyContent: 'space-between',
     alignItems: 'center'
   }

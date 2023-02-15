@@ -1,14 +1,32 @@
-import React from 'react';
-import { Text, SafeAreaView, StyleSheet } from 'react-native';
-import LessonPlanTextField from './LessonPlanTextField';
+import React, { useState } from 'react';
+import { Text, SafeAreaView, StyleSheet, TextInput } from 'react-native';
+import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
+import store from '../../services/configureStore';
 
-const LessonPlanNotes = ({ subtitle }) => {
+const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
+  const [sectionContent, setSectionContent] = useState(placeholder);
+
   return (
-    <SafeAreaView style={styles.sectionContainer}>
+    <SafeAreaView>
       <Text style={styles.title}>{subtitle}</Text>
-      <LessonPlanTextField
-        placeholder={'Write your initial impressions here...'}
-      />
+      <SafeAreaView style={styles.SectionStyle}>
+        <TextInput
+          multiline
+          placeholder={'Add lesson notes here'}
+          returnKeyType="next"
+          onEndEditing={e => {
+            if (e.nativeEvent.text) {
+              setSectionContent(e.nativeEvent.text);
+              store.dispatch(
+                addToNote({ section: sectionType, content: e.nativeEvent.text })
+              );
+            } else {
+              setSectionContent(placeholder);
+              store.dispatch(removeNote());
+            }
+          }}
+        />
+      </SafeAreaView>
     </SafeAreaView>
   );
 };
@@ -21,14 +39,43 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28
+    lineHeight: 28,
+    fontFamily: 'Poppins-Bold'
   },
-  sectionContainer: {
-    marginBottom: 30
-  },
-  shadow: {
+  SectionStyle: {
+    paddingHorizontal: 15,
+    ...Platform.select({
+      ios: {
+        paddingVertical: 10
+      },
+      android: {
+        paddingVertical: 0
+      },
+      default: {
+        ios: {
+          paddingVertical: 3
+        }
+      }
+    }),
+    fontStyle: 'italic',
+    fontFamily: 'Poppins-Medium',
+    fontSize: 16,
+    flexDirection: 'column',
+    backgroundColor: '#FFFAF5',
+    height: 112,
+    width: 333,
+    borderWidth: 0.77,
+    borderColor: '#000',
+    borderRadius: 7.69,
     shadowColor: '#453E3D',
-    elevation: 10
+    shadowOffset: {
+      width: 1,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
+    marginBottom: 20
   }
 });
 

@@ -13,12 +13,13 @@ import {
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
-import Home from './src/home/Home';
+
+import { Provider } from 'react-redux';
+import configureStore from './src/services/configureStore';
 
 import LibraryNavIcon from './assets/libraryNavIcon.svg';
 import HomeNavIcon from './assets/homeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
-
 
 const STACK_SCREENS = {
   HOME: 'Home Page',
@@ -117,7 +118,9 @@ const styles = StyleSheet.create({
 const App = () => {
   return (
     <SafeAreaProvider>
-      <MainNavigator />
+      <Provider store={configureStore}>
+        <MainNavigator />
+      </Provider>
     </SafeAreaProvider>
   );
 };
