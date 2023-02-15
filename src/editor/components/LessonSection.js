@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
       default: {
         ios: {
           paddingVertical: 4
-        },
-      },
+        }
+      }
     }),
     paddingHorizontal: 10,
     marginVertical: 5

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.77,
     borderRadius: 6,
     marginBottom: 10,
-    paddingHorizontal: 12,
+    paddingHorizontal: 12
   },
   textContainer: {
     fontFamily: 'Poppins-Regular',

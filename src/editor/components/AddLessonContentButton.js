@@ -9,7 +9,6 @@ import {
 import AddIcon from '../../../assets/AddIcon';
 
 const AddLessonContentButton = ({ placeholder, handleClick }) => {
-
   return (
     <TouchableOpacity onPress={handleClick}>
       <SafeAreaView style={styles.SectionStyle}>
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     elevation: 7,
     marginVertical: 6,
-    paddingHorizontal: 10,
+    paddingHorizontal: 10
   },
   ImageStyle: {
     paddingLeft: 50,

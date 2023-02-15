@@ -35,24 +35,23 @@ const styles = StyleSheet.create({
   title: {
     color: '#20232a',
     fontSize: 20,
-    fontWeight: 'bold',
     letterSpacing: 0.3,
     marginBottom: 10,
     lineHeight: 28,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Bold'
   },
   SectionStyle: {
     paddingHorizontal: 15,
     ...Platform.select({
       ios: {
-        paddingVertical: 10,
+        paddingVertical: 10
       },
       android: {
-        paddingVertical: 0,
+        paddingVertical: 0
       },
       default: {
         ios: {
-          paddingVertical: 3,
+          paddingVertical: 3
         }
       }
     }),
@@ -69,13 +68,13 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 5,
-    marginBottom: 20,
-  },
+    marginBottom: 20
+  }
 });
 
 export default LessonPlanNotes;

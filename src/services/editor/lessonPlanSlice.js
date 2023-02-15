@@ -23,9 +23,9 @@ export const lessonPlanSlice = createSlice({
           {
             type: action.payload.type,
             content: action.payload.content
-          },
+          }
         ],
-        isDirty: true,
+        isDirty: true
       };
     },
     removeFromSection: (state, action) => {
