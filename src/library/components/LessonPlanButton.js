@@ -1,19 +1,24 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import DotsGraphic from '../../../assets/dots.svg';
-import HeartGraphic from '../../../assets/heartOutline.svg';
+import EmptyHeart from '../../../assets/heartOutline.svg';
+import FilledHeart from '../../../assets/favoriteIcon.svg';
+import { STACK_SCREENS } from '../constants';
 
-const LessonPlanButton = props => {
+const LessonPlanButton = ({ name, navigation, isFavorited, toggleFavorite, index }) => {
   return (
-    <SafeAreaView style={[styles.container, props.style]}>
+    <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.titleContainer}>
-        <Text style={styles.title}>{props.name}</Text>
+        <Text style={styles.title}>{name}</Text>
       </TouchableOpacity>
       <SafeAreaView style={styles.icons}>
-        <TouchableOpacity>
-          <HeartGraphic width={17} height={17} style={styles.heart} />
+        <TouchableOpacity onPress={() => toggleFavorite(!isFavorited, index)}>
+          {isFavorited ? 
+            <EmptyHeart width={17} height={17} style={styles.heart} /> :
+            <FilledHeart width={17} height={17} style={styles.heart} />
+          }
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY)}>
           <DotsGraphic width={23} height={23} />
         </TouchableOpacity>
       </SafeAreaView>
@@ -31,7 +36,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: 22
   },
   title: {
     fontFamily: 'Mulish-Regular',
