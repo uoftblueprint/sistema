@@ -6,7 +6,7 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import AddIcon from '../../../assets/AddIcon';
+import AddIcon from '../../../assets/add';
 
 const AddLessonContentButton = ({ placeholder, handleClick }) => {
   return (

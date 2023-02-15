@@ -1,5 +1,6 @@
 import React from 'react';
 import LessonPlanHeader from '../components/LessonPlanHeader.js';
+<<<<<<< HEAD
 import {
   StyleSheet,
   SafeAreaView,
@@ -8,6 +9,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
+=======
+import { StyleSheet, SafeAreaView, View, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+>>>>>>> master
 import LessonSection from '../components/LessonSection.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
@@ -15,8 +19,9 @@ import SaveButton from '../components/SaveButton.js';
 const LessonPlanEditor = ({ navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
-      <LessonPlanHeader />
+      <LessonPlanHeader navigation={navigation} />
       <ScrollView style={styles.scrollView}>
+<<<<<<< HEAD
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} flex={1}>
           <View style={styles.viewStyle}>
             <LessonSection sectionType={'warmUp'} subtitle={'Warm Up'} />
@@ -30,6 +35,14 @@ const LessonPlanEditor = ({ navigation }) => {
               subtitle={'Notes'}
               placeholder={''}
             />
+=======
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <LessonSection navigation={navigation} subtitle={'Warm Up'} />
+            <LessonSection navigation={navigation} subtitle={'Main Lesson'} />
+            <LessonSection navigation={navigation} subtitle={'Cool Down'} />
+            <LessonPlanNotes subtitle={'Notes'} />
+>>>>>>> master
             <SaveButton />
           </View>
         </TouchableWithoutFeedback>

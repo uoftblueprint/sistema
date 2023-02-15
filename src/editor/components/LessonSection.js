@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import AddLessonContentButton from './AddLessonContentButton';
 import { Text, View, SafeAreaView, Platform, StyleSheet } from 'react-native';
@@ -13,9 +14,18 @@ const LessonSection = ({ sectionType, subtitle }) => {
     setisTextinputOpen(true);
   };
 
+=======
+import React from 'react';
+import LessonPlanTextInput from './LessonPlanTextInput';
+import { Text, View, SafeAreaView, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+const LessonSection = ({ subtitle, navigation }) => {
+>>>>>>> master
   return (
     <SafeAreaView>
       <Text style={styles.title}>{subtitle}</Text>
+<<<<<<< HEAD
       <View style={styles.sectionContainer}>
         {/* New textbox with prompted to insert text */}
         {isTextinputOpen && (
@@ -48,6 +58,21 @@ const LessonSection = ({ sectionType, subtitle }) => {
             );
           }
         })}
+=======
+      <View>
+        <LessonPlanTextInput placeholder={'Input text'} />
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Add Activity Card', {
+              header: subtitle
+            })
+          }>
+          <LessonPlanTextInput
+            placeholder={'Add activity cards'}
+            isButton={true}
+          />
+        </TouchableOpacity>
+>>>>>>> master
       </View>
     </SafeAreaView>
   );

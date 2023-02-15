@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import SistemaLogo from '../../assets/SistemaLogoLoading';
+import SistemaLogo from '../../assets/SistemaLogoLoading.svg';
 
 const Loading = () => {
   return (
