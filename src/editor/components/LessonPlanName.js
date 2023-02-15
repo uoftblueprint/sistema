@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 15,
     fontSize: 24,
+    fontFamily: 'Poppins-Bold',
     color: '#000',
     ...Platform.select({
       ios: {

@@ -87,9 +87,8 @@ const styles = StyleSheet.create({
   header: {
     color: 'black',
     fontSize: 24,
-    fontFamily: 'Poppins',
-    marginTop: '5%',
-    fontWeight: '900'
+    fontFamily: 'Poppins-Bold',
+    marginTop: '5%'
   },
   tags: {
     color: 'black',

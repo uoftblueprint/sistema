@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     marginVertical: 4
   },
   text: {
-    FontFamily: 'Roboto-Regular',
+    fontFamily: 'Mulish-Regular',
     color: 'black'
   }
 });

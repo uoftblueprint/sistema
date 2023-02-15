@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4D8ECB'
   },
   title: {
+    fontFamily: 'Mulish-Regular',
     color: '#FFFFFF',
     width: '100%',
     fontSize: 17,

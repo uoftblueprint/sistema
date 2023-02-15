@@ -14,7 +14,7 @@ const AddLessonContentButton = ({ placeholder, handleClick }) => {
       <SafeAreaView style={styles.sectionStyle}>
         <AddIcon style={styles.imageStyle} />
         <View style={styles.input}>
-          <Text>{placeholder}</Text>
+          <Text style={styles.text}>{placeholder}</Text>
         </View>
       </SafeAreaView>
     </TouchableOpacity>
@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
     height: '20',
     width: '20',
     paddingLeft: '10%'
+  },
+  text: {
+    fontFamily: 'Mulish-Regular',
+    fontSize: 15
   }
 });
 

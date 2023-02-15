@@ -26,10 +26,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12
   },
   textContainer: {
-    fontFamily: 'Poppins-Regular',
     paddingLeft: 8.6,
     color: '#000',
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     fontSize: 13
   }
 });

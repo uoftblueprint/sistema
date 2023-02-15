@@ -10,7 +10,6 @@ import AddButton from './components/AddToLessonButton';
 import BackArrow from '../../assets/backArrow';
 import Header from '../Components/Header';
 
-const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const ExpandedCard = ({ navigation }) => {
@@ -65,8 +64,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#453E3D',
+    fontFamily: 'Poppins-Bold',
     fontSize: 20,
-    fontWeight: '700',
     width: '60%',
     textAlign: 'center',
     marginBottom: 40

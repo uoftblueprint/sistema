@@ -1,7 +1,6 @@
 import { Modal, SafeAreaView, StyleSheet, View } from 'react-native';
 
 const Overlay = props => {
-  console.log(props.style);
   return (
     <Modal
       transparent={true}

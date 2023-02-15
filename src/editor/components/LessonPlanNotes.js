@@ -13,6 +13,7 @@ const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
         <TextInput
           multiline
           placeholder={'Add lesson notes here'}
+          style={styles.notesText}
           returnKeyType="next"
           onEndEditing={e => {
             if (e.nativeEvent.text) {
@@ -74,6 +75,10 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     marginBottom: 20
+  },
+  notesText: {
+    fontFamily: 'Mulish-Regular',
+    fontSize: 16
   }
 });
 

@@ -74,10 +74,9 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: 'Poppins-Bold',
     color: '#20232a',
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
     letterSpacing: 0.3,
     marginBottom: 10,
     lineHeight: 28
