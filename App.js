@@ -13,21 +13,13 @@ import {
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import Library from './src/library/Library';
-<<<<<<< HEAD
-import HomeIcon from './assets/HomeIcon.js';
+
 import { Provider } from 'react-redux';
 import configureStore from './src/services/configureStore';
-import LibraryNavIcon from './assets/LibraryNavIcon.svg';
-import HomeNavIcon from './assets/HomeNavIcon.svg';
-import LessonPlanEditorNavIcon from './assets/LessonPlanEditorNavIcon.svg';
-=======
-import Home from './src/home/Home';
 
 import LibraryNavIcon from './assets/libraryNavIcon.svg';
 import HomeNavIcon from './assets/homeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
-
->>>>>>> master
 
 const STACK_SCREENS = {
   HOME: 'Home Page',

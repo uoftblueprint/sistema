@@ -6,13 +6,13 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import AddIcon from '../../../assets/add';
+import AddIcon from '../../../assets/add.svg';
 
 const AddLessonContentButton = ({ placeholder, handleClick }) => {
   return (
     <TouchableOpacity onPress={handleClick}>
-      <SafeAreaView style={styles.SectionStyle}>
-        <AddIcon style={styles.ImageStyle} />
+      <SafeAreaView style={styles.sectionStyle}>
+        <AddIcon style={styles.imageStyle} />
         <View style={styles.input}>
           <Text>{placeholder}</Text>
         </View>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     fontSize: 16
   },
-  SectionStyle: {
+  sectionStyle: {
     fontFamily: 'Poppins-Light',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -44,9 +44,10 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     paddingHorizontal: 10
   },
-  ImageStyle: {
-    paddingLeft: 50,
-    backgroundColor: 'black'
+  imageStyle: {
+    height: '20',
+    width: '20',
+    paddingLeft: '10%'
   }
 });
 
