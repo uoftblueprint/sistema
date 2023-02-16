@@ -17,7 +17,7 @@ const LessonPlanEditor = ({ navigation }) => {
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
       <LessonPlanHeader navigation={navigation} />
       <ScrollView style={styles.scrollView}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} flex={1}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} flex={1} height={'100%'}>
           <View style={styles.viewStyle}>
             <LessonSection
               navigation={navigation}
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   scrollView: {
     marginHorizontal: '1%',
     marginVertical: '1%',
-    marginBottom: '20%'
+    marginBottom: '23%'
   },
   viewStyle: {
     flexDirection: 'column',
