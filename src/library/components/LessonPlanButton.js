@@ -5,7 +5,7 @@ import EmptyHeart from '../../../assets/heartOutline.svg';
 import FilledHeart from '../../../assets/favoriteIcon.svg';
 import { STACK_SCREENS } from '../constants';
 
-const LessonPlanButton = ({ name, navigation, isFavorited, toggleFavorite, index }) => {
+const LessonPlanButton = ({ index, name, navigation, isFavorited, toggleFavorite, lastEditedDate }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.titleContainer}>
@@ -18,7 +18,9 @@ const LessonPlanButton = ({ name, navigation, isFavorited, toggleFavorite, index
             <FilledHeart width={17} height={17} style={styles.heart} />
           }
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY)}>
+        <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
+          lastEdited: lastEditedDate
+        })}>
           <DotsGraphic width={23} height={23} />
         </TouchableOpacity>
       </SafeAreaView>

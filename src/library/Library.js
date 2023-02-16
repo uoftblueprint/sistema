@@ -10,23 +10,26 @@ import Header from '../Components/Header';
 import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 
-// TODO add last edited into menu, also pass in name
 const fillerLP = [
   {
-    name: 'Lesson Plan A',
-    isFavorited: false
+    name: 'Jan 1, 2023',
+    isFavorited: false,
+    lastEdited: 'Jan 1, 2023'
   },
   {
-    name: 'Lesson Plan B',
-    isFavorited: true
+    name: 'Jan 2, 2023',
+    isFavorited: true,
+    lastEdited: 'Jan 2, 2023'
   },
   {
-    name: 'Lesson Plan C',
-    isFavorited: true
+    name: 'Jan 3, 2023',
+    isFavorited: true,
+    lastEdited: 'Jan 3, 2023'
   },
   {
-    name: 'Lesson Plan D',
-    isFavorited: false
+    name: 'Jan 4, 2023',
+    isFavorited: false,
+    lastEdited: 'Jan 4, 2023'
   }
 ]
 
@@ -67,6 +70,7 @@ const Library = ({ navigation }) => {
                   navigation={navigation} 
                   isFavorited={lessonPlan.isFavorited}
                   toggleFavorite={handleFavoriteChange}
+                  lastEditedDate={lessonPlan.lastEdited}
                 />
               )
           }

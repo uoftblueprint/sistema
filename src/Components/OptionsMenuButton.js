@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#FFFAF5',
     width: '100%',
-    height: 45
+    height: 50
   },
   textContainer: {
     paddingLeft: '5%',

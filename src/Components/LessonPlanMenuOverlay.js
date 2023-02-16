@@ -1,17 +1,16 @@
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import OptionsMenu from '../editor/components/OptionsMenu.js';
+import OptionsMenu from './OptionsMenu.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LessonPlanMenuOverlay = ({ navigation, route }) => {
-  const isLessonPlanEditor = route.params.isLessonPlanEditor;
-  const lessonPlanName = route.params.lessonPlanName;
+  const { isLessonPlanEditor, lastEdited } = route.params;
 
   return (
     <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
       <SafeAreaView style={styles.overlay}>
         <OptionsMenu
           isLessonPlanEditor={isLessonPlanEditor}
-          lessonPlanName={lessonPlanName}
+          lastEdited={lastEdited}
           navigation={navigation}
           style={styles.menu}
         />

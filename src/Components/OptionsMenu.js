@@ -1,19 +1,17 @@
-import FavoriteButton from './FavoriteButton.js';
+import FavoriteButton from '../editor/components/FavoriteButton.js';
 import OptionHeader from './OptionHeader';
 import { useState } from 'react';
 import OptionsMenuBanner from './OptionsMenuBanner';
-import ExportIcon from '../../../assets/exportIcon.svg';
-import TrashIcon from '../../../assets/trashIcon.svg';
-import HeartIcon from '../../../assets/heartIcon.svg';
-import CopyIcon from '../../../assets/copyIcon.svg';
+import ExportIcon from '../../assets/exportIcon.svg';
+import TrashIcon from '../../assets/trashIcon.svg';
+import HeartIcon from '../../assets/heartIcon.svg';
+import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView } from 'react-native';
 
-const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
+const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
   const [isFavorited, setFavorited] = useState(false);
   const [isBannerVisible, setBannerVisible] = useState(false);
-  const lessonPlanNameForOptions = lessonPlanName;
-  const isLessonPlanEditorCheck = isLessonPlanEditor;
 
   const editorButtons = [
     {
@@ -45,14 +43,13 @@ const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
     }
   ];
 
-  const buttons = isLessonPlanEditorCheck ? editorButtons : libraryButtons;
+  const buttons = isLessonPlanEditor ? editorButtons : libraryButtons;
 
   return (
     <SafeAreaView style={styles.screen}>
       <SafeAreaView style={styles.menu}>
         <OptionHeader
-          isLessonEditor={isLessonPlanEditorCheck}
-          lessonName={lessonPlanNameForOptions}
+          lastEdited={lastEdited}
           navigation={navigation}
         />
 

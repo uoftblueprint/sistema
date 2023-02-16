@@ -23,8 +23,7 @@ const LibraryNavigator = () => {
           presentation: 'transparentModal'
         }}
         initialParams={{
-          isLessonPlanEditor: false,
-          lessonPlanName: 'Lesson Plan Name',
+          isLessonPlanEditor: false
         }}
       />
     </Stack.Navigator>
