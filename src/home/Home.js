@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginLeft: '8%',
     letterSpacing: 0.3,
-    width: '55%',
+    width: '55%'
   },
   refreshIcon: {
     fill: '#453E3D'

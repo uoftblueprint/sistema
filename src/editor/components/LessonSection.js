@@ -15,8 +15,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const addActivityCard = () =>
     navigation.navigate('Add Activity Card', {
       header: subtitle
-    }
-  )
+    });
 
   return (
     <SafeAreaView>
@@ -47,8 +46,8 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
             isButton={true}
           />
         </TouchableOpacity> */}
-        <AddLessonContentButton 
-          placeholder={'Add activity cards'} 
+        <AddLessonContentButton
+          placeholder={'Add activity cards'}
           handleClick={addActivityCard}
         />
 
