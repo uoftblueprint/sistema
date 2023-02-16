@@ -18,7 +18,6 @@ import HomeNavIcon from './assets/homeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
 import LibraryNavigator from './src/library/LibraryNavigator';
 
-
 const STACK_SCREENS = {
   HOME: 'HomeNavigator',
   EDITOR: 'LessonPlanEditorNavigator',
@@ -74,7 +73,7 @@ const MainNavigator = () => {
           options={{
             tabBarShowLabel: false,
             headerShown: false,
-            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
+            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused)
           }}
         />
         <Tab.Screen

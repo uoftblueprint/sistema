@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#FFFAF5',
     alignItems: 'center',
-    paddingLeft: '5%',
+    paddingLeft: '5%'
   },
   textContainer: {
     postion: 'absolute',

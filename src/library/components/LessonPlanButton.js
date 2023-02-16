@@ -20,16 +20,16 @@ const LessonPlanButton = ({
       </TouchableOpacity>
       <SafeAreaView style={styles.icons}>
         <TouchableOpacity onPress={() => toggleFavorite(!isFavorited, index)}>
-          {isFavorited ?
-            (<EmptyHeart width={17} height={17} style={styles.heart} />)
-           : 
-            (<FilledHeart width={17} height={17} style={styles.heart} />)
-          }
+          {isFavorited ? (
+            <EmptyHeart width={17} height={17} style={styles.heart} />
+          ) : (
+            <FilledHeart width={17} height={17} style={styles.heart} />
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
-              lastEdited: lastEditedDate,
+              lastEdited: lastEditedDate
             })
           }>
           <DotsGraphic width={23} height={23} />
@@ -50,28 +50,28 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 22,
+    marginBottom: 22
   },
   title: {
     fontFamily: 'Mulish-Regular',
     fontSize: 16,
     letterSpacing: 0.3,
-    color: 'black',
+    color: 'black'
   },
   icons: {
     display: 'flex',
     flexDirection: 'row',
-    margin: 14,
+    margin: 14
   },
   titleContainer: {
     maxWidth: '60%',
-    margin: 14,
+    margin: 14
   },
   heart: {
     // center heart SVG
     marginTop: 2.5,
-    marginRight: 16,
-  },
+    marginRight: 16
+  }
 });
 
 export default LessonPlanButton;
