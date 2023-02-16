@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
   backArrowContainer: {
-    // position: 'absolute',
+    position: 'absolute',
     top: 20,
     bottom: 0,
     left: 25,
