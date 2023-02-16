@@ -48,10 +48,7 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <SafeAreaView style={styles.menu}>
-        <OptionHeader
-          lastEdited={lastEdited}
-          navigation={navigation}
-        />
+        <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
           if (button.name == 'Favorites') {

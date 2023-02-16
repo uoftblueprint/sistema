@@ -13,9 +13,7 @@ const OptionHeader = ({ lastEdited, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerRow}>
-        <Text style={styles.textContainer}> 
-          Options
-        </Text>
+        <Text style={styles.textContainer}>Options</Text>
 
         <TouchableOpacity
           style={{
@@ -27,11 +25,9 @@ const OptionHeader = ({ lastEdited, navigation }) => {
           <XButton style={styles.icon} />
         </TouchableOpacity>
       </View>
-    
+
       <View style={styles.headerRow}>
-        <Text style={styles.subtitle}>
-          {`Last edited: ${lastEdited}`}
-        </Text>
+        <Text style={styles.subtitle}>{`Last edited: ${lastEdited}`}</Text>
       </View>
     </SafeAreaView>
   );

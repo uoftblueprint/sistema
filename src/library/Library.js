@@ -31,7 +31,7 @@ const fillerLP = [
     isFavorited: false,
     lastEdited: 'Jan 4, 2023'
   }
-]
+];
 
 const Library = ({ navigation }) => {
   const [lpList, setList] = useState(fillerLP);
@@ -40,7 +40,7 @@ const Library = ({ navigation }) => {
     // TODO: Send RNFS call to change favorite state for LP (backend)
 
     // Change fav state in lpList (frontend)
-    setList((oldList) => {
+    setList(oldList => {
       oldList[index].isFavorited = newFavState;
       return [...oldList];
     });
@@ -51,29 +51,32 @@ const Library = ({ navigation }) => {
       <Header showInfoIcon={false} />
       <SafeAreaView style={styles.inlineTitle}>
         <Text style={styles.title}>Lesson Plans</Text>
-        <TouchableOpacity> 
+        <TouchableOpacity>
           <FilterGraphic height={25} width={25} style={styles.filterButton} />
         </TouchableOpacity>
       </SafeAreaView>
       <ScrollView>
         <SafeAreaView style={styles.content}>
-          {
-            lpList
-              .sort((x, y) => {   // Always display favorited lesson plans first
-                return (x.isFavorited === y.isFavorited)? 0 : x.isFavorited? 1 : -1;
-              })
-              .map((lessonPlan, i) => 
-                <LessonPlanButton 
-                  key={i} // TODO: if lesson plan has a unique id, replace key with it
-                  index={i}
-                  name={lessonPlan.name} 
-                  navigation={navigation} 
-                  isFavorited={lessonPlan.isFavorited}
-                  toggleFavorite={handleFavoriteChange}
-                  lastEditedDate={lessonPlan.lastEdited}
-                />
-              )
-          }
+          {lpList
+            .sort((x, y) => {
+              // Always display favorited lesson plans first
+              return x.isFavorited === y.isFavorited
+                ? 0
+                : x.isFavorited
+                ? 1
+                : -1;
+            })
+            .map((lessonPlan, i) => (
+              <LessonPlanButton
+                key={i} // TODO: if lesson plan has a unique id, replace key with it
+                index={i}
+                name={lessonPlan.name}
+                navigation={navigation}
+                isFavorited={lessonPlan.isFavorited}
+                toggleFavorite={handleFavoriteChange}
+                lastEditedDate={lessonPlan.lastEdited}
+              />
+            ))}
         </SafeAreaView>
       </ScrollView>
     </SafeAreaView>

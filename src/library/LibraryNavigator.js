@@ -12,10 +12,7 @@ const LibraryNavigator = () => {
       screenOptions={{
         headerShown: false
       }}>
-      <Stack.Screen
-        name={STACK_SCREENS.LIBRARY}
-        component={Library}
-      />
+      <Stack.Screen name={STACK_SCREENS.LIBRARY} component={Library} />
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}
