@@ -9,7 +9,7 @@ const LessonPlanHeader = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity>
-        <BackArrow />
+        <BackArrow height={'30'} width={'30'}/>
       </TouchableOpacity>
       <LessonPlanName />
       <TouchableOpacity
@@ -18,7 +18,7 @@ const LessonPlanHeader = ({ navigation }) => {
             isLessonPlanEditor: true
           })
         }>
-        <Menu />
+        <Menu height={'30'} width={'30'}/>
       </TouchableOpacity>
     </SafeAreaView>
   );

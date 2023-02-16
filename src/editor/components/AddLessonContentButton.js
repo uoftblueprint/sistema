@@ -12,7 +12,7 @@ const AddLessonContentButton = ({ placeholder, handleClick }) => {
   return (
     <TouchableOpacity onPress={handleClick}>
       <SafeAreaView style={styles.sectionStyle}>
-        <AddIcon style={styles.imageStyle} />
+        <AddIcon height={'30'} width={'30'} />
         <View style={styles.input}>
           <Text style={styles.text}>{placeholder}</Text>
         </View>
@@ -45,8 +45,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   imageStyle: {
-    height: '20',
-    width: '20',
     paddingLeft: '10%'
   },
   text: {
