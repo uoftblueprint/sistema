@@ -5,7 +5,6 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
-  ScrollView,
   Platform
 } from 'react-native';
 import { useEffect, useState } from 'react';
@@ -35,7 +34,6 @@ const LessonPlanName = () => {
           }}
           onBlur={() => {
             setIsEditable(false);
-            console.log("i'm onblur!");
           }}
           autoFocus={true}
         />
@@ -47,7 +45,6 @@ const LessonPlanName = () => {
       <TouchableOpacity
         onPress={() => {
           setIsEditable(true);
-          console.log("i'm onpress");
         }}>
         <EditIcon />
       </TouchableOpacity>
@@ -62,6 +59,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 15,
     fontSize: 24,
+    fontFamily: 'Poppins-Bold',
     color: '#000',
     ...Platform.select({
       ios: {

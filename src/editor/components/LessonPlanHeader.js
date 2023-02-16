@@ -5,24 +5,30 @@ import LessonPlanName from './LessonPlanName';
 
 import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 
-const LessonPlanHeader = () => {
+const LessonPlanHeader = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity>
         <BackArrow />
       </TouchableOpacity>
       <LessonPlanName />
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Lesson_Plan_Editor_Menu', {
+            isLessonPlanEditor: true
+          })
+        }>
         <Menu />
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginVertical: 15,
-    marginHorizontal: 33,
+    marginHorizontal: 25,
     justifyContent: 'space-between',
     alignItems: 'center'
   }

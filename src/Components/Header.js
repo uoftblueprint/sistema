@@ -20,7 +20,6 @@ const Header = ({ isHome, navigation }) => {
     setVisible(!isVisible);
   };
 
-  console.log(navigation);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -82,8 +81,7 @@ const styles = StyleSheet.create({
     marginRight: '3%'
   },
   textHeader: {
-    fontFamily: 'Poppins',
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
     marginBottom: '5%'
   },
   textBody: {

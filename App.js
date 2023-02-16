@@ -12,11 +12,14 @@ import {
 } from 'react-native-safe-area-context';
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
+import LibraryNavigator from './src/library/LibraryNavigator';
+
+import { Provider } from 'react-redux';
+import configureStore from './src/services/configureStore';
 
 import LibraryNavIcon from './assets/libraryNavIcon.svg';
 import HomeNavIcon from './assets/homeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
-import LibraryNavigator from './src/library/LibraryNavigator';
 
 const STACK_SCREENS = {
   HOME: 'HomeNavigator',
@@ -115,7 +118,9 @@ const styles = StyleSheet.create({
 const App = () => {
   return (
     <SafeAreaProvider>
-      <MainNavigator />
+      <Provider store={configureStore}>
+        <MainNavigator />
+      </Provider>
     </SafeAreaProvider>
   );
 };

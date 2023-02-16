@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     postion: 'absolute',
     width: '70%',
     color: 'rgba(0,0,0, 0.87)',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     fontSize: 20
   },
   icon: {
