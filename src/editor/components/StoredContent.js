@@ -14,7 +14,7 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
         defaultValue={text}
         onEndEditing={e => {
           setSectionContent(state => {
-            newContent = [...state];
+            let newContent = [...state];
             // delete the content from section content state when empty
             newContent = newContent.filter((_, i) => i != index);
             store.dispatch(
