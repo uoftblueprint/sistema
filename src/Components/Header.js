@@ -12,7 +12,7 @@ import InfoIcon from '../../assets/infoIcon.svg';
 import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';
 
-const Header = ({ isHome, navigation }) => {
+const Header = ({ isHome }) => {
   const [isHomePage, setHomePage] = useState(isHome);
   const [isVisible, setVisible] = useState(false);
 
@@ -29,8 +29,8 @@ const Header = ({ isHome, navigation }) => {
         <GearIcon width={30} height={30} style={styles.settingIcon} />
       </TouchableOpacity>
       {isHomePage ? (
-        <TouchableOpacity style={styles.helpIcon} onPress={toggleOverlay}>
-          <InfoIcon height={33} width={33} />
+        <TouchableOpacity style={styles.infoIcon} onPress={toggleOverlay}>
+          <InfoIcon height={37} width={37} />
         </TouchableOpacity>
       ) : (
         <></>
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
   settingIcon: {
     margin: 'auto'
   },
-  helpIcon: {
-    marginRight: '3%'
+  infoIcon: {
+    marginRight: '1%'
   },
   textHeader: {
     fontFamily: 'Poppins-Bold',
