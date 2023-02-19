@@ -104,13 +104,11 @@ export async function checkFileExists(path) {
  * @param {String} dirPath Full file path of the directory to be added
  */
 export async function makeDirectory(dirPath) {
-  return (
-    RNFS.mkdir(dirPath)
+  return RNFS.mkdir(dirPath)
     .then(() => {
-        console.log('DIRECTORY MADE')
+      console.log('DIRECTORY MADE');
     })
-    .catch(err =>{
+    .catch(err => {
       console.error(`RNFS makeDirectory: ${err.message}`);
-    })
-  );
+    });
 }
