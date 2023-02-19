@@ -19,6 +19,7 @@ const LessonPlanService = {
       return v;
     } catch (e) {
       // There was an error, catch it and do something with it
+      
     }
   },
 
@@ -50,9 +51,9 @@ const LessonPlanService = {
    */
   getLessonPlan: async function (name) {
     try {
-      // ...
+      
     } catch (e) {
-      // ...
+      // Error
     }
   },
 
@@ -63,9 +64,13 @@ const LessonPlanService = {
    */
   getAllLessonPlanNames: async function () {
     try {
-      // ...
+      var favouritedLessonPlans = await Local.readDirectory(MAINDIRECTORY + '/Favourited');
+      var defaultLessonPlans = await Local.readDirectory(MAINDIRECTORY + '/Default');
+
+      return (favouritedLessonPlans.concat(defaultLessonPlans));
+
     } catch (e) {
-      // ...
+      console.log(e);
     }
   },
 
@@ -90,10 +95,40 @@ const LessonPlanService = {
    * @param {String} name Old name of lesson plan
    */
   favouriteLessonPlan: async function (name) {
-    try {
-      // ...
+    try {  
+      /* Notes: 
+      - We cannot call recursively move file. So first we are going to check
+        if the file exists in the favourtie directory (it shouldnt) but if it does, we 
+        delete the directory.
+      
+      - Next, we will read the current file in default and move each file individually.
+        This works under the assumption that it does not call*/
+
+      var oldpath = MAINDIRECTORY + '/Default/' + name + '/';
+      var newpath = MAINDIRECTORY + '/Favourited/' + name + '/';
+
+      const output_exists = await Local.checkFileExists(newpath);
+      const input_file = await Local.checkFileExists(oldpath);
+
+      if (!input_file) {
+        throw new Error('File is not in defaults');
+      }
+
+      if (output_exists){
+        //DELETE THE FILE
+        await Local.deleteFile(newpath);
+        await Local.makeDirectory(newpath);
+      }
+      var files = await Local.readFile(oldpath);
+      
+      for (var i = 0; i < files.length; i++){
+        var file = await Local.moveFile(oldpath + files[i], newpath + files[i])
+      }
+
+      const v = await Local.deleteFile(oldpath);
+      return v;
     } catch (e) {
-      // ...
+      console.log(e);
     }
   },
 
@@ -103,9 +138,32 @@ const LessonPlanService = {
    */
   unfavouriteLessonPlan: async function (name) {
     try {
-      // ...
+      var newpath = MAINDIRECTORY + '/Default/' + name + '/';
+      var oldpath = MAINDIRECTORY + '/Favourited/' + name + '/';
+
+      await Local.checkFileExists(newpath);
+      
+      const output_exists = await Local.checkFileExists(newpath);
+      const input_file = await Local.checkFileExists(oldpath);
+
+      if (!input_file){
+        throw new Error('File is not in favourites');
+      }
+
+      if (output_exists){
+        await Local.deleteFile(newpath);
+        await Local.makeDirectory(newpath);
+      }
+      var files = await Local.readFile(oldpath);
+      
+      for (var i = 0; i < files.length; i++){
+        var file = await Local.moveFile(oldpath + files[i], newpath + files[i])
+      }
+
+      const v = await Local.deleteFile(oldpath);
+      return v;
     } catch (e) {
-      // ...
+      console.log(e);
     }
   }
 };

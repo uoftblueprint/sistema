@@ -97,3 +97,20 @@ export async function checkFileExists(path) {
       console.error(`RNFS checkFileExists: ${err.message}`);
     });
 }
+
+/**
+ * Create a directory at filepath. Automatically creates parents and does not throw
+ * if already exists
+ * @param {String} dirPath Full file path of the directory to be added
+ */
+export async function makeDirectory(dirPath) {
+  return (
+    RNFS.mkdir(dirPath)
+    .then(() => {
+        console.log('DIRECTORY MADE')
+    })
+    .catch(err =>{
+      console.error(`RNFS makeDirectory: ${err.message}`);
+    })
+  );
+}
