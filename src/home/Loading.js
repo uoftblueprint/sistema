@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
     height: '100%', // full screen is filled with color
     flexDirection: 'column', // organize items vertically
     alignItems: 'center', // center items
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   imageContainer: {
     height: 99,
-    width: 171
+    width: 171,
   },
   //add 'Poppins' font
   appname: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 42,
     letterSpacing: 0.05,
-    lineHeight: 63
+    lineHeight: 63,
   },
   visionStatement: {
     fontFamily: 'Poppins-Regular',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 23,
     letterSpacing: 0.05,
-    lineHeight: 34
-  }
+    lineHeight: 34,
+  },
 });
 export default Loading;

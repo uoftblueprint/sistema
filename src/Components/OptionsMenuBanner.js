@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#DEFCDF',
     height: 55,
-    width: windowWidth
+    width: windowWidth,
   },
   containerRemoved: {
     justifyContent: 'flex-start',
@@ -43,23 +43,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FCE5E3',
     height: 55,
-    width: windowWidth
+    width: windowWidth,
   },
   textContainerAdded: {
     fontFamily: 'Mulish-Regular',
     fontSize: 14,
-    color: '#375238'
+    color: '#375238',
   },
   textContainerRemoved: {
     fontFamily: 'Mulish-Regular',
     fontSize: 14,
-    color: '#471612'
+    color: '#471612',
   },
   iconBanner: {
     width: 18.33,
     height: 18.33,
-    paddingLeft: '20%'
-  }
+    paddingLeft: '20%',
+  },
 });
 
 export default OptionsMenuBanner;

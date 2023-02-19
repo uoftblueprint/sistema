@@ -10,17 +10,17 @@ const LibraryNavigator = () => {
     <Stack.Navigator
       intialRouteName={STACK_SCREENS.LIBRARY}
       screenOptions={{
-        headerShown: false
+        headerShown: false,
       }}>
       <Stack.Screen name={STACK_SCREENS.LIBRARY} component={Library} />
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}
         options={{
-          presentation: 'transparentModal'
+          presentation: 'transparentModal',
         }}
         initialParams={{
-          isLessonPlanEditor: false
+          isLessonPlanEditor: false,
         }}
       />
     </Stack.Navigator>

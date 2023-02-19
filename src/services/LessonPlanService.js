@@ -107,7 +107,7 @@ const LessonPlanService = {
     } catch (e) {
       // ...
     }
-  }
+  },
 };
 
 export default LessonPlanService;

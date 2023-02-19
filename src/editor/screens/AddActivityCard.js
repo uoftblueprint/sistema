@@ -4,7 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import TagFilter from '../components/TagFilter';
 import BackArrow from '../../../assets/backArrow.svg';
@@ -19,7 +19,7 @@ const TAGS = [
   'Note Reading',
   'Group Activity',
   'Quick',
-  'Scale'
+  'Scale',
 ];
 
 const AddActivityCard = function ({ navigation, route }) {
@@ -32,7 +32,7 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
     false,
     false,
-    false
+    false,
   ]);
 
   const onChangeSearch = query => setSearchQuery(query);
@@ -78,29 +78,29 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     width: '100%',
-    backgroundColor: '#FFFAF5'
+    backgroundColor: '#FFFAF5',
   },
   tagContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   header: {
     color: 'black',
     fontSize: 24,
     fontFamily: 'Poppins-Bold',
-    marginTop: '5%'
+    marginTop: '5%',
   },
   tags: {
     color: 'black',
     fontSize: 18,
     fontFamily: 'Mulish-Regular',
     marginTop: '1%',
-    marginBottom: '2%'
+    marginBottom: '2%',
   },
   backText: {
     color: 'black',
     fontSize: 18,
-    fontFamily: 'Mulish-Regular'
+    fontFamily: 'Mulish-Regular',
   },
   backButton: {
     flexWrap: 'wrap',
@@ -108,11 +108,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: '10%',
     width: '20%',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   paddingHorizontal: {
-    paddingHorizontal: '5%'
-  }
+    paddingHorizontal: '5%',
+  },
 });
 
 export default AddActivityCard;

@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 
 const STACK_SCREENS = {
   HOME_SCREEN: 'HomePage',
-  EXPANDED_CARD: 'CardView'
+  EXPANDED_CARD: 'CardView',
 };
 
 const HomeNavigator = () => {
