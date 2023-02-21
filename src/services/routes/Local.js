@@ -8,7 +8,7 @@ import RNFS from 'react-native-fs';
 export async function readDirectory(dirpath) {
   return RNFS.readdir(dirpath)
     .then(result => {
-      console.log('GOT RESULT', result);
+      console.log(`GOT RESULT: ${dirpath}`, result);
       return result;
     })
     .catch(err => {
@@ -41,7 +41,7 @@ export async function readFile(filepath) {
 export async function writeFile(filepath, content) {
   return RNFS.writeFile(filepath, content, 'utf8')
     .then(success => {
-      console.log('FILE WRITTEN!');
+      console.log(`FILE WRITTEN!: ${filepath}`);
     })
     .catch(err => {
       console.error(`RNFS writeFile: ${err.message}`);
@@ -58,7 +58,7 @@ export async function deleteFile(filepath) {
   return (
     RNFS.unlink(filepath)
       .then(() => {
-        console.log('FILE DELETED');
+        console.log(`FILE DELETED!: ${filepath}}`);
       })
       // `unlink` will throw an error, if the item to unlink does not exist
       .catch(err => {
@@ -90,7 +90,7 @@ export async function moveFile(oldpath, newpath) {
 export async function checkFileExists(path) {
   return RNFS.exists(path)
     .then(result => {
-      console.log('FILE EXISTS');
+      console.log(`FILE EXISTS: ${path}`);
       return result;
     })
     .catch(err => {
@@ -106,7 +106,7 @@ export async function checkFileExists(path) {
 export async function makeDirectory(dirPath) {
   return RNFS.mkdir(dirPath)
     .then(() => {
-      console.log('DIRECTORY MADE');
+      console.log(`DIRECTORY MADE: ${dirPath}`);
     })
     .catch(err => {
       console.error(`RNFS makeDirectory: ${err.message}`);

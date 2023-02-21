@@ -1,4 +1,4 @@
-import Local from './routes/Local';
+import Local, {checkFileExists, readDirectory, moveFile, deleteFile, makeDirectory} from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 
 const LessonPlanService = {
@@ -14,11 +14,10 @@ const LessonPlanService = {
     try {
       // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
       var path = MAINDIRECTORY + '/' + name + '/';
-      const v = await Local.deleteFile(path);
-      console.log(v);
+      const v = await deleteFile(path);
       return v;
     } catch (e) {
-      // There was an error, catch it and do something with it
+      console.log('Error deleteLessonPlan: ', e);
     }
   },
 
@@ -62,16 +61,19 @@ const LessonPlanService = {
    */
   getAllLessonPlanNames: async function () {
     try {
-      var favouritedLessonPlans = await Local.readDirectory(
-        MAINDIRECTORY + '/Favourited'
-      );
-      var defaultLessonPlans = await Local.readDirectory(
-        MAINDIRECTORY + '/Default'
-      );
+      //Note: you have to await for the directory (even though VScode says it is unnecessary)
+      var favouritedLessonPlans = await readDirectory(MAINDIRECTORY + '/Favourited/');
+      var defaultLessonPlans = await readDirectory(MAINDIRECTORY + '/Default/');
 
-      return favouritedLessonPlans.concat(defaultLessonPlans);
+      var combined = favouritedLessonPlans;
+
+      for(let i = 0; i < defaultLessonPlans.length; i++){
+        combined.push(defaultLessonPlans[i]);
+      }
+
+      return combined;
     } catch (e) {
-      console.log(e);
+        console.log("Error getAllLessonPlanNames: ", e);
     }
   },
 
@@ -108,28 +110,27 @@ const LessonPlanService = {
       var oldpath = MAINDIRECTORY + '/Default/' + name + '/';
       var newpath = MAINDIRECTORY + '/Favourited/' + name + '/';
 
-      const output_exists = await Local.checkFileExists(newpath);
-      const input_file = await Local.checkFileExists(oldpath);
-
-      if (!input_file) {
-        throw new Error('File is not in defaults');
+      if (!(await checkFileExists(oldpath))) {
+        throw new Error('File is not in Defaults');
       }
 
-      if (output_exists) {
-        //DELETE THE FILE
-        await Local.deleteFile(newpath);
-        await Local.makeDirectory(newpath);
+      if (await checkFileExists(newpath)) {
+        await deleteFile(newpath);  
       }
-      var files = await Local.readFile(oldpath);
+
+      await makeDirectory(newpath); 
+
+      var files = await readDirectory(oldpath);
+      
 
       for (var i = 0; i < files.length; i++) {
-        var file = await Local.moveFile(oldpath + files[i], newpath + files[i]);
+        await moveFile(oldpath + files[i], newpath + files[i]);
       }
 
-      const v = await Local.deleteFile(oldpath);
-      return v;
+      await deleteFile(oldpath);
+      return 0;
     } catch (e) {
-      console.log(e);
+      console.log('Error favourite: ', e);
     }
   },
 
@@ -142,29 +143,26 @@ const LessonPlanService = {
       var newpath = MAINDIRECTORY + '/Default/' + name + '/';
       var oldpath = MAINDIRECTORY + '/Favourited/' + name + '/';
 
-      await Local.checkFileExists(newpath);
-
-      const output_exists = await Local.checkFileExists(newpath);
-      const input_file = await Local.checkFileExists(oldpath);
-
-      if (!input_file) {
-        throw new Error('File is not in favourites');
+      if (!(await checkFileExists(oldpath))) {
+        throw new Error('File is not in Favourited');
       }
 
-      if (output_exists) {
-        await Local.deleteFile(newpath);
-        await Local.makeDirectory(newpath);
+      if (await checkFileExists(newpath)) {
+        await deleteFile(newpath); 
       }
-      var files = await Local.readFile(oldpath);
-
+      await makeDirectory(newpath);
+  
+      var files = await readDirectory(oldpath);
+      
       for (var i = 0; i < files.length; i++) {
-        var file = await Local.moveFile(oldpath + files[i], newpath + files[i]);
+         await moveFile(oldpath + files[i], newpath + files[i]);
       }
 
-      const v = await Local.deleteFile(oldpath);
-      return v;
+    await deleteFile(oldpath);
+    
+     return 0;
     } catch (e) {
-      console.log(e);
+      console.log('Error unfavourite: ', e);
     }
   }
 };
