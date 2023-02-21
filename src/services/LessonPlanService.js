@@ -1,4 +1,10 @@
-import Local, {checkFileExists, readDirectory, moveFile, deleteFile, makeDirectory} from './routes/Local';
+import Local, {
+  checkFileExists,
+  readDirectory,
+  moveFile,
+  deleteFile,
+  makeDirectory
+} from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 
 const LessonPlanService = {
@@ -62,18 +68,20 @@ const LessonPlanService = {
   getAllLessonPlanNames: async function () {
     try {
       //Note: you have to await for the directory (even though VScode says it is unnecessary)
-      var favouritedLessonPlans = await readDirectory(MAINDIRECTORY + '/Favourited/');
+      var favouritedLessonPlans = await readDirectory(
+        MAINDIRECTORY + '/Favourited/'
+      );
       var defaultLessonPlans = await readDirectory(MAINDIRECTORY + '/Default/');
 
       var combined = favouritedLessonPlans;
 
-      for(let i = 0; i < defaultLessonPlans.length; i++){
+      for (let i = 0; i < defaultLessonPlans.length; i++) {
         combined.push(defaultLessonPlans[i]);
       }
 
       return combined;
     } catch (e) {
-        console.log("Error getAllLessonPlanNames: ", e);
+      console.log('Error getAllLessonPlanNames: ', e);
     }
   },
 
@@ -115,13 +123,12 @@ const LessonPlanService = {
       }
 
       if (await checkFileExists(newpath)) {
-        await deleteFile(newpath);  
+        await deleteFile(newpath);
       }
 
-      await makeDirectory(newpath); 
+      await makeDirectory(newpath);
 
       var files = await readDirectory(oldpath);
-      
 
       for (var i = 0; i < files.length; i++) {
         await moveFile(oldpath + files[i], newpath + files[i]);
@@ -148,19 +155,19 @@ const LessonPlanService = {
       }
 
       if (await checkFileExists(newpath)) {
-        await deleteFile(newpath); 
+        await deleteFile(newpath);
       }
       await makeDirectory(newpath);
-  
+
       var files = await readDirectory(oldpath);
-      
+
       for (var i = 0; i < files.length; i++) {
-         await moveFile(oldpath + files[i], newpath + files[i]);
+        await moveFile(oldpath + files[i], newpath + files[i]);
       }
 
-    await deleteFile(oldpath);
-    
-     return 0;
+      await deleteFile(oldpath);
+
+      return 0;
     } catch (e) {
       console.log('Error unfavourite: ', e);
     }
