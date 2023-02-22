@@ -134,7 +134,6 @@ const LessonPlanService = {
       }
 
       await deleteFile(oldpath);
-
     } catch (e) {
       console.log('Error favourite: ', e);
     }
@@ -165,7 +164,6 @@ const LessonPlanService = {
       }
 
       await deleteFile(oldpath);
-
     } catch (e) {
       console.log('Error unfavourite: ', e);
     }
