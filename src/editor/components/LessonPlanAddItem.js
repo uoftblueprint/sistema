@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  TextInput,
   Text,
   TouchableOpacity
 } from 'react-native';
