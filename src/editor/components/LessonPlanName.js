@@ -46,7 +46,7 @@ const LessonPlanName = () => {
         onPress={() => {
           setIsEditable(true);
         }}>
-        <EditIcon height={'25'} width={'25'} paddingRight={'12%'}/>
+        <EditIcon height={'25'} width={'25'} paddingRight={'12%'} />
       </TouchableOpacity>
     </SafeAreaView>
   );

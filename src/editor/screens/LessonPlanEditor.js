@@ -17,7 +17,10 @@ const LessonPlanEditor = ({ navigation }) => {
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
       <LessonPlanHeader navigation={navigation} />
       <ScrollView style={styles.scrollView}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} flex={1} height={'100%'}>
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+          flex={1}
+          height={'100%'}>
           <View style={styles.viewStyle}>
             <LessonSection
               navigation={navigation}
