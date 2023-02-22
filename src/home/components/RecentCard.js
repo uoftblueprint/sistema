@@ -29,7 +29,7 @@ const RecentCard = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
   },
   box: {

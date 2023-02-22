@@ -2,5 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "Fixing any lint errors..."
-yarn eslint --fix src/
+yarn run lint:fix
 echo "Lint check complete."
