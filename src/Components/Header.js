@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,20 +6,48 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
+import SistemaButton from '../Components/SistemaButton';
 import SistemaLogo from '../../assets/sistemaLogo.svg';
-import OptionIcon from '../../assets/OptionIcon.svg';
+import InfoIcon from '../../assets/infoIcon.svg';
+import GearIcon from '../../assets/gearIcon.svg';
+import Overlay from './Overlay';
 
-const Header = ({ navigation }) => {
+const Header = ({ isHome }) => {
+  const [isHomePage, setHomePage] = useState(isHome);
+  const [isVisible, setVisible] = useState(false);
+
+  const toggleOverlay = () => {
+    setVisible(!isVisible);
+  };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
-
       <TouchableOpacity style={styles.settingContainer}>
-        <OptionIcon width={30} height={30} style={styles.settingIcon} />
+        <GearIcon width={30} height={30} style={styles.settingIcon} />
       </TouchableOpacity>
-    </View>
+      {isHomePage ? (
+        <TouchableOpacity style={styles.infoIcon} onPress={toggleOverlay}>
+          <InfoIcon height={37} width={37} />
+        </TouchableOpacity>
+      ) : (
+        <></>
+      )}
+      <Overlay
+        close={toggleOverlay}
+        visible={isVisible}
+        style={styles.overlayStyle}>
+        <Text style={styles.textHeader}>How activity cards are named</Text>
+        <Text style={styles.textBody}>x, y, z - Ask Alex to write this</Text>
+        <View style={styles.buttonStyle}>
+          <SistemaButton onPress={toggleOverlay} style={{ minWidth: '30%' }}>
+            <Text> Okay </Text>
+          </SistemaButton>
+        </View>
+      </Overlay>
+    </SafeAreaView>
   );
 };
 
@@ -43,11 +71,34 @@ const styles = StyleSheet.create({
     //container for setting icon
     height: '100%',
     alignItems: 'center',
-    marginRight: '2%',
+    marginRight: '3%',
     justifyContent: 'center'
   },
   settingIcon: {
     margin: 'auto'
+  },
+  infoIcon: {
+    marginRight: '1%'
+  },
+  textHeader: {
+    fontFamily: 'Poppins-Bold',
+    marginBottom: '5%'
+  },
+  textBody: {
+    fontFamily: 'Mulish-Regular',
+    marginBottom: '5%'
+  },
+  overlayStyle: {
+    minHeight: '30%',
+    paddingHorizontal: '5%'
+  },
+  buttonStyle: {
+    position: 'absolute',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    left: 0,
+    right: 0,
+    top: '95%'
   }
 });
 

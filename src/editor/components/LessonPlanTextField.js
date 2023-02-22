@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 15,
     fontStyle: 'italic',
+    fontFamily: 'Mulish',
     fontSize: 16
   },
   SectionStyle: {

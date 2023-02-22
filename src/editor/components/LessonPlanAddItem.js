@@ -2,11 +2,11 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  View,
+  TextInput,
   Text,
   TouchableOpacity
 } from 'react-native';
-import AddIcon from '../../../assets/AddIcon';
+import AddIcon from '../../../assets/add';
 
 const LessonPlanAddItem = ({ placeholder }) => {
 
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     shadowColor: '#453E3D',
+    fontFamily: 'Mulish-Regular',
     paddingLeft: 12,
     fontSize: 16
   },
