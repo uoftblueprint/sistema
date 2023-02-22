@@ -20,8 +20,7 @@ const LessonPlanService = {
     try {
       // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
       var path = MAINDIRECTORY + '/' + name + '/';
-      const v = await deleteFile(path);
-      return v;
+      await deleteFile(path);
     } catch (e) {
       console.log('Error deleteLessonPlan: ', e);
     }
@@ -135,7 +134,7 @@ const LessonPlanService = {
       }
 
       await deleteFile(oldpath);
-      return 0;
+
     } catch (e) {
       console.log('Error favourite: ', e);
     }
@@ -167,7 +166,6 @@ const LessonPlanService = {
 
       await deleteFile(oldpath);
 
-      return 0;
     } catch (e) {
       console.log('Error unfavourite: ', e);
     }
