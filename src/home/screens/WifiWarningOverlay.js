@@ -32,30 +32,30 @@ const styles = StyleSheet.create({
     fontSize: 21,
     flexWrap: 'wrap',
     maxWidth: '95%',
-    marginBottom: 5
+    marginBottom: 5,
   },
   description: {
     fontFamily: 'Mulish-Regular',
     color: 'rgba(0,0,0,0.87)',
-    fontSize: 17
+    fontSize: 17,
   },
   buttonText: {
     color: 'black',
     fontSize: 13,
-    fontFamily: 'Mulish-Regular'
+    fontFamily: 'Mulish-Regular',
   },
   container: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   row: {
     display: 'flex',
     flexDirection: 'row',
     maxWidth: '100%',
-    marginBottom: 9
+    marginBottom: 9,
   },
   textContainer: { marginLeft: 10 },
-  svg: { marginTop: 4 }
+  svg: { marginTop: 4 },
 });
 
 export default WifiWarningOverlay;

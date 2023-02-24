@@ -4,7 +4,7 @@ import {
   Text,
   ScrollView,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import AddButton from './components/AddToLessonButton';
 import BackArrow from '../../assets/backArrow';
@@ -43,7 +43,7 @@ const ExpandedCard = ({ navigation }) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#FFFAF5',
-    height: '100%'
+    height: '100%',
   },
   box: {
     backgroundColor: 'white',
@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 15,
     width: '75%',
-    height: windowHeight * 0.55
+    height: windowHeight * 0.55,
   },
   scrollview: {
     backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     color: '#453E3D',
@@ -68,18 +68,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width: '60%',
     textAlign: 'center',
-    marginBottom: 40
+    marginBottom: 40,
   },
   backArrowContainer: {
     position: 'absolute',
     top: 20,
     bottom: 0,
     left: 25,
-    right: 0
+    right: 0,
   },
   backArrow: {
-    fill: '#222222'
-  }
+    fill: '#222222',
+  },
 });
 
 export default ExpandedCard;
