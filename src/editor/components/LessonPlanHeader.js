@@ -5,7 +5,7 @@ import LessonPlanName from './LessonPlanName';
 
 import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 
-const LessonPlanHeader = ({ navigation }) => {
+const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity>
@@ -15,7 +15,8 @@ const LessonPlanHeader = ({ navigation }) => {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate('Lesson_Plan_Editor_Menu', {
-            isLessonPlanEditor: true
+            isLessonPlanEditor: true,
+            lastEdited: lastEditedDate
           })
         }>
         <Menu height={'30'} width={'30'}/>

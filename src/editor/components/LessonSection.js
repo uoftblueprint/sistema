@@ -12,11 +12,12 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const handleClick = () => {
     setisTextinputOpen(true);
   };
-  const addActivityCard = () =>
+  const addActivityCard = () => {
     navigation.navigate('Add Activity Card', {
       header: subtitle
     });
-
+  };
+  
   return (
     <SafeAreaView>
       <Text style={styles.title}>{subtitle}</Text>

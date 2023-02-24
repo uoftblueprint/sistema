@@ -12,12 +12,20 @@ import LessonSection from '../components/LessonSection.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 
+// dummy last edited date
+const lastEditedDummy = 'Jan 1, 2023';
+
 const LessonPlanEditor = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
-      <LessonPlanHeader navigation={navigation} />
-      <ScrollView style={styles.scrollView}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} flex={1} height={'100%'}>
+    <SafeAreaView style={styles.mainContainer}>
+      <LessonPlanHeader navigation={navigation} lastEditedDate={lastEditedDummy}  />
+      <ScrollView 
+        style={styles.scrollView} 
+        contentContainerStyle={{
+          paddingBottom: '15%',
+        }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.viewStyle}>
             <LessonSection
               navigation={navigation}
@@ -39,23 +47,36 @@ const LessonPlanEditor = ({ navigation }) => {
               subtitle={'Notes'}
               placeholder={''}
             />
-            <SaveButton />
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
+      <View style={styles.saveButton}>
+        <SaveButton />
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#FFFAF5',
+    justifyContent: 'center',
+  },
   scrollView: {
+    flex: 1,
     marginHorizontal: '1%',
     marginVertical: '1%',
-    marginBottom: '23%'
+    paddingBottom: '10%',
   },
   viewStyle: {
     flexDirection: 'column',
     alignItems: 'center'
+  },
+  saveButton: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 25,
   }
 });
 

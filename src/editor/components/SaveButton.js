@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     width: 109,
     borderWidth: 0.77,
     borderRadius: 6,
-    marginBottom: 10,
-    paddingHorizontal: 12
+    // marginBottom: 10,
+    // paddingHorizontal: 12
   },
   textContainer: {
     paddingLeft: 8.6,
