@@ -33,6 +33,7 @@ const LessonPlanEditor = ({ navigation }) => {
               subtitle={'Warm Up'}
             />
             <LessonSection
+              navigation={navigation}
               sectionType={'mainLesson'}
               subtitle={'Main Lesson'}
             />
