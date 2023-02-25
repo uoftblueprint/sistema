@@ -3,7 +3,8 @@ import {
   SafeAreaView,
   Text,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
 import RecentCard from '../home/components/RecentCard';
 import Header from '../Components/Header';
@@ -24,6 +25,7 @@ const Home = ({ navigation }) => {
               alignItems: 'center'
             }}>
             <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
+            {/* This refresh icon should eventually become a TouchableOpacity */}
             <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
           </SafeAreaView>
         </SafeAreaView>
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     letterSpacing: 0.3,
     width: '100%',
-    paddingBottom: 11
+    paddingBottom: 11,
   },
   subtitle: {
     color: '#453E3D',
@@ -71,7 +73,16 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginLeft: '8%',
     letterSpacing: 0.3,
-    width: '55%'
+    ...Platform.select({
+      ios: {
+        width: '55%',
+      },
+      android: {
+        marginRight: 0,
+        paddingRight: 0,
+        width: '50%',
+      },
+    }),
   },
   refreshIcon: {
     fill: '#453E3D'
