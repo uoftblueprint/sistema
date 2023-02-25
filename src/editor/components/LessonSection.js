@@ -17,7 +17,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
       header: subtitle
     });
   };
-  
+
   return (
     <SafeAreaView>
       <Text style={styles.title}>{subtitle}</Text>

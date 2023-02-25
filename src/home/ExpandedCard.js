@@ -72,10 +72,17 @@ const styles = StyleSheet.create({
   },
   backArrowContainer: {
     position: 'absolute',
-    top: 20,
     bottom: 0,
     left: 25,
-    right: 0
+    right: 0,
+    ...Platform.select({
+      ios: {
+        top: '10%',
+      },
+      android: {
+        top: '3%',
+      },
+    })
   },
   backArrow: {
     fill: '#222222'

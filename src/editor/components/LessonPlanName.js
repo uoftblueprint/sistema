@@ -56,17 +56,21 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     letterSpacing: 0.3,
-    paddingLeft: 12,
-    paddingRight: 15,
-    fontSize: 24,
+    fontSize: 23,
     fontFamily: 'Poppins-Bold',
     color: '#000',
     ...Platform.select({
       ios: {
-        paddingVertical: 10
+        paddingVertical: 10,
+        marginVertical: 0,
+        paddingLeft: '5%',
+        paddingRight: 15,
       },
       android: {
-        paddingVertical: 0
+        paddingVertical: 0,
+        marginVertical: 0,
+        paddingLeft: 0,
+        paddingRight: '5%',
       },
       default: {
         paddingVertical: 4

@@ -18,13 +18,15 @@ const lastEditedDummy = 'Jan 1, 2023';
 const LessonPlanEditor = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <LessonPlanHeader navigation={navigation} lastEditedDate={lastEditedDummy}  />
-      <ScrollView 
-        style={styles.scrollView} 
+      <LessonPlanHeader
+        navigation={navigation}
+        lastEditedDate={lastEditedDummy}
+      />
+      <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={{
           paddingBottom: '15%',
-        }}
-      >
+        }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.viewStyle}>
             <LessonSection
