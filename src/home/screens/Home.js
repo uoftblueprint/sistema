@@ -5,10 +5,10 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import RecentCard from '../home/components/RecentCard';
-import Header from '../Components/Header';
-import RefreshIcon from '../../assets/refreshIcon.svg';
-import { STACK_SCREENS } from './HomeNavigator';
+import RecentCard from '../components/RecentCard';
+import Header from '../../Components/Header';
+import RefreshIcon from '../../../assets/refreshIcon.svg';
+import { STACK_SCREENS } from '../constants';
 
 const Home = ({ navigation }) => {
   return (
