@@ -37,12 +37,14 @@ const LessonPlanService = {
       const lessonJSON = JSON.stringify(lesson);
       // Then, write to local storage with an RNFS call via Local.js
       // ...
-      var path = MAINDIRECTORY + "/" + lesson.name + "/" + lesson.name + ".json";
+      var path =
+        MAINDIRECTORY + '/' + lesson.name + '/' + lesson.name + '.json';
       await Local.makeDirectory(path);
       await Local.writeFile(path, lessonJSON);
     } catch (e) {
-      console.log("Error save: ", e);
       // There was an error, catch it and do something with it
+      console.log('Error save: ', e);
+
     }
   },
 
