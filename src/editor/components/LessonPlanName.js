@@ -38,7 +38,7 @@ const LessonPlanName = () => {
           autoFocus={true}
         />
       ) : (
-        <Text style={styles.input} numberOfLines={1}>
+        <Text style={styles.text} numberOfLines={1}>
           {lessonPlanName}
         </Text>
       )}
@@ -54,6 +54,30 @@ const LessonPlanName = () => {
 
 const styles = StyleSheet.create({
   input: {
+    flex: 1,
+    letterSpacing: 0.3,
+    fontSize: 23,
+    fontFamily: 'Poppins-Bold',
+    color: '#000',
+    ...Platform.select({
+      ios: {
+        paddingVertical: 0,
+        marginVertical: 0,
+        paddingLeft: '5%',
+        paddingRight: 15,
+      },
+      android: {
+        paddingVertical: 0,
+        marginVertical: 0,
+        paddingLeft: 0,
+        paddingRight: '5%',
+      },
+      default: {
+        paddingVertical: 4
+      }
+    })
+  },
+  text: {
     flex: 1,
     letterSpacing: 0.3,
     fontSize: 23,
