@@ -8,7 +8,7 @@ export class AccessToken {
   constructor(
     access_token = '',
     expires_in = new Date(-8640000000000000), // min date allowed (Tue, 20 Apr -271821 00:00:00 GMT)
-    token_type = 'Bearer'
+    token_type = 'Bearer',
   ) {
     this.token = access_token;
     this.expiryTime = expires_in;

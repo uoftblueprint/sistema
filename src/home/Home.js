@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   Text,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import RecentCard from '../home/components/RecentCard';
 import Header from '../Components/Header';
@@ -17,12 +17,7 @@ const Home = ({ navigation }) => {
       <ScrollView>
         <SafeAreaView style={styles.container}>
           <Text style={styles.title}>Recently added activity cards</Text>
-          <SafeAreaView
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center'
-            }}>
+          <SafeAreaView style={styles.subContainer}>
             <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
             <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
           </SafeAreaView>
@@ -49,11 +44,16 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#FFFAF5',
-    height: '100%'
+    height: '100%',
   },
   container: {
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+  },
+  subContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   title: {
     color: '#453E3D',
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     letterSpacing: 0.3,
     width: '100%',
-    paddingBottom: 11
+    paddingBottom: 11,
   },
   subtitle: {
     color: '#453E3D',
@@ -71,11 +71,11 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginLeft: '8%',
     letterSpacing: 0.3,
-    width: '55%'
+    width: '55%',
   },
   refreshIcon: {
-    fill: '#453E3D'
-  }
+    fill: '#453E3D',
+  },
 });
 
 export default Home;

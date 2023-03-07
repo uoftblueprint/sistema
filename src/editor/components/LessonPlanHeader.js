@@ -15,7 +15,7 @@ const LessonPlanHeader = ({ navigation }) => {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate('Lesson_Plan_Editor_Menu', {
-            isLessonPlanEditor: true
+            isLessonPlanEditor: true,
           })
         }>
         <Menu height={'30'} width={'30'} />
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     marginHorizontal: 25,
     justifyContent: 'space-between',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default LessonPlanHeader;

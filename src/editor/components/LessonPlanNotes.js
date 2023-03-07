@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Text, SafeAreaView, StyleSheet, TextInput } from 'react-native';
+import {
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  Platform,
+} from 'react-native';
 import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 
@@ -19,7 +25,10 @@ const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
             if (e.nativeEvent.text) {
               setSectionContent(e.nativeEvent.text);
               store.dispatch(
-                addToNote({ section: sectionType, content: e.nativeEvent.text })
+                addToNote({
+                  section: sectionType,
+                  content: e.nativeEvent.text,
+                }),
               );
             } else {
               setSectionContent(placeholder);
@@ -39,22 +48,22 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     marginBottom: 10,
     lineHeight: 28,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
   SectionStyle: {
     paddingHorizontal: 15,
     ...Platform.select({
       ios: {
-        paddingVertical: 10
+        paddingVertical: 10,
       },
       android: {
-        paddingVertical: 0
+        paddingVertical: 0,
       },
       default: {
         ios: {
-          paddingVertical: 3
-        }
-      }
+          paddingVertical: 3,
+        },
+      },
     }),
     fontStyle: 'italic',
     fontFamily: 'Poppins-Medium',
@@ -69,17 +78,17 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 5,
-    marginBottom: 20
+    marginBottom: 20,
   },
   notesText: {
     fontFamily: 'Mulish-Regular',
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
 
 export default LessonPlanNotes;

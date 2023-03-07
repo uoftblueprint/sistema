@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     fontFamily: 'Mulish-Regular',
     paddingLeft: 12,
-    fontSize: 16
+    fontSize: 16,
   },
   SectionStyle: {
     flexDirection: 'row',
@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     elevation: 7,
     marginVertical: 6,
-    paddingLeft: '3%'
+    paddingLeft: '3%',
   },
   ImageStyle: {
     height: 25,
-    width: 25
-  }
+    width: 25,
+  },
 });
 
 export default LessonPlanAddItem;

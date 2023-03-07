@@ -5,7 +5,7 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
-  Platform
+  Platform,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import EditIcon from '../../../assets/edit.svg';
@@ -18,7 +18,7 @@ const LessonPlanName = () => {
     const todayDate = new Date().toLocaleDateString('en-us', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
     setLessonPlanName(todayDate);
   }, []);
@@ -63,15 +63,15 @@ const styles = StyleSheet.create({
     color: '#000',
     ...Platform.select({
       ios: {
-        paddingVertical: 10
+        paddingVertical: 10,
       },
       android: {
-        paddingVertical: 0
+        paddingVertical: 0,
       },
       default: {
-        paddingVertical: 4
-      }
-    })
+        paddingVertical: 4,
+      },
+    }),
   },
   SectionStyle: {
     flexDirection: 'row',
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     color: '#000',
     borderColor: 'transparent',
     borderRadius: 7.69,
-    paddingLeft: '3%'
-  }
+    paddingLeft: '3%',
+  },
 });
 
 export default LessonPlanName;
