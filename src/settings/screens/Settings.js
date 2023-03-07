@@ -3,13 +3,15 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  View,
-  TouchableOpacity,
+  View
 } from 'react-native';
 import Header from '../../Components/Header';
+import IconButton from '../components/IconButton';
+import PolicyButton from '../components/PolicyButton';
+import CloudUpload from '../../../assets/cloudUploadOutline.svg';
+import Trash from '../../../assets/trashIcon.svg';
 
 const Settings = ({ navigation }) => {
-
   return (
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} showInfoIcon={false} />
@@ -17,12 +19,19 @@ const Settings = ({ navigation }) => {
       <ScrollView>
         <Text style={styles.title}>Settings</Text>
         <View style={styles.buttonContainer}>
-
+          <IconButton title={"Back Up Data"} handlePress={() => console.log("hi")}>
+            <CloudUpload width={25} height={25} />
+          </IconButton>
+          <IconButton title={"Clear App Data"} handlePress={() => console.log("bye")}>
+            <Trash width={25} height={25} />
+          </IconButton>
         </View>
 
         <Text style={styles.title}>Policies</Text>
         <View style={styles.buttonContainer}>
-
+          <PolicyButton title={"Terms of Use"} />
+          <PolicyButton title={"Privacy Policy"} />
+          <PolicyButton title={"About Sistema"} />
         </View>
       </ScrollView>
     </SafeAreaView>

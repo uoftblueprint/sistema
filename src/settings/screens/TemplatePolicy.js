@@ -8,7 +8,7 @@ import {
 import Header from '../../Components/Header';
 import BackArrow from '../../../assets/backArrow.svg';
 
-const TemplateInfoPage = ({ navigation, title, content }) => {
+const TemplatePolicy = ({ navigation, title, content }) => {
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TemplateInfoPage;
+export default TemplatePolicy;
