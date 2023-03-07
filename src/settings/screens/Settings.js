@@ -5,6 +5,7 @@ import {
   ScrollView,
   View
 } from 'react-native';
+import { policyPages } from '../constants';
 import Header from '../../Components/Header';
 import IconButton from '../components/IconButton';
 import PolicyButton from '../components/PolicyButton';
@@ -14,7 +15,7 @@ import Trash from '../../../assets/trashIcon.svg';
 const Settings = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} showInfoIcon={false} />
+      <Header navigation={navigation} showInfoIcon={false} showBackButton={false} />
 
       <ScrollView>
         <Text style={styles.title}>Settings</Text>
@@ -29,9 +30,11 @@ const Settings = ({ navigation }) => {
 
         <Text style={styles.title}>Policies</Text>
         <View style={styles.buttonContainer}>
-          <PolicyButton title={"Terms of Use"} />
-          <PolicyButton title={"Privacy Policy"} />
-          <PolicyButton title={"About Sistema"} />
+          {
+            policyPages.map((policyPage, i) => 
+              <PolicyButton key={i} title={policyPage.title} content={policyPage.text} navigation={navigation} />
+            )
+          }
         </View>
       </ScrollView>
     </SafeAreaView>

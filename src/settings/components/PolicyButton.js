@@ -1,12 +1,19 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { STACK_SCREENS } from '../constants'; 
 import NextButton from '../../../assets/backArrowEast.svg';
 
 const PolicyButton = ({
   title,
-  handlePress
+  content,
+  navigation
 }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={handlePress}>
+    <TouchableOpacity 
+      style={styles.container} 
+      onPress={() => {
+        navigation.navigate(STACK_SCREENS.TEMPLATE_INFO_PAGE, 
+        { pageTitle: title, pageContent: content })
+      }}>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.icon}>
         <NextButton width={14} height={17} />
