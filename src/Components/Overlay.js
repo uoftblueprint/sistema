@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     height: 'auto',
     backgroundColor: '#FFFAF5',
     padding: 16,
-    borderRadius: 4.2
+    borderRadius: 4.2,
   },
   container: {
     height: '100%',
@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D980',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default Overlay;

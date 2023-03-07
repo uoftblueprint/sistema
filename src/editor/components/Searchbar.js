@@ -33,27 +33,27 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 1, height: 1 },
         shadowColor: 'gray',
         shadowRadius: 3,
-        shadowOpacity: 0.4
+        shadowOpacity: 0.4,
       },
       android: {
         elevation: 5,
         shadowOffset: { width: 10, height: 10 },
         shadowColor: 'black',
         shadowRadius: 2,
-        shadowOpacity: 1
-      }
-    })
+        shadowOpacity: 1,
+      },
+    }),
     // background color must be set
   },
   TextStyle: {
     fontFamily: 'Mulish-Regular',
     fontStyle: 'italic',
     width: '100%',
-    fontSize: 17
+    fontSize: 17,
   },
   IconStyle: {
-    marginHorizontal: '1.5%'
-  }
+    marginHorizontal: '1.5%',
+  },
 });
 
 export default Searchbar;

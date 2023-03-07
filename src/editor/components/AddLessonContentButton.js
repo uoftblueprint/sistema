@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import AddIcon from '../../../assets/add.svg';
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     shadowColor: '#453E3D',
     paddingLeft: 12,
-    fontSize: 16
+    fontSize: 16,
   },
   sectionStyle: {
     fontFamily: 'Poppins-Light',
@@ -42,15 +42,15 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     elevation: 7,
     marginVertical: 6,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   imageStyle: {
-    paddingLeft: '10%'
+    paddingLeft: '10%',
   },
   text: {
     fontFamily: 'Mulish-Regular',
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
 });
 
 export default AddLessonContentButton;

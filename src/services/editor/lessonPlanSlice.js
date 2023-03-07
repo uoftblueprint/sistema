@@ -7,7 +7,7 @@ export const lessonPlanSlice = createSlice({
     mainLesson: [],
     coolDown: [],
     notes: '',
-    isDirty: false // TODO: wipe the entire lessonPlan state store to default when you exit the editor
+    isDirty: false, // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {
     addToSection: (state, action) => {
@@ -22,36 +22,36 @@ export const lessonPlanSlice = createSlice({
           ...state[action.payload.section],
           {
             type: action.payload.type,
-            content: action.payload.content
-          }
+            content: action.payload.content,
+          },
         ],
-        isDirty: true
+        isDirty: true,
       };
     },
     removeFromSection: (state, action) => {
       const section = action.payload.section;
       const indx = state[section].findIndex(
-        e => e.content === action.payload.content
+        e => e.content === action.payload.content,
       );
       return {
         ...state,
         isDirty: true,
-        [action.payload.section]: state[section].filter((_, i) => i !== indx)
+        [action.payload.section]: state[section].filter((_, i) => i !== indx),
       };
     },
     addToNote: (state, action) => {
       return {
         ...state,
-        notes: action.payload.content
+        notes: action.payload.content,
       };
     },
     removeNote: (state, _) => {
       return {
         ...state,
-        notes: ''
+        notes: '',
       };
-    }
-  }
+    },
+  },
 });
 
 // Dispatch actions to "write" to redux

@@ -7,7 +7,7 @@ const ContentCard = ({
   setisTextinputOpen,
   setSectionContent,
   sectionContent,
-  sectionType
+  sectionType,
 }) => {
   return (
     <SafeAreaView style={styles.ContentCardStyle}>
@@ -21,8 +21,8 @@ const ContentCard = ({
               addToSection({
                 type: 'text',
                 section: sectionType,
-                content: e.nativeEvent.text
-              })
+                content: e.nativeEvent.text,
+              }),
             );
           }
           setisTextinputOpen(false);
@@ -47,27 +47,27 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 5,
     ...Platform.select({
       ios: {
-        paddingVertical: 10
+        paddingVertical: 10,
       },
       android: {
-        paddingVertical: 0
+        paddingVertical: 0,
       },
       default: {
         ios: {
-          paddingVertical: 4
-        }
-      }
+          paddingVertical: 4,
+        },
+      },
     }),
     paddingHorizontal: 10,
-    marginVertical: 5
-  }
+    marginVertical: 5,
+  },
 });
 
 export default ContentCard;

@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
     width: 134,
     borderWidth: 0.77,
     borderRadius: 6,
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
   },
   textContainer: {
     fontFamily: 'Mulish-Regular',
     color: '#000',
-    fontSize: 13
-  }
+    fontSize: 13,
+  },
 });
 export default AddToLessonButton;

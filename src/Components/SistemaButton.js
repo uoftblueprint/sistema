@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     borderColor: '#453E3D',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 });
 
 export default SistemaButton;
