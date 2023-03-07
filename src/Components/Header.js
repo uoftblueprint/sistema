@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import SistemaButton from '../Components/SistemaButton';
-import SistemaLogo from '../../assets/sistemaLogo.svg';
+import SistemaLogo from '../../assets/SistemaLogo.svg';
 import InfoIcon from '../../assets/infoIcon.svg';
 import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';
+import { STACK_SCREENS as SETTINGS_SCREENS } from '../settings/constants';
 
-const Header = ({ isHome }) => {
+const Header = ({ navigation, isHome }) => {
   const [isHomePage, setHomePage] = useState(isHome);
   const [isVisible, setVisible] = useState(false);
 
@@ -25,7 +26,9 @@ const Header = ({ isHome }) => {
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
-      <TouchableOpacity style={styles.settingContainer}>
+      <TouchableOpacity 
+        style={styles.settingContainer} 
+        onPress={() => navigation.navigate(SETTINGS_SCREENS.NAVIGATOR, { screen: SETTINGS_SCREENS.SETTINGS_MAIN })}>
         <GearIcon width={30} height={30} style={styles.settingIcon} />
       </TouchableOpacity>
       {isHomePage ? (
