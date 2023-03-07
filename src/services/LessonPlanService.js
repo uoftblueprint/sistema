@@ -44,7 +44,6 @@ const LessonPlanService = {
     } catch (e) {
       // There was an error, catch it and do something with it
       console.log('Error save: ', e);
-
     }
   },
 

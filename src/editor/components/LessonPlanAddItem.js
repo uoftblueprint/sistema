@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity
-} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import AddIcon from '../../../assets/add';
 
 const LessonPlanAddItem = ({ placeholder }) => {
