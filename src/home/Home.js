@@ -8,7 +8,7 @@ import {
 import RecentCard from '../home/components/RecentCard';
 import Header from '../Components/Header';
 import RefreshIcon from '../../assets/refreshIcon.svg';
-import { STACK_SCREENS } from './HomeNavigator'; 
+import { STACK_SCREENS } from './HomeNavigator';
 
 const Home = ({ navigation }) => {
   return (
@@ -26,13 +26,16 @@ const Home = ({ navigation }) => {
         {/* Will eventually convert this into .map for x amount of cards in cache */}
         <SafeAreaView style={{ height: '100%' }}>
           {/* PROPS TO PASS IN: Title, Card image, Card id */}
-          <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
             <RecentCard />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
             <RecentCard />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
             <RecentCard />
           </TouchableOpacity>
         </SafeAreaView>

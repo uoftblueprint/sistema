@@ -1,15 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const IconButton = ({
-  title,
-  handlePress,
-  children
-}) => {
+const IconButton = ({ title, handlePress, children }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={handlePress}>
-      <View style={styles.icon}>
-        {children}
-      </View>
+      <View style={styles.icon}>{children}</View>
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   );
@@ -24,7 +18,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.77,
     borderStyle: 'solid',
     display: 'flex',
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: 22,
@@ -39,7 +33,7 @@ const styles = StyleSheet.create({
   icon: {
     marginVertical: 14,
     marginLeft: 14,
-  }
+  },
 });
 
 export default IconButton;

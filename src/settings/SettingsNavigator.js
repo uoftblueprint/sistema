@@ -13,7 +13,10 @@ const SettingsNavigator = () => {
         headerShown: false,
       }}>
       <Stack.Screen name={STACK_SCREENS.SETTINGS_MAIN} component={Settings} />
-      <Stack.Screen name={STACK_SCREENS.TEMPLATE_INFO_PAGE} component={TemplatePolicy} />
+      <Stack.Screen
+        name={STACK_SCREENS.TEMPLATE_INFO_PAGE}
+        component={TemplatePolicy}
+      />
     </Stack.Navigator>
   );
 };

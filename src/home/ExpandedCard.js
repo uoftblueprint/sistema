@@ -14,7 +14,11 @@ const windowHeight = Dimensions.get('window').height;
 const ExpandedCard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <Header navigation={navigation} showInfoIcon={true} showBackButton={true} />
+      <Header
+        navigation={navigation}
+        showInfoIcon={true}
+        showBackButton={true}
+      />
 
       <ScrollView>
         <SafeAreaView

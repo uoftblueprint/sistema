@@ -5,7 +5,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import SistemaButton from '../Components/SistemaButton';
 import SistemaLogo from '../../assets/SistemaLogo.svg';
@@ -15,10 +15,11 @@ import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';
 import { STACK_SCREENS as SETTINGS_SCREENS } from '../settings/constants';
 
-const activityCardNamingExplanation = 'Activity Card names have three parts:\n\nTheme - Activity Type - Activity Title\n\n' + 
-  'The theme will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm"\n\n' + 
+const activityCardNamingExplanation =
+  'Activity Card names have three parts:\n\nTheme - Activity Type - Activity Title\n\n' +
+  'The theme will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm"\n\n' +
   'There are four Activity Types, each describing a different way to approach learning about the social or musical theme: Knowledge, Action, Perception, and Creation.\n\n' +
-  'The Activity Title identifies the specific activity or activities on the card, for example, "Roses and Thorns", or "Naming Intervals". Sometimes the names are jokes or puns, sometimes just a shorthand for what the activity will involve.'
+  'The Activity Title identifies the specific activity or activities on the card, for example, "Roses and Thorns", or "Naming Intervals". Sometimes the names are jokes or puns, sometimes just a shorthand for what the activity will involve.';
 
 const Header = ({ navigation, isHome, showBackButton }) => {
   const [isVisible, setVisible] = useState(false);
@@ -31,25 +32,40 @@ const Header = ({ navigation, isHome, showBackButton }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.logoContainer}>
         <SistemaLogo width={100} height={50} />
       </View>
 
       <View style={styles.toolbar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          {showBackButton && <BackArrow width={iconSize - 4} height={iconSize - 1} style={styles.backArrow} />}
+          {showBackButton && (
+            <BackArrow
+              width={iconSize - 4}
+              height={iconSize - 1}
+              style={styles.backArrow}
+            />
+          )}
         </TouchableOpacity>
 
         <View style={styles.rightToolbar}>
           {isHome && (
-            <TouchableOpacity style={{marginRight: 15}} onPress={toggleOverlay}>
+            <TouchableOpacity
+              style={{ marginRight: 15 }}
+              onPress={toggleOverlay}>
               <InfoIcon width={iconSize} height={iconSize} />
             </TouchableOpacity>
           )}
-          <TouchableOpacity 
-            onPress={() => navigation.navigate(SETTINGS_SCREENS.NAVIGATOR, { screen: SETTINGS_SCREENS.SETTINGS_MAIN })}>
-            <GearIcon width={iconSize} height={iconSize} style={styles.settingIcon} />
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(SETTINGS_SCREENS.NAVIGATOR, {
+                screen: SETTINGS_SCREENS.SETTINGS_MAIN,
+              })
+            }>
+            <GearIcon
+              width={iconSize}
+              height={iconSize}
+              style={styles.settingIcon}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -62,12 +78,11 @@ const Header = ({ navigation, isHome, showBackButton }) => {
         <ScrollView style={styles.overlayScroll}>
           <Text style={styles.textBody}>{activityCardNamingExplanation}</Text>
         </ScrollView>
-        
+
         <SistemaButton onPress={toggleOverlay} style={{ minWidth: '30%' }}>
           <Text> Okay </Text>
         </SistemaButton>
       </Overlay>
-
     </SafeAreaView>
   );
 };
@@ -78,18 +93,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  toolbar: { 
+  toolbar: {
     width: '100%',
     height: 'auto',
     paddingHorizontal: 30,
-    flexDirection: 'row', 
-    alignItems: 'flex-start', 
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     marginTop: 5,
   },
   rightToolbar: {
     flexDirection: 'row',
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'flex-end',
   },
   logoContainer: {
@@ -112,11 +127,11 @@ const styles = StyleSheet.create({
     minHeight: '30%',
     maxHeight: '60%',
     paddingHorizontal: '5%',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   overlayScroll: {
-    marginBottom: '5%'
-  }
+    marginBottom: '5%',
+  },
 });
 
 export default Header;

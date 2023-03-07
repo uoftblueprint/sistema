@@ -1,9 +1,4 @@
-import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  ScrollView
-} from 'react-native';
+import { SafeAreaView, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../../Components/Header';
 
 const TemplatePolicy = ({ navigation, route }) => {
@@ -11,7 +6,11 @@ const TemplatePolicy = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} showInfoIcon={false} showBackButton={true} />
+      <Header
+        navigation={navigation}
+        showInfoIcon={false}
+        showBackButton={true}
+      />
 
       <Text style={styles.title}>{pageTitle}</Text>
       <ScrollView>
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#FFFAF5',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   title: {
     height: 'auto',
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
     color: '#453E3D',
     textAlign: 'center',
     marginHorizontal: 30,
-    marginBottom: 10
+    marginBottom: 10,
   },
   text: {
     fontFamily: 'Mulish-Regular',
@@ -45,8 +44,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     color: '#000000',
     marginHorizontal: 30,
-    marginBottom: 30
-  }
+    marginBottom: 30,
+  },
 });
 
 export default TemplatePolicy;
