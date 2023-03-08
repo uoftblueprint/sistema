@@ -6,7 +6,6 @@ import {
   Dimensions,
 } from 'react-native';
 import AddButton from './components/AddToLessonButton';
-import BackArrow from '../../assets/backArrow';
 import Header from '../Components/Header';
 
 const windowHeight = Dimensions.get('window').height;

@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import SistemaButton from '../Components/SistemaButton';
-import SistemaLogo from '../../assets/SistemaLogo.svg';
+import SistemaLogo from '../../assets/sistemaLogo.svg';
 import BackArrow from '../../assets/backArrow.svg';
 import InfoIcon from '../../assets/infoIcon.svg';
 import GearIcon from '../../assets/gearIcon.svg';
