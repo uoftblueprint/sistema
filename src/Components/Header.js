@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import SistemaButton from '../Components/SistemaButton';
 import SistemaLogo from '../../assets/sistemaLogo.svg';
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   container: {
     height: '10%',
     alignItems: 'center',
-    flexDirection: 'row-reverse'
+    flexDirection: 'row-reverse',
   },
   logoContainer: {
     //container for cross axis alignment of logo.
@@ -65,32 +65,32 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   settingContainer: {
     //container for setting icon
     height: '100%',
     alignItems: 'center',
     marginRight: '3%',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   settingIcon: {
-    margin: 'auto'
+    margin: 'auto',
   },
   infoIcon: {
-    marginRight: '1%'
+    marginRight: '1%',
   },
   textHeader: {
     fontFamily: 'Poppins-Bold',
-    marginBottom: '5%'
+    marginBottom: '5%',
   },
   textBody: {
     fontFamily: 'Mulish-Regular',
-    marginBottom: '5%'
+    marginBottom: '5%',
   },
   overlayStyle: {
     minHeight: '30%',
-    paddingHorizontal: '5%'
+    paddingHorizontal: '5%',
   },
   buttonStyle: {
     position: 'absolute',
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     left: 0,
     right: 0,
-    top: '95%'
-  }
+    top: '95%',
+  },
 });
 
 export default Header;

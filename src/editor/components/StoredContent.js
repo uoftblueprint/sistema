@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, Platform, StyleSheet, TextInput } from 'react-native';
 import {
   addToSection,
-  removeFromSection
+  removeFromSection,
 } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 
@@ -16,13 +16,13 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
           setSectionContent(state => {
             let newContent = [...state];
             // delete the content from section content state when empty
-            newContent = newContent.filter((_, i) => i != index);
+            newContent = newContent.filter((_, i) => i !== index);
             store.dispatch(
               removeFromSection({
                 type: 'text',
                 section: sectionType,
-                content: text
-              })
+                content: text,
+              }),
             );
             // if the content isn't empty, add the edited content to store and newContent
             if (e.nativeEvent.text) {
@@ -31,8 +31,8 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
                 addToSection({
                   type: 'text',
                   section: sectionType,
-                  content: e.nativeEvent.text
-                })
+                  content: e.nativeEvent.text,
+                }),
               );
             }
             return newContent;
@@ -58,27 +58,27 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 5,
     ...Platform.select({
       ios: {
-        paddingVertical: 10
+        paddingVertical: 10,
       },
       android: {
-        paddingVertical: 0
+        paddingVertical: 0,
       },
       default: {
         ios: {
-          paddingVertical: 4
-        }
-      }
+          paddingVertical: 4,
+        },
+      },
     }),
     paddingHorizontal: 10,
-    marginVertical: 5
-  }
+    marginVertical: 5,
+  },
 });
 
 export default StoredContent;

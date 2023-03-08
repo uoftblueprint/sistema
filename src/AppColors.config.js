@@ -13,7 +13,7 @@ const AppColors = {
   tertiary_30: 'rgba(134, 87, 119, 0.4)',
   quaternary_30: 'rgba(167, 97, 163, 0.4)',
   quinary_30: 'rgba(236, 106, 107, 0.4)',
-  senary_30: 'rgba(246, 169, 87, 0.4)'
+  senary_30: 'rgba(246, 169, 87, 0.4)',
 };
 
 export default AppColors;

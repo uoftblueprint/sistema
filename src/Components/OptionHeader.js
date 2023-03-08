@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  View
+  View,
 } from 'react-native';
 import XButton from '../../assets/xButton.svg';
 
@@ -19,7 +19,7 @@ const OptionHeader = ({ lastEdited, navigation }) => {
           style={{
             alignSelf: 'center',
             postion: 'absolute',
-            width: '30%'
+            width: '30%',
           }}
           onPress={() => navigation.goBack()}>
           <XButton style={styles.icon} />
@@ -37,33 +37,33 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     flexDirection: 'column',
-    paddingVertical: '4%'
+    paddingVertical: '4%',
   },
   headerRow: {
     width: windowWidth,
     flexDirection: 'row',
     backgroundColor: '#FFFAF5',
     alignItems: 'center',
-    paddingLeft: '5%'
+    paddingLeft: '5%',
   },
   textContainer: {
     postion: 'absolute',
     width: '70%',
     color: 'rgba(0,0,0, 0.87)',
     fontFamily: 'Poppins-Bold',
-    fontSize: 20
+    fontSize: 20,
   },
   icon: {
     paddingRight: '50%',
     alignSelf: 'flex-end',
     width: 14,
-    height: 14
+    height: 14,
   },
   subtitle: {
     marginTop: '2%',
     fontStyle: 'italic',
     fontSize: 15,
-    color: 'rgba(0, 0, 0, 0.63)'
-  }
+    color: 'rgba(0, 0, 0, 0.63)',
+  },
 });
 export default OptionHeader;

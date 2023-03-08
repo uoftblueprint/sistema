@@ -16,31 +16,31 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
   const editorButtons = [
     {
       name: 'Export Lesson Plan',
-      icon: <ExportIcon />
+      icon: <ExportIcon />,
     },
     {
       name: 'Favorites',
-      icon: <HeartIcon />
+      icon: <HeartIcon />,
     },
     {
       name: 'Delete Lesson Plan',
-      icon: <TrashIcon />
-    }
+      icon: <TrashIcon />,
+    },
   ];
 
   const libraryButtons = [
     {
       name: 'Export Lesson Plan',
-      icon: <ExportIcon />
+      icon: <ExportIcon />,
     },
     {
       name: 'Copy Lesson Plan',
-      icon: <CopyIcon />
+      icon: <CopyIcon />,
     },
     {
       name: 'Delete Lesson Plan',
-      icon: <TrashIcon />
-    }
+      icon: <TrashIcon />,
+    },
   ];
 
   const buttons = isLessonPlanEditor ? editorButtons : libraryButtons;
@@ -51,7 +51,7 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
         <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
-          if (button.name == 'Favorites') {
+          if (button.name === 'Favorites') {
             return (
               <FavoriteButton
                 key={i}
@@ -83,12 +83,12 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     position: 'absolute',
-    bottom: 0
+    bottom: 0,
   },
   menu: {
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 export default OptionsMenu;

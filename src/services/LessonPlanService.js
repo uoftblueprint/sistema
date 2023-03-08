@@ -167,7 +167,7 @@ const LessonPlanService = {
     } catch (e) {
       console.log('Error unfavourite: ', e);
     }
-  }
+  },
 };
 
 export default LessonPlanService;

@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 import LessonSection from '../components/LessonSection.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
@@ -17,7 +17,10 @@ const LessonPlanEditor = ({ navigation }) => {
     <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
       <LessonPlanHeader navigation={navigation} />
       <ScrollView style={styles.scrollView}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} flex={1} height={'100%'}>
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+          flex={1}
+          height={'100%'}>
           <View style={styles.viewStyle}>
             <LessonSection
               navigation={navigation}
@@ -51,12 +54,12 @@ const styles = StyleSheet.create({
   scrollView: {
     marginHorizontal: '1%',
     marginVertical: '1%',
-    marginBottom: '23%'
+    marginBottom: '23%',
   },
   viewStyle: {
     flexDirection: 'column',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default LessonPlanEditor;
