@@ -9,7 +9,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity>
-        <BackArrow height={'30'} width={'30'}/>
+        <BackArrow height={'30'} width={'30'} />
       </TouchableOpacity>
       <LessonPlanName />
       <TouchableOpacity
@@ -19,7 +19,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
             lastEdited: lastEditedDate
           })
         }>
-        <Menu height={'30'} width={'30'}/>
+        <Menu height={'30'} width={'30'} />
       </TouchableOpacity>
     </SafeAreaView>
   );

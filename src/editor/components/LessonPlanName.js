@@ -49,7 +49,7 @@ const LessonPlanName = () => {
         onPress={() => {
           setIsEditable(true);
         }}>
-        <EditIcon height={'25'} width={'25'} paddingRight={'12%'}/>
+        <EditIcon height={'25'} width={'25'} paddingRight={'12%'} />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     })
   },
   text: {
-    textAlignVertical: "center",
+    textAlignVertical: 'center',
     letterSpacing: 0.3,
     fontSize: 23,
     fontFamily: 'Poppins-Bold',
