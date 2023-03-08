@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import Overlay from '../../Components/Overlay';
 import SistemaButton from '../../Components/SistemaButton';
-import NoWifiIcon from '../../../assets/cloud-offline-outline';
+import NoWifiIcon from '../../../assets/cloudOfflineOutline';
 
 const WifiWarningOverlay = props => {
   return (
