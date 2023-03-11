@@ -9,8 +9,16 @@ import {
 import Header from '../Components/Header';
 import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
+import { exportPDF } from '../services/PDFExport';
 
 const Library = ({ navigation }) => {
+  exportPDF({
+    name: 'Cool lesson plan',
+    warmUp: [{ type: 'text', content: 'Baker is awesome' }],
+    mainLesson: [],
+    coolDown: [],
+    notes: 'remember that baker is awesome'
+  });
   return (
     <SafeAreaView style={styles.container}>
       <Header showInfoIcon={false} />
