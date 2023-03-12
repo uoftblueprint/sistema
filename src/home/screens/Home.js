@@ -19,6 +19,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.title}>Recently added activity cards</Text>
           <SafeAreaView style={styles.subContainer}>
             <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
+            {/* This refresh icon should eventually become a TouchableOpacity */}
             <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
           </SafeAreaView>
         </SafeAreaView>
