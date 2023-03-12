@@ -17,7 +17,6 @@ const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditor = ({ navigation }) => {
   return (
-<<<<<<< HEAD
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
         navigation={navigation}
@@ -29,15 +28,6 @@ const LessonPlanEditor = ({ navigation }) => {
           paddingBottom: '15%',
         }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-=======
-    <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
-      <LessonPlanHeader navigation={navigation} />
-      <ScrollView style={styles.scrollView}>
-        <TouchableWithoutFeedback
-          onPress={Keyboard.dismiss}
-          flex={1}
-          height={'100%'}>
->>>>>>> master
           <View style={styles.viewStyle}>
             <LessonSection
               navigation={navigation}
@@ -80,26 +70,17 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: '1%',
     marginVertical: '1%',
-<<<<<<< HEAD
     paddingBottom: '10%',
-  },
-  viewStyle: {
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  saveButton: {
-    position: 'absolute',
-    alignSelf: 'center',
-    bottom: 25,
-  }
-=======
-    marginBottom: '23%',
   },
   viewStyle: {
     flexDirection: 'column',
     alignItems: 'center',
   },
->>>>>>> master
+  saveButton: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 25,
+  },
 });
 
 export default LessonPlanEditor;

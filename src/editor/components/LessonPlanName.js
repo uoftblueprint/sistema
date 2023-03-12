@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
       },
       default: {
         paddingVertical: 0,
-      }
-    })
+      },
+    }),
   },
   text: {
     textAlignVertical: 'center',
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
       default: {
         paddingVertical: 0,
       },
-    })
+    }),
   },
   SectionStyle: {
     flexDirection: 'row',

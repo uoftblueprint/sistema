@@ -16,10 +16,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
         onPress={() =>
           navigation.navigate('Lesson_Plan_Editor_Menu', {
             isLessonPlanEditor: true,
-<<<<<<< HEAD
-            lastEdited: lastEditedDate
-=======
->>>>>>> master
+            lastEdited: lastEditedDate,
           })
         }>
         <Menu height={'30'} width={'30'} />

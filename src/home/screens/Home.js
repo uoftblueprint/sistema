@@ -4,10 +4,6 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-<<<<<<< HEAD:src/home/Home.js
-  Platform,
-=======
->>>>>>> master:src/home/screens/Home.js
 } from 'react-native';
 import RecentCard from '../components/RecentCard';
 import Header from '../../Components/Header';
@@ -79,20 +75,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginLeft: '8%',
     letterSpacing: 0.3,
-<<<<<<< HEAD:src/home/Home.js
-    ...Platform.select({
-      ios: {
-        width: '55%',
-      },
-      android: {
-        marginRight: 0,
-        paddingRight: 0,
-        width: '50%',
-      },
-    }),
-=======
     width: '55%',
->>>>>>> master:src/home/screens/Home.js
   },
   refreshIcon: {
     fill: '#453E3D',
