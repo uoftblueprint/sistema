@@ -6,7 +6,7 @@ const SearchResults = ({
   id,
   setPreviewInfo,
   setHighlightedID,
-  isHighlighted
+  isHighlighted,
 }) => {
   const display_preview = () => {
     const baseQuery = 'https://www.googleapis.com/drive/v3/files/';
@@ -18,15 +18,15 @@ const SearchResults = ({
       .get(`${baseQuery}${id}?`, {
         params: {
           supportsAllDrives: 'true',
-          fields: 'thumbnailLink'
-        }
+          fields: 'thumbnailLink',
+        },
       })
       .then(function (response) {
         setHighlightedID(id);
         setPreviewInfo({
           url: response.data.thumbnailLink,
           name: name,
-          id: id
+          id: id,
         });
         console.log(response.data.thumbnailLink);
       });
@@ -41,7 +41,7 @@ const SearchResults = ({
           fontFamily: 'Mulish-Regular',
           width: '100%',
           fontSize: 17,
-          color: 'black'
+          color: 'black',
         }}>
         {name || ''}
       </Text>
@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingHorizontal: '4%',
     borderBottomColor: 'lightgray',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   containerHighlighted: {
     borderWidth: 3,
     borderColor: '#36ABFF',
     borderBottomColor: '#36ABFF',
-    borderBottomWidth: 3
-  }
+    borderBottomWidth: 3,
+  },
 });
 
 export default SearchResults;

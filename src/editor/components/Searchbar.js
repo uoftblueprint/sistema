@@ -6,7 +6,7 @@ import {
   Platform,
   FlatList,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { act } from 'react-test-renderer';
 import SearchLogo from '../../../assets/Search.svg';
@@ -17,7 +17,7 @@ const Searchbar = ({
   onFocus,
   activityList,
   focused,
-  setPreviewInfo
+  setPreviewInfo,
 }) => {
   useEffect(() => {
     console.log('DO SOMETHING');

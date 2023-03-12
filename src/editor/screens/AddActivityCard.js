@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
-  Image
+  Image,
 } from 'react-native';
 
 //Component dependencies
@@ -24,17 +24,6 @@ import RightArrow from '../../../assets/rightArrow.svg';
 
 import axios from 'axios';
 // import { act } from 'react-test-renderer';
-
-const TAGS = [
-  'Warm Up',
-  'No Equipment',
-  'Beginner',
-  'Rhythm',
-  'Note Reading',
-  'Quick',
-  'Group Activity',
-  'Scale'
-];
 
 const AddActivityCard = function ({ navigation, route }) {
   // SEARCH RELATED VARS
@@ -51,16 +40,25 @@ const AddActivityCard = function ({ navigation, route }) {
       // Send Axios request here
       if (!searchQuery) {
         setActivityList([]);
+        setPreviewInfo(null);
       } else {
-        const nameSearchTerm = "and name contains '" + searchQuery + "'";
+        const nameSearchTerm = `and name contains '${searchQuery}'`;
+        const tagSearchTerm = TAGS.map((tag, index) => {
+          if (activeTags[index]){
+            return ` and fullText contains '${tag}'`
+          }
+        }).join("");
+        console.log(tagSearchTerm);
+        const ACTVTTerm = " and fullText contains 'ACTVT'";
         axios
           .get('https://www.googleapis.com/drive/v3/files?', {
             params: {
               trashed: 'false',
               supportsAllDrives: 'true',
               includeItemsFromAllDrives: 'true',
-              q: "name contains '-' and mimeType='image/jpeg' " + nameSearchTerm
-            }
+              q:
+                "name contains '-' and mimeType='image/jpeg' " + nameSearchTerm + tagSearchTerm
+            },
           })
           .then(function (response) {
             setActivityList(response.data.files);
@@ -85,13 +83,24 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
   ]);
 
+  const TAGS = [
+    'Warm Up',
+    'No Equipment',
+    'Beginner',
+    'Rhythm',
+    'Note Reading',
+    'Quick',
+    'Group Activity',
+    'Scale',
+  ];
+
   //ANIMATION RELATED VARS/FUNCS *****************
   const HEIGHT = 35;
   const heightAnim = useRef(new Animated.Value(HEIGHT)).current;
   const [focused, setFocused] = useState(false);
   const animViewHeight = heightAnim.interpolate({
     inputRange: [0, HEIGHT],
-    outputRange: ['0%', `${HEIGHT}%`]
+    outputRange: ['0%', `${HEIGHT}%`],
   });
 
   const collapse = () => {
@@ -100,7 +109,7 @@ const AddActivityCard = function ({ navigation, route }) {
     Animated.timing(heightAnim, {
       toValue: 0,
       duration: 500,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   };
 
@@ -109,7 +118,7 @@ const AddActivityCard = function ({ navigation, route }) {
     Animated.timing(heightAnim, {
       toValue: HEIGHT,
       duration: 200,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
     Keyboard.dismiss();
   };
@@ -127,7 +136,7 @@ const AddActivityCard = function ({ navigation, route }) {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginTop: '5%'
+                  marginTop: '5%',
                 }}>
                 <TouchableOpacity
                   style={styles.backButton}
@@ -176,13 +185,13 @@ const AddActivityCard = function ({ navigation, route }) {
                 height: '40%',
                 width: '100%',
                 flexDirection: 'row',
-                marginTop: 20
+                marginTop: 20,
               }}>
               <View
                 style={{
                   flex: 1,
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}>
                 <LeftArrow height={30} width={20} />
               </View>
@@ -191,7 +200,7 @@ const AddActivityCard = function ({ navigation, route }) {
                   style={{
                     width: '80%',
                     height: '100%',
-                    resizeMode: 'contain'
+                    resizeMode: 'contain',
                   }}
                   source={{ uri: previewInfo?.url }}
                 />
@@ -200,7 +209,7 @@ const AddActivityCard = function ({ navigation, route }) {
                 style={{
                   flex: 1,
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}>
                 <RightArrow height={30} width={20} />
               </View>
@@ -210,14 +219,14 @@ const AddActivityCard = function ({ navigation, route }) {
               style={{
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
               }}>
               <Text
                 style={{
                   color: 'black',
                   fontSize: 14,
                   fontFamily: 'Mulish-Regular',
-                  marginVertical: '2%'
+                  marginVertical: '2%',
                 }}>
                 {' '}
                 {previewInfo?.name}{' '}
@@ -226,7 +235,7 @@ const AddActivityCard = function ({ navigation, route }) {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  justifyContent: 'space-evenly'
+                  justifyContent: 'space-evenly',
                 }}>
                 <SistemaButton>
                   <Text
@@ -234,7 +243,7 @@ const AddActivityCard = function ({ navigation, route }) {
                       color: 'black',
                       fontSize: 14,
                       fontFamily: 'Mulish-Regular',
-                      marginHorizontal: '2%'
+                      marginHorizontal: '2%',
                     }}>
                     Add Card
                   </Text>
@@ -246,7 +255,7 @@ const AddActivityCard = function ({ navigation, route }) {
                       color: '#0078E8',
                       fontSize: 14,
                       fontFamily: 'Mulish-Regular',
-                      marginHorizontal: '2%'
+                      marginHorizontal: '2%',
                     }}>
                     INSERT AS TEXT INSTEAD
                   </Text>
@@ -269,7 +278,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#FFFAF5',
     height: '100%',
-    paddingHorizontal: '5%'
+    paddingHorizontal: '5%',
   },
   tagContainer: {
     flexDirection: 'row',
@@ -279,7 +288,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
     fontFamily: 'Poppins-Bold',
-    marginLeft: '2%'
+    marginLeft: '2%',
   },
   tags: {
     color: 'black',
@@ -297,8 +306,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly'
-  }
+    justifyContent: 'space-evenly',
+  },
 });
 
 export default AddActivityCard;
