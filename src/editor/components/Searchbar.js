@@ -1,17 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
-import { StyleSheet, TextInput, View, Platform, FlatList, Text, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Platform,
+  FlatList,
+  Text,
+  TouchableOpacity
+} from 'react-native';
 import { act } from 'react-test-renderer';
 import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
 
-const Searchbar = ({ onChangeText, onFocus, activityList, focused, setPreviewInfo }) => {
-
+const Searchbar = ({
+  onChangeText,
+  onFocus,
+  activityList,
+  focused,
+  setPreviewInfo
+}) => {
   useEffect(() => {
-    console.log("DO SOMETHING");
+    console.log('DO SOMETHING');
     console.log(activityList);
   }, [activityList]);
 
-  [highlightedID, setHighlightedID] = useState(null);
+  const [highlightedID, setHighlightedID] = useState(null);
 
   return (
     <View>
@@ -24,25 +37,29 @@ const Searchbar = ({ onChangeText, onFocus, activityList, focused, setPreviewInf
           onChangeText={onChangeText}
           onFocus={onFocus}
         />
-      </View> 
-      {focused ?
-        <View style={{paddingLeft: '4%', height: 250}}>
+      </View>
+      {focused ? (
+        <View style={{ paddingLeft: '4%', height: 250 }}>
           <FlatList
-            style={{ height: '100%', flex: 1}}
+            style={{ height: '100%', flex: 1 }}
             data={activityList}
             renderItem={({ item }) => {
               return (
-                <SearchResults 
-                name={item?.name} 
-                id={item?.id} 
-                setPreviewInfo={setPreviewInfo} 
-                setHighlightedID={setHighlightedID} 
-                isHighlighted={highlightedID === item?.id}/>
-              )
+                <SearchResults
+                  name={item?.name}
+                  id={item?.id}
+                  setPreviewInfo={setPreviewInfo}
+                  setHighlightedID={setHighlightedID}
+                  isHighlighted={highlightedID === item?.id}
+                />
+              );
             }}
-            keyExtractor={item => item.id.toString()}>
-          </FlatList>
-        </View> : <></>}
+            keyExtractor={item => item.id.toString()}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };

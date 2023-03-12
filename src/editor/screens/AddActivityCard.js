@@ -22,7 +22,6 @@ import BackArrow from '../../../assets/backArrow.svg';
 import LeftArrow from '../../../assets/leftArrow.svg';
 import RightArrow from '../../../assets/rightArrow.svg';
 
-
 import axios from 'axios';
 // import { act } from 'react-test-renderer';
 
@@ -53,26 +52,26 @@ const AddActivityCard = function ({ navigation, route }) {
       if (!searchQuery) {
         setActivityList([]);
       } else {
-        nameSearchTerm = "and name contains '" + searchQuery + "'"
-        axios.get('https://www.googleapis.com/drive/v3/files?', {
-          params: {
-            trashed: 'false',
-            supportsAllDrives: 'true',
-            includeItemsFromAllDrives: 'true',
-            q: "name contains '-' and mimeType='image/jpeg' " + nameSearchTerm
-          }
-        })
+        const nameSearchTerm = "and name contains '" + searchQuery + "'";
+        axios
+          .get('https://www.googleapis.com/drive/v3/files?', {
+            params: {
+              trashed: 'false',
+              supportsAllDrives: 'true',
+              includeItemsFromAllDrives: 'true',
+              q: "name contains '-' and mimeType='image/jpeg' " + nameSearchTerm
+            }
+          })
           .then(function (response) {
             setActivityList(response.data.files);
-          })
+          });
       }
-    }, 300)
+    }, 300);
 
-    return () => clearTimeout(delayDebounceFn)
-  }, [searchQuery])
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
 
   // ************ SEARCH RELATED VARS END *********
-
 
   // TAG RELATED VARS
   const [activeTags, setActiveTags] = useState([
@@ -97,41 +96,48 @@ const AddActivityCard = function ({ navigation, route }) {
 
   const collapse = () => {
     setFocused(true);
-    console.log("Fuck")
+    console.log('Fuck');
     Animated.timing(heightAnim, {
       toValue: 0,
       duration: 500,
-      useNativeDriver: false,
+      useNativeDriver: false
     }).start();
-  }
+  };
 
   const uncollapse = () => {
     setFocused(false);
     Animated.timing(heightAnim, {
       toValue: HEIGHT,
       duration: 200,
-      useNativeDriver: false,
+      useNativeDriver: false
     }).start();
     Keyboard.dismiss();
-  }
+  };
   // **************** ANIMATION RELATED STUFF END *********
-
 
   return (
     <TouchableWithoutFeedback onPress={uncollapse} flex={1} height={'100%'}>
       <SafeAreaView style={styles.container}>
-
         <Animated.View style={{ height: animViewHeight }}>
-          {focused ?
-            <></> :
+          {focused ? (
+            <></>
+          ) : (
             <>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginTop: '5%'
+                }}>
                 <TouchableOpacity
                   style={styles.backButton}
                   onPress={() => navigation.goBack()}>
                   <BackArrow height={25} width={25} />
                 </TouchableOpacity>
-                <Text style={styles.header}> {route.params.header} Activity Card </Text>
+                <Text style={styles.header}>
+                  {' '}
+                  {route.params.header} Activity Card{' '}
+                </Text>
               </View>
               <Text style={styles.tags}> Tags: </Text>
               <View style={styles.tagContainer}>
@@ -150,7 +156,7 @@ const AddActivityCard = function ({ navigation, route }) {
                 ))}
               </View>
             </>
-          }
+          )}
         </Animated.View>
 
         <Searchbar
@@ -163,54 +169,96 @@ const AddActivityCard = function ({ navigation, route }) {
           setPreviewInfo={setPreviewInfo}
         />
 
-        {previewInfo ? <>
+        {previewInfo ? (
+          <>
+            <View
+              style={{
+                height: '40%',
+                width: '100%',
+                flexDirection: 'row',
+                marginTop: 20
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                <LeftArrow height={30} width={20} />
+              </View>
+              <View style={{ flex: 4, alignItems: 'center' }}>
+                <Image
+                  style={{
+                    width: '80%',
+                    height: '100%',
+                    resizeMode: 'contain'
+                  }}
+                  source={{ uri: previewInfo?.url }}
+                />
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                <RightArrow height={30} width={20} />
+              </View>
+            </View>
 
-          <View style={{ height: '40%', width: '100%', flexDirection: 'row', marginTop: 20 }}>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <LeftArrow height={30} width={20}></LeftArrow>
-            </View>
-            <View style={{ flex: 4, alignItems: 'center' }}>
-              <Image style={{ width: '80%', height: '100%', resizeMode: "contain" }}
-                source={{ uri: previewInfo?.url }} />
-            </View>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <RightArrow height={30} width={20}></RightArrow>
-            </View>
-          </View>
-
-          <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{
-              color: 'black',
-              fontSize: 14,
-              fontFamily: 'Mulish-Regular', marginVertical: '2%'
-            }}> {previewInfo?.name} </Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-              <SistemaButton>
-                <Text style={{
+            <View
+              style={{
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Text
+                style={{
                   color: 'black',
                   fontSize: 14,
                   fontFamily: 'Mulish-Regular',
-                  marginHorizontal: '2%'
-                }}>Add Card</Text>
-              </SistemaButton>
-              <TouchableOpacity style={{ marginLeft: '5%' }}>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    color: '#0078E8',
-                    fontSize: 14,
-                    fontFamily: 'Mulish-Regular',
-                    marginHorizontal: '2%'
-                  }}>INSERT AS TEXT INSTEAD</Text>
-              </TouchableOpacity>
+                  marginVertical: '2%'
+                }}>
+                {' '}
+                {previewInfo?.name}{' '}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-evenly'
+                }}>
+                <SistemaButton>
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontSize: 14,
+                      fontFamily: 'Mulish-Regular',
+                      marginHorizontal: '2%'
+                    }}>
+                    Add Card
+                  </Text>
+                </SistemaButton>
+                <TouchableOpacity style={{ marginLeft: '5%' }}>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      color: '#0078E8',
+                      fontSize: 14,
+                      fontFamily: 'Mulish-Regular',
+                      marginHorizontal: '2%'
+                    }}>
+                    INSERT AS TEXT INSTEAD
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-
-        </> :
-          <></>}
-
+          </>
+        ) : (
+          <></>
+        )}
       </SafeAreaView>
-    </TouchableWithoutFeedback >
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -225,7 +273,7 @@ const styles = StyleSheet.create({
   },
   tagContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   header: {
     color: 'black',
