@@ -78,7 +78,7 @@ const AddActivityCard = function ({ navigation, route }) {
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchQuery, TAGS, activeTags]);
+  }, [searchQuery, activeTags]);
 
   // ************ SEARCH RELATED VARS END *********
 
