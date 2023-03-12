@@ -76,7 +76,7 @@ const AddActivityCard = function ({ navigation, route }) {
           });
       }
     }, 300);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
