@@ -6,7 +6,7 @@ const SearchResults = ({
   id,
   setPreviewInfo,
   setHighlightedID,
-  isHighlighted,
+  isHighlighted
 }) => {
   const display_preview = () => {
     const baseQuery = 'https://www.googleapis.com/drive/v3/files/';
@@ -41,7 +41,7 @@ const SearchResults = ({
           fontFamily: 'Mulish-Regular',
           width: '100%',
           fontSize: 17,
-          color: 'black',
+          color: 'black'
         }}>
         {name || ''}
       </Text>
