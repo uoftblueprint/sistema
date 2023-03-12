@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     fontStyle: 'italic',
     fontFamily: 'Mulish',
-    fontSize: 16
+    fontSize: 16,
   },
   SectionStyle: {
     flexDirection: 'column',
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderRadius: 7.69,
     shadowColor: '#453E3D',
-    elevation: 7
-  }
+    elevation: 7,
+  },
 });
 
 export default LessonPlanTextField;

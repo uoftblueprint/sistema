@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'rgba(217,217,217, 0.8)',
     justifyContent: 'flex-end',
-    flex: 1
+    flex: 1,
   },
   menu: {
-    alignSelf: 'stretch'
-  }
+    alignSelf: 'stretch',
+  },
 });
 
 export default LessonPlanMenuOverlay;

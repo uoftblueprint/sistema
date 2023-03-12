@@ -17,19 +17,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#68577766',
+    backgroundColor: '#c3b9c3',
     height: 32.68,
     width: 109,
     borderWidth: 0.77,
     borderRadius: 6,
-    marginBottom: 10,
-    paddingHorizontal: 12
   },
   textContainer: {
     paddingLeft: 8.6,
     color: '#000',
     fontFamily: 'Mulish-Regular',
-    fontSize: 13
-  }
+    fontSize: 13,
+  },
 });
 export default SaveButton;

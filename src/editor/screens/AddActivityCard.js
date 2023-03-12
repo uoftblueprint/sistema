@@ -82,7 +82,7 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
     false,
     false,
-    false
+    false,
   ]);
 
   //ANIMATION RELATED VARS/FUNCS *****************
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   },
   tagContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   header: {
     color: 'black',
@@ -286,12 +286,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Mulish-Regular',
     marginTop: '1%',
-    marginBottom: '2%'
+    marginBottom: '2%',
   },
   backText: {
     color: 'black',
     fontSize: 18,
-    fontFamily: 'Mulish-Regular'
+    fontFamily: 'Mulish-Regular',
   },
   backButton: {
     flexWrap: 'wrap',

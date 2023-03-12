@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import Header from '../Components/Header';
 import FilterGraphic from '../../assets/filterOutline.svg';
@@ -14,23 +14,23 @@ const fillerLP = [
   {
     name: 'Jan 1, 2023',
     isFavorited: false,
-    lastEdited: 'Jan 1, 2023'
+    lastEdited: 'Jan 1, 2023',
   },
   {
     name: 'Jan 2, 2023',
     isFavorited: true,
-    lastEdited: 'Jan 2, 2023'
+    lastEdited: 'Jan 2, 2023',
   },
   {
     name: 'Jan 3, 2023',
     isFavorited: true,
-    lastEdited: 'Jan 3, 2023'
+    lastEdited: 'Jan 3, 2023',
   },
   {
     name: 'Jan 4, 2023',
     isFavorited: false,
-    lastEdited: 'Jan 4, 2023'
-  }
+    lastEdited: 'Jan 4, 2023',
+  },
 ];
 
 const Library = ({ navigation }) => {
@@ -48,7 +48,11 @@ const Library = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header showInfoIcon={false} />
+      <Header
+        navigation={navigation}
+        showInfoIcon={false}
+        showBackButton={false}
+      />
       <SafeAreaView style={styles.inlineTitle}>
         <Text style={styles.title}>Lesson Plans</Text>
         <TouchableOpacity>
@@ -86,29 +90,29 @@ const Library = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    backgroundColor: '#FFFAF5'
+    backgroundColor: '#FFFAF5',
   },
   title: {
     fontFamily: 'Poppins-Bold',
     fontSize: 28,
     letterSpacing: 0.3,
-    color: '#453E3D'
+    color: '#453E3D',
   },
   inlineTitle: {
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginHorizontal: 30,
-    marginBottom: 10
+    marginBottom: 10,
   },
   content: {
     marginHorizontal: 30,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   filterButton: {
-    marginTop: 8
-  }
+    marginTop: 8,
+  },
 });
 
 export default Library;

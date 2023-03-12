@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import HeartIcon from '../../../assets/heartIcon.svg';
 import FavoriteIcon from '../../../assets/favoriteIcon.svg';
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     borderColor: '#000000',
-    borderWidth: 0.25
+    borderWidth: 0.25,
   },
   buttonContainer: {
     paddingLeft: '5%',
@@ -48,20 +48,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
     width: '100%',
-    height: 45
+    height: 45,
   },
   textContainer: {
     paddingLeft: '5%',
     color: 'rgba(0,0,0, 0.87)',
     fontFamily: 'Mulish-Bold',
-    fontSize: 16
+    fontSize: 16,
   },
   icon: {
     width: 22,
     height: 22,
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 export default FavoriteButton;

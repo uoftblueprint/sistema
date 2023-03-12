@@ -6,14 +6,14 @@ import lessonPlanReducer from './editor/lessonPlanSlice';
 export default configureStore({
   reducer: {
     auth: authReducer,
-    lessonPlan: lessonPlanReducer
+    lessonPlan: lessonPlanReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: ['auth/setNewToken'],
         ignoredActionPaths: ['auth.driveToken'],
-        ignoredPaths: ['auth.driveToken']
-      }
-    })
+        ignoredPaths: ['auth.driveToken'],
+      },
+    }),
 });
