@@ -13,6 +13,8 @@ import {
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import LibraryNavigator from './src/library/LibraryNavigator';
+import SettingsNavigator from './src/settings/SettingsNavigator';
+import { STACK_SCREENS as SETTINGS_STACK } from './src/settings/constants';
 
 import { Provider } from 'react-redux';
 import configureStore from './src/services/configureStore';
@@ -24,7 +26,8 @@ import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
 const STACK_SCREENS = {
   HOME: 'HomeNavigator',
   EDITOR: 'LessonPlanEditorNavigator',
-  LIBRARY: 'LibraryNavigator'
+  LIBRARY: 'LibraryNavigator',
+  SETTINGS: SETTINGS_STACK.NAVIGATOR
 };
 
 const tabIcon = (iconSVG, isFocused) => {
@@ -94,6 +97,15 @@ const MainNavigator = () => {
           options={{
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused)
+          }}
+        />
+        <Tab.Screen
+          name={STACK_SCREENS.SETTINGS}
+          component={SettingsNavigator}
+          options={{
+            tabBarShowLabel: false,
+            tabBarButton: () => null, // Not displayed in bottom tab bar
+            tabBarVisible: false,
           }}
         />
       </Tab.Navigator>

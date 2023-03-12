@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import XButton from '../../../assets/xButton.svg';
 
@@ -18,7 +18,7 @@ const OptionHeader = ({ isLessonEditor, lessonName, navigation }) => {
         style={{
           alignSelf: 'center',
           postion: 'absolute',
-          width: '30%'
+          width: '30%',
         }}
         onPress={() => navigation.goBack()}>
         <XButton style={styles.icon} />
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     width: windowWidth,
     flexDirection: 'row',
     backgroundColor: '#FFFAF5',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textContainer: {
     postion: 'absolute',
@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0, 0.87)',
     fontWeight: '700',
     fontSize: 20,
-    lineHeight: 60
+    lineHeight: 60,
   },
   icon: {
     paddingRight: '50%',
     alignSelf: 'flex-end',
     width: 14,
-    height: 14
-  }
+    height: 14,
+  },
 });
 export default OptionHeader;

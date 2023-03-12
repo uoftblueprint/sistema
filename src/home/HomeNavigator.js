@@ -1,13 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './Home';
+import Home from './screens/Home';
 import ExpandedCard from './ExpandedCard';
+import { STACK_SCREENS } from './constants';
 
 const Stack = createStackNavigator();
-
-const STACK_SCREENS = {
-  HOME_SCREEN: 'HomePage',
-  EXPANDED_CARD: 'CardView'
-};
 
 const HomeNavigator = () => {
   return (

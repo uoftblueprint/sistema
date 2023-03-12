@@ -14,7 +14,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
   };
   const addActivityCard = () => {
     navigation.navigate('Add Activity Card', {
-      header: subtitle
+      header: subtitle,
     });
   };
 
@@ -79,18 +79,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28
+    lineHeight: 28,
   },
   sectionContainer: {
     marginBottom: 20,
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
-    elevation: 5
+    elevation: 5,
   },
   ContentCardStyle: {
     fontFamily: 'Poppins-Light',
@@ -106,27 +106,27 @@ const styles = StyleSheet.create({
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 5,
     ...Platform.select({
       ios: {
-        paddingVertical: 10
+        paddingVertical: 10,
       },
       android: {
-        paddingVertical: 0
+        paddingVertical: 0,
       },
       default: {
         ios: {
-          paddingVertical: 4
-        }
-      }
+          paddingVertical: 4,
+        },
+      },
     }),
     paddingHorizontal: 10,
-    marginVertical: 5
-  }
+    marginVertical: 5,
+  },
 });
 
 export default LessonSection;

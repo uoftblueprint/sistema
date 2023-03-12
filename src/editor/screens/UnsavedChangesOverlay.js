@@ -28,34 +28,34 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Mulish-Bold',
     color: 'rgba(0,0,0,0.87)',
-    marginBottom: 3
+    marginBottom: 3,
   },
   description: {
     fontSize: 16,
     fontFamily: 'Mulish-Regular',
-    color: 'black'
+    color: 'black',
   },
   container: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   row: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 8
+    marginTop: 8,
   },
   buttonRight: {
-    marginLeft: 14
+    marginLeft: 14,
   },
   buttonLeft: {
-    marginRight: 14
+    marginRight: 14,
   },
   buttonText: {
     color: 'black',
     fontSize: 13,
-    fontFamily: 'Mulish-Regular'
-  }
+    fontFamily: 'Mulish-Regular',
+  },
 });
 
 export default UnsavedChangesOverlay;
