@@ -4,10 +4,8 @@ import {
   Text,
   ScrollView,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native';
 import AddButton from './components/AddToLessonButton';
-import BackArrow from '../../assets/backArrow';
 import Header from '../Components/Header';
 
 const windowHeight = Dimensions.get('window').height;
@@ -15,13 +13,11 @@ const windowHeight = Dimensions.get('window').height;
 const ExpandedCard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <Header showInfoIcon={true} />
-
-      <TouchableOpacity
-        style={styles.backArrowContainer}
-        onPress={() => navigation.goBack()}>
-        <BackArrow height={30} width={15} style={styles.backArrow} />
-      </TouchableOpacity>
+      <Header
+        navigation={navigation}
+        showInfoIcon={true}
+        showBackButton={true}
+      />
 
       <ScrollView>
         <SafeAreaView
@@ -57,11 +53,6 @@ const styles = StyleSheet.create({
     width: '75%',
     height: windowHeight * 0.55,
   },
-  scrollview: {
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   title: {
     color: '#453E3D',
     fontFamily: 'Poppins-Bold',
@@ -69,16 +60,6 @@ const styles = StyleSheet.create({
     width: '60%',
     textAlign: 'center',
     marginBottom: 40,
-  },
-  backArrowContainer: {
-    position: 'absolute',
-    top: 20,
-    bottom: 0,
-    left: 25,
-    right: 0,
-  },
-  backArrow: {
-    fill: '#222222',
   },
 });
 

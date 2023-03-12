@@ -48,7 +48,11 @@ const Library = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header showInfoIcon={false} />
+      <Header
+        navigation={navigation}
+        showInfoIcon={false}
+        showBackButton={false}
+      />
       <SafeAreaView style={styles.inlineTitle}>
         <Text style={styles.title}>Lesson Plans</Text>
         <TouchableOpacity>
