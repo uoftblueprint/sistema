@@ -1,4 +1,4 @@
-import Local from './routes/Local';
+import Local, {readFile, checkFileExists} from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { LessonPlan } from './models';
 
@@ -14,7 +14,7 @@ const LessonPlanService = {
   deleteLessonPlan: async function (name) {
     try {
       // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
-      var path = MAINDIRECTORY + '/' + name + '/';
+      var path = `${MAINDIRECTORY}/${name}/`;
       const v = await Local.deleteFile(path);
       console.log(v);
       return v;
@@ -52,41 +52,64 @@ const LessonPlanService = {
   getLessonPlan: async function (name) {
     try {
       let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-      let defaultPath = `${MAINDIRECTORY}/Default/${name}`;
-      let lessonPlanJSON;
+      let defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+      let path;
+      let lessonPlanObj;
 
-      if (Local.checkFileExists(favouritedPath)) {
-        lessonPlanJSON = require(favouritedPath);
+      // check if file exists, assigning appropriate path if so
+      if (await checkFileExists(favouritedPath)) {
+        path = favouritedPath;
+      } else if (await checkFileExists(defaultPath)) {
+        path = defaultPath;
       } else {
-        lessonPlanJSON = require(defaultPath);
+        console.error(`getLessonPlan: ${name} does not exist.`);
       }
 
-      const lessonPlanObj = new LessonPlan(
-        lessonPlanJSON[0],
-        lessonPlanJSON[1],
-        lessonPlanJSON[2],
-        lessonPlanJSON[3],
-        lessonPlanJSON[4],
+      // read in the file from RNFS
+      let str = await readFile(path);
+      // convert string to JSON object
+      let json = JSON.parse(str);
+      // create LessonPlan object from JSON
+      lessonPlanObj = new LessonPlan(
+        json.name,
+        json.warmUp,
+        json.mainLesson,
+        json.coolDown,
+        json.notes,
       );
 
       console.log(lessonPlanObj);
       return lessonPlanObj;
-
     } catch (e) {
-      // ...
+      console.log('Error getLessonPlan: ', e);
     }
   },
 
-  getLessonPlanJSON: async function (name) {
-    let path = `${MAINDIRECTORY}/Favourited/${name}`;
+  getLessonPlanTest: async function () {
+    try {
+      let path = `${MAINDIRECTORY}/test.json`;
+      // let path = `${MAINDIRECTORY}/.txt`;
 
-    fetch(path)
-      .then(response => response.json())
-      .then(json => console.log(json));
-    return;
-    // const lessonPlanJSON = require(path);
-    // console.log(lessonPlanJSON);
-    // return lessonPlanJSON;
+      let str = await readFile(path);
+      // console.log(`str = ${JSON.stringify(str)}`);
+      // console.log(str);
+
+      let json = JSON.parse(str);
+      // console.log('json parsed');
+      // console.log(json.name);
+
+      const lessonPlanObj = new LessonPlan(
+        json.name,
+        json.warmUp,
+        json.mainLesson,
+        json.coolDown,
+        json.notes,
+      );
+
+      console.log(lessonPlanObj);
+    } catch (e) {
+      console.log('error in getLessonPlanTest');
+    }
   },
 
   /**
