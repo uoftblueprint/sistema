@@ -54,7 +54,7 @@ const Library = ({ navigation }) => {
         showInfoIcon={false}
         showBackButton={false}
       />
-      <NoCardsFound></NoCardsFound>
+      <NoCardsFound />
       <SafeAreaView style={styles.inlineTitle}>
         <Text style={styles.title}>Lesson Plans</Text>
         <TouchableOpacity>

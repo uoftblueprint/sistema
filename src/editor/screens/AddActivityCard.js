@@ -46,10 +46,10 @@ const AddActivityCard = function ({ navigation, route }) {
       } else {
         const nameSearchTerm = `and name contains '${searchQuery}'`;
         const tagSearchTerm = TAGS.map((tag, index) => {
-          if (activeTags[index]){
-            return ` and fullText contains '${tag}'`
+          if (activeTags[index]) {
+            return ` and fullText contains '${tag}'`;
           }
-        }).join("");
+        }).join('');
         const ACTVTTerm = " and fullText contains 'ACTVT'";
         axios
           .get('https://www.googleapis.com/drive/v3/files?', {
@@ -58,16 +58,18 @@ const AddActivityCard = function ({ navigation, route }) {
               supportsAllDrives: 'true',
               includeItemsFromAllDrives: 'true',
               q:
-                "name contains '-' and mimeType='image/jpeg' " + nameSearchTerm + tagSearchTerm
+                "name contains '-' and mimeType='image/jpeg' " +
+                nameSearchTerm +
+                tagSearchTerm,
             },
           })
           .then(function (response) {
             const data = response.data.files;
             console.log(data);
-            if (data.length != 0){
+            if (data.length != 0) {
               showNoCards.current = false;
             } else {
-              console.log("HABADABA")
+              console.log('HABADABA');
               showNoCards.current = true;
             }
             setActivityList(data);
@@ -76,7 +78,7 @@ const AddActivityCard = function ({ navigation, route }) {
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchQuery]);
+  }, [searchQuery, TAGS, activeTags]);
 
   // ************ SEARCH RELATED VARS END *********
 

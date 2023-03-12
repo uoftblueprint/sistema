@@ -19,10 +19,9 @@ const Searchbar = ({
   activityList,
   focused,
   setPreviewInfo,
-  showNoCards
+  showNoCards,
 }) => {
-  useEffect(() => {
-  }, [activityList]);
+  useEffect(() => {}, [activityList]);
 
   const [highlightedID, setHighlightedID] = useState(null);
 
@@ -40,10 +39,11 @@ const Searchbar = ({
       </View>
       {focused ? (
         <View style={{ paddingLeft: '4%', height: 250 }}>
-          {showNoCards.current ?
+          {showNoCards.current ? (
             <>
-              <NoCardsFound></NoCardsFound>
-            </> :
+              <NoCardsFound />
+            </>
+          ) : (
             <>
               <FlatList
                 style={{ height: '100%', flex: 1 }}
@@ -61,7 +61,8 @@ const Searchbar = ({
                 }}
                 keyExtractor={item => item.id.toString()}
               />
-            </>}
+            </>
+          )}
         </View>
       ) : (
         <></>
