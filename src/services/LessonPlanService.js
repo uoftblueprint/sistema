@@ -114,9 +114,6 @@ const LessonPlanService = {
 
   /**
    * Initialize the empty Default and Favourited directories.
-   * Use RNFS.moveFile() with the original filename and the new filename!
-   * @param {String} old_name Old name of lesson plan
-   * @param {String} new_name New name of lesson plan
    */
   initializeEmptyDirectories: async function () {
     try {
