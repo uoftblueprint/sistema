@@ -1,5 +1,6 @@
 import Local from './routes/Local';
 import { MAINDIRECTORY } from './constants';
+import { LessonPlan } from './models';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
@@ -50,10 +51,42 @@ const LessonPlanService = {
    */
   getLessonPlan: async function (name) {
     try {
-      // ...
+      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      let defaultPath = `${MAINDIRECTORY}/Default/${name}`;
+      let lessonPlanJSON;
+
+      if (Local.checkFileExists(favouritedPath)) {
+        lessonPlanJSON = require(favouritedPath);
+      } else {
+        lessonPlanJSON = require(defaultPath);
+      }
+
+      const lessonPlanObj = new LessonPlan(
+        lessonPlanJSON[0],
+        lessonPlanJSON[1],
+        lessonPlanJSON[2],
+        lessonPlanJSON[3],
+        lessonPlanJSON[4],
+      );
+
+      console.log(lessonPlanObj);
+      return lessonPlanObj;
+
     } catch (e) {
       // ...
     }
+  },
+
+  getLessonPlanJSON: async function (name) {
+    let path = `${MAINDIRECTORY}/Favourited/${name}`;
+
+    fetch(path)
+      .then(response => response.json())
+      .then(json => console.log(json));
+    return;
+    // const lessonPlanJSON = require(path);
+    // console.log(lessonPlanJSON);
+    // return lessonPlanJSON;
   },
 
   /**
