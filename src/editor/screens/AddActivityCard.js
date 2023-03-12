@@ -33,12 +33,14 @@ const AddActivityCard = function ({ navigation, route }) {
   };
   const [activityList, setActivityList] = useState([]);
   const [previewInfo, setPreviewInfo] = useState(null);
+  const showNoCards = useRef(false);
 
   // to detect when user stops typing. Source: https://stackoverflow.com/questions/42217121/how-to-start-search-only-when-user-stops-typing
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       // Send Axios request here
       if (!searchQuery) {
+        showNoCards.current = false;
         setActivityList([]);
         setPreviewInfo(null);
       } else {
@@ -48,7 +50,6 @@ const AddActivityCard = function ({ navigation, route }) {
             return ` and fullText contains '${tag}'`
           }
         }).join("");
-        console.log(tagSearchTerm);
         const ACTVTTerm = " and fullText contains 'ACTVT'";
         axios
           .get('https://www.googleapis.com/drive/v3/files?', {
@@ -61,7 +62,15 @@ const AddActivityCard = function ({ navigation, route }) {
             },
           })
           .then(function (response) {
-            setActivityList(response.data.files);
+            const data = response.data.files;
+            console.log(data);
+            if (data.length != 0){
+              showNoCards.current = false;
+            } else {
+              console.log("HABADABA")
+              showNoCards.current = true;
+            }
+            setActivityList(data);
           });
       }
     }, 300);
@@ -105,7 +114,6 @@ const AddActivityCard = function ({ navigation, route }) {
 
   const collapse = () => {
     setFocused(true);
-    console.log('Fuck');
     Animated.timing(heightAnim, {
       toValue: 0,
       duration: 500,
@@ -176,6 +184,7 @@ const AddActivityCard = function ({ navigation, route }) {
           activityList={activityList}
           focused={focused}
           setPreviewInfo={setPreviewInfo}
+          showNoCards={showNoCards}
         />
 
         {previewInfo ? (

@@ -11,9 +11,6 @@ const SearchResults = ({
   const display_preview = () => {
     const baseQuery = 'https://www.googleapis.com/drive/v3/files/';
     const params = '?supportsAllDrives=true&fields=thumbnailLink';
-    console.log(name);
-    console.log(id);
-    console.log(`${baseQuery}${id}?`);
     axios
       .get(`${baseQuery}${id}?`, {
         params: {

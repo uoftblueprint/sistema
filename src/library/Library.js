@@ -9,6 +9,7 @@ import {
 import Header from '../Components/Header';
 import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
+import NoCardsFound from '../editor/components/NoCardsFound';
 
 const fillerLP = [
   {
@@ -53,6 +54,7 @@ const Library = ({ navigation }) => {
         showInfoIcon={false}
         showBackButton={false}
       />
+      <NoCardsFound></NoCardsFound>
       <SafeAreaView style={styles.inlineTitle}>
         <Text style={styles.title}>Lesson Plans</Text>
         <TouchableOpacity>

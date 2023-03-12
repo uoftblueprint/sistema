@@ -11,6 +11,7 @@ import {
 import { act } from 'react-test-renderer';
 import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
+import NoCardsFound from './NoCardsFound';
 
 const Searchbar = ({
   onChangeText,
@@ -18,10 +19,9 @@ const Searchbar = ({
   activityList,
   focused,
   setPreviewInfo,
+  showNoCards
 }) => {
   useEffect(() => {
-    console.log('DO SOMETHING');
-    console.log(activityList);
   }, [activityList]);
 
   const [highlightedID, setHighlightedID] = useState(null);
@@ -40,22 +40,28 @@ const Searchbar = ({
       </View>
       {focused ? (
         <View style={{ paddingLeft: '4%', height: 250 }}>
-          <FlatList
-            style={{ height: '100%', flex: 1 }}
-            data={activityList}
-            renderItem={({ item }) => {
-              return (
-                <SearchResults
-                  name={item?.name}
-                  id={item?.id}
-                  setPreviewInfo={setPreviewInfo}
-                  setHighlightedID={setHighlightedID}
-                  isHighlighted={highlightedID === item?.id}
-                />
-              );
-            }}
-            keyExtractor={item => item.id.toString()}
-          />
+          {showNoCards.current ?
+            <>
+              <NoCardsFound></NoCardsFound>
+            </> :
+            <>
+              <FlatList
+                style={{ height: '100%', flex: 1 }}
+                data={activityList}
+                renderItem={({ item }) => {
+                  return (
+                    <SearchResults
+                      name={item?.name}
+                      id={item?.id}
+                      setPreviewInfo={setPreviewInfo}
+                      setHighlightedID={setHighlightedID}
+                      isHighlighted={highlightedID === item?.id}
+                    />
+                  );
+                }}
+                keyExtractor={item => item.id.toString()}
+              />
+            </>}
         </View>
       ) : (
         <></>
