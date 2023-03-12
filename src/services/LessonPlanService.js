@@ -3,7 +3,8 @@ import Local, {
   readDirectory,
   moveFile,
   deleteFile,
-  makeDirectory
+  makeDirectory,
+  readDDirectory,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 
@@ -62,23 +63,35 @@ const LessonPlanService = {
   /**
    * Reach into the lesson plan directory in local storage and return an array
    * of all the names.
-   * @return {String[]} The list of lesson plan names
+   * @param {Integer} option decides what option we need, 0 returns all times and names, 1 returns
+   * only favourites, and 2 returns only default
+   * @return {String[]} Returns a list of [mtime, name] of the lesson plans
    */
-  getAllLessonPlanNames: async function () {
+  getAllLessonPlanNames: async function (option = 0) {
     try {
       //Note: you have to await for the directory (even though VScode says it is unnecessary)
-      var favouritedLessonPlans = await readDirectory(
-        MAINDIRECTORY + '/Favourited/'
-      );
-      var defaultLessonPlans = await readDirectory(MAINDIRECTORY + '/Default/');
+      var favouritedLessonPlans = await readDDirectory(MAINDIRECTORY + '/Favourited/');
+      var defaultLessonPlans = await readDDirectory(MAINDIRECTORY + '/Default/');
+      var combined = [];
 
-      var combined = favouritedLessonPlans;
-
-      for (let i = 0; i < defaultLessonPlans.length; i++) {
-        combined.push(defaultLessonPlans[i]);
+      if (option == 0 || option == 1){
+        combined = favouritedLessonPlans;
+        if (option == 0){
+          for (var i = 0; i < defaultLessonPlans.length; i++){
+            combined.push(defaultLessonPlans[i]);
+          }
+        }
+      }else {
+        combined = defaultLessonPlans;
       }
+      
+      
+      const lpInfo = combined.map((dirItem) => {
+        return { mtime: dirItem.mtime , 
+                    name: dirItem.name }     
+      })
 
-      return combined;
+      return lpInfo;
     } catch (e) {
       console.log('Error getAllLessonPlanNames: ', e);
     }
@@ -106,14 +119,6 @@ const LessonPlanService = {
    */
   favouriteLessonPlan: async function (name) {
     try {
-      /* Notes:
-      - We cannot call recursively move file. So first we are going to check
-        if the file exists in the favourtie directory (it shouldnt) but if it does, we
-        delete the directory.
-
-      - Next, we will read the current file in default and move each file individually.
-        This works under the assumption that it does not call*/
-
       var oldpath = MAINDIRECTORY + '/Default/' + name + '/';
       var newpath = MAINDIRECTORY + '/Favourited/' + name + '/';
 

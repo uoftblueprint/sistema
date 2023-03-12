@@ -9,6 +9,7 @@ import {
 import Header from '../Components/Header';
 import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
+import LessonPlanService from '../services/LessonPlanService';
 
 const fillerLP = [
   {
@@ -32,12 +33,43 @@ const fillerLP = [
     lastEdited: 'Jan 4, 2023',
   },
 ];
+async function getPlans(){
+  let favL = await LessonPlanService.getAllLessonPlanNames(1);
+  let defL = await LessonPlanService.getAllLessonPlanNames(2);
+  let lessonPlanInfo = [];
+  for (let lp = 0; lp < favL.length; lp++){
+    lessonPlanInfo.push({name: favL[lp].name, isFavorited: true, lastEdited: favL[lp].mtime});
+  }
+  
+  for (let lp = 0; lp < defL.length; lp++){
+    lessonPlanInfo.push({name: defL[lp].name, isFavorited: false, lastEdited: defL[lp].mtime});
+  }
+  console.log(lessonPlanInfo);
+
+ return lessonPlanInfo;
+}
+
+async function favouritePlan(name){
+  await LessonPlanService.favouriteLessonPlan(name);
+}
+async function unfavouritePlan(name){
+  await LessonPlanService.unfavouriteLessonPlan(name);
+}
 
 const Library = ({ navigation }) => {
+  const lessonPlans = getPlans();
+  
+ //This gets printed out as undefined
+  console.log("lesson Plan: ", lessonPlans);
   const [lpList, setList] = useState(fillerLP);
 
   const handleFavoriteChange = (newFavState, index) => {
     // TODO: Send RNFS call to change favorite state for LP (backend)
+    if(newFavState){
+      favouritePlan(lpList[index].name);
+    } else {
+      unfavouritePlan(lpList[index].name);
+    }
 
     // Change fav state in lpList (frontend)
     setList(oldList => {

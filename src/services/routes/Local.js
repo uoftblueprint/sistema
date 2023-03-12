@@ -1,5 +1,6 @@
 import RNFS from 'react-native-fs';
 
+
 /**
  * Reads the file names in the entirety of the given directory.
  * @param {String} dirpath Full directory path to read
@@ -13,6 +14,21 @@ export async function readDirectory(dirpath) {
     })
     .catch(err => {
       console.error(`RNFS readDirectory: ${err.message}`);
+    });
+}
+/**
+ * Reads the ReadDirItem in the entirety of the given directory.
+ * @param {String} dirpath Full directory path to read
+ * @return {RNFS.ReadDirItem[]} Array of directory ReadDirItems
+ */
+export async function readDDirectory(dirpath) {
+  return RNFS.readDir(dirpath)
+    .then(result => {
+      console.log(`GOT RESULT: ${dirpath}`, result);
+      return result;
+    })
+    .catch(err => {
+      console.error(`RNFS readDDirectory: ${err.message}`);
     });
 }
 
@@ -90,7 +106,7 @@ export async function moveFile(oldpath, newpath) {
 export async function checkFileExists(path) {
   return RNFS.exists(path)
     .then(result => {
-      console.log(`FILE EXISTS: ${path}`);
+      console.log(`FILE EXISTS: ${path}`, result);
       return result;
     })
     .catch(err => {
