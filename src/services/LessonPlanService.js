@@ -1,4 +1,4 @@
-import Local, {
+import {
   checkFileExists,
   readDirectory,
   moveFile,
@@ -19,11 +19,12 @@ const LessonPlanService = {
    */
   deleteLessonPlan: async function (name) {
     try {
-      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
+      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan 
+      // as a new directory, we can just unlink it with the deleteFile() function
       var path = MAINDIRECTORY + '/' + name + '/';
       await deleteFile(path);
     } catch (e) {
-      console.log('Error deleteLessonPlan: ', e);
+      console.error('Error deleteLessonPlan: ', e);
     }
   },
 
@@ -85,7 +86,6 @@ const LessonPlanService = {
         combined = defaultLessonPlans;
       }
       
-      
       const lpInfo = combined.map((dirItem) => {
         return { mtime: dirItem.mtime , 
                     name: dirItem.name }     
@@ -93,7 +93,7 @@ const LessonPlanService = {
 
       return lpInfo;
     } catch (e) {
-      console.log('Error getAllLessonPlanNames: ', e);
+      console.error('Error getAllLessonPlanNames: ', e);
     }
   },
 
@@ -109,6 +109,25 @@ const LessonPlanService = {
       // ...
     } catch (e) {
       // ...
+    }
+  },
+
+  /**
+   * Initialize the empty Default and Favourited directories.
+   * Use RNFS.moveFile() with the original filename and the new filename!
+   * @param {String} old_name Old name of lesson plan
+   * @param {String} new_name New name of lesson plan
+   */
+  initializeEmptyDirectories: async function () {
+    try {
+      if (!(await checkFileExists(MAINDIRECTORY + '/Default/') && !(await checkFileExists(MAINDIRECTORY + '/Favourited/')))) {
+        await writeDirectory(MAINDIRECTORY + '/Default/');
+        await writeDirectory(MAINDIRECTORY + '/Favourited/');
+      } else {
+        throw new Error('Directories already exist');
+      }
+    } catch (e) {
+      console.error('Error initializing directories: ', e);
     }
   },
 
@@ -140,7 +159,7 @@ const LessonPlanService = {
 
       await deleteFile(oldpath);
     } catch (e) {
-      console.log('Error favourite: ', e);
+      console.error('Error favourite: ', e);
     }
   },
 
@@ -170,7 +189,7 @@ const LessonPlanService = {
 
       await deleteFile(oldpath);
     } catch (e) {
-      console.log('Error unfavourite: ', e);
+      console.error('Error unfavourite: ', e);
     }
   },
 };
