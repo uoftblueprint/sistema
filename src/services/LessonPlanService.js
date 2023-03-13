@@ -1,4 +1,12 @@
-import Local from './routes/Local';
+import {
+  checkFileExists,
+  readDirectory,
+  writeFile,
+  moveFile,
+  deleteFile,
+  makeDirectory,
+  readDDirectory,
+} from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 
 const LessonPlanService = {
@@ -14,7 +22,7 @@ const LessonPlanService = {
     try {
       // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
       var path = MAINDIRECTORY + '/' + name + '/';
-      const v = await Local.deleteFile(path);
+      const v = await deleteFile(path);
       console.log(v);
       return v;
     } catch (e) {
@@ -33,17 +41,19 @@ const LessonPlanService = {
    */
   saveLessonPlan: async function (lesson) {
     try {
-      // TODO: create lesson plan JSON object from LessonPlan object, as documented in the Wiki
+      // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
       // Then, write to local storage with an RNFS call via Local.js
-      // ...
-      var path =
-        MAINDIRECTORY + '/' + lesson.name + '/' + lesson.name + '.json';
-      await Local.makeDirectory(path);
-      await Local.writeFile(path, lessonJSON);
+      // By default, new lesson plans should not be favourited
+      var path = MAINDIRECTORY + '/Default/' + lesson.name + '/';
+      makeDirectory(path).then(() => {
+        return writeFile(path + lesson.name + '.json', lessonJSON);
+      }).then((r) => {
+        console.log("Successfully saved lesson plan: " + lesson.name);
+      });
     } catch (e) {
       // There was an error, catch it and do something with it
-      console.log('Error save: ', e);
+      console.error('Error saving lesson plan: ', e);
     }
   },
 
