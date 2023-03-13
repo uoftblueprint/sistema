@@ -73,7 +73,7 @@ const LessonPlanService = {
       } else if (await checkFileExists(defaultPath)) {
         path = defaultPath;
       } else {
-        console.error(`getLessonPlan: ${name} does not exist.`);
+        throw new Error(`${name} does not exist`);
       }
 
       // read in the file from RNFS
@@ -89,37 +89,9 @@ const LessonPlanService = {
         json.notes,
       );
 
-      console.log(lessonPlanObj);
       return lessonPlanObj;
     } catch (e) {
       console.log('Error getLessonPlan: ', e);
-    }
-  },
-
-  getLessonPlanTest: async function () {
-    try {
-      let path = `${MAINDIRECTORY}/test.json`;
-      // let path = `${MAINDIRECTORY}/.txt`;
-
-      let str = await readFile(path);
-      // console.log(`str = ${JSON.stringify(str)}`);
-      // console.log(str);
-
-      let json = JSON.parse(str);
-      // console.log('json parsed');
-      // console.log(json.name);
-
-      const lessonPlanObj = new LessonPlan(
-        json.name,
-        json.warmUp,
-        json.mainLesson,
-        json.coolDown,
-        json.notes,
-      );
-
-      console.log(lessonPlanObj);
-    } catch (e) {
-      console.log('error in getLessonPlanTest');
     }
   },
 
