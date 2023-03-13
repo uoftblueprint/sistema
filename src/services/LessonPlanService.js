@@ -91,7 +91,7 @@ const LessonPlanService = {
 
       return lessonPlanObj;
     } catch (e) {
-      console.log('Error getLessonPlan: ', e);
+      console.error('Error getLessonPlan: ', e);
     }
   },
 
