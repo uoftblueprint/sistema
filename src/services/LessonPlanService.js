@@ -1,4 +1,4 @@
-import Local, { readFile, checkFileExists, deleteFile } from './routes/Local';
+import { readFile, checkFileExists, deleteFile } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { LessonPlan } from './models';
 
