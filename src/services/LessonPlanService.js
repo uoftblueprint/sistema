@@ -1,4 +1,4 @@
-import Local, {readFile, checkFileExists} from './routes/Local';
+import Local, { readFile, checkFileExists, deleteFile } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { LessonPlan } from './models';
 
@@ -13,13 +13,24 @@ const LessonPlanService = {
    */
   deleteLessonPlan: async function (name) {
     try {
+      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      let defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+      let path;
+
+      // check if file exists, assigning appropriate path if so
+      if (await checkFileExists(favouritedPath)) {
+        path = favouritedPath;
+      } else if (await checkFileExists(defaultPath)) {
+        path = defaultPath;
+      } else {
+        throw new Error(`${name} does not exist`);
+      }
+
       // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
-      var path = `${MAINDIRECTORY}/${name}/`;
-      const v = await Local.deleteFile(path);
-      console.log(v);
-      return v;
+      let result = await deleteFile(path);
+      return result;
     } catch (e) {
-      // There was an error, catch it and do something with it
+      console.error('deleteLessonPlan error: ', e);
     }
   },
 
