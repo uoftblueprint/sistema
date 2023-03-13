@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import { useState, useCallback, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   SafeAreaView,
   Text,
@@ -12,47 +12,62 @@ import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 import LessonPlanService from '../services/LessonPlanService';
 
-async function favouritePlan(name){
+async function favouritePlan(name) {
   await LessonPlanService.favouriteLessonPlan(name);
 }
-async function unfavouritePlan(name){
+async function unfavouritePlan(name) {
   await LessonPlanService.unfavouriteLessonPlan(name);
 }
 
 const Library = ({ navigation }) => {
-  
   const [lpList, setList] = useState(null);
   const [loaded, setLoaded] = useState(false);
   useFocusEffect(
-    useCallback(
-      () => {
+    useCallback(() => {
       async function getPlans() {
         await LessonPlanService.initializeEmptyDirectories();
         let favL = await LessonPlanService.getAllLessonPlanNames(1);
         let defL = await LessonPlanService.getAllLessonPlanNames(2);
         let lessonPlanInfo = [];
-        for (let lp = 0; lp < favL.length; lp++){
-          lessonPlanInfo.push({name: favL[lp].name, isFavorited: true, lastEdited: favL[lp].mtime.toLocaleDateString('en-US', {month: "short", day: "numeric" , year: "numeric", timeZone: "America/New_York"})});
-        }  
-        for (let lp = 0; lp < defL.length; lp++){
-          lessonPlanInfo.push({name: defL[lp].name, isFavorited: false, lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {month: "short", day: "numeric" , year: "numeric", timeZone: "America/New_York"})});
+        for (let lp = 0; lp < favL.length; lp++) {
+          lessonPlanInfo.push({
+            name: favL[lp].name,
+            isFavorited: true,
+            lastEdited: favL[lp].mtime.toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+              timeZone: 'America/New_York',
+            }),
+          });
+        }
+        for (let lp = 0; lp < defL.length; lp++) {
+          lessonPlanInfo.push({
+            name: defL[lp].name,
+            isFavorited: false,
+            lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+              timeZone: 'America/New_York',
+            }),
+          });
         }
 
         setList(lessonPlanInfo);
       }
       getPlans();
-  },[]));
-    useEffect(
-      () =>{
-        if (lpList !== null){
-          setLoaded(true);
-        }
-      }, [lpList]
-    );
-  if (loaded){
+    }, []),
+  );
+  useEffect(() => {
+    if (lpList !== null) {
+      setLoaded(true);
+    }
+  }, [lpList]);
+  if (loaded) {
     const handleFavoriteChange = (newFavState, index) => {
       // Send RNFS call to change favorite state for LP (backend)
-      if(newFavState){
+      if (newFavState) {
         favouritePlan(lpList[index].name);
       } else {
         unfavouritePlan(lpList[index].name);
@@ -101,7 +116,7 @@ const Library = ({ navigation }) => {
       </SafeAreaView>
     );
   } else {
-    return(
+    return (
       <SafeAreaView style={styles.container}>
         <Header showInfoIcon={false} />
         <SafeAreaView style={styles.inlineTitle}>
@@ -112,7 +127,7 @@ const Library = ({ navigation }) => {
         </SafeAreaView>
         <ScrollView>
           <SafeAreaView style={styles.content}>
-           <Text> Not loading</Text>
+            <Text> Not loading</Text>
           </SafeAreaView>
         </ScrollView>
       </SafeAreaView>

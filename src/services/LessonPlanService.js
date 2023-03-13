@@ -19,7 +19,7 @@ const LessonPlanService = {
    */
   deleteLessonPlan: async function (name) {
     try {
-      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan 
+      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan
       // as a new directory, we can just unlink it with the deleteFile() function
       var path = MAINDIRECTORY + '/' + name + '/';
       await deleteFile(path);
@@ -70,25 +70,28 @@ const LessonPlanService = {
    */
   getAllLessonPlanNames: async function (option = 0) {
     try {
-      var favouritedLessonPlans = await readDDirectory(MAINDIRECTORY + '/Favourited/');
-      var defaultLessonPlans = await readDDirectory(MAINDIRECTORY + '/Default/');
+      var favouritedLessonPlans = await readDDirectory(
+        MAINDIRECTORY + '/Favourited/',
+      );
+      var defaultLessonPlans = await readDDirectory(
+        MAINDIRECTORY + '/Default/',
+      );
       var combined = [];
 
-      if (option == 0 || option == 1){
+      if (option == 0 || option == 1) {
         combined = favouritedLessonPlans;
-        if (option == 0){
-          for (var i = 0; i < defaultLessonPlans.length; i++){
+        if (option == 0) {
+          for (var i = 0; i < defaultLessonPlans.length; i++) {
             combined.push(defaultLessonPlans[i]);
           }
         }
-      }else {
+      } else {
         combined = defaultLessonPlans;
       }
-      
-      const lpInfo = combined.map((dirItem) => {
-        return { mtime: dirItem.mtime , 
-                    name: dirItem.name }     
-      })
+
+      const lpInfo = combined.map(dirItem => {
+        return { mtime: dirItem.mtime, name: dirItem.name };
+      });
 
       return lpInfo;
     } catch (e) {
@@ -117,7 +120,12 @@ const LessonPlanService = {
 
   initializeEmptyDirectories: async function () {
     try {
-      if (!(await checkFileExists(MAINDIRECTORY + '/Default') && !(await checkFileExists(MAINDIRECTORY + '/Favourited')))) {
+      if (
+        !(
+          (await checkFileExists(MAINDIRECTORY + '/Default')) &&
+          !(await checkFileExists(MAINDIRECTORY + '/Favourited'))
+        )
+      ) {
         await makeDirectory(MAINDIRECTORY + '/Default/');
         await makeDirectory(MAINDIRECTORY + '/Favourited/');
       } else {

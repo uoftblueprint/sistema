@@ -1,6 +1,5 @@
 import RNFS from 'react-native-fs';
 
-
 /**
  * Reads the file names in the entirety of the given directory.
  * @param {String} dirpath Full directory path to read
