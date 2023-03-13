@@ -21,9 +21,9 @@ const LessonPlanButton = ({
       <SafeAreaView style={styles.icons}>
         <TouchableOpacity onPress={() => toggleFavorite(!isFavorited, index)}>
           {isFavorited ? (
-            <EmptyHeart width={17} height={17} style={styles.heart} />
-          ) : (
             <FilledHeart width={17} height={17} style={styles.heart} />
+          ) : (
+            <EmptyHeart width={17} height={17} style={styles.heart} />
           )}
         </TouchableOpacity>
         <TouchableOpacity

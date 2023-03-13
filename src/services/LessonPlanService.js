@@ -70,7 +70,6 @@ const LessonPlanService = {
    */
   getAllLessonPlanNames: async function (option = 0) {
     try {
-      //Note: you have to await for the directory (even though VScode says it is unnecessary)
       var favouritedLessonPlans = await readDDirectory(MAINDIRECTORY + '/Favourited/');
       var defaultLessonPlans = await readDDirectory(MAINDIRECTORY + '/Default/');
       var combined = [];
@@ -115,13 +114,14 @@ const LessonPlanService = {
   /**
    * Initialize the empty Default and Favourited directories.
    */
+
   initializeEmptyDirectories: async function () {
     try {
-      if (!(await checkFileExists(MAINDIRECTORY + '/Default/') && !(await checkFileExists(MAINDIRECTORY + '/Favourited/')))) {
-        await writeDirectory(MAINDIRECTORY + '/Default/');
-        await writeDirectory(MAINDIRECTORY + '/Favourited/');
+      if (!(await checkFileExists(MAINDIRECTORY + '/Default') && !(await checkFileExists(MAINDIRECTORY + '/Favourited')))) {
+        await makeDirectory(MAINDIRECTORY + '/Default/');
+        await makeDirectory(MAINDIRECTORY + '/Favourited/');
       } else {
-        throw new Error('Directories already exist');
+        console.log('Directories already exist');
       }
     } catch (e) {
       console.error('Error initializing directories: ', e);
