@@ -90,7 +90,11 @@ export async function moveFile(oldpath, newpath) {
 export async function checkFileExists(path) {
   return RNFS.exists(path)
     .then(result => {
-      console.log('FILE EXISTS');
+      if (result) {
+        console.log('FILE EXISTS');
+      } else {
+        console.log('FILE DOES NOT EXIST');
+      }
       return result;
     })
     .catch(err => {
