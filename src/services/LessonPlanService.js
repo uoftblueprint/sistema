@@ -62,8 +62,8 @@ const LessonPlanService = {
    */
   getLessonPlan: async function (name) {
     try {
-      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-      let defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}`;
+      let defaultPath = `${MAINDIRECTORY}/Default/${name}`;
       let path;
       let lessonPlanObj;
 
