@@ -2,37 +2,23 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  TextInput,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import AddIcon from '../../../assets/add';
 
-const LessonPlanTextInput = ({ placeholder, isButton }) => {
-  const [text, onChangeText] = React.useState(placeholder);
-  const [number, onChangeNumber] = React.useState(null);
-
+const LessonPlanAddItem = ({ placeholder }) => {
   return (
     <SafeAreaView style={styles.SectionStyle}>
-      <TouchableOpacity style={{ marginLeft: '2%' }}>
-        <AddIcon height={25} width={25} style={styles.ImageStyle} />
+      <TouchableOpacity style={styles.SectionStyle}>
+        <TouchableOpacity>
+          <AddIcon style={styles.ImageStyle} />
+        </TouchableOpacity>
+        <View style={styles.addBox} underlineColorAndroid="transparent">
+          <Text style={{ paddingLeft: '3%' }}>{placeholder}</Text>
+        </View>
       </TouchableOpacity>
-      {isButton ? (
-        <Text
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          value={number}>
-          {placeholder}
-        </Text>
-      ) : (
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder={placeholder}
-        />
-      )}
     </SafeAreaView>
   );
 };
@@ -47,7 +33,7 @@ const styles = StyleSheet.create({
   },
   SectionStyle: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
     height: 49,
@@ -66,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LessonPlanTextInput;
+export default LessonPlanAddItem;

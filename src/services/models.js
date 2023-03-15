@@ -35,7 +35,7 @@ export class LessonPlan {
 
 /**
  * @property {string} type type of module content: "text" or "activity card"
- * @property {string} content text: string of content, activity card: "string of path to image"
+ * @property {string} content text: "ALL_CONTENT", activity card: "PATH_TO_IMAGE_IN_DEFAULT_DIR"
  */
 export class Module {
   constructor(type, content) {
