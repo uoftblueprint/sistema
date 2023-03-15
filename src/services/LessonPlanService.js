@@ -46,11 +46,13 @@ const LessonPlanService = {
       // Then, write to local storage with an RNFS call via Local.js
       // By default, new lesson plans should not be favourited
       var path = MAINDIRECTORY + '/Default/' + lesson.name + '/';
-      makeDirectory(path).then(() => {
-        return writeFile(path + lesson.name + '.json', lessonJSON);
-      }).then((r) => {
-        console.log("Successfully saved lesson plan: " + lesson.name);
-      });
+      makeDirectory(path)
+        .then(() => {
+          return writeFile(path + lesson.name + '.json', lessonJSON);
+        })
+        .then(r => {
+          console.log('Successfully saved lesson plan: ' + lesson.name);
+        });
     } catch (e) {
       // There was an error, catch it and do something with it
       console.error('Error saving lesson plan: ', e);
