@@ -12,13 +12,6 @@ import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 import LessonPlanService from '../services/LessonPlanService';
 
-async function favouritePlan(name) {
-  await LessonPlanService.favouriteLessonPlan(name);
-}
-async function unfavouritePlan(name) {
-  await LessonPlanService.unfavouriteLessonPlan(name);
-}
-
 const Library = ({ navigation }) => {
   const [lpList, setList] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -37,7 +30,6 @@ const Library = ({ navigation }) => {
               month: 'short',
               day: 'numeric',
               year: 'numeric',
-              timeZone: 'America/New_York',
             }),
           });
         }
@@ -49,35 +41,36 @@ const Library = ({ navigation }) => {
               month: 'short',
               day: 'numeric',
               year: 'numeric',
-              timeZone: 'America/New_York',
             }),
           });
         }
-
         setList(lessonPlanInfo);
       }
       getPlans();
     }, []),
   );
+
   useEffect(() => {
     if (lpList !== null) {
       setLoaded(true);
     }
   }, [lpList]);
+
   if (loaded) {
     const handleFavoriteChange = (newFavState, index) => {
-      // Send RNFS call to change favorite state for LP (backend)
-      if (newFavState) {
-        favouritePlan(lpList[index].name);
-      } else {
-        unfavouritePlan(lpList[index].name);
-      }
-
-      // Change fav state in lpList (frontend)
-      setList(oldList => {
-        oldList[index].isFavorited = newFavState;
-        return [...oldList];
-      });
+      (newFavState
+        ? LessonPlanService.favouriteLessonPlan(lpList[index].name)
+        : LessonPlanService.unfavouriteLessonPlan(lpList[index].name)
+      )
+        .then(() => {
+          setList(oldList => {
+            oldList[index].isFavorited = newFavState;
+            return [...oldList];
+          });
+        })
+        .catch(err => {
+          console.error(`Library favourite lesson plan: ${err}`);
+        });
     };
 
     return (
