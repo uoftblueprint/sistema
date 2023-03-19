@@ -2,25 +2,21 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  TextInput,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import AddIcon from '../../../assets/add';
 
 const LessonPlanAddItem = ({ placeholder }) => {
-
   return (
     <SafeAreaView style={styles.SectionStyle}>
       <TouchableOpacity style={styles.SectionStyle}>
         <TouchableOpacity>
           <AddIcon style={styles.ImageStyle} />
         </TouchableOpacity>
-        <View
-          style={styles.addBox}
-          underlineColorAndroid="transparent"
-        >
-          <Text style={{paddingLeft: "3%"}}>{placeholder}</Text>
+        <View style={styles.addBox} underlineColorAndroid="transparent">
+          <Text style={{ paddingLeft: '3%' }}>{placeholder}</Text>
         </View>
       </TouchableOpacity>
     </SafeAreaView>
