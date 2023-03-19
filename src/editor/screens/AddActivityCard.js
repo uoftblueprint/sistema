@@ -23,7 +23,6 @@ import LeftArrow from '../../../assets/leftArrow.svg';
 import RightArrow from '../../../assets/rightArrow.svg';
 
 import axios from 'axios';
-// import { act } from 'react-test-renderer';
 
 const AddActivityCard = function ({ navigation, route }) {
   // SEARCH RELATED VARS
@@ -69,7 +68,6 @@ const AddActivityCard = function ({ navigation, route }) {
             if (data.length != 0) {
               showNoCards.current = false;
             } else {
-              console.log('HABADABA');
               showNoCards.current = true;
             }
             setActivityList(data);
@@ -87,7 +85,7 @@ const AddActivityCard = function ({ navigation, route }) {
   const [activeTags, setActiveTags] = useState([
     false,
     false,
-    false,
+    false,  
     false,
     false,
     false,
@@ -136,19 +134,17 @@ const AddActivityCard = function ({ navigation, route }) {
   // **************** ANIMATION RELATED STUFF END *********
 
   return (
+    
     <TouchableWithoutFeedback onPress={uncollapse} flex={1} height={'100%'}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.safeContainer}>
+        <View style={styles.paddingContainer}>
         <Animated.View style={{ height: animViewHeight }}>
           {focused ? (
             <></>
           ) : (
             <>
               <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: '5%',
-                }}>
+                style={[styles.flexRow, styles.alignCenter, styles.marginT5]}>
                 <TouchableOpacity
                   style={styles.backButton}
                   onPress={() => navigation.goBack()}>
@@ -193,82 +189,42 @@ const AddActivityCard = function ({ navigation, route }) {
         {previewInfo ? (
           <>
             <View
-              style={{
-                height: '40%',
-                width: '100%',
-                flexDirection: 'row',
-                marginTop: 20,
-              }}>
+              style={styles.previewContainer}>
               <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+                style={styles.flex1, styles.alignCenter}>
                 <LeftArrow height={30} width={20} />
               </View>
-              <View style={{ flex: 4, alignItems: 'center' }}>
+              <View style={[styles.flex4, styles.alignCenter]}>
                 <Image
-                  style={{
-                    width: '80%',
-                    height: '100%',
-                    resizeMode: 'contain',
-                  }}
+                  style={styles.previewImage}
                   source={{ uri: previewInfo?.url }}
                 />
               </View>
               <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+                style={styles.flex1, styles.alignCenter}>
                 <RightArrow height={30} width={20} />
               </View>
             </View>
 
             <View
-              style={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+              style={[styles.flexColumn, styles.alignCenter]}>
               <Text
-                style={{
-                  color: 'black',
-                  fontSize: 14,
-                  fontFamily: 'Mulish-Regular',
-                  marginVertical: '2%',
-                }}>
+                style={[styles.mulishFont, styles.marginV2, styles.bodyFontSize]}>
                 {' '}
                 {previewInfo?.name}{' '}
               </Text>
               <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-evenly',
-                }}>
+                style={[styles.alignCenter, styles.flexRow]}>
                 <SistemaButton>
                   <Text
-                    style={{
-                      color: 'black',
-                      fontSize: 14,
-                      fontFamily: 'Mulish-Regular',
-                      marginHorizontal: '2%',
-                    }}>
+                    style={[styles.mulishFont, styles.marginH2, styles.bodyFontSize]}>
                     Add Card
                   </Text>
                 </SistemaButton>
                 <TouchableOpacity style={{ marginLeft: '5%' }}>
                   <Text
                     numberOfLines={1}
-                    style={{
-                      color: '#0078E8',
-                      fontSize: 14,
-                      fontFamily: 'Mulish-Regular',
-                      marginHorizontal: '2%',
-                    }}>
+                    style={[styles.mulishFont, styles.marginH2, styles.azureRadiance]}>
                     INSERT AS TEXT INSTEAD
                   </Text>
                 </TouchableOpacity>
@@ -278,23 +234,39 @@ const AddActivityCard = function ({ navigation, route }) {
         ) : (
           <></>
         )}
+        </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeContainer: {
     flex: 1,
     flexDirection: 'column',
     width: '100%',
     backgroundColor: '#FFFAF5',
+    height: '100%'
+  },
+  paddingContainer: {
+    width: '100%', 
     height: '100%',
-    paddingHorizontal: '5%',
+    paddingHorizontal: '5%'
   },
   tagContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  previewContainer: {
+    height: '40%',
+    width: '100%',
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  previewImage: {
+    width: '80%',
+    height: '100%',
+    resizeMode: 'contain',
   },
   header: {
     color: 'black',
@@ -320,6 +292,41 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
+  alignCenter: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  mulishFont: {
+    fontFamily: 'Mulish-Regular',
+    color: 'black'
+  },
+  flex1: {
+    flex: 1
+  },
+  flex4: {
+    flex: 4
+  },
+  flexRow:{
+    flexDirection: 'row'
+  },
+  flexColumn: {
+    flexDirection: 'column'
+  },
+  marginH2: {
+    marginHorizontal: '2%'
+  },
+  marginV2: {
+    marginVertical: '2%'
+  },
+  marginT5: {
+    marginTop: '5%'
+  },
+  bodyFontSize: {
+    fontSize: 14
+  },
+  azureRadiance: {
+    color: '#0078E8'
+  }
 });
 
 export default AddActivityCard;
