@@ -98,8 +98,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         shadowOpacity: 1,
       },
-    }),
-    // background color must be set
+    })
   },
   TextStyle: {
     fontFamily: 'Mulish-Regular',
