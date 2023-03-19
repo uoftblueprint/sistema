@@ -10,6 +10,7 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
   return (
     <SafeAreaView style={styles.ContentCardStyle}>
       <TextInput
+        style={styles.text}
         multiline
         defaultValue={text}
         onEndEditing={e => {
@@ -79,6 +80,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 5,
   },
+  text: {
+    color: '#000000',
+  }
 });
 
 export default StoredContent;

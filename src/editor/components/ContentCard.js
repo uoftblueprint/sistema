@@ -12,6 +12,7 @@ const ContentCard = ({
   return (
     <SafeAreaView style={styles.ContentCardStyle}>
       <TextInput
+        style={styles.text}
         placeholder={'Add Text'}
         multiline={true}
         onEndEditing={e => {
@@ -68,6 +69,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 5,
   },
+  text: {
+    color: '#000000',
+  }
 });
 
 export default ContentCard;
