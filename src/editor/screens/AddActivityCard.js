@@ -24,6 +24,8 @@ import RightArrow from '../../../assets/rightArrow.svg';
 
 import axios from 'axios';
 
+import downloadActivityCard from '../../services/ActivityCardService';
+
 const AddActivityCard = function ({ navigation, route }) {
   // SEARCH RELATED VARS
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,6 +33,7 @@ const AddActivityCard = function ({ navigation, route }) {
     setSearchQuery(query);
   };
   const [activityList, setActivityList] = useState([]);
+  //previewInfo has id, name, and url.
   const [previewInfo, setPreviewInfo] = useState(null);
   const showNoCards = useRef(false);
 
@@ -79,13 +82,18 @@ const AddActivityCard = function ({ navigation, route }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
+  const addCard = () => {
+    const rnfsPath = 
+    navigation.goBack();
+  }
+
   // ************ SEARCH RELATED VARS END *********
 
   // TAG RELATED VARS
   const [activeTags, setActiveTags] = useState([
     false,
     false,
-    false,  
+    false,
     false,
     false,
     false,
@@ -134,106 +142,112 @@ const AddActivityCard = function ({ navigation, route }) {
   // **************** ANIMATION RELATED STUFF END *********
 
   return (
-    
     <TouchableWithoutFeedback onPress={uncollapse} flex={1} height={'100%'}>
       <SafeAreaView style={styles.safeContainer}>
         <View style={styles.paddingContainer}>
-        <Animated.View style={{ height: animViewHeight }}>
-          {focused ? (
-            <></>
-          ) : (
+          <Animated.View style={{ height: animViewHeight }}>
+            {focused ? (
+              <></>
+            ) : (
+              <>
+                <View
+                  style={[styles.flexRow, styles.alignCenter, styles.marginT5]}>
+                  <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => navigation.goBack()}>
+                    <BackArrow height={25} width={25} />
+                  </TouchableOpacity>
+                  <Text style={styles.header}>
+                    {' '}
+                    {route.params.header} Activity Card{' '}
+                  </Text>
+                </View>
+                <Text style={styles.tags}> Tags: </Text>
+                <View style={styles.tagContainer}>
+                  {TAGS.map((tag, index) => (
+                    <TagFilter
+                      key={index}
+                      tagContent={tag}
+                      active={activeTags[index]}
+                      onPress={() => {
+                        // make a copy of the active tags
+                        const newActiveTags = activeTags.slice();
+                        newActiveTags[index] = !newActiveTags[index];
+                        setActiveTags(newActiveTags);
+                      }}
+                    />
+                  ))}
+                </View>
+              </>
+            )}
+          </Animated.View>
+
+          <Searchbar
+            placeholder="Search by title or keyword"
+            onChangeText={onChangeSearch}
+            onFocus={collapse}
+            value={searchQuery}
+            activityList={activityList}
+            focused={focused}
+            setPreviewInfo={setPreviewInfo}
+            showNoCards={showNoCards}
+          />
+
+          {previewInfo ? (
             <>
-              <View
-                style={[styles.flexRow, styles.alignCenter, styles.marginT5]}>
-                <TouchableOpacity
-                  style={styles.backButton}
-                  onPress={() => navigation.goBack()}>
-                  <BackArrow height={25} width={25} />
-                </TouchableOpacity>
-                <Text style={styles.header}>
-                  {' '}
-                  {route.params.header} Activity Card{' '}
-                </Text>
-              </View>
-              <Text style={styles.tags}> Tags: </Text>
-              <View style={styles.tagContainer}>
-                {TAGS.map((tag, index) => (
-                  <TagFilter
-                    key={index}
-                    tagContent={tag}
-                    active={activeTags[index]}
-                    onPress={() => {
-                      // make a copy of the active tags
-                      const newActiveTags = activeTags.slice();
-                      newActiveTags[index] = !newActiveTags[index];
-                      setActiveTags(newActiveTags);
-                    }}
+              <View style={styles.previewContainer}>
+                <View style={(styles.flex1, styles.alignCenter)}>
+                  <LeftArrow height={30} width={20} />
+                </View>
+                <View style={[styles.flex4, styles.alignCenter]}>
+                  <Image
+                    style={styles.previewImage}
+                    source={{ uri: previewInfo?.url }}
                   />
-                ))}
+                </View>
+                <View style={(styles.flex1, styles.alignCenter)}>
+                  <RightArrow height={30} width={20} />
+                </View>
+              </View>
+
+              <View style={[styles.flexColumn, styles.alignCenter]}>
+                <Text
+                  style={[
+                    styles.mulishFont,
+                    styles.marginV2,
+                    styles.bodyFontSize,
+                  ]}>
+                  {' '}
+                  {previewInfo?.name}{' '}
+                </Text>
+                <View style={[styles.alignCenter, styles.flexRow]}>
+                  <SistemaButton onPress={addCard}>
+                    <Text
+                      style={[
+                        styles.mulishFont,
+                        styles.marginH2,
+                        styles.bodyFontSize,
+                      ]}>
+                      Add Card
+                    </Text>
+                  </SistemaButton>
+                  <TouchableOpacity style={{ marginLeft: '5%' }}>
+                    <Text
+                      numberOfLines={1}
+                      style={[
+                        styles.mulishFont,
+                        styles.marginH2,
+                        styles.azureRadiance,
+                      ]}>
+                      INSERT AS TEXT INSTEAD
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </>
+          ) : (
+            <></>
           )}
-        </Animated.View>
-
-        <Searchbar
-          placeholder="Search by title or keyword"
-          onChangeText={onChangeSearch}
-          onFocus={collapse}
-          value={searchQuery}
-          activityList={activityList}
-          focused={focused}
-          setPreviewInfo={setPreviewInfo}
-          showNoCards={showNoCards}
-        />
-
-        {previewInfo ? (
-          <>
-            <View
-              style={styles.previewContainer}>
-              <View
-                style={styles.flex1, styles.alignCenter}>
-                <LeftArrow height={30} width={20} />
-              </View>
-              <View style={[styles.flex4, styles.alignCenter]}>
-                <Image
-                  style={styles.previewImage}
-                  source={{ uri: previewInfo?.url }}
-                />
-              </View>
-              <View
-                style={styles.flex1, styles.alignCenter}>
-                <RightArrow height={30} width={20} />
-              </View>
-            </View>
-
-            <View
-              style={[styles.flexColumn, styles.alignCenter]}>
-              <Text
-                style={[styles.mulishFont, styles.marginV2, styles.bodyFontSize]}>
-                {' '}
-                {previewInfo?.name}{' '}
-              </Text>
-              <View
-                style={[styles.alignCenter, styles.flexRow]}>
-                <SistemaButton>
-                  <Text
-                    style={[styles.mulishFont, styles.marginH2, styles.bodyFontSize]}>
-                    Add Card
-                  </Text>
-                </SistemaButton>
-                <TouchableOpacity style={{ marginLeft: '5%' }}>
-                  <Text
-                    numberOfLines={1}
-                    style={[styles.mulishFont, styles.marginH2, styles.azureRadiance]}>
-                    INSERT AS TEXT INSTEAD
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </>
-        ) : (
-          <></>
-        )}
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -246,12 +260,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     backgroundColor: '#FFFAF5',
-    height: '100%'
+    height: '100%',
   },
   paddingContainer: {
-    width: '100%', 
+    width: '100%',
     height: '100%',
-    paddingHorizontal: '5%'
+    paddingHorizontal: '5%',
   },
   tagContainer: {
     flexDirection: 'row',
@@ -294,39 +308,39 @@ const styles = StyleSheet.create({
   },
   alignCenter: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   mulishFont: {
     fontFamily: 'Mulish-Regular',
-    color: 'black'
+    color: 'black',
   },
   flex1: {
-    flex: 1
+    flex: 1,
   },
   flex4: {
-    flex: 4
+    flex: 4,
   },
-  flexRow:{
-    flexDirection: 'row'
+  flexRow: {
+    flexDirection: 'row',
   },
   flexColumn: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   marginH2: {
-    marginHorizontal: '2%'
+    marginHorizontal: '2%',
   },
   marginV2: {
-    marginVertical: '2%'
+    marginVertical: '2%',
   },
   marginT5: {
-    marginTop: '5%'
+    marginTop: '5%',
   },
   bodyFontSize: {
-    fontSize: 14
+    fontSize: 14,
   },
   azureRadiance: {
-    color: '#0078E8'
-  }
+    color: '#0078E8',
+  },
 });
 
 export default AddActivityCard;

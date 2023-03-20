@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         shadowOpacity: 1,
       },
-    })
+    }),
   },
   TextStyle: {
     fontFamily: 'Mulish-Regular',

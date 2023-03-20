@@ -33,10 +33,7 @@ const SearchResults = ({
     <TouchableOpacity
       onPress={display_preview}
       style={[styles.container, isHighlighted && styles.containerHighlighted]}>
-      <Text
-        style={styles.textStyle}>
-        {name || ''}
-      </Text>
+      <Text style={styles.textStyle}>{name || ''}</Text>
     </TouchableOpacity>
   );
 };
@@ -48,20 +45,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingHorizontal: '4%',
     borderBottomColor: 'lightgray',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   containerHighlighted: {
     borderWidth: 3,
     borderColor: '#36ABFF',
     borderBottomColor: '#36ABFF',
-    borderBottomWidth: 3
+    borderBottomWidth: 3,
   },
   textStyle: {
-      fontFamily: 'Mulish-Regular',
-      width: '100%',
-      fontSize: 17,
-      color: 'black'
-  }
+    fontFamily: 'Mulish-Regular',
+    width: '100%',
+    fontSize: 17,
+    color: 'black',
+  },
 });
 
 export default SearchResults;
