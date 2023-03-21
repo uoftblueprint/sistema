@@ -13,7 +13,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const handleClick = () => {
     setisTextinputOpen(true);
   };
-  
+
   const addActivityCard = () => {
     navigation.navigate('Add Activity Card', {
       header: subtitle,

@@ -1,5 +1,12 @@
 import React, { useRef } from 'react';
-import { SafeAreaView, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  SafeAreaView,
+  Platform,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 
@@ -14,7 +21,9 @@ const ContentCard = ({
   return (
     <SafeAreaView style={styles.ContentCardStyle}>
       {/* Touching the touchable opacity should focus the text input */}
-      <TouchableOpacity onPress={() => refInput.current.focus()} style={styles.TouchableStyle}>
+      <TouchableOpacity
+        onPress={() => refInput.current.focus()}
+        style={styles.TouchableStyle}>
         <View pointerEvents="none">
           <TextInput
             placeholder={'Add Text'}
