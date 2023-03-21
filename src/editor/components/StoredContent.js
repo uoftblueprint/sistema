@@ -1,5 +1,5 @@
-import React from 'react';
-import { SafeAreaView, Platform, StyleSheet, TextInput } from 'react-native';
+import React, { useRef } from 'react';
+import { SafeAreaView, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import {
   addToSection,
   removeFromSection,
@@ -7,38 +7,47 @@ import {
 import store from '../../services/configureStore';
 
 const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
+  const refInput = useRef();
+
   return (
     <SafeAreaView style={styles.ContentCardStyle}>
-      <TextInput
-        multiline
-        defaultValue={text}
-        onEndEditing={e => {
-          setSectionContent(state => {
-            let newContent = [...state];
-            // delete the content from section content state when empty
-            newContent = newContent.filter((_, i) => i !== index);
-            store.dispatch(
-              removeFromSection({
-                type: 'text',
-                section: sectionType,
-                content: text,
-              }),
-            );
-            // if the content isn't empty, add the edited content to store and newContent
-            if (e.nativeEvent.text) {
-              newContent[index] = e.nativeEvent.text;
-              store.dispatch(
-                addToSection({
-                  type: 'text',
-                  section: sectionType,
-                  content: e.nativeEvent.text,
-                }),
-              );
-            }
-            return newContent;
-          });
-        }}
-      />
+      {/* Touching the touchable opacity should focus the text input */}
+      <TouchableOpacity onPress={() => refInput.current.focus()} style={styles.TouchableStyle}>
+        <View pointerEvents="none">
+          <TextInput
+            multiline
+            defaultValue={text}
+            ref={refInput}
+            onEndEditing={e => {
+              const currText = e.nativeEvent.text;
+              setSectionContent(state => {
+                let newContent = [...state];
+                // delete the content from section content state when empty
+                newContent = newContent.filter((_, i) => i !== index);
+                store.dispatch(
+                  removeFromSection({
+                    type: 'text',
+                    section: sectionType,
+                    content: text,
+                  }),
+                );
+                // if the content isn't empty, add the edited content to store and newContent
+                if (currText) {
+                  newContent[index] = currText;
+                  store.dispatch(
+                    addToSection({
+                      type: 'text',
+                      section: sectionType,
+                      content: currText,
+                    }),
+                  );
+                }
+                return newContent;
+              });
+            }}
+          />
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -78,6 +87,10 @@ const styles = StyleSheet.create({
     }),
     paddingHorizontal: 10,
     marginVertical: 5,
+  },
+  TouchableStyle: {
+    flex: 1,
+    height: 80,
   },
 });
 

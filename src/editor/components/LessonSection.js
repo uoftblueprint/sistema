@@ -9,9 +9,11 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const [sectionContent, setSectionContent] = useState([]);
   const [sectionActivityCards, setSectionActivityCards] = useState([]);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
+
   const handleClick = () => {
     setisTextinputOpen(true);
   };
+  
   const addActivityCard = () => {
     navigation.navigate('Add Activity Card', {
       header: subtitle,
@@ -36,17 +38,6 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
           placeholder={'Input text'}
           handleClick={handleClick}
         />
-        {/* <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Add Activity Card', {
-              header: subtitle
-            })
-          }>
-          <LessonPlanTextInput
-            placeholder={'Add activity cards'}
-            isButton={true}
-          />
-        </TouchableOpacity> */}
         <AddLessonContentButton
           placeholder={'Add activity cards'}
           handleClick={addActivityCard}
