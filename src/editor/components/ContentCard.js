@@ -1,5 +1,12 @@
-import React from 'react';
-import { SafeAreaView, Platform, StyleSheet, TextInput } from 'react-native';
+import React, { useRef } from 'react';
+import {
+  SafeAreaView,
+  Platform,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 
@@ -9,31 +16,43 @@ const ContentCard = ({
   sectionContent,
   sectionType,
 }) => {
+  const refInput = useRef();
+
   return (
     <SafeAreaView style={styles.ContentCardStyle}>
-      <TextInput
-        placeholder={'Add Text'}
-        multiline={true}
-        onEndEditing={e => {
-          if (e.nativeEvent.text) {
-            setSectionContent([...sectionContent, e.nativeEvent.text]);
-            store.dispatch(
-              addToSection({
-                type: 'text',
-                section: sectionType,
-                content: e.nativeEvent.text,
-              }),
-            );
-          }
-          setisTextinputOpen(false);
-        }}
-      />
+      {/* Touching the touchable opacity should focus the text input */}
+      <TouchableOpacity
+        onPress={() => refInput.current.focus()}
+        style={styles.TouchableStyle}>
+        <View pointerEvents="none">
+          <TextInput
+            placeholder={'Add Text'}
+            multiline={true}
+            ref={refInput}
+            onEndEditing={e => {
+              if (e.nativeEvent.text) {
+                setSectionContent([...sectionContent, e.nativeEvent.text]);
+                store.dispatch(
+                  addToSection({
+                    type: 'text',
+                    section: sectionType,
+                    content: e.nativeEvent.text,
+                  }),
+                );
+              }
+              setisTextinputOpen(false);
+            }}
+          />
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   ContentCardStyle: {
+    maxHeight: '100%',
+    maxWidth: '100%',
     fontFamily: 'Poppins-Light',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -67,6 +86,10 @@ const styles = StyleSheet.create({
     }),
     paddingHorizontal: 10,
     marginVertical: 5,
+  },
+  TouchableStyle: {
+    flex: 1,
+    height: 80,
   },
 });
 
