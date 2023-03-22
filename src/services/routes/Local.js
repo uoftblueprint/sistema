@@ -8,11 +8,26 @@ import RNFS from 'react-native-fs';
 export async function readDirectory(dirpath) {
   return RNFS.readdir(dirpath)
     .then(result => {
-      console.log('GOT RESULT', result);
+      console.log(`GOT RESULT: ${dirpath}`, result);
       return result;
     })
     .catch(err => {
       console.error(`RNFS readDirectory: ${err.message}`);
+    });
+}
+/**
+ * Reads the ReadDirItem in the entirety of the given directory.
+ * @param {String} dirpath Full directory path to read
+ * @return {RNFS.ReadDirItem[]} Array of directory ReadDirItems
+ */
+export async function readDDirectory(dirpath) {
+  return RNFS.readDir(dirpath)
+    .then(result => {
+      console.log(`GOT RESULT: ${dirpath}`, result);
+      return result;
+    })
+    .catch(err => {
+      console.error(`RNFS readDDirectory: ${err.message}`);
     });
 }
 
@@ -41,7 +56,7 @@ export async function readFile(filepath) {
 export async function writeFile(filepath, content) {
   return RNFS.writeFile(filepath, content, 'utf8')
     .then(success => {
-      console.log('FILE WRITTEN!');
+      console.log(`FILE WRITTEN!: ${filepath}`);
     })
     .catch(err => {
       console.error(`RNFS writeFile: ${err.message}`);
@@ -58,7 +73,7 @@ export async function deleteFile(filepath) {
   return (
     RNFS.unlink(filepath)
       .then(() => {
-        console.log('FILE DELETED');
+        console.log(`FILE DELETED!: ${filepath}}`);
       })
       // `unlink` will throw an error, if the item to unlink does not exist
       .catch(err => {
@@ -99,5 +114,20 @@ export async function checkFileExists(path) {
     })
     .catch(err => {
       console.error(`RNFS checkFileExists: ${err.message}`);
+    });
+}
+
+/**
+ * Create a directory at filepath. Automatically creates parents and does not throw
+ * if already exists
+ * @param {String} dirPath Full file path of the directory to be added
+ */
+export async function makeDirectory(dirPath) {
+  return RNFS.mkdir(dirPath)
+    .then(() => {
+      console.log(`DIRECTORY MADE: ${dirPath}`);
+    })
+    .catch(err => {
+      console.error(`RNFS makeDirectory: ${err.message}`);
     });
 }
