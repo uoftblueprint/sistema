@@ -11,6 +11,7 @@ import Header from '../Components/Header';
 import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 import LessonPlanService from '../services/LessonPlanService';
+import { refreshAccessToken } from '../services/login/AuthService';
 
 const Library = ({ navigation }) => {
   const [lpList, setList] = useState(null);
@@ -75,6 +76,12 @@ const Library = ({ navigation }) => {
 
     return (
       <SafeAreaView style={styles.container}>
+        <TouchableOpacity onPress={async ()=>{
+          const token = await refreshAccessToken();
+          console.log(`TOKEN: ${token.token}`);
+          }}>
+          <Text>Refresh access token</Text>
+        </TouchableOpacity>
         <Header
           navigation={navigation}
           showInfoIcon={false}

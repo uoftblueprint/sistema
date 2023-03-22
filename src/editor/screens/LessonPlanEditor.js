@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import LessonPlanHeader from '../components/LessonPlanHeader.js';
 import {
   StyleSheet,
@@ -16,6 +17,9 @@ import SaveButton from '../components/SaveButton.js';
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditor = ({ navigation }) => {
+  
+  const reduxState = useSelector(state => state.counter);
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader

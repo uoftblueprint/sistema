@@ -24,7 +24,9 @@ import RightArrow from '../../../assets/rightArrow.svg';
 
 import axios from 'axios';
 
-import downloadActivityCard from '../../services/ActivityCardService';
+import ActivityCardService from '../../services/ActivityCardService';
+import { addToSection } from '../../services/editor/lessonPlanSlice';
+import store from '../../services/configureStore';
 
 const AddActivityCard = function ({ navigation, route }) {
   // SEARCH RELATED VARS
@@ -82,8 +84,19 @@ const AddActivityCard = function ({ navigation, route }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
-  const addCard = () => {
-    const rnfsPath = 
+  const addCard = async () => {
+    console.log("SKFHDSKFHSJKDHFKJSHDFKJSDHKFJHSJDFHSKJDHFJKSDHFK")
+    console.log(previewInfo.id);
+    const rnfsPath = await ActivityCardService.downloadActivityCard(previewInfo.id);
+    console.log(rnfsPath);
+
+    store.dispatch(
+      addToSection({
+        type: 'activity',
+        section: route.params.sectionType,
+        content: rnfsPath,
+      })
+    );
     navigation.goBack();
   }
 
