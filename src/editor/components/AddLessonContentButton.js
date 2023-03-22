@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'Mulish-Regular',
     fontSize: 15,
+    color: '#000000',
   },
 });
 
