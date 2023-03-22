@@ -9,7 +9,8 @@ import {
   readDDirectory,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
-import { LessonPlan } from './models';
+import { LessonPlan, Module } from './models';
+
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
@@ -99,12 +100,24 @@ const LessonPlanService = {
       let str = await readFile(path);
       // convert string to JSON object
       let json = JSON.parse(str);
+
+      // create Module objects from JSON
+      const warmUpList = json.warmUp.map(createModules);
+      const mainLessonList = json.mainLesson.map(createModules);
+      const coolDownList = json.coolDown.map(createModules);
+
+      // helper function to create Module objects for .map()
+      function createModules(module) {
+        moduleObj = new Module(module.type, module.content);
+        return moduleObj;
+      }
+
       // create LessonPlan object from JSON
       lessonPlanObj = new LessonPlan(
         json.name,
-        json.warmUp,
-        json.mainLesson,
-        json.coolDown,
+        warmUpList,
+        mainLessonList,
+        coolDownList,
         json.notes,
       );
 
