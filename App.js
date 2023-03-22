@@ -23,10 +23,6 @@ import LibraryNavIcon from './assets/libraryNavIcon.svg';
 import HomeNavIcon from './assets/homeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
 
-// Imports for the lessonplanservice testing
-import LessonPlanService from './src/services/LessonPlanService';
-
-
 const STACK_SCREENS = {
   HOME: 'HomeNavigator',
   EDITOR: 'LessonPlanEditorNavigator',
@@ -130,8 +126,6 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.OS === 'ios' ? 0 : 17
   }
 });
-
-LessonPlanService.getLessonPlanJSON('test.json');
 
 const App = () => {
   return (
