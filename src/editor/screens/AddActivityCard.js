@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
-  Image,
+  Image
 } from 'react-native';
 
 //Component dependencies

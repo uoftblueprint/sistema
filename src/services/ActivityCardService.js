@@ -94,7 +94,7 @@ import configureStore from './configureStore';
           fields: 'kind,driveId,mimeType,id,name,teamDriveId,thumbnailLink,webContentLink,modifiedTime',
           alt: 'media'
         };
-        const dirPath = MAINDIRECTORY + '/FeaturedActivityCards/' + '/' + id + '/';
+        const dirPath = MAINDIRECTORY + '/FeaturedActivityCards';
         const filePath = `${dirPath}/${id}.jpg`;
         let card = {};
  
