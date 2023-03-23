@@ -7,13 +7,14 @@ import {
   View,
 } from 'react-native';
 import XButton from '../../assets/xButton.svg';
+import { TextStyle } from '../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
 const OptionHeader = ({ lastEdited, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerRow}>
-        <Text style={styles.textContainer}>Options</Text>
+        <Text style={[TextStyle.h2, styles.textContainer]}>Options</Text>
 
         <TouchableOpacity
           style={{
@@ -27,7 +28,11 @@ const OptionHeader = ({ lastEdited, navigation }) => {
       </View>
 
       <View style={styles.headerRow}>
-        <Text style={styles.subtitle}>{`Last edited: ${lastEdited}`}</Text>
+        <Text
+          style={[
+            TextStyle.h3,
+            styles.subtitle,
+          ]}>{`Last edited: ${lastEdited}`}</Text>
       </View>
     </SafeAreaView>
   );
@@ -49,9 +54,6 @@ const styles = StyleSheet.create({
   textContainer: {
     postion: 'absolute',
     width: '70%',
-    color: 'rgba(0,0,0, 0.87)',
-    fontFamily: 'Poppins-Bold',
-    fontSize: 20,
   },
   icon: {
     paddingRight: '50%',
@@ -61,9 +63,6 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginTop: '2%',
-    fontFamily: 'Mulish-Italic',
-    fontSize: 15,
-    color: 'rgba(0, 0, 0, 0.63)',
   },
 });
 export default OptionHeader;

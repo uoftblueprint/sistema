@@ -142,9 +142,9 @@ const LessonPlanService = {
       );
       var combined = [];
 
-      if (option == 0 || option == 1) {
+      if (option === 0 || option === 1) {
         combined = favouritedLessonPlans;
-        if (option == 0) {
+        if (option === 0) {
           for (var i = 0; i < defaultLessonPlans.length; i++) {
             combined.push(defaultLessonPlans[i]);
           }

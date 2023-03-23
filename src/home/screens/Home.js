@@ -4,13 +4,13 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Platform,
 } from 'react-native';
 import RecentCard from '../components/RecentCard';
 import Header from '../../Components/Header';
 import RefreshIcon from '../../../assets/refreshIcon.svg';
 import { STACK_SCREENS } from '../constants';
 import { TextStyle } from '../../Styles.config';
+import { scale } from 'react-native-size-matters';
 
 const Home = ({ navigation }) => {
   return (
@@ -20,7 +20,9 @@ const Home = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
           <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
           <SafeAreaView style={styles.subContainer}>
-            <Text style={[styles.subtitle, TextStyle.h3]}>Last updated on Jan 1, 2023</Text>
+            <Text style={[styles.subtitle, TextStyle.h3]}>
+              Last updated on Jan 1, 2023
+            </Text>
             {/* TODO: backend integration in this TouchableOpacity's onPress */}
             <TouchableOpacity>
               <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     height: '100%',
-    paddingHorizontal: 35,
+    paddingHorizontal: scale(30),
   },
   container: {
     justifyContent: 'center',
