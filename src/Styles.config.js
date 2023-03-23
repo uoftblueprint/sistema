@@ -42,4 +42,9 @@ export const TextStyle = StyleSheet.create({
     color: '#000000',
     fontFamily: 'Mulish-Regular',
   },
+  label: {
+    color: '#000000',
+    fontFamily: 'Mulish-Regular',
+    fontSize: 16,
+  },
 });

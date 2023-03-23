@@ -5,7 +5,7 @@ const IconButton = ({ title, handlePress, children }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={handlePress}>
       <View style={styles.icon}>{children}</View>
-      <Text style={[TextStyle.body, styles.title]}>{title}</Text>
+      <Text style={[TextStyle.label, styles.title]}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto',
     backgroundColor: '#FDFBF7',
-    borderRadius: 7.7,
+    borderRadius: 8,
     borderWidth: 0.77,
     borderStyle: 'solid',
     display: 'flex',
@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
   },
   title: {
     margin: 14,
-    fontSize: 16,
   },
   icon: {
     marginVertical: 10,
