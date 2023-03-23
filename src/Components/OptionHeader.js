@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginTop: '2%',
-    fontStyle: 'italic',
+    fontFamily: 'Mulish-Italic',
     fontSize: 15,
     color: 'rgba(0, 0, 0, 0.63)',
   },

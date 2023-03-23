@@ -23,8 +23,10 @@ const Home = ({ navigation }) => {
           </Text>
           <SafeAreaView style={styles.subContainer}>
             <Text style={[styles.subtitle, TextStyle.h3]}>Last updated on Jan 1, 2023</Text>
-            {/* This refresh icon should eventually become a TouchableOpacity */}
-            <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
+            {/* TODO: backend integration in this TouchableOpacity's onPress */}
+            <TouchableOpacity>
+              <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
+            </TouchableOpacity>
           </SafeAreaView>
         </SafeAreaView>
 
