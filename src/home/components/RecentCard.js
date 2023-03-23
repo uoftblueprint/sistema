@@ -58,10 +58,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontFamily: 'Mulish-Regular',
+    fontFamily: 'Mulish-Italic',
     color: '#FFFFFF',
     width: '100%',
-    fontStyle: 'italic',
   },
 });
 

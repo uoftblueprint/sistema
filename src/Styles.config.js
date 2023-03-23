@@ -34,9 +34,8 @@ export const TextStyle = StyleSheet.create({
   },
   h3: {
     color: '#453E3D',
-    fontFamily: 'Mulish-Regular',
+    fontFamily: 'Mulish-Italic',
     fontSize: 15,
-    fontStyle: 'italic',
     letterSpacing: 0.3,
   },
   body: {
