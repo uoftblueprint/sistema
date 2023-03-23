@@ -11,7 +11,6 @@ import {
 import { MAINDIRECTORY } from './constants';
 import { LessonPlan, Module } from './models';
 
-
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
   // Don't call RNFS directly here!
@@ -108,8 +107,7 @@ const LessonPlanService = {
 
       // helper function to create Module objects for .map()
       function createModules(module) {
-        moduleObj = new Module(module.type, module.content);
-        return moduleObj;
+        return new Module(module.type, module.content);
       }
 
       // create LessonPlan object from JSON

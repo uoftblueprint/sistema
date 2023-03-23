@@ -17,7 +17,9 @@ const Home = ({ navigation }) => {
       <Header isHome={true} navigation={navigation} showBackButton={false} />
       <ScrollView>
         <SafeAreaView style={styles.container}>
-          <Text style={[styles.title, TextStyle.h2]}>Recently added activity cards</Text>
+          <Text style={[styles.title, TextStyle.h2]}>
+            Recently added activity cards
+          </Text>
           <SafeAreaView style={styles.subContainer}>
             <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
             {/* This refresh icon should eventually become a TouchableOpacity */}
