@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     height: '100%',
-    paddingHorizontal: 30,
+    paddingHorizontal: 35,
   },
   container: {
     justifyContent: 'center',
