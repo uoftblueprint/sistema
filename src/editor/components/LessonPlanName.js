@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import EditIcon from '../../../assets/edit.svg';
+import { TextStyle } from '../../Styles.config';
 
 const LessonPlanName = () => {
   const [isEditable, setIsEditable] = useState(false);
@@ -29,7 +30,7 @@ const LessonPlanName = () => {
       <View style={styles.inputWrapper}>
         {isEditable ? (
           <TextInput
-            style={styles.input}
+            style={[styles.input, TextStyle.h1]}
             value={lessonPlanName}
             onChangeText={newText => {
               setLessonPlanName(newText);
@@ -40,7 +41,7 @@ const LessonPlanName = () => {
             autoFocus={true}
           />
         ) : (
-          <Text style={styles.text} numberOfLines={1}>
+          <Text style={[styles.text, TextStyle.h1]} numberOfLines={1}>
             {lessonPlanName}
           </Text>
         )}
@@ -62,10 +63,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: '100%',
-    letterSpacing: 0.3,
-    fontSize: 23,
-    fontFamily: 'Poppins-Bold',
-    color: '#000',
     ...Platform.select({
       ios: {
         paddingLeft: '5%',
@@ -85,10 +82,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlignVertical: 'center',
-    letterSpacing: 0.3,
-    fontSize: 23,
-    fontFamily: 'Poppins-Bold',
-    color: '#000',
     ...Platform.select({
       ios: {
         paddingLeft: '5%',

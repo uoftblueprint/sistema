@@ -9,6 +9,7 @@ import RecentCard from '../components/RecentCard';
 import Header from '../../Components/Header';
 import RefreshIcon from '../../../assets/refreshIcon.svg';
 import { STACK_SCREENS } from '../constants';
+import { TextStyle } from '../../Styles.config';
 
 const Home = ({ navigation }) => {
   return (
@@ -16,7 +17,7 @@ const Home = ({ navigation }) => {
       <Header isHome={true} navigation={navigation} showBackButton={false} />
       <ScrollView>
         <SafeAreaView style={styles.container}>
-          <Text style={styles.title}>Recently added activity cards</Text>
+          <Text style={[styles.title, TextStyle.h2]}>Recently added activity cards</Text>
           <SafeAreaView style={styles.subContainer}>
             <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
             {/* This refresh icon should eventually become a TouchableOpacity */}
@@ -60,11 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: '#453E3D',
-    fontFamily: 'Poppins-Bold',
-    fontSize: 20,
     marginHorizontal: 30,
-    letterSpacing: 0.3,
     width: '100%',
     paddingBottom: 11,
   },

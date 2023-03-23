@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
+import { TextStyle } from '../../Styles.config';
 import store from '../../services/configureStore';
 
 const ContentCard = ({
@@ -26,6 +27,7 @@ const ContentCard = ({
         style={styles.TouchableStyle}>
         <View pointerEvents="none">
           <TextInput
+            style={TextStyle.body}
             placeholder={'Add Text'}
             multiline={true}
             ref={refInput}

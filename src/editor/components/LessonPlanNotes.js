@@ -8,18 +8,19 @@ import {
 } from 'react-native';
 import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
+import { TextStyle } from '../../Styles.config';
 
 const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
   const [sectionContent, setSectionContent] = useState(placeholder);
 
   return (
     <SafeAreaView>
-      <Text style={styles.title}>{subtitle}</Text>
+      <Text style={[styles.title, TextStyle.h2]}>{subtitle}</Text>
       <SafeAreaView style={styles.SectionStyle}>
         <TextInput
+          style={TextStyle.body}
           multiline
           placeholder={'Add lesson notes here'}
-          style={styles.notesText}
           returnKeyType="next"
           onEndEditing={e => {
             if (e.nativeEvent.text) {
@@ -43,12 +44,7 @@ const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#20232a',
-    fontSize: 20,
-    letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28,
-    fontFamily: 'Poppins-Bold',
   },
   SectionStyle: {
     paddingHorizontal: 15,
@@ -84,10 +80,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     marginBottom: 20,
-  },
-  notesText: {
-    fontFamily: 'Mulish-Regular',
-    fontSize: 16,
   },
 });
 

@@ -2,6 +2,7 @@ import React from 'react-native';
 import BackArrow from '../../../assets/backArrow.svg';
 import Menu from '../../../assets/menu.svg';
 import LessonPlanName from './LessonPlanName';
+import { STACK_SCREENS } from '../../library/constants';
 
 import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 
@@ -14,7 +15,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
       <LessonPlanName />
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate('Lesson_Plan_Editor_Menu', {
+          navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
             isLessonPlanEditor: true,
             lastEdited: lastEditedDate,
           })

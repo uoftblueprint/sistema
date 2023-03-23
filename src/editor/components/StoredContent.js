@@ -12,6 +12,7 @@ import {
   removeFromSection,
 } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
+import { TextStyle } from '../../Styles.config';
 
 const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
   const refInput = useRef();
@@ -24,6 +25,7 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
         style={styles.TouchableStyle}>
         <View pointerEvents="none">
           <TextInput
+            style={TextStyle.body}
             multiline
             defaultValue={text}
             ref={refInput}

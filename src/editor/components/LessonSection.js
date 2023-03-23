@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AddLessonContentButton from './AddLessonContentButton';
 import { Text, View, SafeAreaView, Platform, StyleSheet } from 'react-native';
 import store from '../../services/configureStore';
+import { TextStyle } from '../../Styles.config';
 import ContentCard from './ContentCard';
 import StoredContent from './StoredContent';
 
@@ -22,7 +23,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
 
   return (
     <SafeAreaView>
-      <Text style={styles.title}>{subtitle}</Text>
+      <Text style={[styles.title, TextStyle.h2]}>{subtitle}</Text>
       <View style={styles.sectionContainer}>
         {/* New textbox with prompted to insert text */}
         {isTextinputOpen && (
@@ -65,12 +66,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#20232a',
-    fontSize: 20,
-    fontFamily: 'Poppins-Bold',
-    letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28,
   },
   sectionContainer: {
     marginBottom: 20,

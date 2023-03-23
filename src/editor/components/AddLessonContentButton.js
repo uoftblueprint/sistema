@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     flex: 1,
     shadowColor: '#453E3D',
     paddingLeft: 12,
-    fontSize: 16,
   },
   sectionStyle: {
     fontFamily: 'Poppins-Light',
