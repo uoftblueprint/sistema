@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     width: 280,
     color: '#000',
     borderColor: 'transparent',
-    borderRadius: 7.69,
+    borderRadius: 8,
     paddingLeft: '3%',
   },
 });

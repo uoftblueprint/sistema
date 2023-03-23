@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto',
     backgroundColor: '#FDFBF7',
-    borderRadius: 7.7,
+    borderRadius: 8,
     borderWidth: 0.77,
     borderStyle: 'solid',
     display: 'flex',

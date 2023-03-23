@@ -11,6 +11,7 @@ import {
 import LessonSection from '../components/LessonSection.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 // dummy last edited date
 const lastEditedDummy = 'Jan 1, 2023';
@@ -25,7 +26,7 @@ const LessonPlanEditor = ({ navigation }) => {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={{
-          paddingBottom: '15%',
+          paddingBottom: verticalScale(55),
         }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.viewStyle}>
@@ -68,18 +69,17 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    marginHorizontal: '1%',
-    marginVertical: '1%',
-    paddingBottom: '10%',
+    paddingBottom: verticalScale(20),
   },
   viewStyle: {
     flexDirection: 'column',
     alignItems: 'center',
+    paddingHorizontal: scale(30),
   },
   saveButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: 25,
+    bottom: verticalScale(20),
   },
 });
 

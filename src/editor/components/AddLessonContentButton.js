@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AddIcon from '../../../assets/add.svg';
+import { TextStyle } from '../../Styles.config';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const AddLessonContentButton = ({ placeholder, handleClick }) => {
   return (
@@ -14,7 +16,7 @@ const AddLessonContentButton = ({ placeholder, handleClick }) => {
       <SafeAreaView style={styles.sectionStyle}>
         <AddIcon height={'30'} width={'30'} />
         <View style={styles.input}>
-          <Text style={styles.text}>{placeholder}</Text>
+          <Text style={TextStyle.label}>{placeholder}</Text>
         </View>
       </SafeAreaView>
     </TouchableOpacity>
@@ -28,28 +30,28 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
   },
   sectionStyle: {
-    fontFamily: 'Poppins-Light',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
-    height: 49,
-    width: 333,
+    height: verticalScale(50),
+    width: '100%',
     borderWidth: 0.77,
     borderColor: '#000',
-    borderRadius: 7.69,
+    borderRadius: 8,
     shadowColor: '#453E3D',
-    elevation: 7,
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
     marginVertical: 6,
     paddingHorizontal: 10,
   },
   imageStyle: {
     paddingLeft: '10%',
-  },
-  text: {
-    fontFamily: 'Mulish-Regular',
-    fontSize: 15,
-    color: '#000000',
   },
 });
 

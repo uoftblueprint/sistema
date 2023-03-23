@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   Platform,
+  View,
 } from 'react-native';
 import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
@@ -14,9 +15,9 @@ const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
   const [sectionContent, setSectionContent] = useState(placeholder);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView width={'100%'}>
       <Text style={[styles.title, TextStyle.h2]}>{subtitle}</Text>
-      <SafeAreaView style={styles.SectionStyle}>
+      <View style={styles.SectionStyle}>
         <TextInput
           style={TextStyle.body}
           multiline
@@ -37,7 +38,7 @@ const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
             }
           }}
         />
-      </SafeAreaView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -50,26 +51,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     ...Platform.select({
       ios: {
-        paddingVertical: 10,
+        paddingTop: 10,
+        paddingBottom: 15,
       },
       android: {
         paddingVertical: 0,
       },
-      default: {
-        ios: {
-          paddingVertical: 3,
-        },
-      },
     }),
-    fontFamily: 'Poppins-MediumItalic',
-    fontSize: 16,
     flexDirection: 'column',
     backgroundColor: '#FFFAF5',
-    height: 112,
-    width: 333,
     borderWidth: 0.77,
     borderColor: '#000',
-    borderRadius: 7.69,
+    borderRadius: 8,
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,

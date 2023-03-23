@@ -65,13 +65,11 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
 
 const styles = StyleSheet.create({
   ContentCardStyle: {
-    fontFamily: 'Poppins-Light',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: '#FFFAF5',
-    height: 80,
-    width: 333,
+    height: 'auto',
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,
@@ -81,27 +79,24 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 2,
     elevation: 5,
-    ...Platform.select({
-      ios: {
-        paddingVertical: 10,
-      },
-      android: {
-        paddingVertical: 0,
-      },
-      default: {
-        ios: {
-          paddingVertical: 4,
-        },
-      },
-    }),
-    paddingHorizontal: 10,
+    shadowRadius: 2,
     marginVertical: 5,
   },
   TouchableStyle: {
-    flex: 1,
-    height: 80,
+    height: '100%',
+    ...Platform.select({
+      ios: {
+        paddingTop: 10,
+        paddingBottom: 15,
+        paddingHorizontal: 15,
+      },
+      android: {
+        paddingVertical: 0,
+        paddingHorizontal: 10,
+      },
+    }),
+    width: '100%',
   },
 });
 

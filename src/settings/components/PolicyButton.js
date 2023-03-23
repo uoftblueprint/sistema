@@ -13,7 +13,7 @@ const PolicyButton = ({ title, content, navigation }) => {
           pageContent: content,
         });
       }}>
-      <Text style={[TextStyle.body, styles.title]}>{title}</Text>
+      <Text style={[TextStyle.label, styles.title]}>{title}</Text>
       <View style={styles.icon}>
         <NextButton width={14} height={17} />
       </View>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto',
     backgroundColor: '#FDFBF7',
-    borderRadius: 7.7,
+    borderRadius: 8,
     borderWidth: 0.77,
     borderStyle: 'solid',
     display: 'flex',
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   title: {
     margin: 14,
     maxWidth: '80%',
-    fontSize: 16,
   },
   icon: {
     margin: 14,

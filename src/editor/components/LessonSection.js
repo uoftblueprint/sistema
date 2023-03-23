@@ -22,7 +22,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.mainContainer}>
       <Text style={[styles.title, TextStyle.h2]}>{subtitle}</Text>
       <View style={styles.sectionContainer}>
         {/* New textbox with prompted to insert text */}
@@ -68,16 +68,11 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 10,
   },
+  mainContainer: {
+    width: '100%',
+  },
   sectionContainer: {
     marginBottom: 20,
-    shadowColor: '#453E3D',
-    shadowOffset: {
-      width: 1,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 5,
   },
 });
 
