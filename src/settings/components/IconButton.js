@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   },
   title: {
     margin: 14,
+    fontSize: 16,
   },
   icon: {
     marginVertical: 10,

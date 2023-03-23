@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   title: {
     margin: 14,
     maxWidth: '80%',
+    fontSize: 16,
   },
   icon: {
     margin: 14,
