@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, SafeAreaView, Text, ScrollView } from 'react-native';
 import AddButton from './components/AddToLessonButton';
 import Header from '../Components/Header';
 import { TextStyle } from '../Styles.config';
@@ -23,11 +18,13 @@ const ExpandedCard = ({ navigation }) => {
           style={{ justifyContent: 'center', alignItems: 'center' }}>
           {/* Pass in props.cardTitle eventually. You want to parse the parts around the dashes for the third part of the title */}
           <Text style={[styles.title, TextStyle.h2]}>Listening Spinners</Text>
-          <Text style={[TextStyle.h3, styles.subtitle]}>Theme:
+          <Text style={[TextStyle.h3, styles.subtitle]}>
+            Theme:
             {/* You'll parse the name of the activity card to get the theme (first part of title) */}
             <Text style={TextStyle.h3}> THEME HERE</Text>
           </Text>
-          <Text style={[TextStyle.h3, styles.subtitle]}>Activity Type:
+          <Text style={[TextStyle.h3, styles.subtitle]}>
+            Activity Type:
             {/* You'll parse the name of the activity card to get the type (second part of title) */}
             <Text style={TextStyle.h3}> TYPE HERE</Text>
           </Text>

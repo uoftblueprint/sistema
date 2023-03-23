@@ -28,7 +28,11 @@ const OptionHeader = ({ lastEdited, navigation }) => {
       </View>
 
       <View style={styles.headerRow}>
-        <Text style={[TextStyle.h3, styles.subtitle]}>{`Last edited: ${lastEdited}`}</Text>
+        <Text
+          style={[
+            TextStyle.h3,
+            styles.subtitle,
+          ]}>{`Last edited: ${lastEdited}`}</Text>
       </View>
     </SafeAreaView>
   );

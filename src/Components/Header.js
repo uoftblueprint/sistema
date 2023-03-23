@@ -15,7 +15,7 @@ import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';
 import { STACK_SCREENS as SETTINGS_SCREENS } from '../settings/constants';
 import { TextStyle } from '../Styles.config';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 
 const activityCardNamingExplanation =
   'Activity Card names have three parts:\n\nTheme - Activity Type - Activity Title\n\n' +
@@ -76,9 +76,13 @@ const Header = ({ navigation, isHome, showBackButton }) => {
         close={toggleOverlay}
         visible={isVisible}
         style={styles.overlayStyle}>
-        <Text style={[TextStyle.h2, styles.textHeader]}>How activity cards are named</Text>
+        <Text style={[TextStyle.h2, styles.textHeader]}>
+          How activity cards are named
+        </Text>
         <ScrollView style={styles.overlayScroll}>
-          <Text style={[TextStyle.body, styles.textBody]}>{activityCardNamingExplanation}</Text>
+          <Text style={[TextStyle.body, styles.textBody]}>
+            {activityCardNamingExplanation}
+          </Text>
         </ScrollView>
 
         <SistemaButton onPress={toggleOverlay} style={{ minWidth: '30%' }}>
