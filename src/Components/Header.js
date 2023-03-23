@@ -80,7 +80,7 @@ const Header = ({ navigation, isHome, showBackButton }) => {
         </ScrollView>
 
         <SistemaButton onPress={toggleOverlay} style={{ minWidth: '30%' }}>
-          <Text> Okay </Text>
+          <Text style={styles.textButton}> Okay </Text>
         </SistemaButton>
       </Overlay>
     </SafeAreaView>
@@ -116,12 +116,17 @@ const styles = StyleSheet.create({
   textHeader: {
     fontFamily: 'Poppins-Bold',
     fontSize: 16,
+    color: 'black',
     marginBottom: '5%',
   },
   textBody: {
     fontFamily: 'Mulish-Regular',
     fontSize: 16,
+    color: 'black',
     marginBottom: '5%',
+  },
+  textButton: {
+    color: 'black',
   },
   overlayStyle: {
     minHeight: '30%',
