@@ -6,6 +6,7 @@ import {
   TextInput,
   Text,
   Keyboard,
+  Platform,
 } from 'react-native';
 import { useState, createRef, useEffect } from 'react';
 import BackArrow from '../../../assets/backArrow.svg';
@@ -48,12 +49,12 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   useEffect(() => {
     if (isEditable) {
       inputRef.current.focus();
-      console.log("focusing & pulling up keyboard");
+      console.log('focusing & pulling up keyboard');
     } else {
-      inputRef.current.blur()
+      inputRef.current.blur();
       console.log('NOT editable');
     }
-  }, [isEditable]);
+  }, [isEditable, inputRef]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,17 +62,27 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
         <TouchableOpacity>
           <BackArrow height={'30'} width={'30'} />
         </TouchableOpacity>
-        
+
         {/* LESSON PLAN NAME*/}
         <TextInput
           ref={inputRef}
-          style={[ styles.input, TextStyle.h1, isEditable ? styles.isOnTop : styles.isBehind ]}
+          style={[
+            styles.input,
+            TextStyle.h1,
+            isEditable ? styles.isOnTop : styles.isBehind,
+          ]}
           value={lessonPlanName}
           onChangeText={newText => {
             setLessonPlanName(newText);
           }}
         />
-        <Text style={[styles.text, TextStyle.h1, !isEditable ? styles.isOnTop : styles.isBehind ]} numberOfLines={1}>
+        <Text
+          style={[
+            styles.text,
+            TextStyle.h1,
+            !isEditable ? styles.isOnTop : styles.isBehind,
+          ]}
+          numberOfLines={1}>
           {lessonPlanName}
         </Text>
       </View>
@@ -142,7 +153,7 @@ const styles = StyleSheet.create({
   isBehind: {
     opacity: 0,
     width: 0,
-    zIndex: 1, 
+    zIndex: 1,
     ...Platform.select({
       ios: {
         paddingHorizontal: 0,
@@ -151,7 +162,7 @@ const styles = StyleSheet.create({
         paddingRight: 0,
       },
     }),
-  }
+  },
 });
 
 export default LessonPlanHeader;
