@@ -32,10 +32,10 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={{marginLeft: scale(horizontalMargin)}}>
+      <TouchableOpacity style={{ marginLeft: scale(horizontalMargin) }}>
         <BackArrow height={headerIconSize} width={headerIconSize} />
       </TouchableOpacity>
-      
+
       <SafeAreaView style={styles.SectionStyle}>
         <View style={styles.inputWrapper}>
           {isEditable ? (
@@ -61,7 +61,11 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
             onPress={() => {
               setIsEditable(true);
             }}>
-            <EditIcon height={headerIconSize - 5} width={headerIconSize - 5} marginRight={scale(15)} />
+            <EditIcon
+              height={headerIconSize - 5}
+              width={headerIconSize - 5}
+              marginRight={scale(15)}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
@@ -74,9 +78,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-      
     </SafeAreaView>
-
   );
 };
 
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginRight: scale(horizontalMargin)
+    marginRight: scale(horizontalMargin),
   },
   SectionStyle: {
     flex: 2,
