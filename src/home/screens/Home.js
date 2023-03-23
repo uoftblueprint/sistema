@@ -18,9 +18,7 @@ const Home = ({ navigation }) => {
       <Header isHome={true} navigation={navigation} showBackButton={false} />
       <ScrollView style={styles.scrollContainer}>
         <SafeAreaView style={styles.container}>
-          <Text style={[styles.title, TextStyle.h2]}>
-            New activity cards
-          </Text>
+          <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
           <SafeAreaView style={styles.subContainer}>
             <Text style={[styles.subtitle, TextStyle.h3]}>Last updated on Jan 1, 2023</Text>
             {/* TODO: backend integration in this TouchableOpacity's onPress */}

@@ -16,9 +16,9 @@ const RecentCard = ({ navigation }) => {
         <ScrollView>{/* <Text>CARD GOES HERE</Text> */}</ScrollView>
 
         <SafeAreaView style={styles.titleBar}>
-            <Text style={styles.title} numberOfLines={1}>
-              Listening - Knowledge - Listening Spinners
-            </Text>
+          <Text style={styles.title} numberOfLines={1}>
+            Listening - Knowledge - Listening Spinners
+          </Text>
         </SafeAreaView>
       </SafeAreaView>
     </SafeAreaView>
