@@ -24,7 +24,7 @@ const ExpandedCard = ({ navigation }) => {
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
           {/* Pass in props.cardTitle eventually. You want to parse the parts around the dashes for the third part of the title */}
-          <Text style={[styles.title, TextStyle.h1]}>Listening Spinners</Text>
+          <Text style={[styles.title, TextStyle.h2]}>Listening Spinners</Text>
           <Text style={[TextStyle.h3, styles.subtitle]}>Theme:
             {/* You'll parse the name of the activity card to get the theme (first part of title) */}
             <Text style={TextStyle.h3}> THEME HERE</Text>
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   title: {
     width: '75%',
     textAlign: 'left',
+    marginBottom: 5,
   },
   subtitle: {
     width: '75%',
