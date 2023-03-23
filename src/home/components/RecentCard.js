@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Mulish-Regular',
     color: '#FFFFFF',
     width: '100%',
-    fontSize: 17,
+    // fontSize: 17,
     marginTop: 7,
     fontStyle: 'italic',
   },

@@ -60,6 +60,7 @@ const MainNavigator = () => {
 
   const navigationRef = useNavigationContainerRef();
   const insets = useSafeAreaInsets();
+  console.log(insets);
 
   return (
     <NavigationContainer ref={navigationRef} independent={true}>
@@ -123,8 +124,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: Platform.OS === 'ios' ? 0 : 17
   }
 });
 
