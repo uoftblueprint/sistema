@@ -1,28 +1,25 @@
 import {
-  StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
-  View,
+  StyleSheet,
   TextInput,
+  View,
   Text,
-  Keyboard,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
-import { useState, createRef, useEffect } from 'react';
-import BackArrow from '../../../assets/backArrow.svg';
+import { useEffect, useState } from 'react';
 import EditIcon from '../../../assets/edit.svg';
 import Menu from '../../../assets/menu.svg';
-import LessonPlanName from './LessonPlanName';
-import { STACK_SCREENS } from '../../library/constants';
+import BackArrow from '../../../assets/backArrow.svg';
 import { TextStyle } from '../../Styles.config';
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { scale, moderateScale } from 'react-native-size-matters';
 
-const headerIconSize = 30;
+const headerIconSize = moderateScale(25);
+const horizontalMargin = 30;
 
 const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [lessonPlanName, setLessonPlanName] = useState('');
-
-  const inputRef = createRef();
 
   useEffect(() => {
     const todayDate = new Date().toLocaleDateString('en-us', {
@@ -31,89 +28,70 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
       day: 'numeric',
     });
     setLessonPlanName(todayDate);
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      console.log('keyboard shown');
-    });
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      console.log('keyboard hidden');
-      setIsEditable(false);
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
   }, []);
-
-  useEffect(() => {
-    if (isEditable) {
-      inputRef.current.focus();
-      console.log("focusing & pulling up keyboard");
-    } else {
-      inputRef.current.blur()
-      console.log('NOT editable');
-    }
-  }, [isEditable]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.toolbar, { justifyContent: 'flex-start' }]}>
-        <TouchableOpacity>
-          <BackArrow height={'30'} width={'30'} />
-        </TouchableOpacity>
-        
-        {/* LESSON PLAN NAME*/}
-        <TextInput
-          ref={inputRef}
-          style={[ styles.input, TextStyle.h1, isEditable ? styles.isOnTop : styles.isBehind ]}
-          value={lessonPlanName}
-          onChangeText={newText => {
-            setLessonPlanName(newText);
-          }}
-        />
-        <Text style={[styles.text, TextStyle.h1, !isEditable ? styles.isOnTop : styles.isBehind ]} numberOfLines={1}>
-          {lessonPlanName}
-        </Text>
-      </View>
-
-      <View style={[styles.toolbar, { justifyContent: 'flex-end' }]}>
-        <TouchableOpacity
-          style={{ marginRight: scale(15) }}
-          onPress={() => {
-            setIsEditable(true);
-          }}>
-          <EditIcon height={'25'} width={'25'} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
-              isLessonPlanEditor: true,
-              lastEdited: lastEditedDate,
-            })
-          }>
-          <Menu height={'30'} width={'30'} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={{marginLeft: scale(horizontalMargin)}}>
+        <BackArrow height={headerIconSize} width={headerIconSize} />
+      </TouchableOpacity>
+      
+      <SafeAreaView style={styles.SectionStyle}>
+        <View style={styles.inputWrapper}>
+          {isEditable ? (
+            <TextInput
+              style={[styles.input, TextStyle.h1]}
+              value={lessonPlanName}
+              onChangeText={newText => {
+                setLessonPlanName(newText);
+              }}
+              onBlur={() => {
+                setIsEditable(false);
+              }}
+              autoFocus={true}
+            />
+          ) : (
+            <Text style={[styles.text, TextStyle.h1]} numberOfLines={1}>
+              {lessonPlanName}
+            </Text>
+          )}
+        </View>
+        <View style={styles.rightToolbar}>
+          <TouchableOpacity
+            onPress={() => {
+              setIsEditable(true);
+            }}>
+            <EditIcon height={headerIconSize - 5} width={headerIconSize - 5} marginRight={scale(15)} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Lesson_Plan_Editor_Menu', {
+                isLessonPlanEditor: true,
+                lastEdited: lastEditedDate,
+              })
+            }>
+            <Menu height={headerIconSize} width={headerIconSize} />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+      
     </SafeAreaView>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    marginVertical: 15,
+    alignItems: 'center',
     width: '100%',
-    flexDirection: 'row',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
-  toolbar: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  inputWrapper: {
+    flex: 1,
+    justifyContent: 'center',
   },
   input: {
-    backgroundColor: '#FFFAF5',
     height: '100%',
     ...Platform.select({
       ios: {
@@ -123,8 +101,8 @@ const styles = StyleSheet.create({
       android: {
         paddingVertical: 0,
         marginVertical: 0,
-        marginHorizontal: 0,
         paddingLeft: 0,
+        marginLeft: 0,
         paddingRight: '5%',
       },
       default: {
@@ -133,25 +111,43 @@ const styles = StyleSheet.create({
     }),
   },
   text: {
-    backgroundColor: '#FFFAF5',
     textAlignVertical: 'center',
-  },
-  isOnTop: {
-    zIndex: 3,
-  },
-  isBehind: {
-    opacity: 0,
-    width: 0,
-    zIndex: 1, 
     ...Platform.select({
       ios: {
-        paddingHorizontal: 0,
+        paddingLeft: '5%',
+        paddingRight: 15,
       },
       android: {
-        paddingRight: 0,
+        paddingVertical: 0,
+        marginVertical: 0,
+        paddingLeft: 0,
+        marginLeft: 0,
+        paddingRight: '5%',
+      },
+      default: {
+        paddingVertical: 0,
       },
     }),
-  }
+  },
+  rightToolbar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginRight: scale(horizontalMargin)
+  },
+  SectionStyle: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFFAF5',
+    height: 49,
+    width: '100%',
+    color: '#000',
+    borderColor: 'transparent',
+    borderRadius: 7.69,
+    paddingLeft: scale(15),
+  },
 });
 
 export default LessonPlanHeader;
