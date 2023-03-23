@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   filterButton: {
-    marginBottom: Platform === 'iOS' ? 0 : 5,
+    marginBottom: Platform.OS === 'ios' ? 0 : 5,
   },
 });
 
