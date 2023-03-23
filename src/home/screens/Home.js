@@ -4,6 +4,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import RecentCard from '../components/RecentCard';
 import Header from '../../Components/Header';
@@ -15,13 +16,13 @@ const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
       <Header isHome={true} navigation={navigation} showBackButton={false} />
-      <ScrollView>
+      <ScrollView style={styles.scrollContainer}>
         <SafeAreaView style={styles.container}>
           <Text style={[styles.title, TextStyle.h2]}>
-            Recently added activity cards
+            New activity cards
           </Text>
           <SafeAreaView style={styles.subContainer}>
-            <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
+            <Text style={[styles.subtitle, TextStyle.h3]}>Last updated on Jan 1, 2023</Text>
             {/* This refresh icon should eventually become a TouchableOpacity */}
             <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
           </SafeAreaView>
@@ -53,6 +54,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5',
     height: '100%',
   },
+  scrollContainer: {
+    height: '100%',
+    paddingHorizontal: 30,
+  },
   container: {
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -63,18 +68,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    marginHorizontal: 30,
     width: '100%',
-    paddingBottom: 11,
+    paddingBottom: 5,
   },
   subtitle: {
-    color: '#453E3D',
-    fontFamily: 'Mulish-Regular',
-    fontSize: 15,
-    fontStyle: 'italic',
-    marginLeft: '8%',
-    letterSpacing: 0.3,
-    width: '55%',
+    marginRight: 10,
   },
   refreshIcon: {
     fill: '#453E3D',

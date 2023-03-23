@@ -16,11 +16,9 @@ const RecentCard = ({ navigation }) => {
         <ScrollView>{/* <Text>CARD GOES HERE</Text> */}</ScrollView>
 
         <SafeAreaView style={styles.titleBar}>
-          <SafeAreaView style={{ marginHorizontal: 20 }}>
             <Text style={styles.title} numberOfLines={1}>
               Listening - Knowledge - Listening Spinners
             </Text>
-          </SafeAreaView>
         </SafeAreaView>
       </SafeAreaView>
     </SafeAreaView>
@@ -41,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     marginVertical: 15,
-    width: '87%',
+    width: '100%',
     height: windowHeight * 0.25,
   },
   scrollview: {
@@ -55,13 +53,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '19%',
     backgroundColor: '#4D8ECB',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   title: {
     fontFamily: 'Mulish-Regular',
     color: '#FFFFFF',
     width: '100%',
-    // fontSize: 17,
-    marginTop: 7,
     fontStyle: 'italic',
   },
 });
