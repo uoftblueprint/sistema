@@ -11,6 +11,7 @@ import Header from '../../Components/Header';
 import RefreshIcon from '../../../assets/refreshIcon.svg';
 import { STACK_SCREENS } from '../constants';
 import { TextStyle } from '../../Styles.config';
+import { scale } from 'react-native-size-matters';
 
 const Home = ({ navigation }) => {
   return (
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     height: '100%',
-    paddingHorizontal: 35,
+    paddingHorizontal: scale(30),
   },
   container: {
     justifyContent: 'center',

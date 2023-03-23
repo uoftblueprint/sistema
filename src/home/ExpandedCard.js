@@ -3,13 +3,11 @@ import {
   SafeAreaView,
   Text,
   ScrollView,
-  Dimensions,
 } from 'react-native';
 import AddButton from './components/AddToLessonButton';
 import Header from '../Components/Header';
 import { TextStyle } from '../Styles.config';
-
-const windowHeight = Dimensions.get('window').height;
+import { verticalScale } from 'react-native-size-matters';
 
 const ExpandedCard = ({ navigation }) => {
   return (
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '75%',
     marginTop: 30,
-    height: windowHeight * 0.55,
+    height: verticalScale(400),
   },
   title: {
     width: '75%',
