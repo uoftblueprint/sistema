@@ -6,6 +6,7 @@
     },
     "ACCESS_TOKEN_SCOPE": "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
     "DRIVE_API_URLS": {
-        "SEARCH_FILES": "https://www.googleapis.com/drive/v3/files/"
+        "SEARCH_FILES": "https://www.googleapis.com/drive/v3/files",
+        "SEARCH_PARAMETERS": "?supportsAllDrives=true&includeItemsFromAllDrives=true&trashed=false"
     }
 }

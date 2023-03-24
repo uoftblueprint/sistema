@@ -3,22 +3,107 @@ import {
   SafeAreaView,
   Text,
   ScrollView,
-  Dimensions,
+  Dimensions
 } from 'react-native';
-
+import {
+  readFile,
+} from '../../services/routes/Local.js';
+import {useState, useEffect} from 'react';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const RecentCard = ({ navigation }) => {
+const RecentCard = ({ navigation, cardPath }) => {
+
+  const [title, setTitle] = useState("");
+
+  const cardTitlePath = cardPath + 'cardName.txt';
+  
+  useEffect(() => {
+    const readCardTitle = async () => {
+      try {
+        var cardNames = await readFile(cardTitlePath, 'utf-8');
+        cardNames = cardNames.substring(0, cardNames.length - 5);
+        setTitle(cardNames);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    readCardTitle();
+  }, [cardPath]);
+
+  // var backgroundColor;
+
+  // switch (true) {
+  //   case title.includes('Knowledge'):
+  //     backgroundColor = '#5D8CC6';
+  //     break;
+  //   case title.includes('Action'):
+  //     backgroundColor = '#9D649F';
+  //     break;
+  //   case title.includes('Perception'):
+  //     backgroundColor = '#5CB1A9';
+  //     break;
+  //   case title.includes('Creation'):
+  //     backgroundColor = '#DD726C';
+  //     break;
+  //   default:
+  //     backgroundColor = '#5D8CC6';
+  // }
+
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    box: {
+      backgroundColor: 'white',
+      borderWidth: 1,
+      borderColor: 'black',
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'hidden',
+      marginVertical: 15,
+      width: '87%',
+      height: windowHeight * 0.25,
+    },
+    scrollview: {
+      backgroundColor: 'white',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    titleBar: {
+      borderBottomLeftRadius: 18,
+      borderBottomRightRadius: 18,
+      width: '100%',
+      height: '19%',
+      backgroundColor: '#9D649F' /*{backgroundColor},*/
+      // ACTION:     #9D649F
+      // PERCEPTION: #5CB1A9
+      // CREATION:   #DD726C
+      // KNOWLEDGE:  #5D8CC6
+    },
+    title: {
+      fontFamily: 'Mulish-Regular',
+      color: '#FFFFFF',
+      width: '100%',
+      fontSize: 17,
+      marginTop: 7,
+      fontStyle: 'italic',
+    },
+  });
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.box}>
-        <ScrollView>{/* <Text>CARD GOES HERE</Text> */}</ScrollView>
+        <ScrollView>{/* <Text>CARD IMAGE GOES HERE</Text> */}</ScrollView>
 
         <SafeAreaView style={styles.titleBar}>
           <SafeAreaView style={{ marginHorizontal: 20 }}>
+           
             <Text style={styles.title} numberOfLines={1}>
-              Listening - Knowledge - Listening Spinners
+              {title}
             </Text>
           </SafeAreaView>
         </SafeAreaView>
@@ -27,43 +112,6 @@ const RecentCard = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    marginVertical: 15,
-    width: '87%',
-    height: windowHeight * 0.25,
-  },
-  scrollview: {
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  titleBar: {
-    borderBottomLeftRadius: 18,
-    borderBottomRightRadius: 18,
-    width: '100%',
-    height: '19%',
-    backgroundColor: '#4D8ECB',
-  },
-  title: {
-    fontFamily: 'Mulish-Regular',
-    color: '#FFFFFF',
-    width: '100%',
-    fontSize: 17,
-    marginTop: 7,
-    fontStyle: 'italic',
-  },
-});
+
 
 export default RecentCard;

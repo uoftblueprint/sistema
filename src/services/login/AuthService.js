@@ -35,7 +35,7 @@ const encryptSecret = testKey => {
  * @param {string} key key in jwt.keys.json
  * @returns String or null if key is not found
  */
-const decryptSecret = key => {
+export const decryptSecret = key => {
   return jwt_info[key]
     ? AES.decrypt(jwt_info[key], key, {
         iv: Hex.parse('00000000000000000000000000000000'),
@@ -92,3 +92,4 @@ export function isTokenValid() {
 
   return currTokenExpiry > inFiveMinutes;
 }
+

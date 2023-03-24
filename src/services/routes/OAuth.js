@@ -16,19 +16,21 @@ async function getOAuthToken(jwt, iat) {
   return uninterceptedAxiosClient
     .post(OAUTH_API_URL, {
       grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-      assertion: `${jwt}`,
+      assertion: `${jwt}`
     })
     .then(response => {
       const data = response.data;
       return new AccessToken(
         data.access_token,
         new Date((iat + parseInt(data.expires_in)) * 1000),
-        data.token_type,
+        data.token_type
       );
     })
     .catch(() => {
-      return new AccessToken(); // Empty token
+      console.error("getOAuthToken");
+      return new AccessToken("this is not right"); // Empty token
     });
 }
 
 export default getOAuthToken;
+

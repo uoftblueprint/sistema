@@ -10,7 +10,11 @@ import Header from '../Components/Header';
 
 const windowHeight = Dimensions.get('window').height;
 
-const ExpandedCard = ({ navigation }) => {
+const ExpandedCard = ({ route, navigation }) => {
+
+  // const {cardImage, cardName} = route.params;
+  // const cardNameString = JSON.stringify(cardName)
+
   return (
     <SafeAreaView style={styles.background}>
       <Header

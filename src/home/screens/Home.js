@@ -5,12 +5,25 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import { useState } from 'react';
 import RecentCard from '../components/RecentCard';
 import Header from '../../Components/Header';
 import RefreshIcon from '../../../assets/refreshIcon.svg';
-import { STACK_SCREENS } from '../constants';
+import { STACK_SCREENS, MAINDIRECTORY } from '../constants';
+import ActivityCardService from '../../services/ActivityCardService';
 
 const Home = ({ navigation }) => {
+
+  const [date, setDate] = useState(new Date());
+  const [pathArr, setPathArr] = useState([MAINDIRECTORY + '/FeaturedActivityCards/']);
+
+
+  const handleRefreshPress = async () => {
+      const cards = await ActivityCardService.getFeaturedActivityCards();
+      setPathArr(cards);
+      
+  };
+
   return (
     <SafeAreaView style={styles.background}>
       <Header isHome={true} navigation={navigation} showBackButton={false} />
@@ -18,28 +31,58 @@ const Home = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
           <Text style={styles.title}>Recently added activity cards</Text>
           <SafeAreaView style={styles.subContainer}>
-            <Text style={styles.subtitle}>Last updated on Jan 1, 2023</Text>
-            {/* This refresh icon should eventually become a TouchableOpacity */}
-            <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
+            <Text style={styles.subtitle}>Last updated on ...</Text>
+            <TouchableOpacity
+              onPress={() => handleRefreshPress()}>
+              <RefreshIcon 
+                height={23} 
+                width={23} 
+                style={styles.refreshIcon}
+              />
+            </TouchableOpacity>
           </SafeAreaView>
         </SafeAreaView>
 
-        {/* Will eventually convert this into .map for x amount of cards in cache */}
+        {/* 
+        
+        pathArr.map(cardPath => {
+          <TouchableOpacity
+            onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
+            cardImage= "${cardPath}/cardimage.jpg",
+            cardName= "${cardPath}/cardName.txt",
+          });
+            <RecentCard 
+              image={"${cardPath}/cardimage.jpg"}
+              cardName: "${cardPath}/cardName.txt"
+            />
+          </TouchableOpacity>
+        });
+        
+        */}
+
         <SafeAreaView style={{ height: '100%' }}>
-          {/* PROPS TO PASS IN: Title, Card image, Card id */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
-            <RecentCard />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
-            <RecentCard />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD)}>
-            <RecentCard />
-          </TouchableOpacity>
+          
+          {
+          
+
+            pathArr.map((cardPath, index) => {
+              return(<SafeAreaView>
+                <TouchableOpacity key={index}>
+                  <RecentCard 
+                    cardPath={cardPath}
+                  />
+                </TouchableOpacity>
+                </SafeAreaView>);
+              
+          
+              })
+          
+          
+          }
+          
         </SafeAreaView>
+
+
       </ScrollView>
     </SafeAreaView>
   );

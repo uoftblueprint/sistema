@@ -53,13 +53,21 @@ export async function readFile(filepath) {
  * @param {String} filepath Full file path to delete
  * @param {String} content Content to write to given file path
  */
-export async function writeFile(filepath, content) {
-  return RNFS.writeFile(filepath, content, 'utf8')
+export async function writeFile(isImage, filepath, content) {
+  const options = {
+    encoding: '',
+  };
+  if (isImage) {
+    options.encoding = 'base64';
+  } else {
+    options.encoding = 'utf8';
+  }
+  return RNFS.writeFile(filepath, content, options.encoding)
     .then(success => {
       console.log(`FILE WRITTEN!: ${filepath}`);
     })
     .catch(err => {
-      console.error(`RNFS writeFile: ${err.message}`);
+      console.log(`RNFS writeFile: ${err.message}`);
     });
 }
 
