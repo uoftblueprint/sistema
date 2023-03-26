@@ -10,13 +10,16 @@ import FavoriteIcon from '../../../assets/favoriteIcon.svg';
 import { OptionsMenuPadding } from '../../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
+let timer;
 
 const FavoriteButton = ({ setBanner, setFavoritedPlan, isFavoritedPlan }) => {
   const onPress = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
     setFavoritedPlan(!isFavoritedPlan);
     setBanner(true);
-
-    setTimeout(() => {
+    timer = setTimeout(() => {
       setBanner(false);
     }, 2000);
   };
