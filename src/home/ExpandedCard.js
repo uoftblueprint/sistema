@@ -5,6 +5,8 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
+import { useState, useEffect } from 'react';
+import { readFile } from '../services/routes/Local.js';
 import AddButton from './components/AddToLessonButton';
 import Header from '../Components/Header';
 
@@ -12,8 +14,23 @@ const windowHeight = Dimensions.get('window').height;
 
 const ExpandedCard = ({ route, navigation }) => {
 
-  // const {cardImage, cardName} = route.params;
-  // const cardNameString = JSON.stringify(cardName)
+  const {cardPath} = route.params;
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    const readCardTitle = async () => {
+      try {
+        const cardTitlePath = cardPath + 'cardName.txt';
+        var cardNames = await readFile(cardTitlePath, 'utf-8');
+        cardNames = cardNames.substring(0, cardNames.length - 5);
+        setTitle(cardNames);
+
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    readCardTitle();
+  }, [cardPath]);
 
   return (
     <SafeAreaView style={styles.background}>
@@ -26,8 +43,7 @@ const ExpandedCard = ({ route, navigation }) => {
       <ScrollView>
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {/* pass in props.cardTitle eventually */}
-          <Text style={styles.title}> TITLE </Text>
+          <Text style={styles.title}> {title} </Text>
 
           <SafeAreaView style={styles.box}>
             {/* CARD CONTENT GOES HERE */}

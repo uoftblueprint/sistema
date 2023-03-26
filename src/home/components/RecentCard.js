@@ -3,27 +3,42 @@ import {
   SafeAreaView,
   Text,
   ScrollView,
-  Dimensions
+  Dimensions,
 } from 'react-native';
-import {
-  readFile,
-} from '../../services/routes/Local.js';
-import {useState, useEffect} from 'react';
+import { readFile } from '../../services/routes/Local.js';
+import { useState, useEffect } from 'react';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const RecentCard = ({ navigation, cardPath }) => {
+  const [title, setTitle] = useState('');
+  const [backgroundColor, setBackgroundColor] = useState('#9D649F');
 
-  const [title, setTitle] = useState("");
-
-  const cardTitlePath = cardPath + 'cardName.txt';
-  
   useEffect(() => {
     const readCardTitle = async () => {
       try {
+        const cardTitlePath = cardPath + 'cardName.txt';
         var cardNames = await readFile(cardTitlePath, 'utf-8');
         cardNames = cardNames.substring(0, cardNames.length - 5);
         setTitle(cardNames);
+
+        switch (true) {
+          case cardNames.includes('Knowledge'):
+            setBackgroundColor('#5D8CC6');
+            break;
+          case cardNames.includes('Action'):
+            setBackgroundColor('#9D649F');
+            break;
+          case cardNames.includes('Perception'):
+            setBackgroundColor('#5CB1A9');
+            break;
+          case cardNames.includes('Creation'):
+            setBackgroundColor('#DD726C');
+            break;
+          default:
+            setBackgroundColor('#9D649F');
+        }
+
       } catch (err) {
         console.log(err);
       }
@@ -31,24 +46,6 @@ const RecentCard = ({ navigation, cardPath }) => {
     readCardTitle();
   }, [cardPath]);
 
-  // var backgroundColor;
-
-  // switch (true) {
-  //   case title.includes('Knowledge'):
-  //     backgroundColor = '#5D8CC6';
-  //     break;
-  //   case title.includes('Action'):
-  //     backgroundColor = '#9D649F';
-  //     break;
-  //   case title.includes('Perception'):
-  //     backgroundColor = '#5CB1A9';
-  //     break;
-  //   case title.includes('Creation'):
-  //     backgroundColor = '#DD726C';
-  //     break;
-  //   default:
-  //     backgroundColor = '#5D8CC6';
-  // }
 
   const styles = StyleSheet.create({
     container: {
@@ -77,7 +74,7 @@ const RecentCard = ({ navigation, cardPath }) => {
       borderBottomRightRadius: 18,
       width: '100%',
       height: '19%',
-      backgroundColor: '#9D649F' /*{backgroundColor},*/
+      backgroundColor: backgroundColor,
       // ACTION:     #9D649F
       // PERCEPTION: #5CB1A9
       // CREATION:   #DD726C
@@ -92,7 +89,6 @@ const RecentCard = ({ navigation, cardPath }) => {
       fontStyle: 'italic',
     },
   });
-  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -101,7 +97,6 @@ const RecentCard = ({ navigation, cardPath }) => {
 
         <SafeAreaView style={styles.titleBar}>
           <SafeAreaView style={{ marginHorizontal: 20 }}>
-           
             <Text style={styles.title} numberOfLines={1}>
               {title}
             </Text>
@@ -111,7 +106,5 @@ const RecentCard = ({ navigation, cardPath }) => {
     </SafeAreaView>
   );
 };
-
-
 
 export default RecentCard;

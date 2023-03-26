@@ -13,15 +13,14 @@ import { STACK_SCREENS, MAINDIRECTORY } from '../constants';
 import ActivityCardService from '../../services/ActivityCardService';
 
 const Home = ({ navigation }) => {
-
-  const [date, setDate] = useState(new Date());
-  const [pathArr, setPathArr] = useState([MAINDIRECTORY + '/FeaturedActivityCards/']);
-
+  const [date, setDate] = useState("TODAY.....");
+  const [pathArr, setPathArr] = useState([]);
 
   const handleRefreshPress = async () => {
-      const cards = await ActivityCardService.getFeaturedActivityCards();
-      setPathArr(cards);
-      
+    const cards = await ActivityCardService.getFeaturedActivityCards();
+    setPathArr(cards);
+    console.log(cards.length);
+    setDate((new Date()).toDateString());
   };
 
   return (
@@ -31,58 +30,41 @@ const Home = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
           <Text style={styles.title}>Recently added activity cards</Text>
           <SafeAreaView style={styles.subContainer}>
-            <Text style={styles.subtitle}>Last updated on ...</Text>
-            <TouchableOpacity
-              onPress={() => handleRefreshPress()}>
-              <RefreshIcon 
-                height={23} 
-                width={23} 
-                style={styles.refreshIcon}
-              />
+            <Text style={styles.subtitle}>Last updated on {date}</Text>
+            <TouchableOpacity onPress={() => handleRefreshPress()}>
+              <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
             </TouchableOpacity>
           </SafeAreaView>
         </SafeAreaView>
 
-        {/* 
-        
+        {/*
+
         pathArr.map(cardPath => {
           <TouchableOpacity
             onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
             cardImage= "${cardPath}/cardimage.jpg",
             cardName= "${cardPath}/cardName.txt",
           });
-            <RecentCard 
+            <RecentCard
               image={"${cardPath}/cardimage.jpg"}
               cardName: "${cardPath}/cardName.txt"
             />
           </TouchableOpacity>
         });
-        
+
         */}
 
         <SafeAreaView style={{ height: '100%' }}>
-          
-          {
-          
-
-            pathArr.map((cardPath, index) => {
-              return(<SafeAreaView>
-                <TouchableOpacity key={index}>
-                  <RecentCard 
-                    cardPath={cardPath}
-                  />
+          {pathArr && pathArr.length > 0 && pathArr.map((cardPath, index) => {
+            return (
+              <SafeAreaView key={index}>
+                <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD, { cardPath: cardPath })}>
+                  <RecentCard cardPath={cardPath} />
                 </TouchableOpacity>
-                </SafeAreaView>);
-              
-          
-              })
-          
-          
-          }
-          
+              </SafeAreaView>
+            );
+          })}
         </SafeAreaView>
-
-
       </ScrollView>
     </SafeAreaView>
   );
