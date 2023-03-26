@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import XButton from '../../assets/xButton.svg';
 import { TextStyle } from '../Styles.config';
+import { OptionsMenuPadding } from '../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
 const OptionHeader = ({ lastEdited, navigation }) => {
@@ -49,14 +50,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#FFFAF5',
     alignItems: 'center',
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
   },
   textContainer: {
     postion: 'absolute',
     width: '70%',
   },
   icon: {
-    paddingRight: '50%',
+    marginRight: OptionsMenuPadding,
     alignSelf: 'flex-end',
     width: 14,
     height: 14,
@@ -65,4 +66,5 @@ const styles = StyleSheet.create({
     marginTop: '2%',
   },
 });
+
 export default OptionHeader;

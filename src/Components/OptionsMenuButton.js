@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
+import { OptionsMenuPadding } from '../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.25,
   },
   buttonContainer: {
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
     alignSelf: 'stretch',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -44,10 +45,11 @@ const styles = StyleSheet.create({
     height: 50,
   },
   textContainer: {
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
     fontFamily: 'Mulish-Bold',
     color: 'rgba(0,0,0, 0.87)',
     fontSize: 16,
   },
 });
+
 export default OptionsMenuButton;

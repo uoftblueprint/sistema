@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 export const AppColors = {
   primary: '#4D8ECB', // Celestial Blue, primary color
@@ -48,3 +49,5 @@ export const TextStyle = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+export const OptionsMenuPadding = scale(20);
