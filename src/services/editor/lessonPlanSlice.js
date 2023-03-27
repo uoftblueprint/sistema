@@ -11,9 +11,10 @@ export const lessonPlanSlice = createSlice({
   },
   reducers: {
     addToSection: (state, action) => {
-      // action.payload: {
-      //     section: SectionName.coolDown,
-      //     type: "text" or "activityCard"
+      // See constants in ../services/constants.js
+      // action.payload: {       
+      //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
+      //     type: ModuleType.text || ModuleType.activityCard
       //     content: "",
       // }
       return {

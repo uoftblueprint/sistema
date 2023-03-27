@@ -4,8 +4,12 @@ export const SectionName = {
   warmUp: 'warmUp',
   mainLesson: 'mainLesson',
   coolDown: 'coolDown',
-  notes: 'notes',
 };
+
+export const ModuleType = {
+  text: 'text',
+  activityCard: 'activityCard',
+}
 
 // LessonPlanService.js
 export const MAINDIRECTORY = RNFS.DocumentDirectoryPath;
