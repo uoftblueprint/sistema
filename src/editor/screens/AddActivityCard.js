@@ -10,7 +10,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Image,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 
 //Component dependencies
@@ -29,10 +29,9 @@ import axios from 'axios';
 import ActivityCardService from '../../services/ActivityCardService';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
-import { act } from 'react-test-renderer';
+
 
 const AddActivityCard = function ({ navigation, route }) {
-
   // *************** SEARCH RELATED VARS *******************
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -155,7 +154,7 @@ const AddActivityCard = function ({ navigation, route }) {
       () => {
         setKeyBoardVisible(true);
         console.log('Keyboard is shown');
-      }
+      },
     );
 
     const keyboardDidHideListener = Keyboard.addListener(
@@ -163,12 +162,12 @@ const AddActivityCard = function ({ navigation, route }) {
       () => {
         setKeyBoardVisible(false);
         console.log('Keyboard is hidden');
-      }
+      },
     );
 
     //return a cleanup function to remove the event listeners on component unmount
     return () => {
-      console.log("Keyboard is unmounted.")
+      console.log('Keyboard is unmounted.');
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
@@ -186,6 +185,7 @@ const AddActivityCard = function ({ navigation, route }) {
     store.dispatch(
       addToSection({
         type: 'activity',
+        name: previewInfo?.name,
         section: route.params.sectionType,
         content: rnfsPath,
       }),
@@ -205,7 +205,12 @@ const AddActivityCard = function ({ navigation, route }) {
             ) : (
               <>
                 <View
-                  style={[styles.flexRow, styles.alignCenter, styles.marginT5, styles.marginB5]}>
+                  style={[
+                    styles.flexRow,
+                    styles.alignCenter,
+                    styles.marginT5,
+                    styles.marginB5,
+                  ]}>
                   <TouchableOpacity
                     style={styles.backButton}
                     onPress={() => navigation.goBack()}>
@@ -221,7 +226,11 @@ const AddActivityCard = function ({ navigation, route }) {
           </Animated.View>
 
           <Text style={styles.tags}> Tags: </Text>
-          <TagCarousel tagsList={TAGS} activeTags={activeTags} setActiveTags={setActiveTags} />
+          <TagCarousel
+            tagsList={TAGS}
+            activeTags={activeTags}
+            setActiveTags={setActiveTags}
+          />
           <Searchbar
             placeholder="Search by title or keyword"
             onChangeText={onChangeSearch}
@@ -232,67 +241,74 @@ const AddActivityCard = function ({ navigation, route }) {
             setPreviewInfo={setPreviewInfo}
             showNoCards={showNoCards}
           />
-          {!keyboardVisible ? <>
-            {previewInfo ? (
-              <>
-                <View style={[styles.previewContainer, 
-                { height: focused ? '30%' : '40%' , 
-                  marginTop: focused ? '5%' : '12%'}]}>
-                  <View style={(styles.flex1, styles.alignCenter)}>
-                    <LeftArrow height={30} width={20} />
-                  </View>
-                  <View style={[styles.flex4, styles.alignCenter]}>
-                    <Image
-                      style={styles.previewImage}
-                      source={{ uri: previewInfo?.url }}
-                    />
-                  </View>
-                  <View style={(styles.flex1, styles.alignCenter)}>
-                    <RightArrow height={30} width={20} />
-                  </View>
-                </View>
-
-                <View style={[styles.flexColumn, styles.alignCenter]}>
-                  <Text
+          {!keyboardVisible ? (
+            <>
+              {previewInfo ? (
+                <>
+                  <View
                     style={[
-                      styles.mulishFont,
-                      styles.marginV2,
-                      styles.bodyFontSize,
+                      styles.previewContainer,
+                      {
+                        height: focused ? '30%' : '40%',
+                        marginTop: focused ? '5%' : '12%',
+                      },
                     ]}>
-                    {' '}
-                    {previewInfo?.name}{' '}
-                  </Text>
-                  <View style={[styles.alignCenter, styles.flexRow]}>
-                    <SistemaButton onPress={addCard}>
-                      <Text
-                        style={[
-                          styles.mulishFont,
-                          styles.marginH2,
-                          styles.bodyFontSize,
-                        ]}>
-                        Add Card
-                      </Text>
-                    </SistemaButton>
-                    <TouchableOpacity style={{ marginLeft: '5%' }}>
-                      <Text
-                        numberOfLines={1}
-                        style={[
-                          styles.mulishFont,
-                          styles.marginH2,
-                          styles.azureRadiance,
-                        ]}>
-                        INSERT AS TEXT INSTEAD
-                      </Text>
-                    </TouchableOpacity>
+                    <View style={(styles.flex1, styles.alignCenter)}>
+                      <LeftArrow height={30} width={20} />
+                    </View>
+                    <View style={[styles.flex4, styles.alignCenter]}>
+                      <Image
+                        style={styles.previewImage}
+                        source={{ uri: previewInfo?.url }}
+                      />
+                    </View>
+                    <View style={(styles.flex1, styles.alignCenter)}>
+                      <RightArrow height={30} width={20} />
+                    </View>
                   </View>
-                </View>
-              </>
-            ) : (
-              <></>
-            )}
 
-          </> :
-            <></>}
+                  <View style={[styles.flexColumn, styles.alignCenter]}>
+                    <Text
+                      style={[
+                        styles.mulishFont,
+                        styles.marginV2,
+                        styles.bodyFontSize,
+                      ]}>
+                      {' '}
+                      {previewInfo?.name}{' '}
+                    </Text>
+                    <View style={[styles.alignCenter, styles.flexRow]}>
+                      <SistemaButton onPress={addCard}>
+                        <Text
+                          style={[
+                            styles.mulishFont,
+                            styles.marginH2,
+                            styles.bodyFontSize,
+                          ]}>
+                          Add Card
+                        </Text>
+                      </SistemaButton>
+                      <TouchableOpacity style={{ marginLeft: '5%' }}>
+                        <Text
+                          numberOfLines={1}
+                          style={[
+                            styles.mulishFont,
+                            styles.marginH2,
+                            styles.azureRadiance,
+                          ]}>
+                          INSERT AS TEXT INSTEAD
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </>
+              ) : (
+                <></>
+              )}
+            </>
+          ) : (
+            <></>
+          )}
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -313,7 +329,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
   },
   tagContainer: {
-    height: '20%'
+    height: '20%',
   },
   previewContainer: {
     height: '30%',
@@ -349,7 +365,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    paddingBottom: '1%'
+    paddingBottom: '1%',
   },
   alignCenter: {
     justifyContent: 'center',
@@ -381,7 +397,7 @@ const styles = StyleSheet.create({
     marginTop: '5%',
   },
   marginB5: {
-    marginBottom: '5%'
+    marginBottom: '5%',
   },
   bodyFontSize: {
     fontSize: 14,
