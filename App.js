@@ -60,7 +60,6 @@ const MainNavigator = () => {
 
   const navigationRef = useNavigationContainerRef();
   const insets = useSafeAreaInsets();
-  console.log(insets);
 
   return (
     <NavigationContainer ref={navigationRef} independent={true}>
