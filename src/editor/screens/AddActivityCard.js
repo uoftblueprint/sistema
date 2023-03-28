@@ -9,13 +9,15 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 
 //Component dependencies
 import TagFilter from '../components/TagFilter';
 import SistemaButton from '../../Components/SistemaButton';
 import Searchbar from '../components/Searchbar';
+import TagCarousel from '../components/TagCarousel';
 
 //SVGs
 import BackArrow from '../../../assets/backArrow.svg';
@@ -27,9 +29,12 @@ import axios from 'axios';
 import ActivityCardService from '../../services/ActivityCardService';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
+import { act } from 'react-test-renderer';
 
 const AddActivityCard = function ({ navigation, route }) {
-  // SEARCH RELATED VARS
+
+  // *************** SEARCH RELATED VARS *******************
+
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = query => {
     setSearchQuery(query);
@@ -84,25 +89,9 @@ const AddActivityCard = function ({ navigation, route }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
-  const addCard = async () => {
-    console.log("SKFHDSKFHSJKDHFKJSHDFKJSDHKFJHSJDFHSKJDHFJKSDHFK")
-    console.log(previewInfo.id);
-    const rnfsPath = await ActivityCardService.downloadActivityCard(previewInfo.id);
-    console.log(rnfsPath);
-
-    store.dispatch(
-      addToSection({
-        type: 'activity',
-        section: route.params.sectionType,
-        content: rnfsPath,
-      })
-    );
-    navigation.goBack();
-  }
-
   // ************ SEARCH RELATED VARS END *********
 
-  // TAG RELATED VARS
+  // ************ TAG RELATED VARS *************
   const [activeTags, setActiveTags] = useState([
     false,
     false,
@@ -125,8 +114,10 @@ const AddActivityCard = function ({ navigation, route }) {
     'Scale',
   ];
 
-  //ANIMATION RELATED VARS/FUNCS *****************
-  const HEIGHT = 35;
+  // ************* TAG RELATED VARS END ************
+
+  // ************* ANIMATION RELATED VARS/FUNCS *****************
+  const HEIGHT = 10;
   const heightAnim = useRef(new Animated.Value(HEIGHT)).current;
   const [focused, setFocused] = useState(false);
   const animViewHeight = heightAnim.interpolate({
@@ -154,6 +145,56 @@ const AddActivityCard = function ({ navigation, route }) {
   };
   // **************** ANIMATION RELATED STUFF END *********
 
+  // **************** PREVIEW RELATED VARS ***************
+
+  //Subscribe to keyboard events on component mount
+  const [keyboardVisible, setKeyBoardVisible] = useState(false);
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyBoardVisible(true);
+        console.log('Keyboard is shown');
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyBoardVisible(false);
+        console.log('Keyboard is hidden');
+      }
+    );
+
+    //return a cleanup function to remove the event listeners on component unmount
+    return () => {
+      console.log("Keyboard is unmounted.")
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  //onPress function for add Card button
+  const addCard = async () => {
+    console.log('SKFHDSKFHSJKDHFKJSHDFKJSDHKFJHSJDFHSKJDHFJKSDHFK');
+    console.log(previewInfo.id);
+    const rnfsPath = await ActivityCardService.downloadActivityCard(
+      previewInfo.id,
+    );
+    console.log(rnfsPath);
+
+    store.dispatch(
+      addToSection({
+        type: 'activity',
+        section: route.params.sectionType,
+        content: rnfsPath,
+      }),
+    );
+    navigation.goBack();
+  };
+
+  // *************** PREVIEW RELATED VARS END ***********
+
   return (
     <TouchableWithoutFeedback onPress={uncollapse} flex={1} height={'100%'}>
       <SafeAreaView style={styles.safeContainer}>
@@ -164,7 +205,7 @@ const AddActivityCard = function ({ navigation, route }) {
             ) : (
               <>
                 <View
-                  style={[styles.flexRow, styles.alignCenter, styles.marginT5]}>
+                  style={[styles.flexRow, styles.alignCenter, styles.marginT5, styles.marginB5]}>
                   <TouchableOpacity
                     style={styles.backButton}
                     onPress={() => navigation.goBack()}>
@@ -175,26 +216,12 @@ const AddActivityCard = function ({ navigation, route }) {
                     {route.params.header} Activity Card{' '}
                   </Text>
                 </View>
-                <Text style={styles.tags}> Tags: </Text>
-                <View style={styles.tagContainer}>
-                  {TAGS.map((tag, index) => (
-                    <TagFilter
-                      key={index}
-                      tagContent={tag}
-                      active={activeTags[index]}
-                      onPress={() => {
-                        // make a copy of the active tags
-                        const newActiveTags = activeTags.slice();
-                        newActiveTags[index] = !newActiveTags[index];
-                        setActiveTags(newActiveTags);
-                      }}
-                    />
-                  ))}
-                </View>
               </>
             )}
           </Animated.View>
 
+          <Text style={styles.tags}> Tags: </Text>
+          <TagCarousel tagsList={TAGS} activeTags={activeTags} setActiveTags={setActiveTags} />
           <Searchbar
             placeholder="Search by title or keyword"
             onChangeText={onChangeSearch}
@@ -205,62 +232,67 @@ const AddActivityCard = function ({ navigation, route }) {
             setPreviewInfo={setPreviewInfo}
             showNoCards={showNoCards}
           />
+          {!keyboardVisible ? <>
+            {previewInfo ? (
+              <>
+                <View style={[styles.previewContainer, 
+                { height: focused ? '30%' : '40%' , 
+                  marginTop: focused ? '5%' : '12%'}]}>
+                  <View style={(styles.flex1, styles.alignCenter)}>
+                    <LeftArrow height={30} width={20} />
+                  </View>
+                  <View style={[styles.flex4, styles.alignCenter]}>
+                    <Image
+                      style={styles.previewImage}
+                      source={{ uri: previewInfo?.url }}
+                    />
+                  </View>
+                  <View style={(styles.flex1, styles.alignCenter)}>
+                    <RightArrow height={30} width={20} />
+                  </View>
+                </View>
 
-          {previewInfo ? (
-            <>
-              <View style={styles.previewContainer}>
-                <View style={(styles.flex1, styles.alignCenter)}>
-                  <LeftArrow height={30} width={20} />
+                <View style={[styles.flexColumn, styles.alignCenter]}>
+                  <Text
+                    style={[
+                      styles.mulishFont,
+                      styles.marginV2,
+                      styles.bodyFontSize,
+                    ]}>
+                    {' '}
+                    {previewInfo?.name}{' '}
+                  </Text>
+                  <View style={[styles.alignCenter, styles.flexRow]}>
+                    <SistemaButton onPress={addCard}>
+                      <Text
+                        style={[
+                          styles.mulishFont,
+                          styles.marginH2,
+                          styles.bodyFontSize,
+                        ]}>
+                        Add Card
+                      </Text>
+                    </SistemaButton>
+                    <TouchableOpacity style={{ marginLeft: '5%' }}>
+                      <Text
+                        numberOfLines={1}
+                        style={[
+                          styles.mulishFont,
+                          styles.marginH2,
+                          styles.azureRadiance,
+                        ]}>
+                        INSERT AS TEXT INSTEAD
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <View style={[styles.flex4, styles.alignCenter]}>
-                  <Image
-                    style={styles.previewImage}
-                    source={{ uri: previewInfo?.url }}
-                  />
-                </View>
-                <View style={(styles.flex1, styles.alignCenter)}>
-                  <RightArrow height={30} width={20} />
-                </View>
-              </View>
+              </>
+            ) : (
+              <></>
+            )}
 
-              <View style={[styles.flexColumn, styles.alignCenter]}>
-                <Text
-                  style={[
-                    styles.mulishFont,
-                    styles.marginV2,
-                    styles.bodyFontSize,
-                  ]}>
-                  {' '}
-                  {previewInfo?.name}{' '}
-                </Text>
-                <View style={[styles.alignCenter, styles.flexRow]}>
-                  <SistemaButton onPress={addCard}>
-                    <Text
-                      style={[
-                        styles.mulishFont,
-                        styles.marginH2,
-                        styles.bodyFontSize,
-                      ]}>
-                      Add Card
-                    </Text>
-                  </SistemaButton>
-                  <TouchableOpacity style={{ marginLeft: '5%' }}>
-                    <Text
-                      numberOfLines={1}
-                      style={[
-                        styles.mulishFont,
-                        styles.marginH2,
-                        styles.azureRadiance,
-                      ]}>
-                      INSERT AS TEXT INSTEAD
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </>
-          ) : (
-            <></>
-          )}
+          </> :
+            <></>}
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -281,11 +313,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
   },
   tagContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    height: '20%'
   },
   previewContainer: {
-    height: '40%',
+    height: '30%',
     width: '100%',
     flexDirection: 'row',
     marginTop: 20,
@@ -305,7 +336,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     fontFamily: 'Mulish-Regular',
-    marginTop: '1%',
+    marginTop: '5%',
     marginBottom: '2%',
   },
   backText: {
@@ -318,6 +349,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    paddingBottom: '1%'
   },
   alignCenter: {
     justifyContent: 'center',
@@ -347,6 +379,9 @@ const styles = StyleSheet.create({
   },
   marginT5: {
     marginTop: '5%',
+  },
+  marginB5: {
+    marginBottom: '5%'
   },
   bodyFontSize: {
     fontSize: 14,

@@ -76,9 +76,10 @@ const Library = ({ navigation }) => {
 
     return (
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity onPress={async ()=>{
-          const token = await refreshAccessToken();
-          console.log(`TOKEN: ${token.token}`);
+        <TouchableOpacity
+          onPress={async () => {
+            const token = await refreshAccessToken();
+            console.log(`TOKEN: ${token.token}`);
           }}>
           <Text>Refresh access token</Text>
         </TouchableOpacity>

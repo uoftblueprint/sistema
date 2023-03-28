@@ -16,7 +16,6 @@ import SaveButton from '../components/SaveButton.js';
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditor = ({ navigation }) => {
-
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader

@@ -17,7 +17,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const addActivityCard = () => {
     navigation.navigate('Add Activity Card', {
       header: subtitle,
-      sectionType: sectionType
+      sectionType: sectionType,
     });
   };
 

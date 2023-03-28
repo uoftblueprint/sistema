@@ -38,7 +38,7 @@ const Searchbar = ({
         />
       </View>
       {focused ? (
-        <View style={{ paddingLeft: '4%', height: 250 }}>
+        <View style={{ paddingLeft: '4%', height: 200 }}>
           {showNoCards.current ? (
             <>
               <NoCardsFound />
@@ -46,6 +46,7 @@ const Searchbar = ({
           ) : (
             <>
               <FlatList
+                showsVerticalScrollIndicator={false}
                 style={{ height: '100%', flex: 1 }}
                 data={activityList}
                 renderItem={({ item }) => {

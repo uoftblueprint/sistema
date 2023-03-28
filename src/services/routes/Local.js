@@ -54,12 +54,12 @@ export async function readFile(filepath) {
  */
 export async function writeFile(isImage, filepath, content) {
   const options = {
-    encoding: ''
+    encoding: '',
   };
-  if (isImage){
-    options.encoding = 'base64'
+  if (isImage) {
+    options.encoding = 'base64';
   } else {
-    options.encoding = 'utf8'
+    options.encoding = 'utf8';
   }
   return RNFS.writeFile(filepath, content, options)
     .then(success => {
