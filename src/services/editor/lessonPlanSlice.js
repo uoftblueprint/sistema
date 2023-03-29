@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { SectionName } from '../constants';
 
 export const lessonPlanSlice = createSlice({
   name: 'lessonPlan',
   initialState: {
-    warmUp: [], // [{type: "text", content: "..."} where type: "text" or "activityCard"
-    mainLesson: [],
-    coolDown: [],
-    notes: '',
+    [SectionName.warmUp]: [], // [{type: "text", content: "..."} where type is ModuleType.text || ModuleType.activityCard
+    [SectionName.mainLesson]: [],
+    [SectionName.coolDown]: [],
+    [SectionName.notes]: '',
     isDirty: false, // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {

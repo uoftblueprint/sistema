@@ -9,12 +9,12 @@ import {
 import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 
-const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
+const LessonPlanNotes = ({ sectionType, placeholder }) => {
   const [sectionContent, setSectionContent] = useState(placeholder);
 
   return (
     <SafeAreaView>
-      <Text style={styles.title}>{subtitle}</Text>
+      <Text style={styles.title}>{sectionType}</Text>
       <SafeAreaView style={styles.SectionStyle}>
         <TextInput
           multiline
