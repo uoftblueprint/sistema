@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { DRIVE_API_URLS } from '../../services/config.json';
 
 const SearchResults = ({
   name,
@@ -9,7 +10,7 @@ const SearchResults = ({
   isHighlighted,
 }) => {
   const display_preview = () => {
-    const baseQuery = 'https://www.googleapis.com/drive/v3/files/';
+    const baseQuery = DRIVE_API_URLS.SEARCH_FILES;
     const params = '?supportsAllDrives=true&fields=thumbnailLink';
     axios
       .get(`${baseQuery}${id}?`, {

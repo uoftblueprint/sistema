@@ -25,6 +25,7 @@ import LeftArrow from '../../../assets/leftArrow.svg';
 import RightArrow from '../../../assets/rightArrow.svg';
 
 import axios from 'axios';
+import { DRIVE_API_URLS } from '../../services/config.json';
 
 import ActivityCardService from '../../services/ActivityCardService';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
@@ -59,7 +60,7 @@ const AddActivityCard = function ({ navigation, route }) {
         }).join('');
         const ACTVTTerm = " and fullText contains 'ACTVT'";
         axios
-          .get('https://www.googleapis.com/drive/v3/files?', {
+          .get(DRIVE_API_URLS.SEARCH_FILES, {
             params: {
               trashed: 'false',
               supportsAllDrives: 'true',
@@ -174,8 +175,6 @@ const AddActivityCard = function ({ navigation, route }) {
 
   //onPress function for add Card button
   const addCard = async () => {
-    console.log('SKFHDSKFHSJKDHFKJSHDFKJSDHKFJHSJDFHSKJDHFJKSDHFK');
-    console.log(previewInfo.id);
     const rnfsPath = await ActivityCardService.downloadActivityCard(
       previewInfo.id,
     );

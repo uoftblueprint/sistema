@@ -23,7 +23,7 @@ export const lessonPlanSlice = createSlice({
           {
             type: action.payload.type,
             content: action.payload.content,
-            name: action.payload.name
+            name: action.payload.name,
           },
         ],
         isDirty: true,
