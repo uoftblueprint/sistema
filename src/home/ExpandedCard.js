@@ -4,18 +4,18 @@ import {
   Text,
   ScrollView,
   Dimensions,
+  Image
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { readFile } from '../services/routes/Local.js';
-import AddButton from './components/AddToLessonButton';
 import Header from '../Components/Header';
-
+const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const ExpandedCard = ({ route, navigation }) => {
-
-  const {cardPath} = route.params;
+  const { cardPath } = route.params;
   const [title, setTitle] = useState('');
+  const [cardImagePath, setCardImagePath] = useState(null);
 
   useEffect(() => {
     const readCardTitle = async () => {
@@ -23,8 +23,8 @@ const ExpandedCard = ({ route, navigation }) => {
         const cardTitlePath = cardPath + 'cardName.txt';
         var cardNames = await readFile(cardTitlePath, 'utf-8');
         cardNames = cardNames.substring(0, cardNames.length - 5);
+        setCardImagePath(cardPath + 'cardImage.jpg');
         setTitle(cardNames);
-
       } catch (err) {
         console.log(err);
       }
@@ -46,10 +46,13 @@ const ExpandedCard = ({ route, navigation }) => {
           <Text style={styles.title}> {title} </Text>
 
           <SafeAreaView style={styles.box}>
-            {/* CARD CONTENT GOES HERE */}
+          <Image
+              source={{ uri: `file://${cardImagePath}` }}
+              style={styles.cardImage}
+             resizeMode="contain"
+          />
           </SafeAreaView>
 
-          <AddButton />
         </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
@@ -70,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     marginTop: 15,
-    width: '75%',
+    width: '64%',
     height: windowHeight * 0.55,
   },
   title: {
@@ -81,6 +84,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 40,
   },
+  cardImage: {
+      width: '100%', // 80% of window width
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center'
+  }
 });
 
 export default ExpandedCard;

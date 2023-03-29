@@ -24,6 +24,7 @@
     "@rneui/themed": "^4.0.0-rc.7",
     "axios": "^1.2.0",
     "axios-retry": "^3.3.1",
+    "buffer": "^6.0.3",
     "crypto-js": "3.1.9-1",
     "jsrsasign": "^10.6.1",
     "jsrsasign-util": "^1.0.5",
@@ -34,14 +35,14 @@
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.2",
     "react-native-svg": "^13.6.0",
-    "react-redux": "^8.0.5",
-    "react-native-vector-icons": "^9.2.0"
+    "react-native-vector-icons": "^9.2.0",
+    "react-redux": "^8.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
-    "@redux-devtools/core": "^3.13.1", 
+    "@redux-devtools/core": "^3.13.1",
     "babel-jest": "^26.6.3",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.32.0",

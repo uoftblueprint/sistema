@@ -13,14 +13,13 @@ import { STACK_SCREENS, MAINDIRECTORY } from '../constants';
 import ActivityCardService from '../../services/ActivityCardService';
 
 const Home = ({ navigation }) => {
-  const [date, setDate] = useState("TODAY.....");
+  const [date, setDate] = useState('TODAY.....');
   const [pathArr, setPathArr] = useState([]);
 
   const handleRefreshPress = async () => {
     const cards = await ActivityCardService.getFeaturedActivityCards();
     setPathArr(cards);
-    console.log(cards.length);
-    setDate((new Date()).toDateString());
+    setDate(new Date().toDateString());
   };
 
   return (
@@ -37,33 +36,23 @@ const Home = ({ navigation }) => {
           </SafeAreaView>
         </SafeAreaView>
 
-        {/*
-
-        pathArr.map(cardPath => {
-          <TouchableOpacity
-            onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
-            cardImage= "${cardPath}/cardimage.jpg",
-            cardName= "${cardPath}/cardName.txt",
-          });
-            <RecentCard
-              image={"${cardPath}/cardimage.jpg"}
-              cardName: "${cardPath}/cardName.txt"
-            />
-          </TouchableOpacity>
-        });
-
-        */}
-
         <SafeAreaView style={{ height: '100%' }}>
-          {pathArr && pathArr.length > 0 && pathArr.map((cardPath, index) => {
-            return (
-              <SafeAreaView key={index}>
-                <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.EXPANDED_CARD, { cardPath: cardPath })}>
-                  <RecentCard cardPath={cardPath} />
-                </TouchableOpacity>
-              </SafeAreaView>
-            );
-          })}
+          {pathArr &&
+            pathArr.length > 0 &&
+            pathArr.map((cardPath, index) => {
+              return (
+                <SafeAreaView key={index}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
+                        cardPath: cardPath,
+                      })
+                    }>
+                    <RecentCard cardPath={cardPath} />
+                  </TouchableOpacity>
+                </SafeAreaView>
+              );
+            })}
         </SafeAreaView>
       </ScrollView>
     </SafeAreaView>

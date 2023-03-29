@@ -7,6 +7,7 @@ import {
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { AccessToken } from './models';
+import { Buffer } from "buffer";
 import axios from 'axios';
 import { DRIVE_API_URLS } from './config.json';
 
@@ -94,13 +95,11 @@ const ActivityCardService = {
   downloadActivityCard: async function (id) {
     try {
       const params = {
-        //  fields: 'kind,driveId,mimeType,id,name,teamDriveId,thumbnailLink,webContentLink,modifiedTime',
         alt: 'media',
         responseType: 'arraybuffer',
       };
       const dirPath = MAINDIRECTORY + '/FeaturedActivityCards/' + id;
       const filePath = `${dirPath}/cardImage.jpg`;
-      let card = {};
 
       //check if file exists
       if (await checkFileExists(filePath)) {
@@ -114,14 +113,17 @@ const ActivityCardService = {
         id +
         DRIVE_API_URLS.SEARCH_PARAMETERS;
 
-      const response = await axios.get(downloadUrl, { params }).catch(error => {
+      
+      //get the response as an arrayBuffer to be read by RNFS
+      const response = await axios
+      .get(downloadUrl, { params: params, responseType: "arraybuffer" })
+      .catch(error => {
         console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
       });
-
-      const base64Image = new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '');
-      //make directory for the newly downloaded card, write the card into this path and return
+      
       await makeDirectory(dirPath);
-      await writeFile(true, filePath, base64Image);
+      await writeFile(true, filePath, Buffer.from(response.data, 'base64'));
+      
       return filePath;
     } catch (e) {
       console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
