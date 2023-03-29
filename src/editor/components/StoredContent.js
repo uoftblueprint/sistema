@@ -98,9 +98,6 @@ const styles = StyleSheet.create({
     }),
     width: '100%',
   },
-  text: {
-    color: '#000000',
-  }
 });
 
 export default StoredContent;

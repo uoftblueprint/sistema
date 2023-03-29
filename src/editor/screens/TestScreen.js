@@ -4,14 +4,14 @@ import {
   StyleSheet,
   SafeAreaView,
   View,
-  ScrollView,
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { NestableScrollContainer, NestableDraggableFlatList } from "react-native-draggable-flatlist";
+import { NestableScrollContainer } from "react-native-draggable-flatlist";
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
+import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName } from '../../services/constants.js';
 
 // dummy last edited date
@@ -48,6 +48,7 @@ const TestScreen = ({ navigation }) => {
          </View>
         </TouchableWithoutFeedback>
       </NestableScrollContainer>
+      
       <View style={styles.saveButton}>
         <SaveButton />
       </View>
@@ -61,21 +62,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5',
     justifyContent: 'center',
   },
-  scrollView: {
-    flex: 1,
-    marginHorizontal: '1%',
-    marginVertical: '1%',
-    paddingBottom: '10%',
-    backgroundColor: 'blue'
-  },
   viewStyle: {
     flexDirection: 'column',
-    backgroundColor: 'yellow'
+    paddingBottom: verticalScale(75),
+    paddingHorizontal: scale(30),
   },
   saveButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: 25,
+    bottom: verticalScale(20),
   },
 });
 

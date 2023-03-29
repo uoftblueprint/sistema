@@ -4,15 +4,9 @@ import LessonPlanEditor from './screens/LessonPlanEditor';
 import TestScreen from './screens/TestScreen';      // TODO: revert everything back to master to stop testing draggable
 import AddActivityCard from './screens/AddActivityCard';
 import LessonPlanMenuOverlay from '../Components/LessonPlanMenuOverlay';
+import { STACK_SCREENS } from './constants';
 
 const Stack = createStackNavigator();
-
-const STACK_SCREENS = {
-  LESSON_PLAN_EDITOR: 'Lesson Plan Editor Home',
-  ADD_ACTIVITY_CARD: 'Add Activity Card',
-  LESSON_PLAN_MENU_OVERLAY: 'Lesson_Plan_Editor_Menu',
-  TEST: 'test'
-};
 
 const EditorNavigator = () => {
   return (

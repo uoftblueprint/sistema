@@ -6,46 +6,54 @@ import {
   findNodeHandle,
   View,
   TouchableOpacity,
+  StyleSheet,
+  Text,
+  TextInput,
 } from "react-native";
+import { ModuleType } from "../../services/constants";
+import { TextStyle } from "../../Styles.config";
 
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
 
 export default class DraggableModuleWithMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.menuRef; // Assigned upon render
+    this.menuRef;       // Assigned upon render
+    this.textInputRef;  // Assigned upon render
+    this.options = ["Edit", "Delete"]; 
+    this.actions = [this.toggleEdit, this.deleteModule]
+    this.state = {
+      isEditable: false
+    };
   }
 
-  handleClick = index => {
-    let options = this.props.options;
-    if (index == options.length - 1 && Platform.OS === "android") {
-      
-    }
+  toggleEdit = () => {
+    this.setState({ isEditable: true });
+    setTimeout(() => this.textInputRef.focus(), 100);
+  };
 
-    for (var i = 0; i < options.length; i++) {
+  deleteModule = () => {
+    // TODO: [SIS-118] Warn user before deleting lesson plan module
+    this.props.handleDelete(this.props.data.key);
+  };
+
+  handleClick = index => {
+    for (var i = 0; i < this.options.length; i++) {
       if (index === i) {
-        if (this.props.actions[i] !== null) {
-          this.props.actions[i]();
+        if (this.actions[i] !== null) {
+          this.actions[i]();
         }
       }
     }
   };
 
   handlePress = () => {
-    let options = this.props.options;
     if (Platform.OS === "ios") {
-      let destructiveIndex = -1;
-      if (
-        Number.isInteger(this.props.destructiveIndex) &&
-        this.props.destructiveIndex >= 0
-      ) {
-        destructiveIndex = this.props.destructiveIndex;
-      }
       ActionSheetIOS.showActionSheetWithOptions(
         {
-          options: [...options, "Cancel"],  // Add Cancel button for iOS since menu appears as overlay
-          destructiveButtonIndex: destructiveIndex,
-          cancelButtonIndex: options.length - 1
+          options: [...this.options, "Cancel"], 
+          destructiveButtonIndex: this.options.indexOf("Delete"),
+          cancelButtonIndex: options.length - 1 // index of "Cancel" which is always last
         },
         buttonIndex => {
           this.handleClick(buttonIndex);
@@ -54,9 +62,9 @@ export default class DraggableModuleWithMenu extends React.Component {
     } else if (Platform.OS === "android") {
       UIManager.showPopupMenu(
         findNodeHandle(this.menuRef),
-        options,
-        () => console.log("something went wrong with the popup menu"),
-        (e, i) => {
+        this.options,
+        () => console.warn(`Something went wrong with the Android popup menu inside DraggableModuleWithMenu ${this.props.data.key}.`),
+        (_, i) => {
           this.handleClick(i);
         }
       );
@@ -72,12 +80,63 @@ export default class DraggableModuleWithMenu extends React.Component {
           delayLongPress={this.props.longPressTriggerMs}  // ms to trigger a LongPress
           onLongPress={this.props.drag}
           disabled={this.props.dragIsActive}              // disable interactions while being dragged
-          style={this.props.style}
+          style={styles.module}
         >
-          {this.props.children}
+        
+          {this.props.data.type == ModuleType.text ?
+            <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
+              <TextInput
+                ref={(input) => { this.textInputRef = input; }}
+                editable={this.state.isEditable}
+                style={TextStyle.body}
+                multiline
+                defaultValue={this.props.data.content}
+                onEndEditing={e => {      
+                  const currText = e.nativeEvent.text;
+                  this.props.handleEdit(this.props.data.key, currText);
+                  this.setState({ isEditable: false });
+                }}
+              />
+            </View>
+          :
+            <Text style={TextStyle.body}>{this.props.data.content}</Text> // TODO: replace with component for ModuleType.activityCard
+          }
+
         </TouchableOpacity>
       </View>
     );
   };
   
 }
+
+
+const styles = StyleSheet.create({
+  module: {
+    backgroundColor: '#FFFAF5',
+    height: 'auto',
+    width: '100%', 
+    borderWidth: 0.77,
+    borderColor: '#000',
+    borderRadius: 8,
+    shadowColor: '#453E3D',
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
+    marginVertical: 5,
+    ...Platform.select({
+      ios: {
+        paddingTop: 10,
+        paddingBottom: 15,
+        paddingHorizontal: 15,
+      },
+      android: {
+        paddingVertical: 0,
+        paddingHorizontal: 10,
+      },
+    }),
+  },
+});
