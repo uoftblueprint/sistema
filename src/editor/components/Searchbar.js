@@ -102,8 +102,7 @@ const styles = StyleSheet.create({
     }),
   },
   TextStyle: {
-    fontFamily: 'Mulish-Regular',
-    fontStyle: 'italic',
+    fontFamily: 'Mulish-Italic',
     width: '100%',
     fontSize: 17,
   },

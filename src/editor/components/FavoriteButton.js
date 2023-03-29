@@ -7,15 +7,19 @@ import {
 } from 'react-native';
 import HeartIcon from '../../../assets/heartIcon.svg';
 import FavoriteIcon from '../../../assets/favoriteIcon.svg';
+import { OptionsMenuPadding } from '../../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
+let timer;
 
 const FavoriteButton = ({ setBanner, setFavoritedPlan, isFavoritedPlan }) => {
   const onPress = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
     setFavoritedPlan(!isFavoritedPlan);
     setBanner(true);
-
-    setTimeout(() => {
+    timer = setTimeout(() => {
       setBanner(false);
     }, 2000);
   };
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.25,
   },
   buttonContainer: {
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
     alignSelf: 'stretch',
     justifyContent: 'flex-start',
     flexDirection: 'row',
@@ -51,7 +55,7 @@ const styles = StyleSheet.create({
     height: 45,
   },
   textContainer: {
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
     color: 'rgba(0,0,0, 0.87)',
     fontFamily: 'Mulish-Bold',
     fontSize: 16,

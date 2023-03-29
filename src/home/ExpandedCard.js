@@ -1,14 +1,8 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import { StyleSheet, SafeAreaView, Text, ScrollView } from 'react-native';
 import AddButton from './components/AddToLessonButton';
 import Header from '../Components/Header';
-
-const windowHeight = Dimensions.get('window').height;
+import { TextStyle } from '../Styles.config';
+import { verticalScale } from 'react-native-size-matters';
 
 const ExpandedCard = ({ navigation }) => {
   return (
@@ -22,9 +16,18 @@ const ExpandedCard = ({ navigation }) => {
       <ScrollView>
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {/* pass in props.cardTitle eventually */}
-          <Text style={styles.title}> TITLE </Text>
-
+          {/* Pass in props.cardTitle eventually. You want to parse the parts around the dashes for the third part of the title */}
+          <Text style={[styles.title, TextStyle.h2]}>Listening Spinners</Text>
+          <Text style={[TextStyle.h3, styles.subtitle]}>
+            Theme:
+            {/* You'll parse the name of the activity card to get the theme (first part of title) */}
+            <Text style={TextStyle.h3}> THEME HERE</Text>
+          </Text>
+          <Text style={[TextStyle.h3, styles.subtitle]}>
+            Activity Type:
+            {/* You'll parse the name of the activity card to get the type (second part of title) */}
+            <Text style={TextStyle.h3}> TYPE HERE</Text>
+          </Text>
           <SafeAreaView style={styles.box}>
             {/* CARD CONTENT GOES HERE */}
           </SafeAreaView>
@@ -49,17 +52,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    marginTop: 15,
     width: '75%',
-    height: windowHeight * 0.55,
+    marginTop: 30,
+    height: verticalScale(400),
   },
   title: {
-    color: '#453E3D',
-    fontFamily: 'Poppins-Bold',
-    fontSize: 20,
-    width: '60%',
-    textAlign: 'center',
-    marginBottom: 40,
+    width: '75%',
+    textAlign: 'left',
+    marginBottom: 5,
+  },
+  subtitle: {
+    width: '75%',
+    textAlign: 'left',
+    fontFamily: 'Mulish-Bold',
   },
 });
 

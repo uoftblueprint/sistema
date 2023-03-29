@@ -123,8 +123,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: Platform.OS === 'ios' ? 0 : 17
   }
 });
 
