@@ -11,6 +11,20 @@ import store from './src/services/configureStore';
 import { setNewToken } from './src/services/login/authSlice';
 import { printAxiosError } from './src/services/helpers';
 
+// Disable the following non-breaking warnings
+if (__DEV__) {
+  const ignoreWarns = ["VirtualizedLists should never be nested inside plain ScrollViews"];
+
+  const errorWarn = global.console.error;
+  global.console.error = (...arg) => {
+    for (const error of ignoreWarns) {
+      if (arg[0].startsWith(error)) {
+        return;
+      }
+    }
+    errorWarn(...arg);
+  };
+}
 
 // Add axios interceptor at root level to check and if needed, refresh, for valid token every time an HTTP request is made
 
