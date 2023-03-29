@@ -30,7 +30,6 @@ import ActivityCardService from '../../services/ActivityCardService';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 
-
 const AddActivityCard = function ({ navigation, route }) {
   // *************** SEARCH RELATED VARS *******************
 
