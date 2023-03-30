@@ -7,7 +7,7 @@ import {
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { AccessToken } from './models';
-import { Buffer } from "buffer";
+import { Buffer } from 'buffer';
 import axios from 'axios';
 import { DRIVE_API_URLS } from './config.json';
 
@@ -52,7 +52,7 @@ const ActivityCardService = {
       var pathArr = [];
 
       //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
-      if (files_list.length != 0 && await checkFileExists(path)) {
+      if (files_list.length != 0 && (await checkFileExists(path))) {
         await deleteFile(path);
         await makeDirectory(path);
       } else {
@@ -113,17 +113,16 @@ const ActivityCardService = {
         id +
         DRIVE_API_URLS.SEARCH_PARAMETERS;
 
-      
       //get the response as an arrayBuffer to be read by RNFS
       const response = await axios
-      .get(downloadUrl, { params: params, responseType: "arraybuffer" })
-      .catch(error => {
-        console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
-      });
-      
+        .get(downloadUrl, { params: params, responseType: 'arraybuffer' })
+        .catch(error => {
+          console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
+        });
+
       await makeDirectory(dirPath);
       await writeFile(true, filePath, Buffer.from(response.data, 'base64'));
-      
+
       return filePath;
     } catch (e) {
       console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);

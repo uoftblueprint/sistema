@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   Text,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import RecentCard from '../components/RecentCard';
@@ -12,21 +12,27 @@ import RefreshIcon from '../../../assets/refreshIcon.svg';
 import { MAINDIRECTORY } from '../../services/constants';
 import { STACK_SCREENS } from '../constants';
 import ActivityCardService from '../../services/ActivityCardService';
-import { makeDirectory, readDirectory, readFile, writeFile, checkFileExists} from '../../services/routes/Local.js';
-import { readDir } from 'react-native-fs';
+import {
+  makeDirectory,
+  readDirectory,
+  readFile,
+  writeFile,
+  checkFileExists,
+} from '../../services/routes/Local.js';
 
 const Home = ({ navigation }) => {
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState('');
   const [pathArr, setPathArr] = useState([]);
-  const datePath = MAINDIRECTORY + "/RefreshedDate";
-  const filePath = `${datePath}/date.txt`;
 
   const handleRefreshPress = async () => {
+    const datePath = MAINDIRECTORY + '/RefreshedDate';
+    const filePath = `${datePath}/date.txt`;
+
     const cards = await ActivityCardService.getFeaturedActivityCards();
     setPathArr(cards);
 
     //update the last refreshed date
-    if(cards.length != 0){
+    if (cards.length != 0) {
       const today = new Date().toDateString();
       setDate(today);
       await makeDirectory(datePath);
@@ -38,27 +44,28 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const fetchSavedData = async () => {
       try {
-          
-          //Check if the last refreshed date is stored, read and store into date if it does
-          if (await checkFileExists(filePath)) {
-            const lastDate = await readFile(filePath, 'utf8');
-            setDate(lastDate);
-          }
-          
-          //Check if the last Activity Cards exist, read and store into pathArr if it does
-          const arrPath = MAINDIRECTORY + "/FeaturedActivityCards";
-          if (await checkFileExists(arrPath)){
-              const fileNames = await readDirectory(arrPath);
-              const subDirectories = fileNames.filter((name) => name !== ".DS_Store"); // filter out .DS_Store files (on macOS)
-              const tempArr = subDirectories.map((name) => `${arrPath}/${name}/`); // create an array of the full path of all subdirectories
+        const datePath = MAINDIRECTORY + '/RefreshedDate';
+        const filePath = `${datePath}/date.txt`;
 
-              //map this pathArr when app is first opened
-              if(tempArr.length != 0){
-                setPathArr(tempArr);
-              }
-          }
+        //Check if the last refreshed date is stored, read and store into date if it does
+        if (await checkFileExists(filePath)) {
+          const lastDate = await readFile(filePath, 'utf8');
+          setDate(lastDate);
+        }
 
-      }catch (error) {
+        //Check if the last Activity Cards exist, read and store into pathArr if it does
+        const arrPath = MAINDIRECTORY + '/FeaturedActivityCards';
+        if (await checkFileExists(arrPath)) {
+          const fileNames = await readDirectory(arrPath);
+          const subDirectories = fileNames.filter(name => name !== '.DS_Store'); // filter out .DS_Store files (on macOS)
+          const tempArr = subDirectories.map(name => `${arrPath}/${name}/`); // create an array of the full path of all subdirectories
+
+          //map this pathArr when app is first opened
+          if (tempArr.length != 0) {
+            setPathArr(tempArr);
+          }
+        }
+      } catch (error) {
         console.error(error);
       }
     };

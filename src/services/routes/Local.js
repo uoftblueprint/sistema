@@ -54,13 +54,12 @@ export async function readFile(filepath) {
  * @param {String} content Content to write to given file path
  */
 export async function writeFile(isImage, filepath, content) {
-  
   const options = {
     encoding: '',
   };
-  
+
   //set up the encoding based on wether or not content is an image
-  options.encoding = isImage? 'base64' : 'utf8'
+  options.encoding = isImage ? 'base64' : 'utf8';
   const data = isImage ? content.toString('base64') : content;
 
   return RNFS.writeFile(filepath, data, options.encoding)

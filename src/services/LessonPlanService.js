@@ -47,7 +47,7 @@ const LessonPlanService = {
       var path = MAINDIRECTORY + '/Default/' + lesson.name + '/';
       makeDirectory(path)
         .then(() => {
-          return writeFile(path + lesson.name + '.json', lessonJSON);
+          return writeFile(false, path + lesson.name + '.json', lessonJSON);
         })
         .then(r => {
           console.log('Successfully saved lesson plan: ' + lesson.name);

@@ -4,12 +4,12 @@ import {
   Text,
   ScrollView,
   Dimensions,
-  Image
+  Image,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { readFile } from '../services/routes/Local.js';
 import Header from '../Components/Header';
-const windowWidth = Dimensions.get('window').width;
+
 const windowHeight = Dimensions.get('window').height;
 
 const ExpandedCard = ({ route, navigation }) => {
@@ -46,13 +46,12 @@ const ExpandedCard = ({ route, navigation }) => {
           <Text style={styles.title}> {title} </Text>
 
           <SafeAreaView style={styles.box}>
-          <Image
+            <Image
               source={{ uri: `file://${cardImagePath}` }}
               style={styles.cardImage}
-             resizeMode="contain"
-          />
+              resizeMode="contain"
+            />
           </SafeAreaView>
-
         </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
@@ -85,11 +84,11 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   cardImage: {
-      width: '100%',
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'center'
-  }
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default ExpandedCard;
