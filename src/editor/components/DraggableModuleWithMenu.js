@@ -20,23 +20,28 @@ export default class DraggableModuleWithMenu extends React.Component {
     super(props);
     this.menuRef; // Assigned upon render
     this.textInputRef; // Assigned upon render
-    this.options = (Platform.OS === 'ios') ? ['Edit', 'Delete', 'Cancel'] : ['Edit', 'Delete'];
+    // TODO: Options change if (this.props.data.type == ModuleType.activityCard). We only want "Delete" (and if iOS, "Cancel" too).
+    this.options =
+      Platform.OS === 'ios' ? ['Edit', 'Delete', 'Cancel'] : ['Edit', 'Delete'];
     this.actions = [this.toggleEdit, this.deleteModule];
     this.state = {
       isEditable: false,
     };
   }
 
+  /** Edit the text module */
   toggleEdit = () => {
     this.setState({ isEditable: true });
     setTimeout(() => this.textInputRef.focus(), 100);
   };
 
+  /** Removes the module from this section. Deletes this component. */
   deleteModule = () => {
     // TODO: [SIS-118] Warn user before deleting lesson plan module
     this.props.handleDelete(this.props.data.key);
   };
 
+  /** Based on what menu option the user clicks, execute the function corresponding with the same index in this.actions. */
   handleClick = index => {
     for (var i = 0; i < this.options.length; i++) {
       if (index === i) {
@@ -47,6 +52,7 @@ export default class DraggableModuleWithMenu extends React.Component {
     }
   };
 
+  /** Opens module meu */
   handlePress = () => {
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showActionSheetWithOptions(
