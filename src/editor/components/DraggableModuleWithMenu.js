@@ -20,7 +20,7 @@ export default class DraggableModuleWithMenu extends React.Component {
     super(props);
     this.menuRef; // Assigned upon render
     this.textInputRef; // Assigned upon render
-    this.options = ['Edit', 'Delete'];
+    this.options = (Platform.OS === 'ios') ? ['Edit', 'Delete', 'Cancel'] : ['Edit', 'Delete'];
     this.actions = [this.toggleEdit, this.deleteModule];
     this.state = {
       isEditable: false,
@@ -51,9 +51,9 @@ export default class DraggableModuleWithMenu extends React.Component {
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showActionSheetWithOptions(
         {
-          options: [...this.options, 'Cancel'],
+          options: this.options,
           destructiveButtonIndex: this.options.indexOf('Delete'),
-          cancelButtonIndex: options.length - 1, // index of "Cancel" which is always last
+          cancelButtonIndex: this.options.length - 1, // index of "Cancel" which is always last
         },
         buttonIndex => {
           this.handleClick(buttonIndex);
@@ -83,10 +83,9 @@ export default class DraggableModuleWithMenu extends React.Component {
           delayLongPress={this.props.longPressTriggerMs} // ms to trigger a LongPress
           onLongPress={this.props.drag}
           disabled={this.props.dragIsActive} // disable interactions while being dragged
-          style={styles.module}
-        >
-          {this.props.data.type == ModuleType.text ?
-            ( 
+          style={styles.module}>
+          {
+            this.props.data.type == ModuleType.text ? (
               <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
                 <TextInput
                   ref={input => {
@@ -111,9 +110,7 @@ export default class DraggableModuleWithMenu extends React.Component {
       </View>
     );
   }
-  
 }
-
 
 const styles = StyleSheet.create({
   module: {
