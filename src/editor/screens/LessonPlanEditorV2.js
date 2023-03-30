@@ -1,4 +1,3 @@
-import React from 'react';
 import LessonPlanHeader from '../components/LessonPlanHeader.js';
 import {
   StyleSheet,
@@ -17,7 +16,7 @@ import { SectionName } from '../../services/constants.js';
 // dummy last edited date
 const lastEditedDummy = 'Jan 1, 2023';
 
-const TestScreen = ({ navigation }) => {
+const LessonPlanEditorV2 = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
@@ -26,7 +25,7 @@ const TestScreen = ({ navigation }) => {
       />
 
       <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
             <LessonSectionDraggable
               navigation={navigation}
@@ -74,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TestScreen;
+export default LessonPlanEditorV2;

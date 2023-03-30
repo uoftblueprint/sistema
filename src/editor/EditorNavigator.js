@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LessonPlanEditor from './screens/LessonPlanEditor';
-import TestScreen from './screens/TestScreen';      // TODO: revert everything back to master to stop testing draggable
+import LessonPlanEditor from './screens/LessonPlanEditor'; // TODO: Remove once you're done
+import LessonPlanEditorV2 from './screens/LessonPlanEditorV2'; 
 import AddActivityCard from './screens/AddActivityCard';
 import LessonPlanMenuOverlay from '../Components/LessonPlanMenuOverlay';
 import { STACK_SCREENS } from './constants';
@@ -11,17 +11,17 @@ const Stack = createStackNavigator();
 const EditorNavigator = () => {
   return (
     <Stack.Navigator
-      intialRouteName={STACK_SCREENS.TEST}
+      intialRouteName={STACK_SCREENS.LESSON_PLAN_EDITOR_V2}
       detachInactiveScreens={false}
       screenOptions={{
         headerShown: false,
         detachPreviousScreen: false,
       }}>
       <Stack.Screen
-        name={STACK_SCREENS.TEST}
-        component={TestScreen}
+        name={STACK_SCREENS.LESSON_PLAN_EDITOR_V2}
+        component={LessonPlanEditorV2}
       />
-      <Stack.Screen
+      <Stack.Screen // TODO: Remove once you're done and all unused components once this screen is gone
         name={STACK_SCREENS.LESSON_PLAN_EDITOR}
         component={LessonPlanEditor}
       />

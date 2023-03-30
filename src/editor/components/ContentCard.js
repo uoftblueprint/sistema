@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import {
   SafeAreaView,
   Platform,
@@ -7,17 +7,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import { TextStyle } from '../../Styles.config';
-import store from '../../services/configureStore';
 import { ModuleType } from '../../services/constants';
 
 const ContentCard = ({
   setisTextinputOpen,
-  setSectionContent,
-  sectionContent,
+  sectionType,
 }) => {
   const refInput = useRef();
+  const dispatch = useDispatch();
 
   return (
     <SafeAreaView style={styles.ContentCardStyle}>
@@ -32,15 +32,15 @@ const ContentCard = ({
             multiline={true}
             ref={refInput}
             onEndEditing={e => {
-              if (e.nativeEvent.text) {
-                setSectionContent([             // TODO: Update this store func
-                  ...sectionContent, 
-                  {
+              if (e.nativeEvent.text) { // If text is not empty
+                dispatch(
+                  addToSection({
                     type: ModuleType.text,
-                    content: e.nativeEvent.text
-                  },
-                ]);
-              }
+                    section: sectionType,
+                    content: e.nativeEvent.text,
+                  }),
+                )
+              };
               setisTextinputOpen(false);
             }}
           />
@@ -85,9 +85,6 @@ const styles = StyleSheet.create({
     }),
     width: '100%',
   },
-  text: {
-    color: '#000000',
-  }
 });
 
 export default ContentCard;
