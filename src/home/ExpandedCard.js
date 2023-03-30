@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     marginTop: 15,
-    width: '64%',
+    width: '61%',
     height: windowHeight * 0.55,
   },
   title: {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   cardImage: {
-      width: '100%', // 80% of window width
+      width: '100%',
       height: '100%',
       alignItems: 'center',
       justifyContent: 'center'
