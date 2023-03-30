@@ -52,7 +52,7 @@ export default class DraggableModuleWithMenu extends React.Component {
     }
   };
 
-  /** Opens module meu */
+  /** Opens module menu */
   handlePress = () => {
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showActionSheetWithOptions(
