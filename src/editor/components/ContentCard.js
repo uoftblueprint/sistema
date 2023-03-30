@@ -12,10 +12,7 @@ import { addToSection } from '../../services/editor/lessonPlanSlice';
 import { TextStyle } from '../../Styles.config';
 import { ModuleType } from '../../services/constants';
 
-const ContentCard = ({
-  setisTextinputOpen,
-  sectionType,
-}) => {
+const ContentCard = ({ setisTextinputOpen, sectionType }) => {
   const refInput = useRef();
   const dispatch = useDispatch();
 
@@ -32,15 +29,16 @@ const ContentCard = ({
             multiline={true}
             ref={refInput}
             onEndEditing={e => {
-              if (e.nativeEvent.text) { // If text is not empty
+              if (e.nativeEvent.text) {
+                // If text is not empty
                 dispatch(
                   addToSection({
                     type: ModuleType.text,
                     section: sectionType,
                     content: e.nativeEvent.text,
                   }),
-                )
-              };
+                );
+              }
               setisTextinputOpen(false);
             }}
           />

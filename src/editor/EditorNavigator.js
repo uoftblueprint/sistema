@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LessonPlanEditor from './screens/LessonPlanEditor'; // TODO: Remove once you're done
-import LessonPlanEditorV2 from './screens/LessonPlanEditorV2'; 
+import LessonPlanEditorV2 from './screens/LessonPlanEditorV2';
 import AddActivityCard from './screens/AddActivityCard';
 import LessonPlanMenuOverlay from '../Components/LessonPlanMenuOverlay';
 import { STACK_SCREENS } from './constants';

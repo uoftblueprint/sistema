@@ -6,7 +6,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { NestableScrollContainer } from "react-native-draggable-flatlist";
+import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
@@ -44,10 +44,10 @@ const LessonPlanEditorV2 = ({ navigation }) => {
               sectionType={SectionName.notes}
               placeholder={''}
             />
-         </View>
+          </View>
         </TouchableWithoutFeedback>
       </NestableScrollContainer>
-      
+
       <View style={styles.saveButton}>
         <SaveButton />
       </View>

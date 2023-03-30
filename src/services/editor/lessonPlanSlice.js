@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { SectionName } from '../constants';
 import { grabNextKey } from '../helpers';
 
-
 export const lessonPlanSlice = createSlice({
   name: 'lessonPlan',
   /**
@@ -13,7 +12,7 @@ export const lessonPlanSlice = createSlice({
    * @property {string} key Unique in that section. For example, 'module-0'.
    */
   initialState: {
-    [SectionName.warmUp]: [], 
+    [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
     [SectionName.notes]: '',
@@ -21,16 +20,16 @@ export const lessonPlanSlice = createSlice({
   },
   reducers: {
     replaceSection: (state, action) => {
-      // action.payload: {       
+      // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
       //     allData: { type, content, key }[]
       // }
 
       // TODO: Do some error handling. Confirm that every module is properly formed
-        // Check that it has 3 properties [type, section, content]
-          // If only missing key property, grab next unique key
-          // Else, remove module
-        // Check that all keys are unique
+      // Check that it has 3 properties [type, section, content]
+      // If only missing key property, grab next unique key
+      // Else, remove module
+      // Check that all keys are unique
       return {
         ...state,
         [action.payload.section]: action.payload.allData,
@@ -38,7 +37,7 @@ export const lessonPlanSlice = createSlice({
       };
     },
     addToSection: (state, action) => {
-      // action.payload: {       
+      // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
       //     type: ModuleType.text || ModuleType.activityCard
       //     content: "",
@@ -58,7 +57,8 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
-    removeFromSection: (state, action) => { // TODO: remove if not being used anymore
+    removeFromSection: (state, action) => {
+      // TODO: remove this reducer if not being used anymore after you're done
       const section = action.payload.section;
       const indx = state[section].findIndex(
         e => e.content === action.payload.content,
@@ -85,15 +85,22 @@ export const lessonPlanSlice = createSlice({
 });
 
 // Dispatch actions to "write" to redux
-export const { addToSection, removeFromSection, addToNote, removeNote, replaceSection } =
-  lessonPlanSlice.actions;
+export const {
+  addToSection,
+  removeFromSection,
+  addToNote,
+  removeNote,
+  replaceSection,
+} = lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
 export const getLessonSection = (state, sectionName) => {
   try {
     return state[sectionName];
   } catch {
-    console.error(`getLessonSection: Could not grab lesson plan section ${sectionName} from redux.`);
+    console.error(
+      `getLessonSection: Could not grab lesson plan section ${sectionName} from redux.`,
+    );
     return [];
   }
 };

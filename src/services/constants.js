@@ -10,7 +10,7 @@ export const SectionName = {
 export const ModuleType = {
   text: 'text',
   activityCard: 'activityCard',
-}
+};
 
 // LessonPlanService.js
 export const MAINDIRECTORY = RNFS.DocumentDirectoryPath;
