@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import './src/services/ignoreWarnings'; // Keep at top
+import React from 'react'; 
+import { View, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,

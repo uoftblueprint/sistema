@@ -13,6 +13,7 @@ import Menu from '../../../assets/menu.svg';
 import BackArrow from '../../../assets/backArrow.svg';
 import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
+import { STACK_SCREENS } from '../constants';
 
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
@@ -69,7 +70,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('Lesson_Plan_Editor_Menu', {
+              navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
                 isLessonPlanEditor: true,
                 lastEdited: lastEditedDate,
               })
