@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import AddIcon from '../../../assets/add.svg';
 import { TextStyle } from '../../Styles.config';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 
 const AddLessonContentButton = ({ placeholder, handleClick }) => {
   return (

@@ -11,12 +11,12 @@ import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 import { TextStyle } from '../../Styles.config';
 
-const LessonPlanNotes = ({ sectionType, subtitle, placeholder }) => {
-  const [sectionContent, setSectionContent] = useState(placeholder);
+const LessonPlanNotes = ({ sectionType, placeholder }) => {
+  const [sectionContent, setSectionContent] = useState(placeholder); // TODO: fix
 
   return (
     <SafeAreaView width={'100%'}>
-      <Text style={[styles.title, TextStyle.h2]}>{subtitle}</Text>
+      <Text style={[styles.title, TextStyle.h2]}>{sectionType}</Text>
       <View style={styles.SectionStyle}>
         <TextInput
           style={TextStyle.body}
