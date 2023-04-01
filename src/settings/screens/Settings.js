@@ -5,6 +5,7 @@ import IconButton from '../components/IconButton';
 import PolicyButton from '../components/PolicyButton';
 import CloudUpload from '../../../assets/cloudUploadOutline.svg';
 import Trash from '../../../assets/trashIcon.svg';
+import { TextStyle } from '../../Styles.config';
 
 const Settings = ({ navigation }) => {
   return (
@@ -16,7 +17,7 @@ const Settings = ({ navigation }) => {
       />
 
       <ScrollView>
-        <Text style={styles.title}>Settings</Text>
+        <Text style={[TextStyle.h2, styles.title]}>Settings</Text>
         <View style={styles.buttonContainer}>
           <IconButton
             title={'Back Up Data'}
@@ -30,7 +31,7 @@ const Settings = ({ navigation }) => {
           </IconButton>
         </View>
 
-        <Text style={styles.title}>Policies</Text>
+        <Text style={[TextStyle.h2, styles.title]}>Policies</Text>
         <View style={styles.buttonContainer}>
           {policyPages.map((policyPage, i) => (
             <PolicyButton
@@ -52,10 +53,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5',
   },
   title: {
-    fontFamily: 'Poppins-Bold',
-    fontSize: 28,
-    letterSpacing: 0.3,
-    color: '#453E3D',
     marginHorizontal: 30,
     marginBottom: 10,
   },

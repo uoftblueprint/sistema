@@ -40,7 +40,6 @@ export async function readFile(filepath) {
   return RNFS.readFile(filepath)
     .then(result => {
       console.log('GOT FILE: ', filepath);
-      console.log(result);
       return result;
     })
     .catch(err => {
@@ -53,8 +52,16 @@ export async function readFile(filepath) {
  * @param {String} filepath Full file path to delete
  * @param {String} content Content to write to given file path
  */
-export async function writeFile(filepath, content) {
-  return RNFS.writeFile(filepath, content, 'utf8')
+export async function writeFile(isImage, filepath, content) {
+  const options = {
+    encoding: '',
+  };
+  if (isImage) {
+    options.encoding = 'base64';
+  } else {
+    options.encoding = 'utf8';
+  }
+  return RNFS.writeFile(filepath, content, options)
     .then(success => {
       console.log(`FILE WRITTEN!: ${filepath}`);
     })
@@ -105,7 +112,11 @@ export async function moveFile(oldpath, newpath) {
 export async function checkFileExists(path) {
   return RNFS.exists(path)
     .then(result => {
-      console.log(`FILE EXISTS: ${path}`, result);
+      if (result) {
+        console.log('FILE EXISTS');
+      } else {
+        console.log('FILE DOES NOT EXIST');
+      }
       return result;
     })
     .catch(err => {

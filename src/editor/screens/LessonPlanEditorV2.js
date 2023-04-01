@@ -1,59 +1,53 @@
-import React from 'react';
 import LessonPlanHeader from '../components/LessonPlanHeader.js';
 import {
   StyleSheet,
   SafeAreaView,
   View,
-  ScrollView,
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import LessonSection from '../components/LessonSection.js';
+import { NestableScrollContainer } from 'react-native-draggable-flatlist';
+import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { SectionName } from '../../services/constants.js';
 
 // dummy last edited date
 const lastEditedDummy = 'Jan 1, 2023';
 
-const LessonPlanEditor = ({ navigation }) => {
+const LessonPlanEditorV2 = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
         navigation={navigation}
         lastEditedDate={lastEditedDummy}
       />
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={{
-          paddingBottom: verticalScale(55),
-        }}>
+
+      <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.viewStyle}>
-            <LessonSection
+          <View>
+            <LessonSectionDraggable
               navigation={navigation}
-              sectionType={'warmUp'}
-              subtitle={'Warm Up'}
+              sectionType={SectionName.warmUp}
             />
-            <LessonSection
+            <LessonSectionDraggable
               navigation={navigation}
-              sectionType={'mainLesson'}
-              subtitle={'Main Lesson'}
+              sectionType={SectionName.mainLesson}
             />
-            <LessonSection
+            <LessonSectionDraggable
               navigation={navigation}
-              sectionType={'coolDown'}
-              subtitle={'Cool Down'}
+              sectionType={SectionName.coolDown}
             />
             <LessonPlanNotes
               navigation={navigation}
-              sectionType={'notes'}
-              subtitle={'Notes'}
+              sectionType={SectionName.notes}
               placeholder={''}
             />
           </View>
         </TouchableWithoutFeedback>
-      </ScrollView>
+      </NestableScrollContainer>
+
       <View style={styles.saveButton}>
         <SaveButton />
       </View>
@@ -67,13 +61,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5',
     justifyContent: 'center',
   },
-  scrollView: {
-    flex: 1,
-    paddingBottom: verticalScale(20),
-  },
   viewStyle: {
     flexDirection: 'column',
-    alignItems: 'center',
+    paddingBottom: verticalScale(75),
     paddingHorizontal: scale(30),
   },
   saveButton: {
@@ -83,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LessonPlanEditor;
+export default LessonPlanEditorV2;

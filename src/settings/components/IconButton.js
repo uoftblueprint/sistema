@@ -1,10 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TextStyle } from '../../Styles.config';
 
 const IconButton = ({ title, handlePress, children }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={handlePress}>
       <View style={styles.icon}>{children}</View>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[TextStyle.label, styles.title]}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto',
     backgroundColor: '#FDFBF7',
-    borderRadius: 7.7,
+    borderRadius: 8,
     borderWidth: 0.77,
     borderStyle: 'solid',
     display: 'flex',
@@ -24,15 +25,11 @@ const styles = StyleSheet.create({
     marginBottom: 22,
   },
   title: {
-    fontFamily: 'Mulish-Regular',
-    fontSize: 18,
-    letterSpacing: 0.3,
-    color: 'black',
     margin: 14,
   },
   icon: {
-    marginVertical: 14,
-    marginLeft: 14,
+    marginVertical: 10,
+    marginLeft: 15,
   },
 });
 

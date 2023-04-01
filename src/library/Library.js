@@ -6,11 +6,13 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Header from '../Components/Header';
 import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 import LessonPlanService from '../services/LessonPlanService';
+import { TextStyle } from '../Styles.config';
 
 const Library = ({ navigation }) => {
   const [lpList, setList] = useState(null);
@@ -81,7 +83,7 @@ const Library = ({ navigation }) => {
           showBackButton={false}
         />
         <SafeAreaView style={styles.inlineTitle}>
-          <Text style={styles.title}>Lesson Plans</Text>
+          <Text style={TextStyle.h1}>Lesson Plans</Text>
           <TouchableOpacity>
             <FilterGraphic height={25} width={25} style={styles.filterButton} />
           </TouchableOpacity>
@@ -117,7 +119,7 @@ const Library = ({ navigation }) => {
       <SafeAreaView style={styles.container}>
         <Header showInfoIcon={false} />
         <SafeAreaView style={styles.inlineTitle}>
-          <Text style={styles.title}>Lesson Plans</Text>
+          <Text style={TextStyle.h1}>Lesson Plans</Text>
           <TouchableOpacity>
             <FilterGraphic height={25} width={25} style={styles.filterButton} />
           </TouchableOpacity>
@@ -137,15 +139,10 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#FFFAF5',
   },
-  title: {
-    fontFamily: 'Poppins-Bold',
-    fontSize: 28,
-    letterSpacing: 0.3,
-    color: '#453E3D',
-  },
   inlineTitle: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
     marginHorizontal: 30,
     marginBottom: 10,
@@ -156,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   filterButton: {
-    marginTop: 8,
+    marginBottom: Platform.OS === 'ios' ? 0 : 5,
   },
 });
 
