@@ -12,6 +12,7 @@ export const lessonPlanSlice = createSlice({
    * @property {string} key Unique in that section. For example, 'module-0'.
    */
   initialState: {
+    lessonPlanName: null,
     [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
@@ -19,6 +20,24 @@ export const lessonPlanSlice = createSlice({
     isDirty: false, // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {
+    addLessonPlan: (state, action) => {
+      // action.payload: {
+      //    lessonPlanName: "",
+      //    warmUp: [],
+      //    mainLesson: [],
+      //    coolDown: [],
+      //    notes: "",
+      // }
+      return {
+        ...state, 
+        lessonPlanName: action.payload.lessonPlanName,
+        [SectionName.warmUp]: action.payload.warmUp,
+        [SectionName.mainLesson]: action.payload.mainLesson,
+        [SectionName.coolDown]: action.payload.coolDown,
+        [SectionName.notes]: action.payload.notes,
+        isDirty: false, // T: 
+      }
+    },
     replaceSection: (state, action) => {
       // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
@@ -36,7 +55,7 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
-    addToSection: (state, action) => {
+    addToSection: (state, action) => { //add one module
       // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
       //     type: ModuleType.text || ModuleType.activityCard
@@ -55,18 +74,6 @@ export const lessonPlanSlice = createSlice({
           },
         ],
         isDirty: true,
-      };
-    },
-    removeFromSection: (state, action) => {
-      // TODO: remove this reducer if not being used anymore after you're done
-      const section = action.payload.section;
-      const indx = state[section].findIndex(
-        e => e.content === action.payload.content,
-      );
-      return {
-        ...state,
-        isDirty: true,
-        [action.payload.section]: state[section].filter((_, i) => i !== indx),
       };
     },
     addToNote: (state, action) => {
@@ -91,6 +98,7 @@ export const {
   addToNote,
   removeNote,
   replaceSection,
+  addLessonPlan,
 } = lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'

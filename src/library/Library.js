@@ -13,6 +13,7 @@ import FilterGraphic from '../../assets/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 import LessonPlanService from '../services/LessonPlanService';
 import { TextStyle } from '../Styles.config';
+import { STACK_SCREENS } from './constants';
 
 const Library = ({ navigation }) => {
   const [lpList, setList] = useState(null);
@@ -58,6 +59,10 @@ const Library = ({ navigation }) => {
     }
   }, [lpList]);
 
+  const openLessonPlan = () => {
+    navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2);
+  };
+
   if (loaded) {
     const handleFavoriteChange = (newFavState, index) => {
       (newFavState
@@ -100,16 +105,41 @@ const Library = ({ navigation }) => {
                   : -1;
               })
               .map((lessonPlan, i) => (
-                <LessonPlanButton
-                  key={i} // TODO: if lesson plan has a unique id, replace key with it
-                  index={i}
-                  name={lessonPlan.name}
-                  navigation={navigation}
-                  isFavorited={lessonPlan.isFavorited}
-                  toggleFavorite={handleFavoriteChange}
-                  lastEditedDate={lessonPlan.lastEdited}
-                />
+                <TouchableOpacity
+                    onPress={() => {
+                      /* 1. Navigate to the Details route with params */
+                    navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2,
+                      {lessonPlanName: lessonPlan.name});
+                  }}> 
+                  <LessonPlanButton
+                    key={i} // TODO: if lesson plan has a unique id, replace key with it
+                    index={i}
+                    name={lessonPlan.name}
+                    navigation={navigation}
+                    isFavorited={lessonPlan.isFavorited}
+                    toggleFavorite={handleFavoriteChange}
+                    lastEditedDate={lessonPlan.lastEdited}
+                    handleClick={openLessonPlan}
+                  ></LessonPlanButton>
+                </TouchableOpacity>
               ))}
+            {/* DUMMY LESSON PLAN */}
+            <TouchableOpacity
+                onPress={() => {
+                  /* 1. Navigate to the Details route with params */
+                navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2,
+                  {lessonPlanName: "March 1"});
+              }}> 
+              <LessonPlanButton
+                key={1} // TODO: if lesson plan has a unique id, replace key with it
+                index={0}
+                name={"Demo Plan"}
+                navigation={navigation}
+                isFavorited={false}
+                toggleFavorite={handleFavoriteChange}
+                lastEditedDate={"March 1"}
+                handleClick={openLessonPlan}/>
+            </TouchableOpacity>
           </SafeAreaView>
         </ScrollView>
       </SafeAreaView>

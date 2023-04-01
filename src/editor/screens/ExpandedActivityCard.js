@@ -10,7 +10,6 @@ import {
 import Header from '../../Components/Header';
 import ActivityCardService from '../../services/ActivityCardService';
 const windowHeight = Dimensions.get('window').height;
-import { MAINDIRECTORY } from '../../constants.js';
 
 const ExpandedActivityCard = ({ navigation, cardPath }) => {
   return (

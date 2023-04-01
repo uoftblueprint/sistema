@@ -16,6 +16,7 @@ import ContentCard from './ContentCard';
 import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS } from '../constants';
 import { TextStyle } from '../../Styles.config';
+import ChosenActivityCard from './ChosenActivityCard';
 
 const LessonSectionDraggable = ({ sectionType, navigation }) => {
   // REDUX STATES
@@ -37,19 +38,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   const [isLoaded, setLoaded] = useState(false);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
 
-  // Equivalent to componentDidMount
-  useEffect(() => {
-    // TODO: Do all your fetching data here like grab lesson plan from RNFS, and set it to redux.
-    // Make sure to add an indexing key to each module when you send it to redux (necessary for keyExtractor in NestableDraggableFlatList)
-    // Like so:
-    // .map((module, i) => {
-    //   return {
-    //     ...module,
-    //     key: `module-${i}`,   // Whatever key you use, make sure it will work with the regex in grabNextKey inside helpers.js. Must be a string.
-    //   }
-    // })
-    setLoaded(true); // Disable stuff until everything is loaded
-  }, []);
 
   // ADD LESSON CONTENT FUNCTIONS
   const addTextModule = () => {
@@ -60,6 +48,10 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
     navigation.navigate(STACK_SCREENS.ADD_ACTIVITY_CARD, {
       header: sectionType,
     });
+  };
+
+  const expandActivityCard = () => {
+    navigation.navigate(STACK_SCREENS.EXPANDED_ACTIVITY_CARD);
   };
 
   // MODULE MENU FUNCTIONS
@@ -80,6 +72,8 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
     });
     updateRedux(newSectionData);
   };
+
+  
 
   // To render each module in DraggableFlatList
   const renderModule = ({ item, drag, isActive }) => {
@@ -115,6 +109,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           placeholder={'Input text'}
           handleClick={addTextModule}
         />
+        
         <AddLessonContentButton
           placeholder={'Add activity cards'}
           handleClick={addActivityCard}
@@ -127,6 +122,10 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           keyExtractor={item => item.key}
           renderItem={renderModule}
         />
+        <ChosenActivityCard
+          handleClick={expandActivityCard} />
+          {/* cardName={cardName}
+          cardPath={cardPath} /> */}
       </View>
     </SafeAreaView>
   );

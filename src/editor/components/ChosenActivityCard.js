@@ -8,12 +8,12 @@ import store from '../../services/configureStore';
 import ImageIcon from '../../../assets/imageIcon.svg';
 import { STACK_SCREENS } from '../EditorNavigator';
 
-const ChosenActivityCard = ({ navigation, cardName, cardPath }) => {
+const ChosenActivityCard = ({ cardName, cardPath, handleClick}) => {
 // how to pass in the title 'cardName'?
-    const cardPath = cardPath; //.params?
+    const activityCardPath = cardPath; //.params?
     return (
         <SafeAreaView>
-            <TouchableOpacity onPress={() => navigation.navigate('Expanded Activity Card', {cardPath: cardPath})}>
+            <TouchableOpacity onPress={handleClick}>
             <SafeAreaView style= { styles.CardStyle } >
                 <ImageIcon style={[alignItems = "centre"]} />
                 <Text style={styles.cardName}>{cardName}</Text>
