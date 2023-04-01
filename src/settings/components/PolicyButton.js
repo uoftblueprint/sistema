@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { STACK_SCREENS } from '../constants';
 import NextButton from '../../../assets/backArrowEast.svg';
+import { TextStyle } from '../../Styles.config';
 
 const PolicyButton = ({ title, content, navigation }) => {
   return (
@@ -12,7 +13,7 @@ const PolicyButton = ({ title, content, navigation }) => {
           pageContent: content,
         });
       }}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[TextStyle.label, styles.title]}>{title}</Text>
       <View style={styles.icon}>
         <NextButton width={14} height={17} />
       </View>
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto',
     backgroundColor: '#FDFBF7',
-    borderRadius: 7.7,
+    borderRadius: 8,
     borderWidth: 0.77,
     borderStyle: 'solid',
     display: 'flex',
@@ -35,10 +36,6 @@ const styles = StyleSheet.create({
     marginBottom: 22,
   },
   title: {
-    fontFamily: 'Mulish-Regular',
-    fontSize: 18,
-    letterSpacing: 0.3,
-    color: 'black',
     margin: 14,
     maxWidth: '80%',
   },

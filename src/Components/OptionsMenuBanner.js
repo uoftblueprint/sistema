@@ -1,4 +1,5 @@
 import { Text, SafeAreaView, StyleSheet, Dimensions } from 'react-native';
+import { OptionsMenuPadding } from '../Styles.config';
 
 import CheckMarkIcon from '../../assets/checkMark.svg';
 import AlertErrorIcon from '../../assets/errorAlert.svg';
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   iconBanner: {
     width: 18.33,
     height: 18.33,
-    paddingLeft: '20%',
+    marginHorizontal: OptionsMenuPadding,
   },
 });
 

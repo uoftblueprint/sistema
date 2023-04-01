@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import './src/services/ignoreWarnings'; // Keep at top
+import React from 'react'; 
+import { View, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,
@@ -123,8 +124,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: Platform.OS === 'ios' ? 0 : 17
   }
 });
 
