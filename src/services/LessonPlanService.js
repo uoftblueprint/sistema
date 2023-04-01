@@ -164,19 +164,71 @@ const LessonPlanService = {
   },
 
   /**
-   * Rename a lesson plan. Throw an error if the lesson DNE or if it's renamed
-   * to an existing name.
-   * Use RNFS.moveFile() with the original filename and the new filename!
-   * @param {String} old_name Old name of lesson plan
-   * @param {String} new_name New name of lesson plan
+   * Helper function to find a lesson plan. Returns null if DNE.
+   * @param {String} name Name of the lesson plan
+   * @return {String} path to the lesson plan
    */
-  setLessonPlanName: async function (oldName, newName) {
+  findLessonPlan: async function (name, isFavourite) {
     try {
-      // ...
+      let path;
+      let favouritePath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      let defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+
+      if (await checkFileExists(favouritePath)) {
+        path = favouritePath;
+        isFavourite = true;
+      } else if (await checkFileExists(defaultPath)) {
+        path = defaultPath;
+        isFavourite = false;
+      } else {
+        path = null;
+      }
+
+      return path;
     } catch (e) {
-      // ...
+      console.error('Error findLessonPlan: ', e);
     }
   },
+
+  // /**
+  //  * Rename a lesson plan. Throw an error if the lesson DNE or if it's renamed
+  //  * to an existing name.
+  //  * Use RNFS.moveFile() with the original filename and the new filename!
+  //  * @param {String} old_name Old name of lesson plan
+  //  * @param {String} new_name New name of lesson plan
+  //  */
+  // setLessonPlanName: async function (oldName, newName) {
+  //   try {
+  //     /**
+  //      * 1. Check if oldName exists
+  //      * 2. Check if newName is taken
+  //      * 3. Update the JSON w/ new name
+  //      * 4. Rename relevant files inside oldPath
+  //      * 5. mkdir newPath
+  //      * 6. move everything from oldPath to newPath
+  //      * 7. unlink oldPath
+  //      */
+
+  //     // 1. check if oldName exists
+  //     let isFavourite;
+  //     let oldPath = this.findLessonPlan(oldName, isFavourite);
+  //     if (oldPath == null) {
+  //       throw new Error(`${oldName} does not exist.`);
+  //     }
+
+  //     // 2. check if newName is taken
+  //     let newPath = this.findLessonPlan(newName, isFavourite);
+  //     if (newPath != null) {
+  //       throw new Error(`${newName} is already taken.`);
+  //     }
+
+  //     // 3. edit the LESSON_PLAN.json
+
+      
+  //   } catch (e) {
+  //     console.error('Error setLessonPlanName: ', e);
+  //   }
+  // },
 
   /**
    * Initialize the empty Default and Favourited directories.

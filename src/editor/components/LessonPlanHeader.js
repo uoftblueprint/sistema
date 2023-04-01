@@ -14,13 +14,20 @@ import BackArrow from '../../../assets/backArrow.svg';
 import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
+import store from '../../services/configureStore';
+import { useSelector, useDispatch } from 'react-redux';
+import { getLessonName } from '../../services/editor/lessonPlanSlice';
+import { setLessonPlanName } from '../../services/editor/lessonPlanSlice';
 
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
 const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   const [isEditable, setIsEditable] = useState(false);
-  const [lessonPlanName, setLessonPlanName] = useState('');
+  // const [lessonPlanName ,setLessonPlanName] = useState('');
+
+  const lessonPlanName = useSelector(state => getLessonName(state));
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const todayDate = new Date().toLocaleDateString('en-us', {
@@ -50,6 +57,13 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
                 setIsEditable(false);
               }}
               autoFocus={true}
+              onEndEditing={e => {
+                dispatch(
+                  setLessonPlanName({
+                    name: lessonPlanName,
+                  }),
+                );
+              }}
             />
           ) : (
             <Text style={[styles.text, TextStyle.h1]} numberOfLines={1}>

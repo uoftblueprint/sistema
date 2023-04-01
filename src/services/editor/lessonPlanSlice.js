@@ -12,6 +12,7 @@ export const lessonPlanSlice = createSlice({
    * @property {string} key Unique in that section. For example, 'module-0'.
    */
   initialState: {
+    lessonPlanName: null,
     [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
@@ -57,6 +58,12 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
+    setLessonPlanName: (state, action) => {
+      return {
+        ...state,
+        lessonPlanName: action.payload.name,
+      };
+    },
     removeFromSection: (state, action) => {
       // TODO: remove this reducer if not being used anymore after you're done
       const section = action.payload.section;
@@ -91,6 +98,7 @@ export const {
   addToNote,
   removeNote,
   replaceSection,
+  setLessonPlanName,
 } = lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
@@ -102,6 +110,15 @@ export const getLessonSection = (state, sectionName) => {
       `getLessonSection: Could not grab lesson plan section ${sectionName} from redux.`,
     );
     return [];
+  }
+};
+
+export const getLessonName = (state) => {
+  try {
+    return state.lessonPlanName;
+  } catch {
+    console.error(`getLessonName: Could not grab leson plan name.`);
+    return '';
   }
 };
 
