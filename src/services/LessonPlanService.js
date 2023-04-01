@@ -224,7 +224,6 @@ const LessonPlanService = {
 
   //     // 3. edit the LESSON_PLAN.json
 
-      
   //   } catch (e) {
   //     console.error('Error setLessonPlanName: ', e);
   //   }

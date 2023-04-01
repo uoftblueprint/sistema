@@ -113,11 +113,11 @@ export const getLessonSection = (state, sectionName) => {
   }
 };
 
-export const getLessonName = (state) => {
+export const getLessonName = state => {
   try {
     return state.lessonPlanName;
   } catch {
-    console.error(`getLessonName: Could not grab leson plan name.`);
+    console.error('getLessonName: Could not grab leson plan name.');
     return '';
   }
 };
