@@ -37,12 +37,12 @@ export class LessonPlan {
  * @property {string} name Name of the add activity card
  * @property {string} path path to image in RNHS
  */
- export class ActivityCard {
+export class ActivityCard {
   constructor(name, path) {
     this.name = name;
     this.path = path;
   }
- }
+}
 
 /**
  * @property {string} type type of module content: "text" or "activity card"

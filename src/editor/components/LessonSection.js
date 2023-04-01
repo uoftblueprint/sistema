@@ -44,11 +44,11 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
           placeholder={'Add activity cards'}
           handleClick={addActivityCard}
         />
-        <ChosenActivityCard navigation={ navigation }/>
+        <ChosenActivityCard navigation={navigation} />
         {/* Stack of content already inserted, available for further editing/removing */}
         {/* arr is [{type: "text", content: "textcontent / path"}, {type: "text", content: "path"}, where type: "text" or "activityCard" */}
         {store.getState(sectionType).lessonPlan[sectionType].map((arr, i) => {
-          if (arr.type === "text" && arr.content.length > 0) {
+          if (arr.type === 'text' && arr.content.length > 0) {
             return (
               <View key={i}>
                 <StoredContent
@@ -59,15 +59,14 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
                 />
               </View>
             );
-          }
-          else if (arr.type === "activity" && arr.content.length > 0) {
+          } else if (arr.type === 'activity' && arr.content.length > 0) {
             let cardName = arr.name;
             let cardPath = arr.content;
             return (
               <View key={cardName}>
-                <ChosenActivityCard name={cardName} path={cardPath}/>
+                <ChosenActivityCard name={cardName} path={cardPath} />
               </View>
-            )
+            );
           }
         })}
       </View>

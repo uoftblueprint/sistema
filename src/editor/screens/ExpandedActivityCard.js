@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   Text,
   ScrollView,
-    Dimensions,
+  Dimensions,
 } from 'react-native';
 
 // import AddButton from './components/AddToLessonButton';
@@ -13,9 +13,6 @@ const windowHeight = Dimensions.get('window').height;
 import { MAINDIRECTORY } from '../../constants.js';
 
 const ExpandedActivityCard = ({ navigation, cardPath }) => {
-
- 
-  
   return (
     <SafeAreaView style={styles.background}>
       <Header
