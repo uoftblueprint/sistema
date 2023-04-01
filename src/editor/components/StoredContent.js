@@ -31,6 +31,7 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
                 addToSection({
                   type: 'text',
                   section: sectionType,
+                  name: 'text',
                   content: e.nativeEvent.text,
                 }),
               );

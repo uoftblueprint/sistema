@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const lessonPlanSlice = createSlice({
   name: 'lessonPlan',
   initialState: {
-    warmUp: [], // [{type: "text", content: "..."} where type: "text" or "activityCard"
+    warmUp: [], // [{type: "text", content: "textcontent / path"} where type: "text" or "activityCard"
     mainLesson: [],
     coolDown: [],
     notes: '',

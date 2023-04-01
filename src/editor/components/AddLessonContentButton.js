@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   sectionStyle: {
-    fontFamily: 'Poppins-Light',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

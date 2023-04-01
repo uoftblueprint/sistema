@@ -4,6 +4,7 @@ import { Text, View, SafeAreaView, Platform, StyleSheet } from 'react-native';
 import store from '../../services/configureStore';
 import ContentCard from './ContentCard';
 import StoredContent from './StoredContent';
+import ChosenActivityCard from './ChosenActivityCard';
 
 const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const [sectionContent, setSectionContent] = useState([]);
@@ -36,25 +37,15 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
           placeholder={'Input text'}
           handleClick={handleClick}
         />
-        {/* <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Add Activity Card', {
-              header: subtitle
-            })
-          }>
-          <LessonPlanTextInput
-            placeholder={'Add activity cards'}
-            isButton={true}
-          />
-        </TouchableOpacity> */}
         <AddLessonContentButton
           placeholder={'Add activity cards'}
           handleClick={addActivityCard}
         />
-
+        <ChosenActivityCard navigation={ navigation }/>
         {/* Stack of content already inserted, available for further editing/removing */}
+        {/* arr is [{type: "text", content: "textcontent / path"}, {type: "text", content: "path"}, where type: "text" or "activityCard" */}
         {store.getState(sectionType).lessonPlan[sectionType].map((arr, i) => {
-          if (arr.content.length > 0) {
+          if (arr.type === "text" && arr.content.length > 0) {
             return (
               <View key={i}>
                 <StoredContent
@@ -65,6 +56,15 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
                 />
               </View>
             );
+          }
+          else if (arr.type === "activity" && arr.content.length > 0) {
+            let cardName = arr.name;
+            let cardPath = arr.content;
+            return (
+              <View key={cardName}>
+                <ChosenActivityCard name={cardName} path={cardPath}/>
+              </View>
+            )
           }
         })}
       </View>

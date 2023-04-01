@@ -21,6 +21,7 @@ const ContentCard = ({
               addToSection({
                 type: 'text',
                 section: sectionType,
+                name: 'text',
                 content: e.nativeEvent.text,
               }),
             );
