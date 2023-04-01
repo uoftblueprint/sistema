@@ -24,7 +24,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     const { lessonPlanName } = route.params;
     useEffect(() => {
       async function getLessonPlan() {
-        let lessonPlanObj = await LessonPlanService.getLessonPlan(lessonPlanName);
+        let lessonPlanObj = await LessonPlanService.getLessonPlan(
+          lessonPlanName,
+        );
         store.dispatch(
           //check arrays this is JSONparsed too
           //add a key to each module
@@ -34,9 +36,8 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             mainLesson: lessonPlanObj.mainLessonList,
             coolDown: lessonPlanObj.coolDownList,
             notes: lessonPlanObj.json.notes,
-          })
-        )
-        
+          }),
+        );
       }
       getLessonPlan();
     }, []);
@@ -76,7 +77,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       <TouchableOpacity style={styles.saveButton}>
         <SaveButton />
         {/* when saving, strinfy the lessonapln object (and remove key)<
-        
+
         when displaying, JSON.parse*/}
       </TouchableOpacity>
     </SafeAreaView>

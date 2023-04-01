@@ -29,14 +29,14 @@ export const lessonPlanSlice = createSlice({
       //    notes: "",
       // }
       return {
-        ...state, 
+        ...state,
         lessonPlanName: action.payload.lessonPlanName,
         [SectionName.warmUp]: action.payload.warmUp,
         [SectionName.mainLesson]: action.payload.mainLesson,
         [SectionName.coolDown]: action.payload.coolDown,
         [SectionName.notes]: action.payload.notes,
-        isDirty: false, // T: 
-      }
+        isDirty: false, // T:
+      };
     },
     replaceSection: (state, action) => {
       // action.payload: {
@@ -55,7 +55,8 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
-    addToSection: (state, action) => { //add one module
+    addToSection: (state, action) => {
+      //add one module
       // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
       //     type: ModuleType.text || ModuleType.activityCard

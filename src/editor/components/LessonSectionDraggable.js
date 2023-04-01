@@ -38,7 +38,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   const [isLoaded, setLoaded] = useState(false);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
 
-
   // ADD LESSON CONTENT FUNCTIONS
   const addTextModule = () => {
     setisTextinputOpen(!isTextinputOpen);
@@ -72,8 +71,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
     });
     updateRedux(newSectionData);
   };
-
-  
 
   // To render each module in DraggableFlatList
   const renderModule = ({ item, drag, isActive }) => {
@@ -109,7 +106,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           placeholder={'Input text'}
           handleClick={addTextModule}
         />
-        
+
         <AddLessonContentButton
           placeholder={'Add activity cards'}
           handleClick={addActivityCard}
@@ -122,9 +119,8 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           keyExtractor={item => item.key}
           renderItem={renderModule}
         />
-        <ChosenActivityCard
-          handleClick={expandActivityCard} />
-          {/* cardName={cardName}
+        <ChosenActivityCard handleClick={expandActivityCard} />
+        {/* cardName={cardName}
           cardPath={cardPath} /> */}
       </View>
     </SafeAreaView>

@@ -106,11 +106,12 @@ const Library = ({ navigation }) => {
               })
               .map((lessonPlan, i) => (
                 <TouchableOpacity
-                    onPress={() => {
-                      /* 1. Navigate to the Details route with params */
-                    navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2,
-                      {lessonPlanName: lessonPlan.name});
-                  }}> 
+                  onPress={() => {
+                    /* 1. Navigate to the Details route with params */
+                    navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2, {
+                      lessonPlanName: lessonPlan.name,
+                    });
+                  }}>
                   <LessonPlanButton
                     key={i} // TODO: if lesson plan has a unique id, replace key with it
                     index={i}
@@ -120,25 +121,27 @@ const Library = ({ navigation }) => {
                     toggleFavorite={handleFavoriteChange}
                     lastEditedDate={lessonPlan.lastEdited}
                     handleClick={openLessonPlan}
-                  ></LessonPlanButton>
+                  />
                 </TouchableOpacity>
               ))}
             {/* DUMMY LESSON PLAN */}
             <TouchableOpacity
-                onPress={() => {
-                  /* 1. Navigate to the Details route with params */
-                navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2,
-                  {lessonPlanName: "March 1"});
-              }}> 
+              onPress={() => {
+                /* 1. Navigate to the Details route with params */
+                navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2, {
+                  lessonPlanName: 'March 1',
+                });
+              }}>
               <LessonPlanButton
                 key={1} // TODO: if lesson plan has a unique id, replace key with it
                 index={0}
-                name={"Demo Plan"}
+                name={'Demo Plan'}
                 navigation={navigation}
                 isFavorited={false}
                 toggleFavorite={handleFavoriteChange}
-                lastEditedDate={"March 1"}
-                handleClick={openLessonPlan}/>
+                lastEditedDate={'March 1'}
+                handleClick={openLessonPlan}
+              />
             </TouchableOpacity>
           </SafeAreaView>
         </ScrollView>

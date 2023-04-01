@@ -17,8 +17,6 @@ import { scale, verticalScale } from 'react-native-size-matters';
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditor = ({ navigation, name }) => {
-
-  
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
