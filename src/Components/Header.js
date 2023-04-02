@@ -19,12 +19,6 @@ import { verticalScale } from 'react-native-size-matters';
 import Circle from '../../assets/circle.svg';
 import { AppColors } from '../Styles.config';
 
-const activityCardNamingExplanation =
-  'Activity Card names have three parts:\n\n' +
-  'The theme will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm"\n\n' +
-  'There are four Activity Types, each describing a different way to approach learning about the social or musical theme:';
-// 'Knowledge, Action, Perception, and Creation.\n\n' +
-// 'The Activity Title identifies the specific activity or activities on the card, for example, "Roses and Thorns", or "Naming Intervals". Sometimes the names are jokes or puns, sometimes just a shorthand for what the activity will involve.';
 
 const Header = ({ navigation, isHome, showBackButton }) => {
   const [isVisible, setVisible] = useState(false);
@@ -93,17 +87,14 @@ const Header = ({ navigation, isHome, showBackButton }) => {
               {'Theme '}
             </Text>
             {
-              'will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm".\n'
+              'will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm".\nThere are four'
             }
-            {'There are four'}
             <Text style={[TextStyle.body, styles.textBody, styles.bold]}>
-              {' '}
-              Activity Types{' '}
+              {' Activity Types'}
             </Text>
             {
-              ', each describing a different way to approach learning about the social or musical theme:'
+              ', each describing a different way to approach learning about the social or musical theme: Knowledge '
             }
-            {' Knowledge '}
             <Circle
               style={styles.inlineCircle}
               width={13}
@@ -118,11 +109,10 @@ const Header = ({ navigation, isHome, showBackButton }) => {
             <Circle width={13} height={13} fill={AppColors.senary} />
             {'.\nThe'}
             <Text style={[TextStyle.body, styles.textBody, styles.bold]}>
-              {' '}
-              {'Activity Title '}{' '}
+              {' Activity Title '}
             </Text>
             {
-              'identifies the specific activity or activities on the card, for example, "Roses and Thorns", or "Naming Intervals".'
+              'identifies the specific activity or activities on the card, for example, "Roses and Thorns", or "Naming Intervals". '
             }
             {
               'Sometimes the names are jokes or puns, sometimes just a shorthand for what the activity will involve.'
