@@ -45,7 +45,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       async function getLessonPlan(LessonName) {
         lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
       }
-      //parse everything
+      //TODO: parse everything
       getLessonPlan(lessonPlanName);
     }, []);
   }
