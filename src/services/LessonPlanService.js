@@ -7,6 +7,7 @@ import {
   deleteFile,
   makeDirectory,
   readDDirectory,
+  cpyFile,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { LessonPlan, Module } from './models';
@@ -124,6 +125,51 @@ const LessonPlanService = {
       console.error('Error getLessonPlan: ', e);
     }
   },
+  /**
+   * Given the name of the lesson plan, copy all files in its directory 
+   * into a new directory named lesson plan name (i) in the default 
+   * directory
+   * @param {String} name is the lesson plans name 
+   */
+  copyLessonPlan: async function (name){
+    try {
+      var j = 1;
+
+      // find which repetition of copy are we on
+      while (await checkFileExists(MAINDIRECTORY + '/Default/' + name + ' (' + j + ')') 
+      || await checkFileExists(MAINDIRECTORY + '/Favourited/' + name + ' (' + j + ')')){
+        j++;
+      }
+      const destPath = MAINDIRECTORY + '/Default/' + name + ' (' + j + ')/';
+
+      // make new directory for the copied file
+      await makeDirectory(destPath);
+
+      var filepath;
+
+      // find the original filepath
+      if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + name)){
+         filepath = MAINDIRECTORY + '/Favourited/' + name + '/';
+      } else {
+        filepath = MAINDIRECTORY + '/Default/' + name + '/';
+      }
+
+      var files = await readDirectory(filepath);
+
+      // copy all the files in the lesson plans directory to the new directory
+      for (var i = 0; i < files.length; i++) {
+        // if this is the lesson plan, rename with the new name, otherwise just copy 
+        if (files[i] === (`${name}.json`)){
+          await cpyFile(filepath + files[i], destPath + name + ' (' + j + ').json');
+        } else {
+          await cpyFile(filepath + files[i], destPath + files[i]);
+       }
+      }
+
+    } catch (e){
+      console.error('Error copyLessonPlan: ', e);
+    } 
+  },
 
   /**
    * Reach into the lesson plan directory in local storage and return an array
@@ -144,11 +190,13 @@ const LessonPlanService = {
 
       if (option === 0 || option === 1) {
         combined = favouritedLessonPlans;
+
         if (option === 0) {
           for (var i = 0; i < defaultLessonPlans.length; i++) {
             combined.push(defaultLessonPlans[i]);
           }
         }
+
       } else {
         combined = defaultLessonPlans;
       }
@@ -262,5 +310,7 @@ const LessonPlanService = {
     }
   },
 };
+
+
 
 export default LessonPlanService;

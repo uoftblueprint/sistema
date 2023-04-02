@@ -12,6 +12,7 @@ const LessonPlanButton = ({
   isFavorited,
   toggleFavorite,
   lastEditedDate,
+  lessonPlan, 
 }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -30,6 +31,7 @@ const LessonPlanButton = ({
           onPress={() =>
             navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
               lastEdited: lastEditedDate,
+              lessonPlanName: lessonPlan,
             })
           }>
           <DotsGraphic width={23} height={23} />

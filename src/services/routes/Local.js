@@ -138,3 +138,21 @@ export async function makeDirectory(dirPath) {
       console.error(`RNFS makeDirectory: ${err.message}`);
     });
 }
+
+/**
+ * Copies the file located at filepath to destPath.
+
+   Note: On Android copyFile will overwrite destPath if it already exists. On iOS an error will be thrown if the file already exists.
+ * @param {String} filepath 
+ * @param {String} destPath 
+ */
+export async function cpyFile(filepath, destPath) {
+  return RNFS.copyFile(filepath, destPath)
+  .then(() => {
+    console.log(`FILE COPIED! ${filepath} => ${destPath}`);
+  })
+  .catch(err => {
+    console.error(`RNFS cpyFile: ${err.message}`);
+  })
+
+}
