@@ -28,6 +28,7 @@ import axios from 'axios';
 import { DRIVE_API_URLS } from '../../services/config.json';
 
 import ActivityCardService from '../../services/ActivityCardService';
+import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 
@@ -147,6 +148,7 @@ const AddActivityCard = function ({ navigation, route }) {
   // **************** PREVIEW RELATED VARS ***************
 
   //Subscribe to keyboard events on component mount
+  const dispatch = useDispatch();
   const [keyboardVisible, setKeyBoardVisible] = useState(false);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -179,8 +181,9 @@ const AddActivityCard = function ({ navigation, route }) {
       previewInfo.id,
     );
     console.log(rnfsPath);
-
-    store.dispatch(
+    console.log(previewInfo.name);
+    console.log(route.params.sectionType);
+    dispatch(
       addToSection({
         type: 'activity',
         name: previewInfo?.name,
