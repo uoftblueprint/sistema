@@ -6,6 +6,7 @@ import {
 import { useState, useEffect } from 'react';
 import SortingButton from './components/SortingButton';
 import { STACK_SCREENS } from './constants';
+import { verticalScale, scale } from 'react-native-size-matters';
 
 const buttons = [
   {
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttons: {
-    paddingTop: '30%',
-    paddingRight: '5%',
+    marginTop: verticalScale(100),
+    marginRight: scale(20),
   },
 });
 export default LessonPlanSortingMenu;

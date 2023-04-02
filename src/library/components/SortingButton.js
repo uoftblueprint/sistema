@@ -1,9 +1,10 @@
-import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, SafeAreaView, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { TextStyle } from '../../Styles.config';
 
 const SortingButton = ({ text, onPress }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={[styles.buttonContainer]} onPress={onPress}>
+      <TouchableOpacity style={[TextStyle.label, styles.buttonContainer]} onPress={onPress}>
         <Text style={styles.textContainer}>{text}</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -12,7 +13,14 @@ const SortingButton = ({ text, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: '2%',
+    ...Platform.select({
+      ios: {
+        marginBottom: '2%',
+      },
+      android: {
+        paddingBottom: '2%',
+      },
+    }),
   },
   buttonContainer: {
     borderWidth: 0.25,
@@ -28,9 +36,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingLeft: '10%',
-    fontFamily: 'Mulish',
-    color: 'rgba(0,0,0, 0.87)',
-    fontSize: 16,
   },
 });
 export default SortingButton;
