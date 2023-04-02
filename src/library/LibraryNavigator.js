@@ -12,13 +12,14 @@ const LibraryNavigator = () => {
       intialRouteName={STACK_SCREENS.LIBRARY}
       screenOptions={{
         headerShown: false,
-      }}
-      
-      >
-      <Stack.Screen name={STACK_SCREENS.LIBRARY} component={Library} 
-      initialParams={{
-        sortT: 0,
-      }}/>
+      }}>
+      <Stack.Screen
+        name={STACK_SCREENS.LIBRARY}
+        component={Library}
+        initialParams={{
+          sortT: 0,
+        }}
+      />
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}
@@ -29,7 +30,7 @@ const LibraryNavigator = () => {
           isLessonPlanEditor: false,
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_SORTING_MENU}
         component={LessonPlanSortingMenu}
         options={{

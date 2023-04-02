@@ -14,13 +14,16 @@ const handleOnPress = (text, name) => {
   if (text === 'Copy Lesson Plan') {
     LessonPlanService.copyLessonPlan(name);
   }
-} 
+};
 
-const OptionsMenuButton = ({ text, icon, lessonName}) => {
-  
+const OptionsMenuButton = ({ text, icon, lessonName }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={[styles.buttonContainer]} onPress={() => {handleOnPress(text, lessonName)}}>
+      <TouchableOpacity
+        style={[styles.buttonContainer]}
+        onPress={() => {
+          handleOnPress(text, lessonName);
+        }}>
         <SafeAreaView
           style={{
             width: 22,

@@ -12,7 +12,7 @@ const LessonPlanButton = ({
   isFavorited,
   toggleFavorite,
   lastEditedDate,
-  lessonPlan, 
+  lessonPlan,
 }) => {
   return (
     <SafeAreaView style={styles.container}>

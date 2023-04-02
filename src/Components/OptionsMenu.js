@@ -9,7 +9,12 @@ import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView } from 'react-native';
 
-const OptionsMenu = ({ isLessonPlanEditor, lastEdited, lessonPlan,  navigation }) => {
+const OptionsMenu = ({
+  isLessonPlanEditor,
+  lastEdited,
+  lessonPlan,
+  navigation,
+}) => {
   const [isFavorited, setFavorited] = useState(false);
   const [isBannerVisible, setBannerVisible] = useState(false);
 

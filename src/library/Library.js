@@ -15,18 +15,18 @@ import LessonPlanService from '../services/LessonPlanService';
 import { TextStyle } from '../Styles.config';
 import { STACK_SCREENS } from './constants';
 
-const Library = ({navigation, route}) => {
+const Library = ({ navigation, route }) => {
   const { sortT } = route.params;
   const [lpList, setList] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [sortType, setSortType] = useState(null);
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     setLoaded(false);
   }, [sortType]);
 
   // If sort time is different, we have to reload
-  if (sortT !== sortType){
+  if (sortT !== sortType) {
     setSortType(sortT);
   }
 
@@ -61,8 +61,8 @@ const Library = ({navigation, route}) => {
             lastEditedDate: defL[lp].mtime,
           });
         }
-        setList(lessonPlanInfo);   
-      } 
+        setList(lessonPlanInfo);
+      }
 
       getPlans();
     }, []),
@@ -81,25 +81,23 @@ const Library = ({navigation, route}) => {
         : LessonPlanService.unfavouriteLessonPlan(lpList[index].name)
       )
         .then(() => {
-              setList(oldList => {
-                // Update the time temporarily to be now, rather than accessing the new mtime
-                const updateTime = new Date();
-                oldList[index].lastEditedDate = updateTime;
-                oldList[index].lastEdited = updateTime.toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                });
-                oldList[index].isFavorited = newFavState;
-              return [...oldList];
+          setList(oldList => {
+            // Update the time temporarily to be now, rather than accessing the new mtime
+            const updateTime = new Date();
+            oldList[index].lastEditedDate = updateTime;
+            oldList[index].lastEdited = updateTime.toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
             });
-        
+            oldList[index].isFavorited = newFavState;
+            return [...oldList];
+          });
         })
         .catch(err => {
           console.error(`Library favourite lesson plan: ${err}`);
         });
     };
-    
 
     return (
       <SafeAreaView style={styles.container}>
@@ -110,7 +108,10 @@ const Library = ({navigation, route}) => {
         />
         <SafeAreaView style={styles.inlineTitle}>
           <Text style={TextStyle.h1}>Lesson Plans</Text>
-          <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.LESSON_PLAN_SORTING_MENU)}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(STACK_SCREENS.LESSON_PLAN_SORTING_MENU)
+            }>
             <FilterGraphic height={25} width={25} style={styles.filterButton} />
           </TouchableOpacity>
         </SafeAreaView>
@@ -118,23 +119,29 @@ const Library = ({navigation, route}) => {
           <SafeAreaView style={styles.content}>
             {lpList
               .sort((x, y) => {
-                switch (sortType){
+                switch (sortType) {
                   case 1:
                     // A to Z
                     return x.name === y.name ? 0 : x.name > y.name ? 1 : -1;
                   case 2:
                     // Z to A
-                    return x.name === y.name ? 0 : x.name < y.name ? 1: -1;
+                    return x.name === y.name ? 0 : x.name < y.name ? 1 : -1;
                   case 3:
                     // Oldest
                     // + prefix is used to compare the miliseconds
-                    return  +x.lastEditedDate === +y.lastEditedDate ? 0
-                    : x.lastEditedDate > y.lastEditedDate ? 1 : -1;
+                    return +x.lastEditedDate === +y.lastEditedDate
+                      ? 0
+                      : x.lastEditedDate > y.lastEditedDate
+                      ? 1
+                      : -1;
                   default:
                     // Last Edited
                     // if no sort type is chosen, sort by last edited
-                    return  +x.lastEditedDate === +y.lastEditedDate ? 0
-                    : x.lastEditedDate < y.lastEditedDate ? 1 : -1;
+                    return +x.lastEditedDate === +y.lastEditedDate
+                      ? 0
+                      : x.lastEditedDate < y.lastEditedDate
+                      ? 1
+                      : -1;
                 }
               })
               .sort((x, y) => {
@@ -167,7 +174,10 @@ const Library = ({navigation, route}) => {
         <Header showInfoIcon={false} />
         <SafeAreaView style={styles.inlineTitle}>
           <Text style={TextStyle.h1}>Lesson Plans</Text>
-          <TouchableOpacity onPress={() => navigation.navigate(STACK_SCREENS.LESSON_PLAN_SORTING_MENU)}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(STACK_SCREENS.LESSON_PLAN_SORTING_MENU)
+            }>
             <FilterGraphic height={25} width={25} style={styles.filterButton} />
           </TouchableOpacity>
         </SafeAreaView>

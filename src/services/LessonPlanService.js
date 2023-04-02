@@ -126,18 +126,24 @@ const LessonPlanService = {
     }
   },
   /**
-   * Given the name of the lesson plan, copy all files in its directory 
-   * into a new directory named lesson plan name (i) in the default 
+   * Given the name of the lesson plan, copy all files in its directory
+   * into a new directory named lesson plan name (i) in the default
    * directory
-   * @param {String} name is the lesson plans name 
+   * @param {String} name is the lesson plans name
    */
-  copyLessonPlan: async function (name){
+  copyLessonPlan: async function (name) {
     try {
       var j = 1;
 
       // find which repetition of copy are we on
-      while (await checkFileExists(MAINDIRECTORY + '/Default/' + name + ' (' + j + ')') 
-      || await checkFileExists(MAINDIRECTORY + '/Favourited/' + name + ' (' + j + ')')){
+      while (
+        (await checkFileExists(
+          MAINDIRECTORY + '/Default/' + name + ' (' + j + ')',
+        )) ||
+        (await checkFileExists(
+          MAINDIRECTORY + '/Favourited/' + name + ' (' + j + ')',
+        ))
+      ) {
         j++;
       }
       const destPath = MAINDIRECTORY + '/Default/' + name + ' (' + j + ')/';
@@ -148,8 +154,8 @@ const LessonPlanService = {
       var filepath;
 
       // find the original filepath
-      if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + name)){
-         filepath = MAINDIRECTORY + '/Favourited/' + name + '/';
+      if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + name)) {
+        filepath = MAINDIRECTORY + '/Favourited/' + name + '/';
       } else {
         filepath = MAINDIRECTORY + '/Default/' + name + '/';
       }
@@ -158,17 +164,19 @@ const LessonPlanService = {
 
       // copy all the files in the lesson plans directory to the new directory
       for (var i = 0; i < files.length; i++) {
-        // if this is the lesson plan, rename with the new name, otherwise just copy 
-        if (files[i] === (`${name}.json`)){
-          await cpyFile(filepath + files[i], destPath + name + ' (' + j + ').json');
+        // if this is the lesson plan, rename with the new name, otherwise just copy
+        if (files[i] === `${name}.json`) {
+          await cpyFile(
+            filepath + files[i],
+            destPath + name + ' (' + j + ').json',
+          );
         } else {
           await cpyFile(filepath + files[i], destPath + files[i]);
-       }
+        }
       }
-
-    } catch (e){
+    } catch (e) {
       console.error('Error copyLessonPlan: ', e);
-    } 
+    }
   },
 
   /**
@@ -196,7 +204,6 @@ const LessonPlanService = {
             combined.push(defaultLessonPlans[i]);
           }
         }
-
       } else {
         combined = defaultLessonPlans;
       }
@@ -310,7 +317,5 @@ const LessonPlanService = {
     }
   },
 };
-
-
 
 export default LessonPlanService;
