@@ -10,14 +10,17 @@ import LessonPlanService from '../services/LessonPlanService';
 
 const windowWidth = Dimensions.get('window').width;
 
+const handleOnPress = (text, name) => {
+  if (text === 'Copy Lesson Plan') {
+    LessonPlanService.copyLessonPlan(name);
+  }
+} 
 
 const OptionsMenuButton = ({ text, icon, lessonName}) => {
   
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={[styles.buttonContainer]} onPress={() => {if (text === 'Copy Lesson Plan') {
-        LessonPlanService.copyLessonPlan(lessonName);
-      }}}>
+      <TouchableOpacity style={[styles.buttonContainer]} onPress={() => {handleOnPress(text, lessonName)}}>
         <SafeAreaView
           style={{
             width: 22,
