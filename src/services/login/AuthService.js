@@ -35,7 +35,7 @@ const encryptSecret = testKey => {
  * @param {string} key key in jwt.keys.json
  * @returns String or null if key is not found
  */
-export const decryptSecret = key => {
+const decryptSecret = key => {
   return jwt_info[key]
     ? AES.decrypt(jwt_info[key], key, {
         iv: Hex.parse('00000000000000000000000000000000'),

@@ -57,7 +57,6 @@ const tabIcon = (iconSVG, isFocused) => {
 const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
-
   const navigationRef = useNavigationContainerRef();
   const insets = useSafeAreaInsets();
 

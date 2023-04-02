@@ -15,18 +15,19 @@ const windowHeight = Dimensions.get('window').height;
 const ExpandedCard = ({ route, navigation }) => {
   const { cardPath } = route.params;
   const [title, setTitle] = useState('');
-  const [cardImagePath, setCardImagePath] = useState(null);
+  const [cardImagePath, setCardImagePath] = useState('');
 
   useEffect(() => {
     const readCardTitle = async () => {
       try {
         const cardTitlePath = cardPath + 'cardName.txt';
-        var cardNames = await readFile(cardTitlePath, 'utf-8');
+        let cardNames = await readFile(cardTitlePath, 'utf-8');
         cardNames = cardNames.substring(0, cardNames.length - 5);
         setCardImagePath(cardPath + 'cardImage.jpg');
         setTitle(cardNames);
       } catch (err) {
-        console.log(err);
+        console.warn(err);
+        setTitle('Could not load card preview. Please try again.');
       }
     };
     readCardTitle();
@@ -46,11 +47,13 @@ const ExpandedCard = ({ route, navigation }) => {
           <Text style={styles.title}> {title} </Text>
 
           <SafeAreaView style={styles.box}>
-            <Image
+          { cardImagePath && 
+            (<Image
               source={{ uri: `file://${cardImagePath}` }}
               style={styles.cardImage}
               resizeMode="contain"
-            />
+            />)
+}
           </SafeAreaView>
         </SafeAreaView>
       </ScrollView>

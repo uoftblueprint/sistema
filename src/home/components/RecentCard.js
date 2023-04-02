@@ -14,14 +14,14 @@ const windowHeight = Dimensions.get('window').height;
 const RecentCard = ({ navigation, cardPath }) => {
   const [title, setTitle] = useState('');
   const [backgroundColor, setBackgroundColor] = useState('#9D649F');
-  const [cardImagePath, setCardImagePath] = useState(null);
+  const [cardImagePath, setCardImagePath] = useState('');
 
   useEffect(() => {
     const readCardTitle = async () => {
       try {
         //read card name from the .txt file pointed to by pathArr in Home.js
         const cardTitlePath = cardPath + 'cardName.txt';
-        var cardNames = await readFile(cardTitlePath, 'utf-8');
+        let cardNames = await readFile(cardTitlePath, 'utf-8');
         cardNames = cardNames.substring(0, cardNames.length - 5);
         setTitle(cardNames);
 
@@ -80,10 +80,6 @@ const RecentCard = ({ navigation, cardPath }) => {
       width: '100%',
       height: '19%',
       backgroundColor: backgroundColor,
-      // ACTION:     #9D649F
-      // PERCEPTION: #5CB1A9
-      // CREATION:   #DD726C
-      // KNOWLEDGE:  #5D8CC6
     },
     title: {
       fontFamily: 'Mulish-Regular',

@@ -56,7 +56,7 @@ const ActivityCardService = {
         await deleteFile(path);
         await makeDirectory(path);
       } else {
-        return;
+        return [];
       }
 
       //if new cards were found, save them into the empty directory path
@@ -83,6 +83,7 @@ const ActivityCardService = {
     } catch (e) {
       // There was an error, catch it and do something with it
       console.log('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
+      return [];
     }
   },
 

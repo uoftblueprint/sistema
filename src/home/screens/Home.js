@@ -29,10 +29,12 @@ const Home = ({ navigation }) => {
     const filePath = `${datePath}/date.txt`;
 
     const cards = await ActivityCardService.getFeaturedActivityCards();
-    setPathArr(cards);
+    
 
     //update the last refreshed date
     if (cards.length != 0) {
+      setPathArr(cards);
+      
       const today = new Date().toDateString();
       setDate(today);
       await makeDirectory(datePath);
