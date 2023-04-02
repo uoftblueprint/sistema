@@ -32,7 +32,9 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   });
   const [lessonName, setLessonName] = useState(todayDate.toString());
   const dispatch = useDispatch();
-  dispatch(setLessonPlanName({ name: lessonName }));
+  useEffect(() => {
+    dispatch(setLessonPlanName({ name: lessonName }));
+  }, [lessonName]);
   let reduxName = useSelector(state => getLessonPlanName(state.lessonPlan)); //TODO: why cant??
 
   console.log('REDUX NAME ' + reduxName);
