@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
     const datePath = MAINDIRECTORY + '/RefreshedDate';
     const filePath = `${datePath}/date.txt`;
     const cards = await ActivityCardService.getFeaturedActivityCards();
-    
+
     //update the last refreshed date
     if (cards.length != 0) {
       setPathArr(cards);
