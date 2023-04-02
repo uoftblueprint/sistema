@@ -9,7 +9,7 @@ import Trash from '../../../assets/trashIcon.svg';
 import { TextStyle } from '../../Styles.config';
 import { deleteFile } from '../../services/routes/Local';
 import Overlay from '../../Components/Overlay';
-import WarningIcon from '../../../assets/errorAlert.svg'
+import WarningIcon from '../../../assets/errorAlert.svg';
 import SistemaButton from '../../Components/SistemaButton';
 import RNRestart from 'react-native-restart';
 import { MAINDIRECTORY } from '../../services/constants';
@@ -48,22 +48,22 @@ const Settings = ({ navigation }) => {
           </View>
           <View style={styles.textColumn}>
             <Text style={[TextStyle.label, { fontWeight: 'bold' }]}>
-              Warning! This will reset the app and delete all data.</Text>
+              Warning! This will reset the app and delete all data.
+            </Text>
             <View style={styles.buttonContainer2}>
               <SistemaButton onPress={toggleDeleteOverlay}>
                 <Text style={TextStyle.body}> Cancel </Text>
               </SistemaButton>
-              <SistemaButton onPress={
-                () => {
-                  deleteFile(MAINDIRECTORY)
-                  RNRestart.Restart()
-                }
-              } color={'blue'}>
+              <SistemaButton
+                onPress={() => {
+                  deleteFile(MAINDIRECTORY);
+                  RNRestart.Restart();
+                }}
+                color={'blue'}>
                 <Text style={TextStyle.body}> Continue </Text>
               </SistemaButton>
             </View>
           </View>
-
         </Overlay>
         <Text style={[TextStyle.h2, styles.title]}>Policies</Text>
         <View style={styles.buttonContainer}>
@@ -77,7 +77,7 @@ const Settings = ({ navigation }) => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 
@@ -98,20 +98,19 @@ const styles = StyleSheet.create({
   buttonContainer2: {
     flexDirection: 'row',
     paddingTop: '10%',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   deleteOverlayContainer: {
-    flexDirection: 'row', 
-    height: '20%'
+    flexDirection: 'row',
+    height: '20%',
   },
-  textColumn: { 
-    flex: 5, 
-    flexDirection: 'column' 
+  textColumn: {
+    flex: 5,
+    flexDirection: 'column',
   },
   warningIconContainer: {
-    flex: 1
-  }
-
+    flex: 1,
+  },
 });
 
 export default Settings;

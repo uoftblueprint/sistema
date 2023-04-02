@@ -8,7 +8,7 @@ import RNFS from 'react-native-fs';
 export async function readDirectory(dirpath) {
   return RNFS.readdir(dirpath)
     .then(result => {
-       (`GOT RESULT: ${dirpath}`, result);
+      `GOT RESULT: ${dirpath}`, result;
       return result;
     })
     .catch(err => {
