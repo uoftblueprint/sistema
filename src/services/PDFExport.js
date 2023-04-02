@@ -1,5 +1,12 @@
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
+/**
+ * creates a pdf for a given lesson plan
+ *
+ * @async
+ * @param {import("./models").LessonPlan} lessonPlan
+ * @returns {Promise<RNHTMLtoPDF.Pdf>}
+ */
 export const exportPDF = async lessonPlan => {
   var html = [];
 
@@ -17,11 +24,17 @@ export const exportPDF = async lessonPlan => {
     fileName: 'test',
     directory: 'pdfExport'
   };
-  let file = await RNHTMLtoPDF.convert(options);
-  console.log(file.filePath);
+  let file = RNHTMLtoPDF.convert(options);
   return file;
 };
 
+/**
+ * creates HTML for a module
+ *
+ * @param {import("./models").Module[]} m
+ * @param {string} mName
+ * @returns {string[]}
+ */
 const moduleInformation = (m, mName) => {
   var ret = [];
   if (m.length > 0) {
@@ -35,16 +48,29 @@ const moduleInformation = (m, mName) => {
   return ret.join('');
 };
 
+/**
+ * creates an HTML paragraph
+ *
+ * @param {string} text
+ * @returns {string}
+ */
 const paragraph = text => {
   return '<p>' + text.toString() + '</p>';
 };
 
+/**
+ * creates an HTML header
+ *
+ * @param {string} text
+ * @param {number} importance
+ * @returns {string}
+ */
 const header = (text, importance) => {
   return (
     '<h' +
     importance.toString() +
     '>' +
-    text.toString() +
+    text +
     '</h' +
     importance.toString() +
     '>'
