@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LessonPlanMenuOverlay from '../Components/LessonPlanMenuOverlay';
 import Library from './Library';
 import { STACK_SCREENS } from './constants';
+import LessonPlanSortingMenu from './LessonPlanSortingMenu';
 
 const Stack = createStackNavigator();
 
@@ -12,7 +13,13 @@ const LibraryNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name={STACK_SCREENS.LIBRARY} component={Library} />
+      <Stack.Screen
+        name={STACK_SCREENS.LIBRARY}
+        component={Library}
+        initialParams={{
+          sortT: 0,
+        }}
+      />
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}
@@ -21,6 +28,13 @@ const LibraryNavigator = () => {
         }}
         initialParams={{
           isLessonPlanEditor: false,
+        }}
+      />
+      <Stack.Screen
+        name={STACK_SCREENS.LESSON_PLAN_SORTING_MENU}
+        component={LessonPlanSortingMenu}
+        options={{
+          presentation: 'transparentModal',
         }}
       />
     </Stack.Navigator>
