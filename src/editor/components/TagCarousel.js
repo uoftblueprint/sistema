@@ -14,10 +14,6 @@ const TagCarousel = ({ tagsList, activeTags, setActiveTags }) => {
     const { width } = event.nativeEvent.contentSize;
     const maxScrollX = width;
     const scrollPercentage = x / maxScrollX;
-    // Animated.event(
-    //     [{nativeEvent: {contentOffset: {x: scrollBarPosition}}}],
-    //     {useNativeDriver: false}
-    //   )
     Animated.timing(scrollBarPosition, {
       toValue: scrollPercentage,
       duration: 0,

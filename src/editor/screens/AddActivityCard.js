@@ -10,11 +10,9 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Image,
-  ScrollView,
 } from 'react-native';
 
 //Component dependencies
-import TagFilter from '../components/TagFilter';
 import SistemaButton from '../../Components/SistemaButton';
 import Searchbar from '../components/Searchbar';
 import TagCarousel from '../components/TagCarousel';
@@ -30,9 +28,10 @@ import { DRIVE_API_URLS } from '../../services/config.json';
 import ActivityCardService from '../../services/ActivityCardService';
 import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
-import store from '../../services/configureStore';
 
 const AddActivityCard = function ({ navigation, route }) {
+  const { sectionType } = route.params;
+
   // *************** SEARCH RELATED VARS *******************
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,7 +39,7 @@ const AddActivityCard = function ({ navigation, route }) {
     setSearchQuery(query);
   };
   const [activityList, setActivityList] = useState([]);
-  //previewInfo has id, name, and url.
+  // previewInfo has id, name, and url.
   const [previewInfo, setPreviewInfo] = useState(null);
   const showNoCards = useRef(false);
 
@@ -60,6 +59,7 @@ const AddActivityCard = function ({ navigation, route }) {
           }
         }).join('');
         const ACTVTTerm = " and fullText contains 'ACTVT'";
+
         axios
           .get(DRIVE_API_URLS.SEARCH_FILES, {
             params: {
@@ -69,12 +69,12 @@ const AddActivityCard = function ({ navigation, route }) {
               q:
                 "name contains '-' and mimeType='image/jpeg' " +
                 nameSearchTerm +
-                tagSearchTerm,
+                tagSearchTerm +
+                ACTVTTerm,
             },
           })
-          .then(function (response) {
+          .then((response) => {
             const data = response.data.files;
-            console.log(data);
             if (data.length != 0) {
               showNoCards.current = false;
             } else {
@@ -84,9 +84,7 @@ const AddActivityCard = function ({ navigation, route }) {
           });
       }
     }, 300);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => clearTimeout(delayDebounceFn);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   // ************ SEARCH RELATED VARS END *********
@@ -177,17 +175,14 @@ const AddActivityCard = function ({ navigation, route }) {
 
   //onPress function for add Card button
   const addCard = async () => {
-    const rnfsPath = await ActivityCardService.downloadActivityCard(
+    const rnfsPath = ActivityCardService.downloadActivityCard(
       previewInfo.id,
     );
-    console.log(rnfsPath);
-    console.log(previewInfo.name);
-    console.log(route.params.sectionType);
     dispatch(
       addToSection({
         type: 'activity',
         name: previewInfo?.name,
-        section: route.params.sectionType,
+        section: sectionType,
         content: rnfsPath,
       }),
     );
@@ -218,8 +213,7 @@ const AddActivityCard = function ({ navigation, route }) {
                     <BackArrow height={25} width={25} />
                   </TouchableOpacity>
                   <Text style={styles.header}>
-                    {' '}
-                    {route.params.header} Activity Card{' '}
+                    {` ${sectionType} Activity Card `}
                   </Text>
                 </View>
               </>
@@ -275,8 +269,7 @@ const AddActivityCard = function ({ navigation, route }) {
                         styles.marginV2,
                         styles.bodyFontSize,
                       ]}>
-                      {' '}
-                      {previewInfo?.name}{' '}
+                      {` ${previewInfo?.name} `}
                     </Text>
                     <View style={[styles.alignCenter, styles.flexRow]}>
                       <SistemaButton onPress={addCard}>

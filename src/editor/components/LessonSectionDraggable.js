@@ -58,7 +58,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
 
   const addActivityCard = () => {
     navigation.navigate(STACK_SCREENS.ADD_ACTIVITY_CARD, {
-      header: sectionType,
       sectionType: sectionType,
     });
   };
