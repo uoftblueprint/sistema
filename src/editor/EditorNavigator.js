@@ -35,7 +35,10 @@ const EditorNavigator = () => {
         name={STACK_SCREENS.ADD_ACTIVITY_CARD}
         component={AddActivityCard}
       />
-      <Stack.Screen name={STACK_SCREENS.LIBRARY} component={Library} />
+      <Stack.Screen
+        name={STACK_SCREENS.LIBRARY}
+        component={Library}
+      />
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}

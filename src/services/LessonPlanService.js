@@ -102,6 +102,7 @@ const LessonPlanService = {
       let json = JSON.parse(str);
 
       // create Module objects from JSON
+      // warmUpList = [Module(..), Module(..)]
       const warmUpList = json.warmUp.map(createModules);
       const mainLessonList = json.mainLesson.map(createModules);
       const coolDownList = json.coolDown.map(createModules);

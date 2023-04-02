@@ -50,8 +50,12 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
       }
 
-      const lessName = JSON.parsonlesson(lessonPlanObj.name);
+      const lessName = JSON.parse(lessonPlanObj.name);
+      const warmUpArr = [];
+      // for (let module of lessonPlanObj.warmUpList) {
+      //   warmUpArr.push({type: module.type})
 
+      //}
       // lessonPlanObj = new LessonPlan(
       //   json.name,
       //   warmUpList,

@@ -214,7 +214,7 @@ const AddActivityCard = function ({ navigation, route }) {
                   </TouchableOpacity>
                   <Text style={styles.header}>
                     {' '}
-                    {route.params.header} Activity Card{' '}
+                    {route.params.sectionType} Activity Card{' '}
                   </Text>
                 </View>
               </>
