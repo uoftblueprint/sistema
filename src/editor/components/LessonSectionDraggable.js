@@ -69,6 +69,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
       module => module.key != keyToDelete,
     );
     updateRedux(newSectionData);
+    //
   };
 
   const editModule = (keyToEdit, newContent) => {

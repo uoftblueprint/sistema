@@ -45,19 +45,24 @@ const ActivityCardService = {
       const response = await axios.get(downloadUrl, { params }).catch(error => {
         console.log('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
       });
+      
 
       //Access the Array of all files and set up path Array (to be returned)
       const driveFiles = response.data;
       const files_list = driveFiles.files;
       var pathArr = [];
+      
 
       //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
       if (files_list.length != 0 && (await checkFileExists(path))) {
+        
         await deleteFile(path);
         await makeDirectory(path);
-      } else {
-        return [];
-      }
+      } 
+      
+      //else {
+        //return [];
+      //}
 
       //if new cards were found, save them into the empty directory path
       for (var i = 0; i < files_list.length; i++) {
@@ -120,7 +125,7 @@ const ActivityCardService = {
         .catch(error => {
           console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
         });
-
+        console.log("got here");
       await makeDirectory(dirPath);
       await writeFile(true, filePath, Buffer.from(response.data, 'base64'));
 
