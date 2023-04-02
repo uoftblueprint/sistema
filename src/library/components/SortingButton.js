@@ -1,10 +1,18 @@
-import { Text, SafeAreaView, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import {
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import { TextStyle } from '../../Styles.config';
 
 const SortingButton = ({ text, onPress }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={[TextStyle.label, styles.buttonContainer]} onPress={onPress}>
+      <TouchableOpacity
+        style={[TextStyle.label, styles.buttonContainer]}
+        onPress={onPress}>
         <Text style={styles.textContainer}>{text}</Text>
       </TouchableOpacity>
     </SafeAreaView>

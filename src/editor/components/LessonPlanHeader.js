@@ -16,23 +16,26 @@ import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
 import { useSelector, useDispatch } from 'react-redux';
 import store from '../../services/configureStore';
-import { setLessonPlanName, getLessonPlanName } from '../../services/editor/lessonPlanSlice';
+import {
+  setLessonPlanName,
+  getLessonPlanName,
+} from '../../services/editor/lessonPlanSlice';
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
 const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   const [isEditable, setIsEditable] = useState(false);
   const todayDate = new Date().toLocaleDateString('en-us', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   });
   const [lessonName, setLessonName] = useState(todayDate.toString());
   const dispatch = useDispatch();
   dispatch(setLessonPlanName({ name: lessonName }));
   let reduxName = useSelector(state => getLessonPlanName(state.lessonPlan)); //TODO: why cant??
 
-  console.log("REDUX NAME " + reduxName);
+  console.log('REDUX NAME ' + reduxName);
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={{ marginLeft: scale(horizontalMargin) }}>

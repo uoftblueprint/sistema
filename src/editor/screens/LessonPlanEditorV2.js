@@ -99,8 +99,6 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     saveLessonPlanToRNFS(lessonPlanObject);
   };
 
-
-
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
