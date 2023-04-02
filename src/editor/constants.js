@@ -4,4 +4,5 @@ export const STACK_SCREENS = {
   ADD_ACTIVITY_CARD: 'Add Activity Card',
   LESSON_PLAN_MENU_OVERLAY: 'Lesson Plan Options Overlay',
   EXPANDED_ACTIVITY_CARD: 'Exapnded Activity Card',
+  LIBRARY: 'Library',
 };

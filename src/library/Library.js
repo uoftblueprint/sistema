@@ -20,7 +20,7 @@ const Library = ({ navigation, route }) => {
   const [lpList, setList] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [sortType, setSortType] = useState(null);
-
+  
   useEffect(() => {
     setLoaded(false);
   }, [sortType]);
@@ -160,7 +160,7 @@ const Library = ({ navigation, route }) => {
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2, {
-                      lessonPlanName: JSON.parse(lessonPlan.name),
+                      lessonPlanName: lessonPlan.name,
                     });
                   }}>
                   <LessonPlanButton

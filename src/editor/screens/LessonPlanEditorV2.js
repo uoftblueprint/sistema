@@ -15,6 +15,8 @@ import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName, MAINDIRECTORY } from '../../services/constants.js';
+import { STACK_SCREENS } from '../constants';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LessonPlanService from '../../services/LessonPlanService.js';
 import { useSelector, useDispatch } from 'react-redux';
@@ -37,15 +39,29 @@ import {
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
+  const [isSaved, setIsSaved] = useState(false);
   const lessonPlanName = null;
   if (route.params) {
+    setIsSaved(true);
     const { lessonPlanName } = route.params;
     useEffect(() => {
       let lessonPlanObj;
       async function getLessonPlan(LessonName) {
         lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
       }
-      //TODO: parse everything
+
+      const lessName = JSON.parsonlesson(lessonPlanObj.name);
+      
+      // lessonPlanObj = new LessonPlan(
+      //   json.name,
+      //   warmUpList,
+      //   mainLessonList,
+      //   coolDownList,
+      //   json.notes,
+      // );
+
+      //TODO: parse everything and add key and store in redux 
+      
       getLessonPlan(lessonPlanName);
     }, []);
   }
@@ -66,6 +82,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   );
 
   const saveLessonPlan = () => {
+    setIsSaved(true);
     //stringify all
     //TODO: add key to use module
     // for (let i = 0; i < warmUp.length; i++){
@@ -97,6 +114,8 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       await LessonPlanService.saveLessonPlan(lessonPlanObj);
     }
     saveLessonPlanToRNFS(lessonPlanObject);
+
+    navigation.navigate(STACK_SCREENS.LIBRARY, {sortT: 0});
   };
 
   return (
@@ -105,6 +124,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         navigation={navigation}
         lastEditedDate={lastEditedDummy}
         lessonName={lessonPlanName ? lessonPlanName : lessonName}
+        isSaved={isSaved}
       />
       <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

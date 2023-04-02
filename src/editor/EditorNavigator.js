@@ -6,6 +6,7 @@ import AddActivityCard from './screens/AddActivityCard';
 import LessonPlanMenuOverlay from '../Components/LessonPlanMenuOverlay';
 import { STACK_SCREENS } from './constants';
 import ExpandedActivityCard from './screens/ExpandedActivityCard';
+import Library from '../library/Library';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,10 @@ const EditorNavigator = () => {
       <Stack.Screen
         name={STACK_SCREENS.ADD_ACTIVITY_CARD}
         component={AddActivityCard}
+      />
+      <Stack.Screen
+        name={STACK_SCREENS.LIBRARY}
+        component={Library}
       />
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}

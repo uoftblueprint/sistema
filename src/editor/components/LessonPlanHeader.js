@@ -23,7 +23,7 @@ import {
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
-const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
+const LessonPlanHeader = ({ navigation, lastEditedDate, isSaved }) => {
   const [isEditable, setIsEditable] = useState(false);
   const todayDate = new Date().toLocaleDateString('en-us', {
     year: 'numeric',
@@ -85,7 +85,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
                 lastEdited: lastEditedDate,
               })
             }>
-            <Menu height={headerIconSize} width={headerIconSize} />
+            <Menu display={ !isSaved }height={headerIconSize} width={headerIconSize} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>

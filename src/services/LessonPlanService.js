@@ -9,8 +9,8 @@ import {
   readDDirectory,
   cpyFile,
 } from './routes/Local';
-import { MAINDIRECTORY } from './constants';
-import { LessonPlan, Module } from './models';
+import { MAINDIRECTORY, ModuleType } from './constants';
+import { ActivityCardModule, LessonPlan, Module } from './models';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
@@ -108,7 +108,12 @@ const LessonPlanService = {
 
       // helper function to create Module objects for .map()
       function createModules(module) {
-        return new Module(module.type, module.content);
+        if (module.type === ModuleType.text) {
+          return new Module(module.type, module.content, "");
+        }
+        else {
+          return new Module(module.type, module.content, module.name);
+        }
       }
 
       // create LessonPlan object from JSON
