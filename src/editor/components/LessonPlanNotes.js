@@ -1,34 +1,78 @@
-import React from 'react';
-import { Text, SafeAreaView, StyleSheet } from 'react-native';
-import LessonPlanTextField from './LessonPlanTextField';
+import React, { useState } from 'react';
+import {
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  Platform,
+  View,
+} from 'react-native';
+import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
+import store from '../../services/configureStore';
+import { TextStyle } from '../../Styles.config';
 
-const LessonPlanNotes = ({ subtitle }) => {
+const LessonPlanNotes = ({ sectionType, placeholder }) => {
+  const [sectionContent, setSectionContent] = useState(placeholder); // TODO: fix
+
   return (
-    <SafeAreaView style={styles.sectionContainer}>
-      <Text style={styles.title}>{subtitle}</Text>
-      <LessonPlanTextField
-        placeholder={'Write your initial impressions here...'}
-      />
+    <SafeAreaView width={'100%'}>
+      <Text style={[styles.title, TextStyle.h2]}>{sectionType}</Text>
+      <View style={styles.SectionStyle}>
+        <TextInput
+          style={TextStyle.body}
+          multiline
+          placeholder={'Add lesson notes here'}
+          returnKeyType="next"
+          onEndEditing={e => {
+            if (e.nativeEvent.text) {
+              setSectionContent(e.nativeEvent.text);
+              store.dispatch(
+                addToNote({
+                  section: sectionType,
+                  content: e.nativeEvent.text,
+                }),
+              );
+            } else {
+              setSectionContent(placeholder);
+              store.dispatch(removeNote());
+            }
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   title: {
-    color: '#20232a',
-    fontSize: 20,
-    fontWeight: 'bold',
-    letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28
   },
-  sectionContainer: {
-    marginBottom: 30
-  },
-  shadow: {
+  SectionStyle: {
+    paddingHorizontal: 15,
+    ...Platform.select({
+      ios: {
+        paddingTop: 10,
+        paddingBottom: 15,
+      },
+      android: {
+        paddingVertical: 0,
+      },
+    }),
+    flexDirection: 'column',
+    backgroundColor: '#FFFAF5',
+    borderWidth: 0.77,
+    borderColor: '#000',
+    borderRadius: 8,
     shadowColor: '#453E3D',
-    elevation: 10
-  }
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
+    marginBottom: 20,
+  },
 });
 
 export default LessonPlanNotes;

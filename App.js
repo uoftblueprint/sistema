@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import './src/services/ignoreWarnings'; // Keep at top
+import React from 'react'; 
+import { View, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,
@@ -12,17 +13,22 @@ import {
 } from 'react-native-safe-area-context';
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
-import Library from './src/library/Library';
-import Home from './src/home/Home';
+import LibraryNavigator from './src/library/LibraryNavigator';
+import SettingsNavigator from './src/settings/SettingsNavigator';
+import { STACK_SCREENS as SETTINGS_STACK } from './src/settings/constants';
+
+import { Provider } from 'react-redux';
+import configureStore from './src/services/configureStore';
 
 import LibraryNavIcon from './assets/libraryNavIcon.svg';
 import HomeNavIcon from './assets/homeNavIcon.svg';
 import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
 
 const STACK_SCREENS = {
-  HOME: 'Home Page',
-  EDITOR: 'LessonPlanEditor',
-  LIBRARY: 'Library'
+  HOME: 'HomeNavigator',
+  EDITOR: 'LessonPlanEditorNavigator',
+  LIBRARY: 'LibraryNavigator',
+  SETTINGS: SETTINGS_STACK.NAVIGATOR
 };
 
 const tabIcon = (iconSVG, isFocused) => {
@@ -52,6 +58,7 @@ const tabIcon = (iconSVG, isFocused) => {
 const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
+
   const navigationRef = useNavigationContainerRef();
   const insets = useSafeAreaInsets();
 
@@ -88,10 +95,19 @@ const MainNavigator = () => {
         />
         <Tab.Screen
           name={STACK_SCREENS.LIBRARY}
-          component={Library}
+          component={LibraryNavigator}
           options={{
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused)
+          }}
+        />
+        <Tab.Screen
+          name={STACK_SCREENS.SETTINGS}
+          component={SettingsNavigator}
+          options={{
+            tabBarShowLabel: false,
+            tabBarButton: () => null, // Not displayed in bottom tab bar
+            tabBarVisible: false,
           }}
         />
       </Tab.Navigator>
@@ -108,15 +124,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: Platform.OS === 'ios' ? 0 : 17
   }
 });
 
 const App = () => {
   return (
     <SafeAreaProvider>
-      <MainNavigator />
+      <Provider store={configureStore}>
+        <MainNavigator />
+      </Provider>
     </SafeAreaProvider>
   );
 };

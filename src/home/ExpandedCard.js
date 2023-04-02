@@ -1,35 +1,33 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  ScrollView,
-  Dimensions,
-  TouchableOpacity
-} from 'react-native';
+import { StyleSheet, SafeAreaView, Text, ScrollView } from 'react-native';
 import AddButton from './components/AddToLessonButton';
-import BackArrow from '../../assets/backArrow';
 import Header from '../Components/Header';
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+import { TextStyle } from '../Styles.config';
+import { verticalScale } from 'react-native-size-matters';
 
 const ExpandedCard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
-      <Header showInfoIcon={true} />
-
-      <TouchableOpacity
-        style={styles.backArrowContainer}
-        onPress={() => navigation.goBack()}>
-        <BackArrow height={30} width={15} style={styles.backArrow} />
-      </TouchableOpacity>
+      <Header
+        navigation={navigation}
+        showInfoIcon={true}
+        showBackButton={true}
+      />
 
       <ScrollView>
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {/* pass in props.cardTitle eventually */}
-          <Text style={styles.title}> TITLE </Text>
-
+          {/* Pass in props.cardTitle eventually. You want to parse the parts around the dashes for the third part of the title */}
+          <Text style={[styles.title, TextStyle.h2]}>Listening Spinners</Text>
+          <Text style={[TextStyle.h3, styles.subtitle]}>
+            Theme:
+            {/* You'll parse the name of the activity card to get the theme (first part of title) */}
+            <Text style={TextStyle.h3}> THEME HERE</Text>
+          </Text>
+          <Text style={[TextStyle.h3, styles.subtitle]}>
+            Activity Type:
+            {/* You'll parse the name of the activity card to get the type (second part of title) */}
+            <Text style={TextStyle.h3}> TYPE HERE</Text>
+          </Text>
           <SafeAreaView style={styles.box}>
             {/* CARD CONTENT GOES HERE */}
           </SafeAreaView>
@@ -44,7 +42,7 @@ const ExpandedCard = ({ navigation }) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#FFFAF5',
-    height: '100%'
+    height: '100%',
   },
   box: {
     backgroundColor: 'white',
@@ -54,33 +52,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    marginTop: 15,
     width: '75%',
-    height: windowHeight * 0.55
-  },
-  scrollview: {
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginTop: 30,
+    height: verticalScale(400),
   },
   title: {
-    color: '#453E3D',
-    fontSize: 20,
-    fontWeight: '700',
-    width: '60%',
-    textAlign: 'center',
-    marginBottom: 40
+    width: '75%',
+    textAlign: 'left',
+    marginBottom: 5,
   },
-  backArrowContainer: {
-    position: 'absolute',
-    top: 20,
-    bottom: 0,
-    left: 25,
-    right: 0
+  subtitle: {
+    width: '75%',
+    textAlign: 'left',
+    fontFamily: 'Mulish-Bold',
   },
-  backArrow: {
-    fill: '#222222'
-  }
 });
 
 export default ExpandedCard;

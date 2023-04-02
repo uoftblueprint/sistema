@@ -1,28 +1,27 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LessonPlanEditor from './screens/LessonPlanEditor';
+import LessonPlanEditor from './screens/LessonPlanEditor'; // TODO: Remove once you're done
+import LessonPlanEditorV2 from './screens/LessonPlanEditorV2';
 import AddActivityCard from './screens/AddActivityCard';
-import LessonPlanMenuOverlay from './screens/LessonPlanMenuOverlay';
+import LessonPlanMenuOverlay from '../Components/LessonPlanMenuOverlay';
+import { STACK_SCREENS } from './constants';
 
 const Stack = createStackNavigator();
-
-const STACK_SCREENS = {
-  LESSON_PLAN_EDITOR: 'Lesson Plan Editor Home',
-  ADD_ACTIVITY_CARD: 'Add Activity Card',
-  LESSON_PLAN_MENU_OVERLAY: 'Lesson_Plan_Editor_Menu'
-};
 
 const EditorNavigator = () => {
   return (
     <Stack.Navigator
-      intialRouteName={STACK_SCREENS.LESSON_PLAN_EDITOR}
+      intialRouteName={STACK_SCREENS.LESSON_PLAN_EDITOR_V2}
       detachInactiveScreens={false}
       screenOptions={{
         headerShown: false,
         detachPreviousScreen: false,
-        presentation: 'transparentModal'
       }}>
       <Stack.Screen
+        name={STACK_SCREENS.LESSON_PLAN_EDITOR_V2}
+        component={LessonPlanEditorV2}
+      />
+      <Stack.Screen // TODO: Remove once you're done and all unused components once this screen is gone
         name={STACK_SCREENS.LESSON_PLAN_EDITOR}
         component={LessonPlanEditor}
       />
@@ -33,9 +32,12 @@ const EditorNavigator = () => {
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}
+        options={{
+          presentation: 'transparentModal',
+        }}
         initialParams={{
           isLessonPlanEditor: false,
-          lessonPlanName: 'Lesson Plan Name'
+          lessonPlanName: 'Lesson Plan Name',
         }}
       />
     </Stack.Navigator>

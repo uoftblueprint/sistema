@@ -1,7 +1,7 @@
 import { Modal, SafeAreaView, StyleSheet, View } from 'react-native';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const Overlay = props => {
-  console.log(props.style);
   return (
     <Modal
       transparent={true}
@@ -18,11 +18,11 @@ const Overlay = props => {
 
 const styles = StyleSheet.create({
   overlay: {
-    width: '85%',
-    height: 'auto',
+    width: scale(280),
+    height: verticalScale(400),
     backgroundColor: '#FFFAF5',
-    padding: 16,
-    borderRadius: 4.2
+    padding: scale(20),
+    borderRadius: 4.2,
   },
   container: {
     height: '100%',
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D980',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default Overlay;

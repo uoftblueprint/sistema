@@ -6,40 +6,81 @@ import {
   View,
   ScrollView,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 import LessonSection from '../components/LessonSection.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
+import { scale, verticalScale } from 'react-native-size-matters';
+
+// dummy last edited date
+const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditor = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ backgroundColor: '#FFFAF5' }}>
-      <LessonPlanHeader navigation={navigation} />
-      <ScrollView style={styles.scrollView}>
+    <SafeAreaView style={styles.mainContainer}>
+      <LessonPlanHeader
+        navigation={navigation}
+        lastEditedDate={lastEditedDummy}
+      />
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={{
+          paddingBottom: verticalScale(55),
+        }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-            <LessonSection navigation={navigation} subtitle={'Warm Up'} />
-            <LessonSection navigation={navigation} subtitle={'Main Lesson'} />
-            <LessonSection navigation={navigation} subtitle={'Cool Down'} />
-            <LessonPlanNotes subtitle={'Notes'} />
-            <SaveButton />
+          <View style={styles.viewStyle}>
+            <LessonSection
+              navigation={navigation}
+              sectionType={'warmUp'}
+              subtitle={'Warm Up'}
+            />
+            <LessonSection
+              navigation={navigation}
+              sectionType={'mainLesson'}
+              subtitle={'Main Lesson'}
+            />
+            <LessonSection
+              navigation={navigation}
+              sectionType={'coolDown'}
+              subtitle={'Cool Down'}
+            />
+            <LessonPlanNotes
+              navigation={navigation}
+              sectionType={'notes'}
+              subtitle={'Notes'}
+              placeholder={''}
+            />
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
+      <View style={styles.saveButton}>
+        <SaveButton />
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  baseText: {
-    fontFamily: 'Poppins'
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#FFFAF5',
+    justifyContent: 'center',
   },
   scrollView: {
-    marginHorizontal: 20,
-    marginVertical: 5,
-    marginBottom: '20%'
-  }
+    flex: 1,
+    paddingBottom: verticalScale(20),
+  },
+  viewStyle: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingHorizontal: scale(30),
+  },
+  saveButton: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: verticalScale(20),
+  },
 });
 
 export default LessonPlanEditor;

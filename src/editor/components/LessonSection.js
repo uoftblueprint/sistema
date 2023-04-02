@@ -1,25 +1,67 @@
-import React from 'react';
-import LessonPlanTextInput from './LessonPlanTextInput';
-import { Text, View, SafeAreaView, StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import AddLessonContentButton from './AddLessonContentButton';
+import { Text, View, SafeAreaView, Platform, StyleSheet } from 'react-native';
+import store from '../../services/configureStore';
+import { TextStyle } from '../../Styles.config';
+import ContentCard from './ContentCard';
+import StoredContent from './StoredContent';
 
-const LessonSection = ({ subtitle, navigation }) => {
+const LessonSection = ({ sectionType, subtitle, navigation }) => {
+  const lessonPlanState = useSelector(state => state.lessonPlan);
+  const [sectionContent, setSectionContent] = useState([]);
+  const [sectionActivityCards, setSectionActivityCards] = useState([]);
+  const [isTextinputOpen, setisTextinputOpen] = useState(false);
+
+  const handleClick = () => {
+    setisTextinputOpen(true);
+  };
+
+  const addActivityCard = () => {
+    navigation.navigate('Add Activity Card', {
+      header: subtitle,
+      sectionType: sectionType,
+    });
+  };
+
   return (
-    <SafeAreaView style={styles.sectionContainer}>
-      <Text style={styles.title}>{subtitle}</Text>
-      <View>
-        <LessonPlanTextInput placeholder={'Input text'} />
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Add Activity Card', {
-              header: subtitle
-            })
-          }>
-          <LessonPlanTextInput
-            placeholder={'Add activity cards'}
-            isButton={true}
+    <SafeAreaView style={styles.mainContainer}>
+      <Text style={[styles.title, TextStyle.h2]}>{subtitle}</Text>
+      <View style={styles.sectionContainer}>
+        {/* New textbox with prompted to insert text */}
+        {isTextinputOpen && (
+          <ContentCard
+            setisTextinputOpen={setisTextinputOpen}
+            setSectionContent={setSectionContent}
+            sectionContent={sectionContent}
+            sectionType={sectionType}
           />
-        </TouchableOpacity>
+        )}
+
+        <AddLessonContentButton
+          placeholder={'Input text'}
+          handleClick={handleClick}
+        />
+        <AddLessonContentButton
+          placeholder={'Add activity cards'}
+          handleClick={addActivityCard}
+        />
+
+        {/* Stack of content already inserted, available for further editing/removing */}
+        {lessonPlanState[sectionType].map((arr, i) => {
+          if (arr?.content?.length > 0) {
+            return (
+              <View key={i}>
+                <StoredContent
+                  text={arr.content}
+                  index={i}
+                  setSectionContent={setSectionContent}
+                  sectionType={sectionType}
+                />
+              </View>
+            );
+          }
+        })}
       </View>
     </SafeAreaView>
   );
@@ -27,17 +69,14 @@ const LessonSection = ({ subtitle, navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#20232a',
-    fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'Poppins-Light',
-    letterSpacing: 0.3,
     marginBottom: 10,
-    lineHeight: 28
+  },
+  mainContainer: {
+    width: '100%',
   },
   sectionContainer: {
-    marginBottom: 25
-  }
+    marginBottom: 20,
+  },
 });
 
 export default LessonSection;

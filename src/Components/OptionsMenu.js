@@ -1,63 +1,57 @@
-import FavoriteButton from './FavoriteButton.js';
+import FavoriteButton from '../editor/components/FavoriteButton.js';
 import OptionHeader from './OptionHeader';
 import { useState } from 'react';
 import OptionsMenuBanner from './OptionsMenuBanner';
-import ExportIcon from '../../../assets/exportIcon.svg';
-import TrashIcon from '../../../assets/trashIcon.svg';
-import HeartIcon from '../../../assets/heartIcon.svg';
-import CopyIcon from '../../../assets/copyIcon.svg';
+import ExportIcon from '../../assets/exportIcon.svg';
+import TrashIcon from '../../assets/trashIcon.svg';
+import HeartIcon from '../../assets/heartIcon.svg';
+import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView } from 'react-native';
 
-const OptionsMenu = ({ isLessonPlanEditor, lessonPlanName, navigation }) => {
+const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
   const [isFavorited, setFavorited] = useState(false);
   const [isBannerVisible, setBannerVisible] = useState(false);
-  const lessonPlanNameForOptions = lessonPlanName;
-  const isLessonPlanEditorCheck = isLessonPlanEditor;
 
   const editorButtons = [
     {
       name: 'Export Lesson Plan',
-      icon: <ExportIcon />
+      icon: <ExportIcon />,
     },
     {
       name: 'Favorites',
-      icon: <HeartIcon />
+      icon: <HeartIcon />,
     },
     {
       name: 'Delete Lesson Plan',
-      icon: <TrashIcon />
-    }
+      icon: <TrashIcon />,
+    },
   ];
 
   const libraryButtons = [
     {
       name: 'Export Lesson Plan',
-      icon: <ExportIcon />
+      icon: <ExportIcon />,
     },
     {
       name: 'Copy Lesson Plan',
-      icon: <CopyIcon />
+      icon: <CopyIcon />,
     },
     {
       name: 'Delete Lesson Plan',
-      icon: <TrashIcon />
-    }
+      icon: <TrashIcon />,
+    },
   ];
 
-  const buttons = isLessonPlanEditorCheck ? editorButtons : libraryButtons;
+  const buttons = isLessonPlanEditor ? editorButtons : libraryButtons;
 
   return (
     <SafeAreaView style={styles.screen}>
       <SafeAreaView style={styles.menu}>
-        <OptionHeader
-          isLessonEditor={isLessonPlanEditorCheck}
-          lessonName={lessonPlanNameForOptions}
-          navigation={navigation}
-        />
+        <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
-          if (button.name == 'Favorites') {
+          if (button.name === 'Favorites') {
             return (
               <FavoriteButton
                 key={i}
@@ -89,12 +83,12 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     position: 'absolute',
-    bottom: 0
+    bottom: 0,
   },
   menu: {
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 export default OptionsMenu;

@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   Text,
   ScrollView,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
@@ -11,16 +11,14 @@ const windowHeight = Dimensions.get('window').height;
 
 const RecentCard = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center' }}>
+    <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.box}>
         <ScrollView>{/* <Text>CARD GOES HERE</Text> */}</ScrollView>
 
         <SafeAreaView style={styles.titleBar}>
-          <SafeAreaView style={{ marginHorizontal: 20 }}>
-            <Text style={styles.title} numberOfLines={1}>
-              Listening - Knowledge - Listening Spinners
-            </Text>
-          </SafeAreaView>
+          <Text style={styles.title} numberOfLines={1}>
+            Listening - Knowledge - Listening Spinners
+          </Text>
         </SafeAreaView>
       </SafeAreaView>
     </SafeAreaView>
@@ -28,6 +26,10 @@ const RecentCard = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   box: {
     backgroundColor: 'white',
     borderWidth: 1,
@@ -37,28 +39,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     marginVertical: 15,
-    width: '87%',
-    height: windowHeight * 0.25
+    width: '100%',
+    height: windowHeight * 0.25,
   },
   scrollview: {
     backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   titleBar: {
     borderBottomLeftRadius: 18,
     borderBottomRightRadius: 18,
     width: '100%',
     height: '19%',
-    backgroundColor: '#4D8ECB'
+    backgroundColor: '#4D8ECB',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   title: {
+    fontFamily: 'Mulish-Italic',
     color: '#FFFFFF',
     width: '100%',
-    fontSize: 17,
-    marginTop: 7,
-    fontStyle: 'italic'
-  }
+  },
 });
 
 export default RecentCard;

@@ -1,7 +1,8 @@
 import { Text, SafeAreaView, StyleSheet, Dimensions } from 'react-native';
+import { OptionsMenuPadding } from '../Styles.config';
 
-import CheckMarkIcon from '../../../assets/checkMark.svg';
-import AlertErrorIcon from '../../../assets/errorAlert.svg';
+import CheckMarkIcon from '../../assets/checkMark.svg';
+import AlertErrorIcon from '../../assets/errorAlert.svg';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#DEFCDF',
     height: 55,
-    width: windowWidth
+    width: windowWidth,
   },
   containerRemoved: {
     justifyContent: 'flex-start',
@@ -43,23 +44,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FCE5E3',
     height: 55,
-    width: windowWidth
+    width: windowWidth,
   },
   textContainerAdded: {
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     fontSize: 14,
-    color: '#375238'
+    color: '#375238',
   },
   textContainerRemoved: {
-    fontWeight: '400',
+    fontFamily: 'Mulish-Regular',
     fontSize: 14,
-    color: '#471612'
+    color: '#471612',
   },
   iconBanner: {
     width: 18.33,
     height: 18.33,
-    paddingLeft: '20%'
-  }
+    marginHorizontal: OptionsMenuPadding,
+  },
 });
 
 export default OptionsMenuBanner;

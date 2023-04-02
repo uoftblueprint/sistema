@@ -3,19 +3,23 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import HeartIcon from '../../../assets/heartIcon.svg';
 import FavoriteIcon from '../../../assets/favoriteIcon.svg';
+import { OptionsMenuPadding } from '../../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
+let timer;
 
 const FavoriteButton = ({ setBanner, setFavoritedPlan, isFavoritedPlan }) => {
   const onPress = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
     setFavoritedPlan(!isFavoritedPlan);
     setBanner(true);
-
-    setTimeout(() => {
+    timer = setTimeout(() => {
       setBanner(false);
     }, 2000);
   };
@@ -38,30 +42,30 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     borderColor: '#000000',
-    borderWidth: 0.25
+    borderWidth: 0.25,
   },
   buttonContainer: {
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
     alignSelf: 'stretch',
     justifyContent: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFAF5',
     width: '100%',
-    height: 45
+    height: 45,
   },
   textContainer: {
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
     color: 'rgba(0,0,0, 0.87)',
-    fontWeight: '700',
-    fontSize: 16
+    fontFamily: 'Mulish-Bold',
+    fontSize: 16,
   },
   icon: {
     width: 22,
     height: 22,
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 export default FavoriteButton;

@@ -3,8 +3,9 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
+import { OptionsMenuPadding } from '../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -17,7 +18,7 @@ const OptionsMenuButton = ({ text, icon }) => {
             width: 22,
             height: 22,
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}>
           {icon}
         </SafeAreaView>
@@ -31,23 +32,24 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     borderColor: '#000000',
-    borderWidth: 0.25
+    borderWidth: 0.25,
   },
   buttonContainer: {
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
     alignSelf: 'stretch',
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: '#FFFAF5',
     width: '100%',
-    height: 45
+    height: 50,
   },
   textContainer: {
-    paddingLeft: '5%',
+    paddingLeft: OptionsMenuPadding,
+    fontFamily: 'Mulish-Bold',
     color: 'rgba(0,0,0, 0.87)',
-    fontWeight: '700',
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
+
 export default OptionsMenuButton;
