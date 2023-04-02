@@ -51,7 +51,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       }
 
       const lessName = JSON.parsonlesson(lessonPlanObj.name);
-      
+
       // lessonPlanObj = new LessonPlan(
       //   json.name,
       //   warmUpList,
@@ -60,18 +60,21 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       //   json.notes,
       // );
 
-      //TODO: parse everything and add key and store in redux 
-      
+      //TODO: parse everything and add key and store in redux
+
       getLessonPlan(lessonPlanName);
     }, []);
   }
 
   //let lessonName = 'Fake name';
-  let lessonNameGET = (state) => getLessonPlanName(state.lessonPlan);
-  let warmUpGET = (state) => getLessonSection(state.lessonPlan, SectionName.warmUp);
-  let mainLessonGET = (state) => getLessonSection(state.lessonPlan, SectionName.mainLesson);
-  let coolDownGET = (state) => getLessonSection(state.lessonPlan, SectionName.coolDown);
-  let notesGET = (state) => getLessonSection(state.lessonPlan, SectionName.notes);
+  let lessonNameGET = state => getLessonPlanName(state.lessonPlan);
+  let warmUpGET = state =>
+    getLessonSection(state.lessonPlan, SectionName.warmUp);
+  let mainLessonGET = state =>
+    getLessonSection(state.lessonPlan, SectionName.mainLesson);
+  let coolDownGET = state =>
+    getLessonSection(state.lessonPlan, SectionName.coolDown);
+  let notesGET = state => getLessonSection(state.lessonPlan, SectionName.notes);
 
   let lessonName = useSelector(lessonNameGET); //TODO: why cant??
   let warmUp = useSelector(warmUpGET); //returns an array
@@ -113,7 +116,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     }
     saveLessonPlanToRNFS(lessonPlanObject);
 
-    navigation.navigate(STACK_SCREENS.LIBRARY, {sortT: 0});
+    navigation.navigate(STACK_SCREENS.LIBRARY, { sortT: 0 });
   };
 
   return (

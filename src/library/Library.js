@@ -20,7 +20,7 @@ const Library = ({ navigation, route }) => {
   const [lpList, setList] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [sortType, setSortType] = useState(null);
-  
+
   useEffect(() => {
     setLoaded(false);
   }, [sortType]);

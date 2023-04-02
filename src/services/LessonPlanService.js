@@ -109,9 +109,8 @@ const LessonPlanService = {
       // helper function to create Module objects for .map()
       function createModules(module) {
         if (module.type === ModuleType.text) {
-          return new Module(module.type, module.content, "");
-        }
-        else {
+          return new Module(module.type, module.content, '');
+        } else {
           return new Module(module.type, module.content, module.name);
         }
       }

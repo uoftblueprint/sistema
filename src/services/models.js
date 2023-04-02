@@ -31,7 +31,6 @@ export class LessonPlan {
     this.coolDown = coolDown;
     this.notes = notes;
   }
-
 }
 /**
  * @property {string} type type of module content: "text" or "activity card"

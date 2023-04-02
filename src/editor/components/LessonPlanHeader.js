@@ -87,7 +87,11 @@ const LessonPlanHeader = ({ navigation, lastEditedDate, isSaved }) => {
                 lastEdited: lastEditedDate,
               })
             }>
-            <Menu display={ !isSaved }height={headerIconSize} width={headerIconSize} />
+            <Menu
+              display={!isSaved}
+              height={headerIconSize}
+              width={headerIconSize}
+            />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
