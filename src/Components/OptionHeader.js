@@ -20,7 +20,7 @@ const OptionHeader = ({ lastEdited, navigation }) => {
         <TouchableOpacity
           style={{
             alignSelf: 'center',
-            postion: 'absolute',
+            position: 'absolute',
             width: '30%',
           }}
           onPress={() => navigation.goBack()}>

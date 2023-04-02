@@ -37,11 +37,7 @@ const Header = ({ navigation, isHome, showBackButton }) => {
       <View style={styles.toolbar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           {showBackButton && (
-            <BackArrow
-              width={iconSize - 4}
-              height={iconSize - 1}
-              style={styles.backArrow}
-            />
+            <BackArrow width={iconSize - 4} height={iconSize - 1} />
           )}
         </TouchableOpacity>
 
@@ -59,11 +55,7 @@ const Header = ({ navigation, isHome, showBackButton }) => {
                 screen: SETTINGS_SCREENS.SETTINGS_MAIN,
               })
             }>
-            <GearIcon
-              width={iconSize}
-              height={iconSize}
-              style={styles.settingIcon}
-            />
+            <GearIcon width={iconSize} height={iconSize} />
           </TouchableOpacity>
         </View>
       </View>

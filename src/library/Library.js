@@ -41,7 +41,7 @@ const Library = ({ navigation, route }) => {
           lessonPlanInfo.push({
             name: favL[lp].name,
             isFavorited: true,
-            lastEdited: favL[lp].mtime.toLocaleDateString('en-US', {
+            lastEdited: favL[lp].mtime?.toLocaleDateString('en-US', {
               month: 'short',
               day: 'numeric',
               year: 'numeric',
@@ -53,7 +53,7 @@ const Library = ({ navigation, route }) => {
           lessonPlanInfo.push({
             name: defL[lp].name,
             isFavorited: false,
-            lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
+            lastEdited: defL[lp].mtime?.toLocaleDateString('en-US', {
               month: 'short',
               day: 'numeric',
               year: 'numeric',

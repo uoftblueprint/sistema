@@ -15,7 +15,7 @@ const ActivityCardService = {
 
   /**
    * Returns array of file paths for this month's featured activity cards.
-   * @return {String[]}
+   * @return {Promise<string[]>}
    */
   getFeaturedActivityCards: async function () {
     try {
@@ -51,7 +51,7 @@ const ActivityCardService = {
         await deleteFile(path);
         await makeDirectory(path);
       } else {
-        return;
+        return [];
       }
 
       //if new cards were found, save them into the empty directory path
@@ -77,14 +77,15 @@ const ActivityCardService = {
     } catch (e) {
       // There was an error, catch it and do something with it
       console.log('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
+      return [];
     }
   },
 
   /**
    * Given the Google Drive ID of an activity card, download the card
    * directly into local storage.
-   * @param {String} id ID of the activity card to retrieve
-   * @return {String} The requested ActivityCard object
+   * @param {string} id ID of the activity card to retrieve
+   * @return {Promise<string>} The requested ActivityCard object
    */
   downloadActivityCard: async function (id) {
     try {
@@ -121,6 +122,7 @@ const ActivityCardService = {
       return filePath;
     } catch (e) {
       console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
+      return '';
     }
   },
 };

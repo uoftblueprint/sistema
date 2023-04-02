@@ -19,7 +19,7 @@ const LessonPlanService = {
 
   /**
    * Delete a Lesson Plan (a.k.a a directory in MAINDIRECTORY and its contents).
-   * @param {String} name Name of the lesson plan to delete
+   * @param {string} name Name of the lesson plan to delete
    */
   deleteLessonPlan: async function (name) {
     try {
@@ -77,8 +77,8 @@ const LessonPlanService = {
    * Given the name of a lesson plan, return the LessonPlan object by reaching
    * into its directory, checking for the .json file, and later down the line,
    * also its associated .png activity cards.
-   * @param {String} name Name of the lesson plan to retrieve
-   * @return {LessonPlan} The requested LessonPlan object
+   * @param {string} name Name of the lesson plan to retrieve
+   * @return {Promise<LessonPlan | void>} The requested LessonPlan object
    */
   getLessonPlan: async function (name) {
     try {
@@ -182,9 +182,9 @@ const LessonPlanService = {
   /**
    * Reach into the lesson plan directory in local storage and return an array
    * of all the names.
-   * @param {Integer} option decides what option we need, 0 returns all times and names, 1 returns
+   * @param {number} option decides what option we need, 0 returns all times and names, 1 returns
    * only favourites, and 2 returns only default
-   * @return {String[]} Returns a list of [mtime, name] of the lesson plans
+   * @return Returns a list of [mtime, name] of the lesson plans
    */
   getAllLessonPlanNames: async function (option = 0) {
     try {
@@ -215,6 +215,7 @@ const LessonPlanService = {
       return lpInfo;
     } catch (e) {
       console.error('Error getAllLessonPlanNames: ', e);
+      return [];
     }
   },
 
@@ -222,8 +223,8 @@ const LessonPlanService = {
    * Rename a lesson plan. Throw an error if the lesson DNE or if it's renamed
    * to an existing name.
    * Use RNFS.moveFile() with the original filename and the new filename!
-   * @param {String} old_name Old name of lesson plan
-   * @param {String} new_name New name of lesson plan
+   * @param {string} oldName Old name of lesson plan
+   * @param {string} newName New name of lesson plan
    */
   setLessonPlanName: async function (oldName, newName) {
     try {
@@ -258,7 +259,7 @@ const LessonPlanService = {
   /**
    * Favorite a lesson plan. This would place it at the top of the collection
    * in the UI.
-   * @param {String} name Old name of lesson plan
+   * @param {string} name Old name of lesson plan
    */
   favouriteLessonPlan: async function (name) {
     try {
@@ -289,7 +290,7 @@ const LessonPlanService = {
 
   /**
    * Un-favorite a lesson plan. This would put it back in the Default directory.
-   * @param {String} name Old name of lesson plan
+   * @param {string} name Old name of lesson plan
    */
   unfavouriteLessonPlan: async function (name) {
     try {

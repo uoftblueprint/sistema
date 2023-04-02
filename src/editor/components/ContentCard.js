@@ -20,7 +20,7 @@ const ContentCard = ({ setisTextinputOpen, sectionType }) => {
     <SafeAreaView style={styles.ContentCardStyle}>
       {/* Touching the touchable opacity should focus the text input */}
       <TouchableOpacity
-        onPress={() => refInput.current.focus()}
+        onPress={() => refInput.current?.focus()}
         style={styles.TouchableStyle}>
         <View pointerEvents="none">
           <TextInput

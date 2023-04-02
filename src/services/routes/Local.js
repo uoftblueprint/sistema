@@ -2,8 +2,8 @@ import RNFS from 'react-native-fs';
 
 /**
  * Reads the file names in the entirety of the given directory.
- * @param {String} dirpath Full directory path to read
- * @return {String[]} Array of directory names
+ * @param {string} dirpath Full directory path to read
+ * @return {Promise<string[]>} Array of directory names
  */
 export async function readDirectory(dirpath) {
   return RNFS.readdir(dirpath)
@@ -13,12 +13,13 @@ export async function readDirectory(dirpath) {
     })
     .catch(err => {
       console.error(`RNFS readDirectory: ${err.message}`);
+      return [];
     });
 }
 /**
  * Reads the ReadDirItem in the entirety of the given directory.
- * @param {String} dirpath Full directory path to read
- * @return {RNFS.ReadDirItem[]} Array of directory ReadDirItems
+ * @param {string} dirpath Full directory path to read
+ * @return {Promise<RNFS.ReadDirItem[]>} Array of directory ReadDirItems
  */
 export async function readDDirectory(dirpath) {
   return RNFS.readDir(dirpath)
@@ -28,13 +29,14 @@ export async function readDDirectory(dirpath) {
     })
     .catch(err => {
       console.error(`RNFS readDDirectory: ${err.message}`);
+      return [];
     });
 }
 
 /**
  * Reads the file names in the entirety of the given directory in utf8 encoding.
- * @param {String} dirpath Full directory path to read
- * @return {String} File you want to read
+ * @param {string} filepath Full directory path to read
+ * @return {Promise<string>} File you want to read
  */
 export async function readFile(filepath) {
   return RNFS.readFile(filepath)
@@ -44,13 +46,15 @@ export async function readFile(filepath) {
     })
     .catch(err => {
       console.error(`RNFS readFile: ${err.message}`);
+      return '';
     });
 }
 
 /**
  * Write to the local storage with some file in utf8 encoding.
- * @param {String} filepath Full file path to delete
- * @param {String} content Content to write to given file path
+ * @param {boolean} isImage
+ * @param {string} filepath Full file path to delete
+ * @param {string} content Content to write to given file path
  */
 export async function writeFile(isImage, filepath, content) {
   const options = {
@@ -74,7 +78,7 @@ export async function writeFile(isImage, filepath, content) {
  * Delete a Lesson Plan (a.k.a a directory in RNFS.DocumentDirectoryPath and
  * its contents). This can also recursively delete directories, so don't worry
  * if the path isn't a file, but a directory.
- * @param {String} filepath Full file path to delete
+ * @param {string} filepath Full file path to delete
  */
 export async function deleteFile(filepath) {
   return (
@@ -91,8 +95,8 @@ export async function deleteFile(filepath) {
 
 /**
  * Move (rename) a lesson plan or file.
- * @param {String} oldpath Full file path to rename
- * @param {String} newpath Destination path
+ * @param {string} oldpath Full file path to rename
+ * @param {string} newpath Destination path
  */
 export async function moveFile(oldpath, newpath) {
   return RNFS.moveFile(oldpath, newpath)
@@ -106,8 +110,8 @@ export async function moveFile(oldpath, newpath) {
 
 /**
  * Check if a file exists.
- * @param {String} path Full file path to directory to check
- * @return {Bool} result Whether file exists or not
+ * @param {string} path Full file path to directory to check
+ * @return {Promise<boolean>} result Whether file exists or not
  */
 export async function checkFileExists(path) {
   return RNFS.exists(path)
@@ -121,13 +125,14 @@ export async function checkFileExists(path) {
     })
     .catch(err => {
       console.error(`RNFS checkFileExists: ${err.message}`);
+      return false;
     });
 }
 
 /**
  * Create a directory at filepath. Automatically creates parents and does not throw
  * if already exists
- * @param {String} dirPath Full file path of the directory to be added
+ * @param {string} dirPath Full file path of the directory to be added
  */
 export async function makeDirectory(dirPath) {
   return RNFS.mkdir(dirPath)

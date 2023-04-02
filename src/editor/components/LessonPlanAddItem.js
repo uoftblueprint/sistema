@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import AddIcon from '../../../assets/add';
+import AddIcon from '../../../assets/add.svg';
 
 const LessonPlanAddItem = ({ placeholder }) => {
   return (
@@ -15,7 +15,7 @@ const LessonPlanAddItem = ({ placeholder }) => {
         <TouchableOpacity>
           <AddIcon style={styles.ImageStyle} />
         </TouchableOpacity>
-        <View style={styles.addBox} underlineColorAndroid="transparent">
+        <View underlineColorAndroid="transparent">
           <Text style={{ paddingLeft: '3%' }}>{placeholder}</Text>
         </View>
       </TouchableOpacity>

@@ -32,7 +32,7 @@ export default class DraggableModuleWithMenu extends React.Component {
   /** Edit the text module */
   toggleEdit = () => {
     this.setState({ isEditable: true });
-    setTimeout(() => this.textInputRef.focus(), 100);
+    setTimeout(() => this.textInputRef?.focus(), 100);
   };
 
   /** Removes the module from this section. Deletes this component. */
@@ -68,8 +68,17 @@ export default class DraggableModuleWithMenu extends React.Component {
         },
       );
     } else if (Platform.OS === 'android') {
+      if (this.menuRef === undefined) {
+        console.warn('menuRef not defined');
+        return;
+      }
+      let nodeHandle = findNodeHandle(this.menuRef);
+      if (nodeHandle === null) {
+        console.warn('could not find node handle for menuRef');
+        return;
+      }
       UIManager.showPopupMenu(
-        findNodeHandle(this.menuRef),
+        nodeHandle,
         this.options,
         () =>
           console.warn(
