@@ -15,7 +15,7 @@ import { TextStyle } from '../../Styles.config';
 import ChosenActivityCard from './ChosenActivityCard';
 import { STACK_SCREENS } from '../constants';
 import { useSelector, useDispatch } from 'react-redux';
-import store from '../../services/configureStore';
+
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
 
 export default class DraggableModuleWithMenu extends React.Component {
@@ -24,8 +24,16 @@ export default class DraggableModuleWithMenu extends React.Component {
     this.menuRef; // Assigned upon render
     this.textInputRef; // Assigned upon render
     // TODO: Options change if (this.props.data.type == ModuleType.activityCard). We only want "Delete" (and if iOS, "Cancel" too).
-    this.options =
-      Platform.OS === 'ios' ? ['Edit', 'Delete', 'Cancel'] : ['Edit', 'Delete'];
+    if (this.props.data.type == ModuleType.text) {
+      this.options =
+        Platform.OS === 'ios'
+          ? ['Edit', 'Delete', 'Cancel']
+          : ['Edit', 'Delete'];
+      this.actions = [this.toggleEdit, this.deleteModule];
+    } else {
+      this.options = Platform.OS === 'ios' ? ['Delete', 'Cancel'] : ['Delete'];
+      this.actions = [this.deleteModule];
+    }
     this.actions = [this.toggleEdit, this.deleteModule];
     this.state = {
       isEditable: false,
@@ -84,6 +92,7 @@ export default class DraggableModuleWithMenu extends React.Component {
   };
 
   render() {
+    console.log('CARD PATH 1 ' + this.props.data.content);
     return (
       <View>
         <TouchableOpacity
@@ -112,35 +121,34 @@ export default class DraggableModuleWithMenu extends React.Component {
                 />
               </View>
             ) : (
-                  <ChosenActivityCard
-                  key={this.props.name}
-                  handleClick={() => {
-                    const { navigate } = this.props.navigation;
-                    navigate(STACK_SCREENS.EXPANDED_ACTIVITY_CARD,
-                    {
-                      cardName: this.props.data.name,
-                      cardPath: this.props.data.content,
-                    })
-                  }}
-                  cardName={this.props.data.name}
-                  cardPath={this.props.data.content}
-                  placeholder={this.props.data.content}
-                  onEndEditing={e => {
-                    const currText = e.nativeEvent.text;
-                    this.props.handleEdit(this.props.data.key, currText);
-                    this.setState({ isEditable: false });
-                  }}
-                />
-                // <TextInput
-                //   style={TextStyle.body}
-                //   multiline
-                //   defaultValue={this.props.data.name}
-                //   // onEndEditing={e => {
-                //   //   const currText = e.nativeEvent.text;
-                //   //   this.props.handleEdit(this.props.data.key, currText);
-                //   //   this.setState({ isEditable: false });
-                //   // }}
-                // />
+              <ChosenActivityCard
+                key={this.props.name}
+                handleClick={() => {
+                  const { navigate } = this.props.navigation;
+                  navigate(STACK_SCREENS.EXPANDED_ACTIVITY_CARD, {
+                    cardName: this.props.data.name,
+                    cardPath: this.props.data.content,
+                  });
+                }}
+                cardName={this.props.data.name}
+                cardPath={this.props.data.content}
+                placeholder={this.props.data.content}
+                onEndEditing={e => {
+                  const currText = e.nativeEvent.text;
+                  this.props.handleEdit(this.props.data.key, currText);
+                  this.setState({ isEditable: false });
+                }}
+              />
+              // <TextInput
+              //   style={TextStyle.body}
+              //   multiline
+              //   defaultValue={this.props.data.name}
+              //   // onEndEditing={e => {
+              //   //   const currText = e.nativeEvent.text;
+              //   //   this.props.handleEdit(this.props.data.key, currText);
+              //   //   this.setState({ isEditable: false });
+              //   // }}
+              // />
             ) // TODO: replace <Text> with component for ModuleType.activityCard
           }
         </TouchableOpacity>

@@ -19,16 +19,17 @@ import { useSelector, useDispatch } from 'react-redux';
 const ChosenActivityCard = ({ cardName, cardPath, handleClick }) => {
   // how to pass in the title 'cardName'?
   //const activityCardPath = cardPath; //.params?  // if (route.params) {
-
-    // useEffect(() => {
-    //     async function getCardPath() {
-    //         let warmUp = useSelector(state => getLessonSection(state.lessonPlan, SectionName.warmUp)); //returns an array
-    //         let mainLesson = useSelector(state => getLessonSection(state.lessonPlan, SectionName.mainLesson));
-    //         let coolDown = useSelector(state => getLessonSection(state.lessonPlan, SectionName.coolDown));
-    //   }
-    //   //parse everything
-    //   getLessonPlan();
-    // }, []);
+  console.log('CARD NAME ' + cardName);
+  console.log('CARD PATH ' + cardPath);
+  // useEffect(() => {
+  //     async function getCardPath() {
+  //         let warmUp = useSelector(state => getLessonSection(state.lessonPlan, SectionName.warmUp)); //returns an array
+  //         let mainLesson = useSelector(state => getLessonSection(state.lessonPlan, SectionName.mainLesson));
+  //         let coolDown = useSelector(state => getLessonSection(state.lessonPlan, SectionName.coolDown));
+  //   }
+  //   //parse everything
+  //   getLessonPlan();
+  // }, []);
   return (
     <SafeAreaView>
       <TouchableOpacity onPress={handleClick}>

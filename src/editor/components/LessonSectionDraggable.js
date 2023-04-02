@@ -42,7 +42,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
     setisTextinputOpen(!isTextinputOpen);
   };
 
-const addActivityCard = () => {
+  const addActivityCard = () => {
     navigation.navigate(STACK_SCREENS.ADD_ACTIVITY_CARD, {
       header: sectionType,
       sectionType: sectionType,
@@ -120,7 +120,6 @@ const addActivityCard = () => {
           onDragEnd={({ data }) => updateRedux(data)}
           keyExtractor={item => item.key}
           renderItem={renderModule}
-
         />
       </View>
     </SafeAreaView>

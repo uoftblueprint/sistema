@@ -12,7 +12,7 @@ export const lessonPlanSlice = createSlice({
    * @property {string} key Unique in that section. For example, 'module-0'.
    */
   initialState: {
-    lessonPlanName: " ",
+    lessonPlanName: ' ',
     [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
@@ -20,7 +20,7 @@ export const lessonPlanSlice = createSlice({
     isDirty: false, // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {
-    addLessonPlanName: (state, action) => {
+    setLessonPlanName: (state, action) => {
       return {
         ...state,
         lessonPlanName: action.payload.name,
@@ -89,7 +89,7 @@ export const {
   addToNote,
   removeNote,
   replaceSection,
-  addLessonPlanName
+  setLessonPlanName,
 } = lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
@@ -104,12 +104,12 @@ export const getLessonSection = (state, sectionName) => {
   }
 };
 
-export const getLessonPlanName = (state) => {
+export const getLessonPlanName = state => {
   try {
-    return state[lessonPlanName];
+    return state.lessonPlanName;
   } catch {
     console.error(
-      `getLessonPlanName: Could not grab lesson plan name from redux.`,
+      'getLessonPlanName: Could not grab lesson plan name from redux.',
     );
     return [];
   }

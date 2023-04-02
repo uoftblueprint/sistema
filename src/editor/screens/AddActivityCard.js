@@ -177,7 +177,7 @@ const AddActivityCard = function ({ navigation, route }) {
     const rnfsPath = await ActivityCardService.downloadActivityCard(
       previewInfo.id,
     );
-    console.log("RNFSPATH: " + rnfsPath);
+    console.log('RNFSPATH: ' + rnfsPath);
     store.dispatch(
       addToSection({
         type: 'activity',

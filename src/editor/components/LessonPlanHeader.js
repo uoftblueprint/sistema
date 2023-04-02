@@ -15,25 +15,24 @@ import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
 import { useSelector, useDispatch } from 'react-redux';
-import store from '../../services/configureStore'; 
-import { addLessonPlanName } from '../../services/editor/lessonPlanSlice';
+import store from '../../services/configureStore';
+import { setLessonPlanName, getLessonPlanName } from '../../services/editor/lessonPlanSlice';
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
 const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   const [isEditable, setIsEditable] = useState(false);
-  const [lessonPlanName, setLessonPlanName] = useState('');
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const todayDate = new Date().toLocaleDateString('en-us', {
+  const todayDate = new Date().toLocaleDateString('en-us', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
-    });
-    setLessonPlanName(todayDate);
-    
-  }, []);
-    
+  });
+  const [lessonName, setLessonName] = useState(todayDate.toString());
+  const dispatch = useDispatch();
+  dispatch(setLessonPlanName({ name: lessonName }));
+  let reduxName = useSelector(state => getLessonPlanName(state.lessonPlan)); //TODO: why cant??
+
+  console.log("REDUX NAME " + reduxName);
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={{ marginLeft: scale(horizontalMargin) }}>
@@ -45,13 +44,14 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
           {isEditable ? (
             <TextInput
               style={[styles.input, TextStyle.h1]}
-              value={lessonPlanName}
+              value={lessonName}
               onChangeText={newText => {
-                setLessonPlanName(newText);
-                dispatch(
-                  addLessonPlanName({
-                    name: newText,
-                }));
+                setLessonName(newText);
+                // dispatch(
+                //   setLessonPlanName({
+                //     name: lessonName,
+                //   }),
+                // );
               }}
               onBlur={() => {
                 setIsEditable(false);
@@ -60,7 +60,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
             />
           ) : (
             <Text style={[styles.text, TextStyle.h1]} numberOfLines={1}>
-              {lessonPlanName}
+              {lessonName}
             </Text>
           )}
         </View>

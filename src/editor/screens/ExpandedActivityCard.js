@@ -4,7 +4,7 @@ import {
   Text,
   ScrollView,
   Dimensions,
-  Image
+  Image,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { readFile } from '../../services/routes/Local.js';
@@ -13,10 +13,9 @@ const windowHeight = Dimensions.get('window').height;
 
 const ExpandedActivityCard = ({ navigation, route }) => {
   const { cardName, cardPath } = route.params;
-  const [title, setTitle] = useState('');
   const [cardImagePath, setCardImagePath] = useState(null);
 
-    //load the save data when Home.js mounts
+  //load the save data when Home.js mounts
   useEffect(() => {
     const readCardTitle = async () => {
       try {
@@ -47,21 +46,14 @@ const ExpandedActivityCard = ({ navigation, route }) => {
           <Text style={styles.title}>{cardName}</Text>
 
           <SafeAreaView style={styles.box}>
-            {
-              console.log("cardImagePath: " + cardPath)
-            }
-            {
-              cardPath && 
-              (
-                <Image
-                  source={{ uri: `file:/${cardImagePath}` }}
-                  style={styles.cardImage}
-                  resizeMode="contain"
-                  />
-              )
-              
-            }
-          
+            {console.log('cardImagePath: ' + cardPath)}
+            {cardPath && (
+              <Image
+                source={{ uri: `file:/${cardImagePath}` }}
+                style={styles.cardImage}
+                resizeMode="contain"
+              />
+            )}
           </SafeAreaView>
         </SafeAreaView>
       </ScrollView>
