@@ -22,13 +22,8 @@ const Library = ({ navigation }) => {
     useCallback(() => {
       async function getPlans() {
         await LessonPlanService.initializeEmptyDirectories();
-        console.log("1");
-        let favL = await LessonPlanService.
-          console.log(favL);
-          getAllLessonPlanNames(1);
-        let defL = await LessonPlanService.
-          console.log(defL);
-        getAllLessonPlanNames(2);
+        let favL = await LessonPlanService.getAllLessonPlanNames(1);
+        let defL = await LessonPlanService.getAllLessonPlanNames(2);
         let lessonPlanInfo = [];
         for (let lp = 0; lp < favL.length; lp++) {
           lessonPlanInfo.push({
