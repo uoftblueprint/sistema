@@ -159,15 +159,14 @@ const Library = ({ navigation, route }) => {
               .map((lessonPlan, i) => (
                 <TouchableOpacity
                   onPress={() => {
-                    /* 1. Navigate to the Details route with params */
                     navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2, {
-                      lessonPlanName: lessonPlan.name,
+                      lessonPlanName: JSON.parse(lessonPlan.name),
                     });
                   }}>
                   <LessonPlanButton
                     key={i} // TODO: if lesson plan has a unique id, replace key with it
                     index={i}
-                    name={lessonPlan.name}
+                    name={JSON.parse(lessonPlan.name)}
                     navigation={navigation}
                     isFavorited={lessonPlan.isFavorited}
                     toggleFavorite={handleFavoriteChange}
