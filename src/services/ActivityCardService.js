@@ -24,7 +24,7 @@ const ActivityCardService = {
     try {
       //Retrieve the last week from browser, convert to ISO for use in query
       const weekAgo = new Date(
-        Date.now() - 8 * 24 * 60 * 60 * 1000,
+        Date.now() - 15 * 24 * 60 * 60 * 1000,
       ).toISOString();
 
       //Set up GET url, query, and path to Featured Card directory
@@ -51,15 +51,16 @@ const ActivityCardService = {
       const files_list = driveFiles.files;
       var pathArr = [];
 
+      if(files_list.length == 0){
+        return [];
+      }
+
       //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
       if (files_list.length != 0 && (await checkFileExists(path))) {
         await deleteFile(path);
         await makeDirectory(path);
       }
 
-      //else {
-      //return [];
-      //}
 
       //if new cards were found, save them into the empty directory path
       for (var i = 0; i < files_list.length; i++) {
@@ -122,7 +123,7 @@ const ActivityCardService = {
         .catch(error => {
           console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
         });
-      console.log('got here');
+      
       await makeDirectory(dirPath);
       await writeFile(true, filePath, Buffer.from(response.data, 'base64'));
 

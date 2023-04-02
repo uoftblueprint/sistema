@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    width: '75%',
+    width: '65%',
     marginTop: 30,
     height: verticalScale(400),
   },

@@ -81,7 +81,7 @@ const Home = ({ navigation }) => {
         <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
         <SafeAreaView style={styles.subContainer}>
           <Text style={[styles.subtitle, TextStyle.h3]}>
-            Last updated on Jan 1, 2023
+            Last updated on {date}
           </Text>
           <TouchableOpacity onPress={() => handleRefreshPress()}>
             <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
