@@ -3,6 +3,7 @@ import LessonPlanMenuOverlay from '../Components/LessonPlanMenuOverlay';
 import Library from './Library';
 import { STACK_SCREENS } from './constants';
 import LessonPlanEditorV2 from '../editor/screens/LessonPlanEditorV2';
+import LessonPlanSortingMenu from './LessonPlanSortingMenu';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,13 @@ const LibraryNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name={STACK_SCREENS.LIBRARY} component={Library} />
+      <Stack.Screen
+        name={STACK_SCREENS.LIBRARY}
+        component={Library}
+        initialParams={{
+          sortT: 0,
+        }}
+      />
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}
@@ -25,8 +32,11 @@ const LibraryNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={STACK_SCREENS.LESSON_PLAN_EDITOR_V2}
-        component={LessonPlanEditorV2}
+        name={STACK_SCREENS.LESSON_PLAN_SORTING_MENU}
+        component={LessonPlanSortingMenu}
+        options={{
+          presentation: 'transparentModal',
+        }}
       />
     </Stack.Navigator>
   );
