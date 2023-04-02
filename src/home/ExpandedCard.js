@@ -27,11 +27,10 @@ const ExpandedCard = ({ route, navigation }) => {
         cardNames = cardNames.substring(0, cardNames.length - 5);
         setCardImagePath(cardPath + 'cardImage.jpg');
 
-        let titleSegment = cardNames.split("-");
+        let titleSegment = cardNames.split('-');
         setTheme(titleSegment[0]);
         setActivityType(titleSegment[1]);
         setTitle(titleSegment[2]);
-
       } catch (err) {
         console.warn(err);
         setTitle('Could not load card preview. Please try again.');
@@ -61,13 +60,13 @@ const ExpandedCard = ({ route, navigation }) => {
             <Text style={TextStyle.h3}> {activityType} </Text>
           </Text>
           <SafeAreaView style={styles.box}>
-          { cardImagePath && 
-            (<Image
-              source={{ uri: `file://${cardImagePath}` }}
-              style={styles.cardImage}
-              resizeMode="contain"
-            />)
-}
+            {cardImagePath && (
+              <Image
+                source={{ uri: `file://${cardImagePath}` }}
+                style={styles.cardImage}
+                resizeMode="contain"
+              />
+            )}
           </SafeAreaView>
         </SafeAreaView>
       </ScrollView>

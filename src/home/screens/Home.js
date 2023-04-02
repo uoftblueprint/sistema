@@ -31,12 +31,11 @@ const Home = ({ navigation }) => {
     const filePath = `${datePath}/date.txt`;
 
     const cards = await ActivityCardService.getFeaturedActivityCards();
-    
 
     //update the last refreshed date
     if (cards.length != 0) {
       setPathArr(cards);
-      
+
       const today = new Date().toDateString();
       setDate(today);
       await makeDirectory(datePath);
@@ -82,9 +81,9 @@ const Home = ({ navigation }) => {
       <SafeAreaView style={styles.container}>
         <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
         <SafeAreaView style={styles.subContainer}>
-        <Text style={[styles.subtitle, TextStyle.h3]}>
-              Last updated on Jan 1, 2023
-            </Text>
+          <Text style={[styles.subtitle, TextStyle.h3]}>
+            Last updated on Jan 1, 2023
+          </Text>
           <TouchableOpacity onPress={() => handleRefreshPress()}>
             <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
           </TouchableOpacity>
