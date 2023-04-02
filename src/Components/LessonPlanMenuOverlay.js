@@ -3,7 +3,7 @@ import OptionsMenu from './OptionsMenu.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LessonPlanMenuOverlay = ({ navigation, route }) => {
-  const { isLessonPlanEditor, lastEdited } = route.params;
+  const { isLessonPlanEditor, lastEdited, lessonPlanName } = route.params;
 
   return (
     <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
@@ -13,6 +13,7 @@ const LessonPlanMenuOverlay = ({ navigation, route }) => {
           lastEdited={lastEdited}
           navigation={navigation}
           style={styles.menu}
+          lessonPlan={lessonPlanName}
         />
       </SafeAreaView>
     </TouchableWithoutFeedback>
