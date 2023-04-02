@@ -1,10 +1,15 @@
 import RNFS from 'react-native-fs';
 
 export const SectionName = {
-  warmUp: 'warmUp',
-  mainLesson: 'mainLesson',
-  coolDown: 'coolDown',
-  notes: 'notes',
+  warmUp: 'Warm Up',
+  mainLesson: 'Main Lesson',
+  coolDown: 'Cool Down',
+  notes: 'Notes',
+};
+
+export const ModuleType = {
+  text: 'text',
+  activityCard: 'activityCard',
 };
 
 // LessonPlanService.js

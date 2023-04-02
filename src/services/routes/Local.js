@@ -40,7 +40,6 @@ export async function readFile(filepath) {
   return RNFS.readFile(filepath)
     .then(result => {
       console.log('GOT FILE: ', filepath);
-      console.log(result);
       return result;
     })
     .catch(err => {
@@ -113,7 +112,11 @@ export async function moveFile(oldpath, newpath) {
 export async function checkFileExists(path) {
   return RNFS.exists(path)
     .then(result => {
-      console.log(`FILE EXISTS: ${path}`, result);
+      if (result) {
+        console.log('FILE EXISTS');
+      } else {
+        console.log('FILE DOES NOT EXIST');
+      }
       return result;
     })
     .catch(err => {

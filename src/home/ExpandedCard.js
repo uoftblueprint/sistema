@@ -9,11 +9,13 @@ import {
 import { useState, useEffect } from 'react';
 import { readFile } from '../services/routes/Local.js';
 import Header from '../Components/Header';
-
-const windowHeight = Dimensions.get('window').height;
+import { TextStyle } from '../Styles.config';
+import { verticalScale } from 'react-native-size-matters';
 
 const ExpandedCard = ({ route, navigation }) => {
   const { cardPath } = route.params;
+  const [theme, setTheme] = useState('');
+  const [activityType, setActivityType] = useState('');
   const [title, setTitle] = useState('');
   const [cardImagePath, setCardImagePath] = useState('');
 
@@ -24,7 +26,12 @@ const ExpandedCard = ({ route, navigation }) => {
         let cardNames = await readFile(cardTitlePath, 'utf-8');
         cardNames = cardNames.substring(0, cardNames.length - 5);
         setCardImagePath(cardPath + 'cardImage.jpg');
-        setTitle(cardNames);
+
+        let titleSegment = cardNames.split("-");
+        setTheme(titleSegment[0]);
+        setActivityType(titleSegment[1]);
+        setTitle(titleSegment[2]);
+
       } catch (err) {
         console.warn(err);
         setTitle('Could not load card preview. Please try again.');
@@ -44,8 +51,15 @@ const ExpandedCard = ({ route, navigation }) => {
       <ScrollView>
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={styles.title}> {title} </Text>
-
+          <Text style={[styles.title, TextStyle.h2]}> {title} </Text>
+          <Text style={[TextStyle.h3, styles.subtitle]}>
+            Theme:
+            <Text style={TextStyle.h3}> {theme} </Text>
+          </Text>
+          <Text style={[TextStyle.h3, styles.subtitle]}>
+            Activity Type:
+            <Text style={TextStyle.h3}> {activityType} </Text>
+          </Text>
           <SafeAreaView style={styles.box}>
           { cardImagePath && 
             (<Image
@@ -74,17 +88,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    marginTop: 15,
-    width: '61%',
-    height: windowHeight * 0.55,
+    width: '75%',
+    marginTop: 30,
+    height: verticalScale(400),
   },
   title: {
-    color: '#453E3D',
-    fontFamily: 'Poppins-Bold',
-    fontSize: 20,
-    width: '60%',
-    textAlign: 'center',
-    marginBottom: 40,
+    width: '75%',
+    textAlign: 'left',
+    marginBottom: 5,
+  },
+  subtitle: {
+    width: '75%',
+    textAlign: 'left',
+    fontFamily: 'Mulish-Bold',
   },
   cardImage: {
     width: '100%',

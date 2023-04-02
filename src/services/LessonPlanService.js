@@ -1,5 +1,6 @@
 import {
   checkFileExists,
+  readFile,
   readDirectory,
   writeFile,
   moveFile,
@@ -8,6 +9,7 @@ import {
   readDDirectory,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
+import { LessonPlan, Module } from './models';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
@@ -20,12 +22,24 @@ const LessonPlanService = {
    */
   deleteLessonPlan: async function (name) {
     try {
-      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan
-      // as a new directory, we can just unlink it with the deleteFile() function
-      var path = MAINDIRECTORY + '/' + name + '/';
-      await deleteFile(path);
+      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      let defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+      let path;
+
+      // check if file exists, assigning appropriate path if so
+      if (await checkFileExists(favouritedPath)) {
+        path = favouritedPath;
+      } else if (await checkFileExists(defaultPath)) {
+        path = defaultPath;
+      } else {
+        throw new Error(`${name} does not exist`);
+      }
+
+      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
+      let result = await deleteFile(path);
+      return result;
     } catch (e) {
-      console.error('Error deleteLessonPlan: ', e);
+      console.error('deleteLessonPlan error: ', e);
     }
   },
 
@@ -67,8 +81,47 @@ const LessonPlanService = {
    */
   getLessonPlan: async function (name) {
     try {
+      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/${name}.json`;
+      let defaultPath = `${MAINDIRECTORY}/Default/${name}/${name}.json`;
+      let path;
+      let lessonPlanObj;
+
+      // check if file exists, assigning appropriate path if so
+      if (await checkFileExists(favouritedPath)) {
+        path = favouritedPath;
+      } else if (await checkFileExists(defaultPath)) {
+        path = defaultPath;
+      } else {
+        throw new Error(`${name} does not exist`);
+      }
+
+      // read in the file from RNFS
+      let str = await readFile(path);
+      // convert string to JSON object
+      let json = JSON.parse(str);
+
+      // create Module objects from JSON
+      const warmUpList = json.warmUp.map(createModules);
+      const mainLessonList = json.mainLesson.map(createModules);
+      const coolDownList = json.coolDown.map(createModules);
+
+      // helper function to create Module objects for .map()
+      function createModules(module) {
+        return new Module(module.type, module.content);
+      }
+
+      // create LessonPlan object from JSON
+      lessonPlanObj = new LessonPlan(
+        json.name,
+        warmUpList,
+        mainLessonList,
+        coolDownList,
+        json.notes,
+      );
+
+      return lessonPlanObj;
     } catch (e) {
-      // Error
+      console.error('Error getLessonPlan: ', e);
     }
   },
 
@@ -89,9 +142,9 @@ const LessonPlanService = {
       );
       var combined = [];
 
-      if (option == 0 || option == 1) {
+      if (option === 0 || option === 1) {
         combined = favouritedLessonPlans;
-        if (option == 0) {
+        if (option === 0) {
           for (var i = 0; i < defaultLessonPlans.length; i++) {
             combined.push(defaultLessonPlans[i]);
           }

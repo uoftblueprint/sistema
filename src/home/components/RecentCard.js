@@ -122,4 +122,43 @@ const RecentCard = ({ navigation, cardPath }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  box: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginVertical: 15,
+    width: '100%',
+    height: windowHeight * 0.25,
+  },
+  scrollview: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  titleBar: {
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
+    width: '100%',
+    height: '19%',
+    backgroundColor: '#4D8ECB',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontFamily: 'Mulish-Italic',
+    color: '#FFFFFF',
+    width: '100%',
+  },
+});
+
 export default RecentCard;

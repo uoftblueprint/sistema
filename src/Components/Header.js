@@ -14,6 +14,8 @@ import InfoIcon from '../../assets/infoIcon.svg';
 import GearIcon from '../../assets/gearIcon.svg';
 import Overlay from './Overlay';
 import { STACK_SCREENS as SETTINGS_SCREENS } from '../settings/constants';
+import { TextStyle } from '../Styles.config';
+import { verticalScale } from 'react-native-size-matters';
 
 const activityCardNamingExplanation =
   'Activity Card names have three parts:\n\nTheme - Activity Type - Activity Title\n\n' +
@@ -74,13 +76,17 @@ const Header = ({ navigation, isHome, showBackButton }) => {
         close={toggleOverlay}
         visible={isVisible}
         style={styles.overlayStyle}>
-        <Text style={styles.textHeader}>How activity cards are named</Text>
+        <Text style={[TextStyle.h2, styles.textHeader]}>
+          How activity cards are named
+        </Text>
         <ScrollView style={styles.overlayScroll}>
-          <Text style={styles.textBody}>{activityCardNamingExplanation}</Text>
+          <Text style={[TextStyle.body, styles.textBody]}>
+            {activityCardNamingExplanation}
+          </Text>
         </ScrollView>
 
         <SistemaButton onPress={toggleOverlay} style={{ minWidth: '30%' }}>
-          <Text> Okay </Text>
+          <Text style={TextStyle.body}> Okay </Text>
         </SistemaButton>
       </Overlay>
     </SafeAreaView>
@@ -114,22 +120,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textHeader: {
-    fontFamily: 'Poppins-Bold',
-    fontSize: 16,
-    marginBottom: '5%',
+    marginBottom: verticalScale(10),
   },
   textBody: {
-    fontFamily: 'Mulish-Regular',
-    fontSize: 16,
-    marginBottom: '5%',
+    marginBottom: verticalScale(10),
   },
   overlayStyle: {
-    minHeight: '30%',
-    maxHeight: '60%',
     paddingHorizontal: '5%',
     flexDirection: 'column',
   },
   overlayScroll: {
+    paddingRight: '5%',
     marginBottom: '5%',
   },
 });

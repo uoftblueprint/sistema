@@ -1,4 +1,7 @@
-const AppColors = {
+import { StyleSheet } from 'react-native';
+import { scale } from 'react-native-size-matters';
+
+export const AppColors = {
   primary: '#4D8ECB', // Celestial Blue, primary color
   background: '#FFFAF5', // Floral White, background color
   secondary: '#33B4A9', // Keppei (it's a turqoise color), for buttons?
@@ -16,4 +19,35 @@ const AppColors = {
   senary_30: 'rgba(246, 169, 87, 0.4)',
 };
 
-export default AppColors;
+export const TextStyle = StyleSheet.create({
+  h1: {
+    fontSize: 24,
+    color: '#000000',
+    fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.3,
+  },
+  h2: {
+    fontSize: 20,
+    color: '#453E3D',
+    fontFamily: 'Poppins-Bold',
+    lineHeight: 28,
+    letterSpacing: 0.3,
+  },
+  h3: {
+    color: '#453E3D',
+    fontFamily: 'Mulish-Italic',
+    fontSize: 15,
+    letterSpacing: 0.3,
+  },
+  body: {
+    color: '#000000',
+    fontFamily: 'Mulish-Regular',
+  },
+  label: {
+    color: '#000000',
+    fontFamily: 'Mulish-Regular',
+    fontSize: 16,
+  },
+});
+
+export const OptionsMenuPadding = scale(20);
