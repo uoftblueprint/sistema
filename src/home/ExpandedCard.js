@@ -1,10 +1,44 @@
-import { StyleSheet, SafeAreaView, Text, ScrollView } from 'react-native';
-import AddButton from './components/AddToLessonButton';
+import {
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  ScrollView,
+  Dimensions,
+  Image,
+} from 'react-native';
+import { useState, useEffect } from 'react';
+import { readFile } from '../services/routes/Local.js';
 import Header from '../Components/Header';
 import { TextStyle } from '../Styles.config';
 import { verticalScale } from 'react-native-size-matters';
 
-const ExpandedCard = ({ navigation }) => {
+const ExpandedCard = ({ route, navigation }) => {
+  const { cardPath } = route.params;
+  const [theme, setTheme] = useState('');
+  const [activityType, setActivityType] = useState('');
+  const [title, setTitle] = useState('');
+  const [cardImagePath, setCardImagePath] = useState('');
+
+  useEffect(() => {
+    const readCardTitle = async () => {
+      try {
+        const cardTitlePath = cardPath + 'cardName.txt';
+        let cardNames = await readFile(cardTitlePath, 'utf-8');
+        cardNames = cardNames.substring(0, cardNames.length - 5);
+        setCardImagePath(cardPath + 'cardImage.jpg');
+
+        let titleSegment = cardNames.split('-');
+        setTheme(titleSegment[0]);
+        setActivityType(titleSegment[1]);
+        setTitle(titleSegment[2]);
+      } catch (err) {
+        console.warn(err);
+        setTitle('Could not load card preview. Please try again.');
+      }
+    };
+    readCardTitle();
+  }, [cardPath]);
+
   return (
     <SafeAreaView style={styles.background}>
       <Header
@@ -16,23 +50,24 @@ const ExpandedCard = ({ navigation }) => {
       <ScrollView>
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {/* Pass in props.cardTitle eventually. You want to parse the parts around the dashes for the third part of the title */}
-          <Text style={[styles.title, TextStyle.h2]}>Listening Spinners</Text>
+          <Text style={[styles.title, TextStyle.h2]}> {title} </Text>
           <Text style={[TextStyle.h3, styles.subtitle]}>
             Theme:
-            {/* You'll parse the name of the activity card to get the theme (first part of title) */}
-            <Text style={TextStyle.h3}> THEME HERE</Text>
+            <Text style={TextStyle.h3}> {theme} </Text>
           </Text>
           <Text style={[TextStyle.h3, styles.subtitle]}>
             Activity Type:
-            {/* You'll parse the name of the activity card to get the type (second part of title) */}
-            <Text style={TextStyle.h3}> TYPE HERE</Text>
+            <Text style={TextStyle.h3}> {activityType} </Text>
           </Text>
           <SafeAreaView style={styles.box}>
-            {/* CARD CONTENT GOES HERE */}
+            {cardImagePath && (
+              <Image
+                source={{ uri: `file://${cardImagePath}` }}
+                style={styles.cardImage}
+                resizeMode="contain"
+              />
+            )}
           </SafeAreaView>
-
-          <AddButton />
         </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
@@ -65,6 +100,12 @@ const styles = StyleSheet.create({
     width: '75%',
     textAlign: 'left',
     fontFamily: 'Mulish-Bold',
+  },
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
