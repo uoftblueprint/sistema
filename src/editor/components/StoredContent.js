@@ -13,9 +13,11 @@ import {
 } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 import { TextStyle } from '../../Styles.config';
+import { useDispatch } from 'react-redux';
 
 const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
   const refInput = useRef();
+  const dispatch = useDispatch();
 
   return (
     <SafeAreaView style={styles.ContentCardStyle}>
@@ -35,7 +37,7 @@ const StoredContent = ({ text, index, setSectionContent, sectionType }) => {
                 let newContent = [...state];
                 // delete the content from section content state when empty
                 newContent = newContent.filter((_, i) => i !== index);
-                store.dispatch(
+                dispatch(
                   removeFromSection({
                     type: 'text',
                     section: sectionType,

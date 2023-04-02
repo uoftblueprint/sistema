@@ -55,17 +55,15 @@ const LessonPlanService = {
   saveLessonPlan: async function (lesson) {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
-      const lessonJSON = JSON.stringify(lesson);
+      //const lessonJSON = JSON.stringify(lesson);
       // Then, write to local storage with an RNFS call via Local.js
       // By default, new lesson plans should not be favourited
       var path = MAINDIRECTORY + '/Default/' + lesson.name + '/';
-      makeDirectory(path)
-        .then(() => {
-          return writeFile(path + lesson.name + '.json', lessonJSON);
-        })
-        .then(r => {
-          console.log('Successfully saved lesson plan: ' + lesson.name);
-        });
+      await makeDirectory(path)
+      await writeFile(false, path + lesson.name + '.json', lesson)
+    .then(r => {
+        console.log('Successfully saved lesson plan: ' + lesson.name);
+      });
     } catch (e) {
       // There was an error, catch it and do something with it
       console.error('Error saving lesson plan: ', e);

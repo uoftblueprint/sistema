@@ -4,14 +4,35 @@ import {
   Text,
   ScrollView,
   Dimensions,
+  Image
 } from 'react-native';
-
-// import AddButton from './components/AddToLessonButton';
+import { useState, useEffect } from 'react';
+import { readFile } from '../../services/routes/Local.js';
 import Header from '../../Components/Header';
-import ActivityCardService from '../../services/ActivityCardService';
 const windowHeight = Dimensions.get('window').height;
 
-const ExpandedActivityCard = ({ navigation, cardPath }) => {
+const ExpandedActivityCard = ({ navigation, route }) => {
+  const { cardName, cardPath } = route.params;
+  const [title, setTitle] = useState('');
+  const [cardImagePath, setCardImagePath] = useState(null);
+
+    //load the save data when Home.js mounts
+  useEffect(() => {
+    const readCardTitle = async () => {
+      try {
+        //const cardTitlePath = cardPath + 'cardName.txt';
+        const cardTitlePath = cardPath;
+        var cardNames = await readFile(cardTitlePath, 'utf-8');
+        cardNames = cardNames.substring(0, cardNames.length - 5);
+        setCardImagePath(cardPath + 'cardImage.jpg');
+        setTitle(cardNames);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    readCardTitle();
+  }, [cardPath]);
+
   return (
     <SafeAreaView style={styles.background}>
       <Header
@@ -23,14 +44,25 @@ const ExpandedActivityCard = ({ navigation, cardPath }) => {
       <ScrollView>
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {/* pass in props.cardTitle eventually */}
-          <Text style={styles.title}> TITLE </Text>
+          <Text style={styles.title}>{cardName}</Text>
 
           <SafeAreaView style={styles.box}>
-            {/* CARD CONTENT GOES HERE */}
+            {
+              console.log("cardImagePath: " + cardPath)
+            }
+            {
+              cardPath && 
+              (
+                <Image
+                  source={{ uri: `file:/${cardImagePath}` }}
+                  style={styles.cardImage}
+                  resizeMode="contain"
+                  />
+              )
+              
+            }
+          
           </SafeAreaView>
-
-          {/* <AddButton /> */}
         </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
@@ -60,7 +92,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width: '60%',
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 20,
+  },
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

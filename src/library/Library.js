@@ -22,8 +22,13 @@ const Library = ({ navigation }) => {
     useCallback(() => {
       async function getPlans() {
         await LessonPlanService.initializeEmptyDirectories();
-        let favL = await LessonPlanService.getAllLessonPlanNames(1);
-        let defL = await LessonPlanService.getAllLessonPlanNames(2);
+        console.log("1");
+        let favL = await LessonPlanService.
+          console.log(favL);
+          getAllLessonPlanNames(1);
+        let defL = await LessonPlanService.
+          console.log(defL);
+        getAllLessonPlanNames(2);
         let lessonPlanInfo = [];
         for (let lp = 0; lp < favL.length; lp++) {
           lessonPlanInfo.push({
@@ -76,7 +81,7 @@ const Library = ({ navigation }) => {
           });
         })
         .catch(err => {
-          console.error(`Library favourite lesson plan: ${err}`);
+          console.log(`Library favourite lesson plan: ${err}`);
         });
     };
 
@@ -125,11 +130,10 @@ const Library = ({ navigation }) => {
                 </TouchableOpacity>
               ))}
             {/* DUMMY LESSON PLAN */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
-                /* 1. Navigate to the Details route with params */
                 navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2, {
-                  lessonPlanName: 'March 1',
+                  lessonPlanName: 'Apr 2, 2023',
                 });
               }}>
               <LessonPlanButton
@@ -142,7 +146,7 @@ const Library = ({ navigation }) => {
                 lastEditedDate={'March 1'}
                 handleClick={openLessonPlan}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </SafeAreaView>
         </ScrollView>
       </SafeAreaView>

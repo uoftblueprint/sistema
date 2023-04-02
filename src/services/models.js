@@ -18,9 +18,9 @@ export class AccessToken {
 
 /**
  * @property {string} name Name of the lesson plan
- * @property {Module[]} warmUp warmUp module of the lesson
- * @property {Module[]} mainLesson mainLesson module of the lesson
- * @property {Module[]} coolDown coolDown module of the lesson
+ * @property {string[]} warmUp warmUp module of the lesson
+ * @property {string[]} mainLesson mainLesson module of the lesson
+ * @property {string[]} coolDown coolDown module of the lesson
  * @property {string} notes notes, containing strings
  */
 export class LessonPlan {
@@ -44,6 +44,7 @@ export class ActivityCard {
   }
 }
 
+//TODO: delete module because it is not used in LessonPLan anymore
 /**
  * @property {string} type type of module content: "text" or "activity card"
  * @property {string} content text: "ALL_CONTENT", activity card: "PATH_TO_IMAGE_IN_DEFAULT_DIR"

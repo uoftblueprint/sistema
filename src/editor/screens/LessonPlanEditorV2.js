@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import LessonPlanHeader from '../components/LessonPlanHeader.js';
 import {
   StyleSheet,
@@ -7,49 +7,99 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
+
+import {
+  getLessonSection,
+} from '../../services/editor/lessonPlanSlice';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { SectionName } from '../../services/constants.js';
-import store from '../../services/configureStore';
-import { addLessonPlan } from '../../services/editor/lessonPlanSlice.js';
+import { SectionName, MAINDIRECTORY } from '../../services/constants.js';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import LessonPlanService from '../../services/LessonPlanService.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { LessonPlan } from '../../services/models.js';
+import { getLessonPlanName, getLessonPlanSection } from '../../services/editor/lessonPlanSlice';
+import { addLessonPlanName } from '../../services/editor/lessonPlanSlice';
+import ActivityCardService from '../../services/ActivityCardService.js';
+import {
+  makeDirectory,
+  readDirectory,
+  readFile,
+  writeFile,
+  checkFileExists,
+} from '../../services/routes/Local.js';
+
 // dummy last edited date
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
+
+  const lessonPlanName = null;
   if (route.params) {
     const { lessonPlanName } = route.params;
     useEffect(() => {
-      async function getLessonPlan() {
-        let lessonPlanObj = await LessonPlanService.getLessonPlan(
-          lessonPlanName,
-        );
-        store.dispatch(
-          //check arrays this is JSONparsed too
-          //add a key to each module
-          addLessonPlan({
-            lessonPlanName: lessonPlanObj.json.name,
-            warmUp: lessonPlanObj.warmUpList,
-            mainLesson: lessonPlanObj.mainLessonList,
-            coolDown: lessonPlanObj.coolDownList,
-            notes: lessonPlanObj.json.notes,
-          }),
-        );
-      }
-      getLessonPlan();
+      let lessonPlanObj;
+        async function getLessonPlan(LessonName) {
+          lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
+        }
+      //parse everything
+      getLessonPlan(lessonPlanName);
     }, []);
   }
+
+  let lessonName = "Fake name";
+  //let lessonName = useSelector(state => getLessonPlanName(state.lessonPlan)); //TODO: why cant??
+  let warmUp = useSelector(state => getLessonSection(state.lessonPlan, SectionName.warmUp)); //returns an array
+  let mainLesson = useSelector(state => getLessonSection(state.lessonPlan, SectionName.mainLesson));
+  let coolDown = useSelector(state => getLessonSection(state.lessonPlan, SectionName.coolDown));
+  let notes = useSelector(state => getLessonSection(state.lessonPlan, SectionName.notes));
+  
+  const saveLessonPlan = () => {
+    //stringify all
+    //TODO: add key to use module
+    // for (let i = 0; i < warmUp.length; i++){
+    //   let module = warmUp[i];
+    //   if (module) {
+    //     module = module.filter((k) => k !== "key");
+    //     console.log(module);
+    //   }
+      
+    // }
+    //1. Get from Redux
+    //lessonName = JSON.stringify(lessonName);
+    warmUp = JSON.stringify(warmUp);
+    mainLesson = JSON.stringify(mainLesson);
+    coolDown = JSON.stringify(coolDown);
+    notes = JSON.stringify(notes);
+  
+    // console.log(lessonName);
+    // console.log("WARMUP:" + warmUp);
+    const lessonPlanObject = new LessonPlan(
+      lessonName,
+      warmUp,
+      mainLesson,
+      coolDown,
+      notes
+    )
+    //2. Save to RNFS
+    async function saveLessonPlanToRNFS(lessonPlanObj) {
+      await LessonPlanService.saveLessonPlan(lessonPlanObj);
+    }
+    saveLessonPlanToRNFS(lessonPlanObject);
+  }
+  
+  
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
         navigation={navigation}
         lastEditedDate={lastEditedDummy}
+        lessonName={lessonPlanName ? lessonPlanName : lessonName}
       />
-
       <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
@@ -74,12 +124,13 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         </TouchableWithoutFeedback>
       </NestableScrollContainer>
 
-      <TouchableOpacity style={styles.saveButton}>
-        <SaveButton />
-        {/* when saving, strinfy the lessonapln object (and remove key)<
-
-        when displaying, JSON.parse*/}
-      </TouchableOpacity>
+      <View style={styles.saveButton}>
+        <TouchableOpacity onPress={saveLessonPlan} >
+          <SaveButton />
+          {/* take redux, save to rnfs. when saving, strinfy the lessonapln object (and remove key)when displaying, JSON.parse*/}
+          
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };

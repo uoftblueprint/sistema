@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import AddLessonContentButton from './AddLessonContentButton';
 import { Text, View, SafeAreaView, Platform, StyleSheet } from 'react-native';
 import store from '../../services/configureStore';
@@ -7,6 +8,7 @@ import StoredContent from './StoredContent';
 import ChosenActivityCard from './ChosenActivityCard';
 
 const LessonSection = ({ sectionType, subtitle, navigation }) => {
+  const lessonPlanState = useSelector(state => state.lessonPlan);
   const [sectionContent, setSectionContent] = useState([]);
   const [sectionActivityCards, setSectionActivityCards] = useState([]);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
@@ -16,6 +18,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const addActivityCard = () => {
     navigation.navigate('Add Activity Card', {
       header: subtitle,
+      sectionType: sectionType,
     });
   };
 
@@ -43,9 +46,8 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
         />
         <ChosenActivityCard navigation={navigation} />
         {/* Stack of content already inserted, available for further editing/removing */}
-        {/* arr is [{type: "text", content: "textcontent / path"}, {type: "text", content: "path"}, where type: "text" or "activityCard" */}
-        {store.getState(sectionType).lessonPlan[sectionType].map((arr, i) => {
-          if (arr.type === 'text' && arr.content.length > 0) {
+        {lessonPlanState[sectionType].map((arr, i) => {
+          if (arr?.content?.length > 0) {
             return (
               <View key={i}>
                 <StoredContent

@@ -16,14 +16,13 @@ import ContentCard from './ContentCard';
 import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS } from '../constants';
 import { TextStyle } from '../../Styles.config';
-import ChosenActivityCard from './ChosenActivityCard';
 
 const LessonSectionDraggable = ({ sectionType, navigation }) => {
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
   );
-  console.log(sectionType, sectionData); // TODO: delete once you're done, helpful to see for now
+  //console.log(sectionType, sectionData); // TODO: delete once you're done, helpful to see for now
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
     dispatch(
@@ -43,9 +42,10 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
     setisTextinputOpen(!isTextinputOpen);
   };
 
-  const addActivityCard = () => {
+const addActivityCard = () => {
     navigation.navigate(STACK_SCREENS.ADD_ACTIVITY_CARD, {
       header: sectionType,
+      sectionType: sectionType,
     });
   };
 
@@ -74,6 +74,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
 
   // To render each module in DraggableFlatList
   const renderModule = ({ item, drag, isActive }) => {
+    console.log(navigation);
     return (
       <ScaleDecorator
         activeScale={0.95} // shrinks the module when dragged
@@ -85,6 +86,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           drag={drag}
           dragIsActive={isActive}
           data={item}
+          navigation={navigation}
         />
       </ScaleDecorator>
     );
@@ -118,10 +120,8 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           onDragEnd={({ data }) => updateRedux(data)}
           keyExtractor={item => item.key}
           renderItem={renderModule}
+
         />
-        <ChosenActivityCard handleClick={expandActivityCard} />
-        {/* cardName={cardName}
-          cardPath={cardPath} /> */}
       </View>
     </SafeAreaView>
   );

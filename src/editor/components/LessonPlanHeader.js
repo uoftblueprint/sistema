@@ -14,14 +14,16 @@ import BackArrow from '../../../assets/backArrow.svg';
 import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
-
+import { useSelector, useDispatch } from 'react-redux';
+import store from '../../services/configureStore'; 
+import { addLessonPlanName } from '../../services/editor/lessonPlanSlice';
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
 const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [lessonPlanName, setLessonPlanName] = useState('');
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const todayDate = new Date().toLocaleDateString('en-us', {
       year: 'numeric',
@@ -29,8 +31,9 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
       day: 'numeric',
     });
     setLessonPlanName(todayDate);
+    
   }, []);
-
+    
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={{ marginLeft: scale(horizontalMargin) }}>
@@ -45,6 +48,10 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
               value={lessonPlanName}
               onChangeText={newText => {
                 setLessonPlanName(newText);
+                dispatch(
+                  addLessonPlanName({
+                    name: newText,
+                }));
               }}
               onBlur={() => {
                 setIsEditable(false);

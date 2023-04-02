@@ -1,23 +1,80 @@
-import { StyleSheet, TextInput, View, Platform } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Platform,
+  FlatList,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import { act } from 'react-test-renderer';
 import SearchLogo from '../../../assets/Search.svg';
+import SearchResults from './SearchResults';
+import NoCardsFound from './NoCardsFound';
 
-const Searchbar = ({ onChangeText }) => {
+const Searchbar = ({
+  onChangeText,
+  onFocus,
+  activityList,
+  focused,
+  setPreviewInfo,
+  showNoCards,
+}) => {
+  useEffect(() => {}, [activityList]);
+
+  const [highlightedID, setHighlightedID] = useState(null);
+
   return (
-    <View style={styles.container}>
-      <SearchLogo style={styles.IconStyle} width={25} height={25} />
-      <TextInput
-        style={styles.TextStyle}
-        placeholder="Search by title or keyword"
-        placeholderTextColor={'black'}
-        onChangeText={onChangeText}
-      />
+    <View>
+      <View style={styles.container}>
+        <SearchLogo style={styles.IconStyle} width={25} height={25} />
+        <TextInput
+          style={styles.TextStyle}
+          placeholder="Search by title or keyword"
+          placeholderTextColor={'black'}
+          onChangeText={onChangeText}
+          onFocus={onFocus}
+        />
+      </View>
+      {focused ? (
+        <View style={{ paddingLeft: '4%', height: 200 }}>
+          {showNoCards.current ? (
+            <>
+              <NoCardsFound />
+            </>
+          ) : (
+            <>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                style={{ height: '100%', flex: 1 }}
+                data={activityList}
+                renderItem={({ item }) => {
+                  return (
+                    <SearchResults
+                      name={item?.name}
+                      id={item?.id}
+                      setPreviewInfo={setPreviewInfo}
+                      setHighlightedID={setHighlightedID}
+                      isHighlighted={highlightedID === item?.id}
+                    />
+                  );
+                }}
+                keyExtractor={item => item.id.toString()}
+              />
+            </>
+          )}
+        </View>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '8%',
+    marginTop: '1%',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#453E3D',
@@ -43,7 +100,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
       },
     }),
-    // background color must be set
   },
   TextStyle: {
     fontFamily: 'Mulish-Italic',

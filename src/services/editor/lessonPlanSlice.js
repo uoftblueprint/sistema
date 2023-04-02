@@ -12,7 +12,7 @@ export const lessonPlanSlice = createSlice({
    * @property {string} key Unique in that section. For example, 'module-0'.
    */
   initialState: {
-    lessonPlanName: null,
+    lessonPlanName: " ",
     [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
@@ -20,22 +20,11 @@ export const lessonPlanSlice = createSlice({
     isDirty: false, // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {
-    addLessonPlan: (state, action) => {
-      // action.payload: {
-      //    lessonPlanName: "",
-      //    warmUp: [],
-      //    mainLesson: [],
-      //    coolDown: [],
-      //    notes: "",
-      // }
+    addLessonPlanName: (state, action) => {
       return {
         ...state,
-        lessonPlanName: action.payload.lessonPlanName,
-        [SectionName.warmUp]: action.payload.warmUp,
-        [SectionName.mainLesson]: action.payload.mainLesson,
-        [SectionName.coolDown]: action.payload.coolDown,
-        [SectionName.notes]: action.payload.notes,
-        isDirty: false, // T:
+        lessonPlanName: action.payload.name,
+        isDirty: true,
       };
     },
     replaceSection: (state, action) => {
@@ -71,6 +60,7 @@ export const lessonPlanSlice = createSlice({
           {
             type: action.payload.type,
             content: action.payload.content,
+            name: action.payload.name ?? '',
             key: nextKey,
           },
         ],
@@ -99,7 +89,7 @@ export const {
   addToNote,
   removeNote,
   replaceSection,
-  addLessonPlan,
+  addLessonPlanName
 } = lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
@@ -109,6 +99,17 @@ export const getLessonSection = (state, sectionName) => {
   } catch {
     console.error(
       `getLessonSection: Could not grab lesson plan section ${sectionName} from redux.`,
+    );
+    return [];
+  }
+};
+
+export const getLessonPlanName = (state) => {
+  try {
+    return state[lessonPlanName];
+  } catch {
+    console.error(
+      `getLessonPlanName: Could not grab lesson plan name from redux.`,
     );
     return [];
   }

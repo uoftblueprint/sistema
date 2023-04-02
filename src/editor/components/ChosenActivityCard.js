@@ -13,10 +13,22 @@ import {
 import store from '../../services/configureStore';
 import ImageIcon from '../../../assets/imageIcon.svg';
 import { STACK_SCREENS } from '../EditorNavigator';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 const ChosenActivityCard = ({ cardName, cardPath, handleClick }) => {
   // how to pass in the title 'cardName'?
-  const activityCardPath = cardPath; //.params?
+  //const activityCardPath = cardPath; //.params?  // if (route.params) {
+
+    // useEffect(() => {
+    //     async function getCardPath() {
+    //         let warmUp = useSelector(state => getLessonSection(state.lessonPlan, SectionName.warmUp)); //returns an array
+    //         let mainLesson = useSelector(state => getLessonSection(state.lessonPlan, SectionName.mainLesson));
+    //         let coolDown = useSelector(state => getLessonSection(state.lessonPlan, SectionName.coolDown));
+    //   }
+    //   //parse everything
+    //   getLessonPlan();
+    // }, []);
   return (
     <SafeAreaView>
       <TouchableOpacity onPress={handleClick}>
@@ -34,35 +46,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#FFFAF5',
-    height: 50,
-    width: 333,
-    borderWidth: 0.77,
-    borderColor: '#000',
-    borderRadius: 8,
-    shadowColor: '#453E3D',
-    shadowOffset: {
-      width: 1,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 5,
-    ...Platform.select({
-      ios: {
-        paddingVertical: 10,
-      },
-      android: {
-        paddingVertical: 0,
-      },
-      default: {
-        ios: {
-          paddingVertical: 4,
-        },
-      },
-    }),
     paddingLeft: 15,
-    marginVertical: 5,
+    marginRight: 10,
+    marginVertical: 10,
   },
   cardName: {
     fontFamily: 'Poppins-Medium',
