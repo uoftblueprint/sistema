@@ -12,7 +12,6 @@ import {
 } from '../../services/editor/lessonPlanSlice';
 import store from '../../services/configureStore';
 import ImageIcon from '../../../assets/imageIcon.svg';
-import { STACK_SCREENS } from '../EditorNavigator';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 

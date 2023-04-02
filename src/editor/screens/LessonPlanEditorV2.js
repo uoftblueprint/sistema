@@ -51,19 +51,17 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   }
 
   //let lessonName = 'Fake name';
-  let lessonName = useSelector(state => getLessonPlanName(state.lessonPlan)); //TODO: why cant??
-  let warmUp = useSelector(state =>
-    getLessonSection(state.lessonPlan, SectionName.warmUp),
-  ); //returns an array
-  let mainLesson = useSelector(state =>
-    getLessonSection(state.lessonPlan, SectionName.mainLesson),
-  );
-  let coolDown = useSelector(state =>
-    getLessonSection(state.lessonPlan, SectionName.coolDown),
-  );
-  let notes = useSelector(state =>
-    getLessonSection(state.lessonPlan, SectionName.notes),
-  );
+  let lessonNameGET = (state) => getLessonPlanName(state.lessonPlan);
+  let warmUpGET = (state) => getLessonSection(state.lessonPlan, SectionName.warmUp);
+  let mainLessonGET = (state) => getLessonSection(state.lessonPlan, SectionName.mainLesson);
+  let coolDownGET = (state) => getLessonSection(state.lessonPlan, SectionName.coolDown);
+  let notesGET = (state) => getLessonSection(state.lessonPlan, SectionName.notes);
+
+  let lessonName = useSelector(lessonNameGET); //TODO: why cant??
+  let warmUp = useSelector(warmUpGET); //returns an array
+  let mainLesson = useSelector(mainLessonGET);
+  let coolDown = useSelector(coolDownGET);
+  let notes = useSelector(notesGET);
 
   const saveLessonPlan = () => {
     //stringify all
