@@ -10,7 +10,6 @@ import {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
-import { ModuleType } from '../../services/constants';
 import { SafeAreaView } from 'react-native';
 import ContentCard from './ContentCard';
 import AddLessonContentButton from './AddLessonContentButton';
@@ -34,6 +33,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   };
 
   // COMPONENT STATES
+  // eslint-disable-next-line no-unused-vars
   const [isLoaded, setLoaded] = useState(false);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
 
@@ -66,7 +66,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   const deleteModule = keyToDelete => {
     // Remove the module with matching key
     const newSectionData = sectionData.filter(
-      module => module.key != keyToDelete,
+      module => module.key !== keyToDelete,
     );
     updateRedux(newSectionData);
   };
@@ -74,7 +74,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   const editModule = (keyToEdit, newContent) => {
     // Replace the content of the module with a matching key
     const newSectionData = sectionData.map(module => {
-      return module.key == keyToEdit
+      return module.key === keyToEdit
         ? { ...module, content: newContent }
         : module;
     });

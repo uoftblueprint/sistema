@@ -1,15 +1,15 @@
 import './src/services/ignoreWarnings'; // Keep at top
-import React from 'react'; 
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import {
   NavigationContainer,
-  useNavigationContainerRef
+  useNavigationContainerRef,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   useSafeAreaInsets,
-  SafeAreaProvider
+  SafeAreaProvider,
 } from 'react-native-safe-area-context';
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
@@ -28,7 +28,7 @@ const STACK_SCREENS = {
   HOME: 'HomeNavigator',
   EDITOR: 'LessonPlanEditorNavigator',
   LIBRARY: 'LibraryNavigator',
-  SETTINGS: SETTINGS_STACK.NAVIGATOR
+  SETTINGS: SETTINGS_STACK.NAVIGATOR,
 };
 
 const tabIcon = (iconSVG, isFocused) => {
@@ -37,7 +37,7 @@ const tabIcon = (iconSVG, isFocused) => {
     width: 32,
     height: 32,
     marginBottom: 5,
-    color: tabColor
+    color: tabColor,
   });
 
   return (
@@ -47,7 +47,7 @@ const tabIcon = (iconSVG, isFocused) => {
         <View
           style={[
             styles.underline,
-            { backgroundColor: isFocused ? tabColor : '#B8CFE4' }
+            { backgroundColor: isFocused ? tabColor : '#B8CFE4' },
           ]}
         />
       }
@@ -58,7 +58,6 @@ const tabIcon = (iconSVG, isFocused) => {
 const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
-
   const navigationRef = useNavigationContainerRef();
   const insets = useSafeAreaInsets();
 
@@ -71,9 +70,9 @@ const MainNavigator = () => {
           tabBarInactiveBackgroundColor: '#B8CFE4',
           tabBarStyle: {
             height: 60 + insets.bottom,
-            backgroundColor: '#B8CFE4'
+            backgroundColor: '#B8CFE4',
           },
-          headerShown: false
+          headerShown: false,
         }}>
         <Tab.Screen
           name={STACK_SCREENS.HOME}
@@ -81,7 +80,7 @@ const MainNavigator = () => {
           options={{
             tabBarShowLabel: false,
             headerShown: false,
-            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused)
+            tabBarIcon: ({ focused }) => tabIcon(HomeNavIcon, focused),
           }}
         />
         <Tab.Screen
@@ -90,7 +89,7 @@ const MainNavigator = () => {
           options={{
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) =>
-              tabIcon(LessonPlanEditorNavIcon, focused)
+              tabIcon(LessonPlanEditorNavIcon, focused),
           }}
         />
         <Tab.Screen
@@ -98,7 +97,7 @@ const MainNavigator = () => {
           component={LibraryNavigator}
           options={{
             tabBarShowLabel: false,
-            tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused)
+            tabBarIcon: ({ focused }) => tabIcon(LibraryNavIcon, focused),
           }}
         />
         <Tab.Screen
@@ -118,13 +117,13 @@ const MainNavigator = () => {
 const styles = StyleSheet.create({
   underline: {
     width: 50,
-    height: 2
+    height: 2,
   },
   container: {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }
+  },
 });
 
 const App = () => {

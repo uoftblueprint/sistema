@@ -22,7 +22,7 @@ async function getOAuthToken(jwt, iat) {
       const data = response.data;
       return new AccessToken(
         data.access_token,
-        new Date((iat + parseInt(data.expires_in)) * 1000),
+        new Date((iat + parseInt(data.expires_in, 10)) * 1000),
         data.token_type,
       );
     })

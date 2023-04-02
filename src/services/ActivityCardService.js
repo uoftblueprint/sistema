@@ -2,14 +2,11 @@ import {
   checkFileExists,
   writeFile,
   makeDirectory,
-  moveFile,
   deleteFile,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
-import { AccessToken } from './models';
 import axios from 'axios';
 import { DRIVE_API_URLS } from './config.json';
-import configureStore from './configureStore';
 
 const ActivityCardService = {
   // All APIs for ActivityCards should be here
@@ -50,7 +47,7 @@ const ActivityCardService = {
       var pathArr = [];
 
       //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
-      if (files_list.length != 0) {
+      if (files_list.length !== 0) {
         await deleteFile(path);
         await makeDirectory(path);
       } else {

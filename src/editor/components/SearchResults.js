@@ -11,6 +11,7 @@ const SearchResults = ({
 }) => {
   const display_preview = () => {
     const baseQuery = DRIVE_API_URLS.SEARCH_FILES;
+    // eslint-disable-next-line no-unused-vars
     const params = '?supportsAllDrives=true&fields=thumbnailLink';
     axios
       .get(`${baseQuery}${id}?`, {

@@ -93,7 +93,7 @@ export default class DraggableModuleWithMenu extends React.Component {
           disabled={this.props.dragIsActive} // disable interactions while being dragged
           style={styles.module}>
           {
-            this.props.data.type == ModuleType.text ? (
+            this.props.data.type === ModuleType.text ? (
               <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
                 <TextInput
                   ref={input => {

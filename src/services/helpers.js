@@ -1,8 +1,6 @@
-import { AxiosError } from 'axios';
-
 /**
  * Depending on the type of error, appropriately print/log the AxiosError information.
- * @param {AxiosError} error
+ * @param {import("axios").AxiosError} error
  */
 export function printAxiosError(error) {
   if (error.response) {

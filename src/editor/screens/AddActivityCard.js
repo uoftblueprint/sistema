@@ -58,6 +58,7 @@ const AddActivityCard = function ({ navigation, route }) {
             return ` and fullText contains '${tag}'`;
           }
         }).join('');
+        // eslint-disable-next-line no-unused-vars
         const ACTVTTerm = " and fullText contains 'ACTVT'";
 
         axios
@@ -75,7 +76,7 @@ const AddActivityCard = function ({ navigation, route }) {
           })
           .then(response => {
             const data = response.data.files;
-            if (data.length != 0) {
+            if (data.length !== 0) {
               showNoCards.current = false;
             } else {
               showNoCards.current = true;

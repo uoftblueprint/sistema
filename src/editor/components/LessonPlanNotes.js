@@ -12,6 +12,7 @@ import store from '../../services/configureStore';
 import { TextStyle } from '../../Styles.config';
 
 const LessonPlanNotes = ({ sectionType, placeholder }) => {
+  // eslint-disable-next-line no-unused-vars
   const [sectionContent, setSectionContent] = useState(placeholder); // TODO: fix
 
   return (
