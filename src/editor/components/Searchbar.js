@@ -1,17 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  Platform,
-  FlatList,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import { act } from 'react-test-renderer';
+import { useState, useEffect } from 'react';
+import { StyleSheet, TextInput, View, Platform, FlatList } from 'react-native';
 import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
 import NoCardsFound from './NoCardsFound';
+import { TextStyle } from '../../Styles.config';
 
 const Searchbar = ({
   onChangeText,
@@ -30,7 +22,7 @@ const Searchbar = ({
       <View style={styles.container}>
         <SearchLogo style={styles.IconStyle} width={25} height={25} />
         <TextInput
-          style={styles.TextStyle}
+          style={TextStyle.h3}
           placeholder="Search by title or keyword"
           placeholderTextColor={'black'}
           onChangeText={onChangeText}
@@ -100,11 +92,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
       },
     }),
-  },
-  TextStyle: {
-    fontFamily: 'Mulish-Italic',
-    width: '100%',
-    fontSize: 17,
   },
   IconStyle: {
     marginHorizontal: '1.5%',
