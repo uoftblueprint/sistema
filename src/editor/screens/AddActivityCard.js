@@ -73,7 +73,7 @@ const AddActivityCard = function ({ navigation, route }) {
           })
           .then(function (response) {
             const data = response.data.files;
-            if (data.length != 0) {
+            if (data?.length != 0) {
               showNoCards.current = false;
             } else {
               showNoCards.current = true;

@@ -20,15 +20,7 @@ const ChosenActivityCard = ({ cardName, cardPath, handleClick }) => {
   //const activityCardPath = cardPath; //.params?  // if (route.params) {
   console.log('CARD NAME ' + cardName);
   console.log('CARD PATH ' + cardPath);
-  // useEffect(() => {
-  //     async function getCardPath() {
-  //         let warmUp = useSelector(state => getLessonSection(state.lessonPlan, SectionName.warmUp)); //returns an array
-  //         let mainLesson = useSelector(state => getLessonSection(state.lessonPlan, SectionName.mainLesson));
-  //         let coolDown = useSelector(state => getLessonSection(state.lessonPlan, SectionName.coolDown));
-  //   }
-  //   //parse everything
-  //   getLessonPlan();
-  // }, []);
+
   return (
     <SafeAreaView>
       <TouchableOpacity onPress={handleClick}>

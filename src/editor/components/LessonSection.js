@@ -58,7 +58,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
                 />
               </View>
             );
-          } else if (arr.type === 'activity' && arr.content.length > 0) {
+          } else if (arr.type === 'activity' && arr.content?.length > 0) {
             let cardName = arr.name;
             let cardPath = arr.content;
             return (

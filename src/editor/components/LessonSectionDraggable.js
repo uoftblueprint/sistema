@@ -17,7 +17,7 @@ import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS } from '../constants';
 import { TextStyle } from '../../Styles.config';
 
-const LessonSectionDraggable = ({ sectionType, navigation }) => {
+const LessonSectionDraggable = ({ sectionType, navigation, isSaved }) => {
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
@@ -48,9 +48,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
     });
   };
 
-  const expandActivityCard = () => {
-    navigation.navigate(STACK_SCREENS.EXPANDED_ACTIVITY_CARD);
-  };
 
   // MODULE MENU FUNCTIONS
   const deleteModule = keyToDelete => {
@@ -73,7 +70,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
 
   // To render each module in DraggableFlatList
   const renderModule = ({ item, drag, isActive }) => {
-    console.log(navigation);
     return (
       <ScaleDecorator
         activeScale={0.95} // shrinks the module when dragged

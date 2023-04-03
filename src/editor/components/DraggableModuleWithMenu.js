@@ -54,10 +54,10 @@ export default class DraggableModuleWithMenu extends React.Component {
 
   /** Based on what menu option the user clicks, execute the function corresponding with the same index in this.actions. */
   handleClick = index => {
-    for (var i = 0; i < this.options.length; i++) {
+    for (var i = 0; i < this.options?.length; i++) {
       if (index === i) {
         if (this.actions[i] !== null) {
-          this.actions[i]();
+          this.actions[i];
         }
       }
     }
@@ -70,7 +70,7 @@ export default class DraggableModuleWithMenu extends React.Component {
         {
           options: this.options,
           destructiveButtonIndex: this.options.indexOf('Delete'),
-          cancelButtonIndex: this.options.length - 1, // index of "Cancel" which is always last
+          cancelButtonIndex: this.options?.length - 1, // index of "Cancel" which is always last
         },
         buttonIndex => {
           this.handleClick(buttonIndex);
@@ -92,7 +92,6 @@ export default class DraggableModuleWithMenu extends React.Component {
   };
 
   render() {
-    console.log('CARD PATH 1 ' + this.props.data.content);
     return (
       <View>
         <TouchableOpacity

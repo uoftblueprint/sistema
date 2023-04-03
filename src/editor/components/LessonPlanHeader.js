@@ -23,21 +23,19 @@ import {
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
-const LessonPlanHeader = ({ navigation, lastEditedDate, isSaved }) => {
+const LessonPlanHeader = ({ navigation, lessonNamePlan, lastEditedDate, isSaved }) => {
   const [isEditable, setIsEditable] = useState(false);
   const todayDate = new Date().toLocaleDateString('en-us', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   });
-  const [lessonName, setLessonName] = useState(todayDate.toString());
+  const [lessonName, setLessonName] = useState(lessonNamePlan ? lessonNamePlan : todayDate.toString());
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setLessonPlanName({ name: lessonName }));
   }, [lessonName]);
   let reduxName = useSelector(state => getLessonPlanName(state.lessonPlan)); //TODO: why cant??
-
-  console.log('REDUX NAME ' + reduxName);
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={{ marginLeft: scale(horizontalMargin) }}>
@@ -52,11 +50,11 @@ const LessonPlanHeader = ({ navigation, lastEditedDate, isSaved }) => {
               value={lessonName}
               onChangeText={newText => {
                 setLessonName(newText);
-                // dispatch(
-                //   setLessonPlanName({
-                //     name: lessonName,
-                //   }),
-                // );
+                dispatch(
+                  setLessonPlanName({
+                    name: lessonName,
+                  }),
+                );
               }}
               onBlur={() => {
                 setIsEditable(false);

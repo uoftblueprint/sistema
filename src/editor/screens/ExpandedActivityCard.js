@@ -9,11 +9,13 @@ import {
 import { useState, useEffect } from 'react';
 import { readFile } from '../../services/routes/Local.js';
 import Header from '../../Components/Header';
+import { useDispatch } from 'react-redux';
 const windowHeight = Dimensions.get('window').height;
 
 const ExpandedActivityCard = ({ navigation, route }) => {
   const { cardName, cardPath } = route.params;
   const [cardImagePath, setCardImagePath] = useState(null);
+  const dispatch = useDispatch;
 
   //load the save data when Home.js mounts
   useEffect(() => {
@@ -22,7 +24,7 @@ const ExpandedActivityCard = ({ navigation, route }) => {
         //const cardTitlePath = cardPath + 'cardName.txt';
         const cardTitlePath = cardPath;
         var cardNames = await readFile(cardTitlePath, 'utf-8');
-        cardNames = cardNames.substring(0, cardNames.length - 5);
+        cardNames = cardNames.substring(0, cardNames?.length - 5);
         setCardImagePath(cardPath + 'cardImage.jpg');
         setTitle(cardNames);
       } catch (err) {

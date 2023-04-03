@@ -37,33 +37,36 @@ const Library = ({ navigation, route }) => {
         let favL = await LessonPlanService.getAllLessonPlanNames(1);
         let defL = await LessonPlanService.getAllLessonPlanNames(2);
         let lessonPlanInfo = [];
-        for (let lp = 0; lp < favL.length; lp++) {
-          lessonPlanInfo.push({
-            name: JSON.parse(favL[lp].name),
-            isFavorited: true,
-            lastEdited: favL[lp].mtime.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
-            }),
-            lastEditedDate: favL[lp].mtime,
-          });
+        if (favL) {
+          for (let lp = 0; lp < favL.length; lp++) {
+            lessonPlanInfo.push({
+              name: JSON.parse(favL[lp].name),
+              isFavorited: true,
+              lastEdited: favL[lp].mtime.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              }),
+              lastEditedDate: favL[lp].mtime,
+            });
+          }
         }
-        for (let lp = 0; lp < defL.length; lp++) {
-          lessonPlanInfo.push({
-            name: JSON.parse(defL[lp].name),
-            isFavorited: false,
-            lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
-            }),
-            lastEditedDate: defL[lp].mtime,
-          });
-        }
+          if (defL) {
+            for (let lp = 0; lp < defL.length; lp++) {
+              lessonPlanInfo.push({
+                name: JSON.parse(defL[lp].name),
+                isFavorited: false,
+                lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                }),
+                lastEditedDate: defL[lp].mtime,
+              });
+            }
+          }
         setList(lessonPlanInfo);
       }
-
       getPlans();
     }, []),
   );
