@@ -107,7 +107,8 @@ const ActivityCardService = {
       }
 
       //set up the get URL, then call axios for response
-      const downloadUrl = DRIVE_API_URLS.SEARCH_FILES + id;
+      const downloadUrl =
+        DRIVE_API_URLS.SEARCH_FILES + id + DRIVE_API_URLS.SEARCH_PARAMETERS;
       console.log('DOWNLOAD url' + downloadUrl);
       console.log(id);
 
