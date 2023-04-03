@@ -45,7 +45,9 @@ export default class DraggableModuleWithMenu extends React.Component {
   handleClick = index => {
     for (var i = 0; i < this.options.length; i++) {
       if (index === i) {
-        if (this.actions[i] !== null) {
+        if (Platform.OS === 'ios' && index === this.options.length - 1) {
+          // Do nothing
+        } else if (this.actions[i] !== null) {
           this.actions[i]();
         }
       }
