@@ -39,18 +39,22 @@ import {
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(route.params? true : false);
   const lessonPlanName = null;
   if (route.params) {
-    setIsSaved(true);
     const { lessonPlanName } = route.params;
     useEffect(() => {
       let lessonPlanObj;
-      async function getLessonPlan(LessonName) {
-        lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
-      }
+      // async function getLessonPlan(LessonName) {
+      //   lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
+      // }
 
-      const lessName = JSON.parse(lessonPlanObj.name);
+      LessonPlanService.getLessonPlan(lessonPlanName).then((r) => {
+        lessonPlanObj = r;
+      }).then(() => {
+        lessName = JSON.parse(lessonPlanObj.name);
+      });
+
       const warmUpArr = [];
       // for (let module of lessonPlanObj.warmUpList) {
       //   warmUpArr.push({type: module.type})
@@ -66,7 +70,6 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
       //TODO: parse everything and add key and store in redux
 
-      getLessonPlan(lessonPlanName);
     }, []);
   }
 

@@ -28,7 +28,7 @@ const STACK_SCREENS = {
   HOME: 'HomeNavigator',
   EDITOR: 'LessonPlanEditorNavigator',
   LIBRARY: 'LibraryNavigator',
-  SETTINGS: SETTINGS_STACK.NAVIGATOR
+  SETTINGS: SETTINGS_STACK.NAVIGATOR,
 };
 
 const tabIcon = (iconSVG, isFocused) => {

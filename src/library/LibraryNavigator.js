@@ -22,6 +22,10 @@ const LibraryNavigator = () => {
         }}
       />
       <Stack.Screen
+        name={STACK_SCREENS.LESSON_PLAN_EDITOR_V2}
+        component={LessonPlanEditorV2}
+      />
+      <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY}
         component={LessonPlanMenuOverlay}
         options={{
