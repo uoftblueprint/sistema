@@ -82,6 +82,15 @@ const LessonPlanService = {
    */
   getLessonPlan: async function (name) {
     try {
+      // helper function to create Module objects for .map()
+      function createModules(module) {
+        if (module.type === ModuleType.text) {
+          return new Module(module.type, module.content, '');
+        } else {
+          return new Module(module.type, module.content, module.name);
+        }
+      }
+
       let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/${name}.json`;
       let defaultPath = `${MAINDIRECTORY}/Default/${name}/${name}.json`;
       let path;
@@ -97,34 +106,28 @@ const LessonPlanService = {
       }
 
       // read in the file from RNFS
-      let str = await readFile(path);
-      // convert string to JSON object
-      let json = JSON.parse(str);
+      let str;
+      readFile(path).then(r => {
+        str = r;
+      }).then(() => {
+        json = JSON.parse(str);
+        console.log("here is json: " + str);
 
-      // create Module objects from JSON
-      // warmUpList = [Module(..), Module(..)]
-      const warmUpList = json.warmUp.map(createModules);
-      const mainLessonList = json.mainLesson.map(createModules);
-      const coolDownList = json.coolDown.map(createModules);
-
-      // helper function to create Module objects for .map()
-      function createModules(module) {
-        if (module.type === ModuleType.text) {
-          return new Module(module.type, module.content, '');
-        } else {
-          return new Module(module.type, module.content, module.name);
-        }
-      }
-
-      // create LessonPlan object from JSON
-      lessonPlanObj = new LessonPlan(
-        json.name,
-        warmUpList,
-        mainLessonList,
-        coolDownList,
-        json.notes,
-      );
-
+        // create Module objects from JSON
+        // warmUpList = [Module(..), Module(..)]
+        const warmUpList = json.warmUp.map(createModules);
+        const mainLessonList = json.mainLesson.map(createModules);
+        const coolDownList = json.coolDown.map(createModules);
+        
+        // create LessonPlan object from JSON
+        lessonPlanObj = new LessonPlan(
+          json.name,
+          warmUpList,
+          mainLessonList,
+          coolDownList,
+          json.notes,
+        );
+      });
       return lessonPlanObj;
     } catch (e) {
       console.error('Error getLessonPlan: ', e);
@@ -213,9 +216,12 @@ const LessonPlanService = {
         combined = defaultLessonPlans;
       }
 
-      const lpInfo = combined.map(dirItem => {
-        return { mtime: dirItem.mtime, name: dirItem.name };
-      });
+      const lpInfo = combined.reduce(function(result, dirItem) {
+        if (dirItem.name !== ".DS_Store") {
+          result.push({ mtime: dirItem.mtime, name: dirItem.name });
+        }
+        return result;
+      }, []);
 
       return lpInfo;
     } catch (e) {

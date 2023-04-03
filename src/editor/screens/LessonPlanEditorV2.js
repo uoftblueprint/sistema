@@ -40,8 +40,8 @@ import {
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
-  const [isSaved, setIsSaved] = useState(false);
-  const lessonPlanName = null;
+  const [isSaved, setIsSaved] = useState(route.params? true : false);
+  const { lessonPlanName } = route.params? route.params : null;
   const dispath = useDispatch();
   if (route.params) {
     setIsSaved(true);
@@ -88,7 +88,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       //TODO: parse everything and add key and store in redux
 
       getLessonPlan(lessonPlanName);
-    }, []);
+    }, [isSaved]);
   }
 
   //let lessonName = 'Fake name';
@@ -110,7 +110,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   const saveLessonPlan = () => {
     setIsSaved(true);
     //stringify all
-    //TODO: add key to use module
+    //TODO: remove key from module
     // }
     //1. Get from Redux
     lessonName = JSON.stringify(lessonName);
