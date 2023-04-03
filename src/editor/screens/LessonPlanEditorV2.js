@@ -7,8 +7,9 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { grabNextKey } from '../../services/helpers';
 
-import { getLessonSection } from '../../services/editor/lessonPlanSlice';
+import { addToNote, addToSection, getLessonSection, setLessonPlanName } from '../../services/editor/lessonPlanSlice';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
@@ -41,6 +42,7 @@ const lastEditedDummy = 'Jan 1, 2023';
 const LessonPlanEditorV2 = ({ navigation, route }) => {
   const [isSaved, setIsSaved] = useState(false);
   const lessonPlanName = null;
+  const dispath = useDispatch();
   if (route.params) {
     setIsSaved(true);
     const { lessonPlanName } = route.params;
@@ -49,21 +51,40 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       async function getLessonPlan(LessonName) {
         lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
       }
-
+      const nextKey = grabNextKey(listOfKeys);
       const lessName = JSON.parse(lessonPlanObj.name);
+      dispath(setLessonPlanName({ name: JSON.parse(lessName) }));
       const warmUpArr = [];
-      // for (let module of lessonPlanObj.warmUpList) {
-      //   warmUpArr.push({type: module.type})
 
-      //}
-      // lessonPlanObj = new LessonPlan(
-      //   json.name,
-      //   warmUpList,
-      //   mainLessonList,
-      //   coolDownList,
-      //   json.notes,
-      // );
-
+      const notes = JSON.parse(lessonPlanObj.notes);
+      dispath(addToNote({ note: JSON.parse(notes) }));
+      for (let module of lessonPlanObj.warmUpList) {
+        dispath(addToSection({
+          type: JSON.parse(module.type),
+          content: JSON.parse(module.content),
+          name: JSON.parse(module.name),
+          key: nextKey,
+        }));
+      }
+      
+      for (let module of lessonPlanObj.mainLessonList) {
+        dispath(addToSection({
+          type: JSON.parse(module.type),
+          content: JSON.parse(module.content),
+          name: JSON.parse(module.name),
+          key: nextKey,
+        }));
+      }
+      
+      for (let module of lessonPlanObj.coolDownList) {
+        dispath(addToSection({
+          type: JSON.parse(module.type),
+          content: JSON.parse(module.content),
+          name: JSON.parse(module.name),
+          key: nextKey,
+        }));
+      }
+      console.log(warmUpArr);
       //TODO: parse everything and add key and store in redux
 
       getLessonPlan(lessonPlanName);
@@ -90,13 +111,6 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     setIsSaved(true);
     //stringify all
     //TODO: add key to use module
-    // for (let i = 0; i < warmUp.length; i++){
-    //   let module = warmUp[i];
-    //   if (module) {
-    //     module = module.filter((k) => k !== "key");
-    //     console.log(module);
-    //   }
-
     // }
     //1. Get from Redux
     lessonName = JSON.stringify(lessonName);

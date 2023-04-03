@@ -6,9 +6,14 @@ if (__DEV__) {
 
   const errorWarn = global.console.error;
   global.console.error = (...arg) => {
-    for (const error of ignoreWarns) {
+    for (const [index, error] of ignoreWarns) {
       if (arg[0].startsWith(error)) {
         return;
+      } else {
+        return {
+          ...arg,
+          key: index,
+        }
       }
     }
     errorWarn(...arg);

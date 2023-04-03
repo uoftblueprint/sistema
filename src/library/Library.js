@@ -39,7 +39,7 @@ const Library = ({ navigation, route }) => {
         let lessonPlanInfo = [];
         for (let lp = 0; lp < favL.length; lp++) {
           lessonPlanInfo.push({
-            name: favL[lp].name,
+            name: JSON.parse(favL[lp].name),
             isFavorited: true,
             lastEdited: favL[lp].mtime.toLocaleDateString('en-US', {
               month: 'short',
@@ -51,7 +51,7 @@ const Library = ({ navigation, route }) => {
         }
         for (let lp = 0; lp < defL.length; lp++) {
           lessonPlanInfo.push({
-            name: defL[lp].name,
+            name: JSON.parse(defL[lp].name),
             isFavorited: false,
             lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
               month: 'short',
@@ -72,6 +72,7 @@ const Library = ({ navigation, route }) => {
     if (lpList !== null && sortType !== null) {
       setLoaded(true);
     }
+    
   }, [lpList, sortType]);
 
   const openLessonPlan = () => {
@@ -166,7 +167,7 @@ const Library = ({ navigation, route }) => {
                   <LessonPlanButton
                     key={i} // TODO: if lesson plan has a unique id, replace key with it
                     index={i}
-                    name={JSON.parse(lessonPlan.name)}
+                    name={lessonPlan.name}
                     navigation={navigation}
                     isFavorited={lessonPlan.isFavorited}
                     toggleFavorite={handleFavoriteChange}
