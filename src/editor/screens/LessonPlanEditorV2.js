@@ -40,38 +40,38 @@ const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
   const [isSaved, setIsSaved] = useState(route.params? true : false);
-  const lessonPlanName = null;
-  if (route.params) {
-    const { lessonPlanName } = route.params;
-    useEffect(() => {
-      let lessonPlanObj;
-      // async function getLessonPlan(LessonName) {
-      //   lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
-      // }
+  const { lessonPlanName } = route.params? route.params : null;
+  useEffect(() => {
+    let lessonPlanObj;
+    // async function getLessonPlan(LessonName) {
+    //   lessonPlanObj = LessonPlanService.getLessonPlan(LessonName);
+    // }
 
-      LessonPlanService.getLessonPlan(lessonPlanName).then((r) => {
-        lessonPlanObj = r;
-      }).then(() => {
-        lessName = JSON.parse(lessonPlanObj.name);
-      });
+    LessonPlanService.getLessonPlan(lessonPlanName).then((r) => {
+      console.log("Lesson Plan Object:" + r);
+      lessonPlanObj = r;
+    }).then(() => {
+      lessName = JSON.parse(lessonPlanObj.name);
+    }).catch((e) => {
+      console.error("Cannot GET lesson plan object" + e);
+    });
 
-      const warmUpArr = [];
-      // for (let module of lessonPlanObj.warmUpList) {
-      //   warmUpArr.push({type: module.type})
+    const warmUpArr = [];
+    // for (let module of lessonPlanObj.warmUpList) {
+    //   warmUpArr.push({type: module.type})
 
-      //}
-      // lessonPlanObj = new LessonPlan(
-      //   json.name,
-      //   warmUpList,
-      //   mainLessonList,
-      //   coolDownList,
-      //   json.notes,
-      // );
+    //}
+    // lessonPlanObj = new LessonPlan(
+    //   json.name,
+    //   warmUpList,
+    //   mainLessonList,
+    //   coolDownList,
+    //   json.notes,
+    // );
 
-      //TODO: parse everything and add key and store in redux
+    //TODO: parse everything and add key and store in redux
 
-    }, []);
-  }
+  }, [isSaved]);
 
   //let lessonName = 'Fake name';
   let lessonNameGET = state => getLessonPlanName(state.lessonPlan);

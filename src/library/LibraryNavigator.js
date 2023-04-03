@@ -33,6 +33,8 @@ const LibraryNavigator = () => {
         }}
         initialParams={{
           isLessonPlanEditor: false,
+          lessonPlanName: 'Lesson Plan Name',
+          lastEdited: 'Last Edited Date',
         }}
       />
       <Stack.Screen
