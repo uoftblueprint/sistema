@@ -4,45 +4,43 @@ import RNHTMLtoPDF from 'react-native-html-to-pdf';
  * creates a pdf for a given lesson plan
  *
  * @async
- * @param {import("./models").LessonPlan} lessonPlan
- * @returns {Promise<RNHTMLtoPDF.Pdf>}
  */
-export const exportPDF = async lessonPlan => {
+export const createPDF = async lessonPlan => {
   var html = [];
 
   // add title
-  html.push(header(lessonPlan.name, 1));
+  html.push(header('Lesson Plan', 1));
 
-  html.push(moduleInformation(lessonPlan.warmUp, 'Warm Up'));
-  html.push(moduleInformation(lessonPlan.mainLesson, 'Main Lesson'));
-  html.push(moduleInformation(lessonPlan.coolDown, 'Cool Down'));
+  html.push(moduleInformation(lessonPlan['Warm Up'], 'Warm Up'));
+  html.push(moduleInformation(lessonPlan['Main Lesson'], 'Main Lesson'));
+  html.push(moduleInformation(lessonPlan['Cool Down'], 'Cool Down'));
   html.push(header('Notes', 2));
   html.push(paragraph(lessonPlan.notes));
 
   let options = {
     html: html.join(''),
-    fileName: 'test',
-    directory: 'pdfExport'
+    fileName: 'LessonPlan',
   };
-  let file = RNHTMLtoPDF.convert(options);
-  return file;
+  return await RNHTMLtoPDF.convert(options);
 };
 
 /**
  * creates HTML for a module
  *
- * @param {import("./models").Module[]} m
- * @param {string} mName
- * @returns {string[]}
+ * @param {import("./models").Module[]} module
+ * @param {string} moduleName
  */
-const moduleInformation = (m, mName) => {
+const moduleInformation = (module, moduleName) => {
   var ret = [];
-  if (m.length > 0) {
-    ret.push(header(mName, 2));
+  console.log(moduleName);
+  if (module.length > 0) {
+    ret.push(header(moduleName, 2));
   }
-  m.forEach(element => {
+  module.forEach(element => {
     if (element.type === 'text') {
       ret.push(paragraph(element.content));
+    } else {
+      console.log('hello');
     }
   });
   return ret.join('');
@@ -52,10 +50,9 @@ const moduleInformation = (m, mName) => {
  * creates an HTML paragraph
  *
  * @param {string} text
- * @returns {string}
  */
 const paragraph = text => {
-  return '<p>' + text.toString() + '</p>';
+  return '<p>' + text + '</p>';
 };
 
 /**
@@ -63,7 +60,6 @@ const paragraph = text => {
  *
  * @param {string} text
  * @param {number} importance
- * @returns {string}
  */
 const header = (text, importance) => {
   return (

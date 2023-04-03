@@ -9,10 +9,10 @@ import { OptionsMenuPadding } from '../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
 
-const OptionsMenuButton = ({ text, icon }) => {
+const OptionsMenuButton = ({ text, icon, onPress }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={[styles.buttonContainer]}>
+      <TouchableOpacity style={[styles.buttonContainer]} onPress={onPress}>
         <SafeAreaView
           style={{
             width: 22,

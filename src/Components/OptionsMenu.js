@@ -8,6 +8,10 @@ import HeartIcon from '../../assets/heartIcon.svg';
 import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView } from 'react-native';
+import { useSelector } from 'react-redux';
+import { createPDF } from '../services/PDFExport.js';
+import RNFS from 'react-native-fs';
+import Share from 'react-native-share';
 
 const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
   const [isFavorited, setFavorited] = useState(false);
@@ -43,6 +47,21 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
     },
   ];
 
+  const lessonPlan = useSelector(state => state.lessonPlan);
+  const exportLessonPlan = async () => {
+    let r = await createPDF(lessonPlan);
+    try {
+      await Share.open({
+        url: 'file://' + r.filePath,
+        type: 'application/pdf',
+      });
+      console.log('File shared');
+    } catch {
+      console.log('File not shared');
+    }
+    await RNFS.unlink(r.filePath);
+  };
+
   const buttons = isLessonPlanEditor ? editorButtons : libraryButtons;
 
   return (
@@ -51,6 +70,10 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
         <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
+          var onPress;
+          if (button.name === 'Export Lesson Plan') {
+            onPress = exportLessonPlan;
+          }
           if (button.name === 'Favorites') {
             return (
               <FavoriteButton
@@ -66,6 +89,7 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
                 key={i}
                 text={button.name}
                 icon={button.icon}
+                onPress={onPress}
               />
             );
           }
