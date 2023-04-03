@@ -15,8 +15,11 @@ export const createPDF = async lessonPlan => {
   html.push(moduleInformation(lessonPlan['Warm Up'], 'Warm Up'));
   html.push(moduleInformation(lessonPlan['Main Lesson'], 'Main Lesson'));
   html.push(moduleInformation(lessonPlan['Cool Down'], 'Cool Down'));
-  html.push(header('Notes', 2));
-  html.push(paragraph(lessonPlan.notes));
+  // eslint-disable-next-line no-extra-boolean-cast
+  if (!!lessonPlan.notes) {
+    html.push(header('Notes', 2));
+    html.push(paragraph(lessonPlan.notes));
+  }
   html.push('</body>');
 
   console.log(html);
@@ -31,6 +34,7 @@ export const createPDF = async lessonPlan => {
  * creates HTML for a module
  *
  * @param module
+ * @param {import('./models').Module} module
  * @param {string} moduleName
  */
 const moduleInformation = (module, moduleName) => {
