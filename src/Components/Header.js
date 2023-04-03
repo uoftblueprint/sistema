@@ -19,7 +19,6 @@ import { verticalScale } from 'react-native-size-matters';
 import Circle from '../../assets/circle.svg';
 import { AppColors } from '../Styles.config';
 
-
 const Header = ({ navigation, isHome, showBackButton }) => {
   const [isVisible, setVisible] = useState(false);
 

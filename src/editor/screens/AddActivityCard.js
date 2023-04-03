@@ -73,7 +73,7 @@ const AddActivityCard = function ({ navigation, route }) {
                 ACTVTTerm,
             },
           })
-          .then((response) => {
+          .then(response => {
             const data = response.data.files;
             if (data.length != 0) {
               showNoCards.current = false;
@@ -175,9 +175,7 @@ const AddActivityCard = function ({ navigation, route }) {
 
   //onPress function for add Card button
   const addCard = async () => {
-    const rnfsPath = ActivityCardService.downloadActivityCard(
-      previewInfo.id,
-    );
+    const rnfsPath = ActivityCardService.downloadActivityCard(previewInfo.id);
     dispatch(
       addToSection({
         type: 'activity',

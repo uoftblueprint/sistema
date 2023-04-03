@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  Platform,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, TextInput, View, Platform, FlatList } from 'react-native';
 import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
 import NoCardsFound from './NoCardsFound';
