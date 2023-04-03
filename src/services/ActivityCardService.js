@@ -4,12 +4,14 @@ import {
   makeDirectory,
   moveFile,
   deleteFile,
+  readFile,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { AccessToken } from './models';
 import axios from 'axios';
 import { DRIVE_API_URLS } from './config.json';
 import configureStore from './configureStore';
+import { Buffer } from 'buffer';
 
 const ActivityCardService = {
   // All APIs for ActivityCards should be here
@@ -98,7 +100,6 @@ const ActivityCardService = {
       };
       const dirPath = MAINDIRECTORY + '/FeaturedActivityCards';
       const filePath = `${dirPath}/${id}.jpg`;
-      let card = {};
 
       //check if file exists
       if (await checkFileExists(filePath)) {
@@ -106,21 +107,19 @@ const ActivityCardService = {
       }
 
       //set up the get URL, then call axios for response
-      const downloadUrl =
-        DRIVE_API_URLS.SEARCH_FILES + id + DRIVE_API_URLS.SEARCH_PARAMETERS;
+      const downloadUrl = DRIVE_API_URLS.SEARCH_FILES + id;
       console.log('DOWNLOAD url' + downloadUrl);
       console.log(id);
 
-      const response = await axios.get(downloadUrl, { params }).catch(error => {
-        console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
-      });
-
-      console.log(response);
-      card = response.data;
+      const response = await axios
+        .get(downloadUrl, { params, responseType: 'arraybuffer' })
+        .catch(error => {
+          console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
+        });
 
       //make directory for the newly downloaded card, write the card into this path and return
       await makeDirectory(dirPath);
-      await writeFile(true, filePath, card);
+      await writeFile(true, filePath, Buffer.from(response.data, 'base64'));
       return filePath;
     } catch (e) {
       console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);

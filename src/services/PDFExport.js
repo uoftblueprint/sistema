@@ -6,7 +6,8 @@ import RNHTMLtoPDF from 'react-native-html-to-pdf';
  * @async
  */
 export const createPDF = async lessonPlan => {
-  var html = [];
+  console.log(lessonPlan);
+  var html = ['<body>'];
 
   // add title
   html.push(header('Lesson Plan', 1));
@@ -16,7 +17,9 @@ export const createPDF = async lessonPlan => {
   html.push(moduleInformation(lessonPlan['Cool Down'], 'Cool Down'));
   html.push(header('Notes', 2));
   html.push(paragraph(lessonPlan.notes));
+  html.push('</body>');
 
+  console.log(html);
   let options = {
     html: html.join(''),
     fileName: 'LessonPlan',
@@ -27,7 +30,7 @@ export const createPDF = async lessonPlan => {
 /**
  * creates HTML for a module
  *
- * @param {import("./models").Module[]} module
+ * @param module
  * @param {string} moduleName
  */
 const moduleInformation = (module, moduleName) => {
@@ -40,7 +43,9 @@ const moduleInformation = (module, moduleName) => {
     if (element.type === 'text') {
       ret.push(paragraph(element.content));
     } else {
-      console.log('hello');
+      ret.push(
+        `<img src="file://${element.content}" style="height:600;float:center;border:0px"/><br>`,
+      );
     }
   });
   return ret.join('');
