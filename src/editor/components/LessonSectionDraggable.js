@@ -10,7 +10,6 @@ import {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
-import { ModuleType } from '../../services/constants';
 import { SafeAreaView } from 'react-native';
 import ContentCard from './ContentCard';
 import AddLessonContentButton from './AddLessonContentButton';

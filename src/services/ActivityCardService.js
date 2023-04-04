@@ -2,14 +2,11 @@ import {
   checkFileExists,
   writeFile,
   makeDirectory,
-  moveFile,
   deleteFile,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
-import { AccessToken } from './models';
 import axios from 'axios';
 import { DRIVE_API_URLS } from './config.json';
-import configureStore from './configureStore';
 
 const ActivityCardService = {
   // All APIs for ActivityCards should be here
@@ -50,7 +47,7 @@ const ActivityCardService = {
       var pathArr = [];
 
       //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
-      if (files_list.length != 0) {
+      if (files_list.length !== 0) {
         await deleteFile(path);
         await makeDirectory(path);
       } else {
@@ -102,7 +99,8 @@ const ActivityCardService = {
 
       //check if file exists
       if (await checkFileExists(filePath)) {
-        throw new Error('This Activity Card is already downloaded');
+        return filePath;
+        // throw new Error('This Activity Card is already downloaded');
       }
 
       //set up the get URL, then call axios for response
@@ -115,7 +113,6 @@ const ActivityCardService = {
         console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
       });
 
-      console.log(response);
       card = response.data;
 
       //make directory for the newly downloaded card, write the card into this path and return
@@ -125,6 +122,29 @@ const ActivityCardService = {
     } catch (e) {
       console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
     }
+  },
+  /**
+   * get metadata on all activity cards
+   *
+   * @async
+   * @returns {Promise<{id: string, name: string, thumbnailLink: string, description: string}[]>}
+   */
+  getAllActivityCards: async function () {
+    const ACTVTTerm = " and fullText contains 'ACTVT'";
+    console.log('ACTUAL QUERY');
+
+    return (
+      await axios.get(DRIVE_API_URLS.SEARCH_FILES, {
+        params: {
+          trashed: 'false',
+          supportsAllDrives: 'true',
+          includeItemsFromAllDrives: 'true',
+          fields: 'files(id, name, thumbnailLink, description)',
+          q: "mimeType='image/jpeg' " + ACTVTTerm,
+          pageSize: 1000,
+        },
+      })
+    ).data.files;
   },
 };
 
