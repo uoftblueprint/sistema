@@ -131,8 +131,6 @@ const ActivityCardService = {
    */
   getAllActivityCards: async function () {
     const ACTVTTerm = " and fullText contains 'ACTVT'";
-    console.log('ACTUAL QUERY');
-
     return (
       await axios.get(DRIVE_API_URLS.SEARCH_FILES, {
         params: {
