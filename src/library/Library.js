@@ -166,7 +166,7 @@ const Library = ({ navigation, route }) => {
                   <LessonPlanButton
                     key={i} // TODO: if lesson plan has a unique id, replace key with it
                     index={i}
-                    name={JSON.parse(lessonPlan.name)}
+                    name={lessonPlan.name}
                     navigation={navigation}
                     isFavorited={lessonPlan.isFavorited}
                     toggleFavorite={handleFavoriteChange}

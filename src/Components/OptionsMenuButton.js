@@ -7,22 +7,36 @@ import {
 } from 'react-native';
 import { OptionsMenuPadding } from '../Styles.config';
 import LessonPlanService from '../services/LessonPlanService';
+import { STACK_SCREENS } from '../library/constants';
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
-const handleOnPress = (text, name) => {
+
+const handleOnPress = (text, name, navigation) => {
   if (text === 'Copy Lesson Plan') {
     LessonPlanService.copyLessonPlan(name);
+  }
+  if (text === 'Delete Lesson Plan') {
+    console.log("optionsmenubutton")
+    console.log(name);
+    // LessonPlanService.deleteLessonPlan(name);
+    navigation.navigate(STACK_SCREENS.DELETE_LESSON_PLAN_OVERLAY, {
+      lessonName: name,
+    });
   }
 };
 
 const OptionsMenuButton = ({ text, icon, lessonName }) => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
         style={[styles.buttonContainer]}
         onPress={() => {
-          handleOnPress(text, lessonName);
+          console.log('onPress')
+          console.log(lessonName);
+          handleOnPress(text, lessonName, navigation);
         }}>
         <SafeAreaView
           style={{

@@ -31,7 +31,7 @@ const LessonPlanButton = ({
           onPress={() =>
             navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
               lastEdited: lastEditedDate,
-              lessonPlanName: lessonPlan,
+              lessonPlanName: name,
             })
           }>
           <DotsGraphic width={23} height={23} />
