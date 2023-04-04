@@ -23,14 +23,21 @@ import {
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
-const LessonPlanHeader = ({ navigation, lessonNamePlan, lastEditedDate, isSaved }) => {
+const LessonPlanHeader = ({
+  navigation,
+  lessonNamePlan,
+  lastEditedDate,
+  isSaved,
+}) => {
   const [isEditable, setIsEditable] = useState(false);
   const todayDate = new Date().toLocaleDateString('en-us', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   });
-  const [lessonName, setLessonName] = useState(lessonNamePlan ? lessonNamePlan : todayDate.toString());
+  const [lessonName, setLessonName] = useState(
+    lessonNamePlan ? lessonNamePlan : todayDate.toString(),
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setLessonPlanName({ name: lessonName }));

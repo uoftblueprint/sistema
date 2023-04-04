@@ -50,7 +50,7 @@ const ActivityCardService = {
       var pathArr = [];
 
       //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
-      if (files_list.length != 0) {
+      if (files_list?.length != 0) {
         await deleteFile(path);
         await makeDirectory(path);
       } else {
@@ -58,7 +58,7 @@ const ActivityCardService = {
       }
 
       //if new cards were found, save them into the empty directory path
-      for (var i = 0; i < files_list.length; i++) {
+      for (var i = 0; i < files_list?.length; i++) {
         await this.downloadActivityCard(files_list[i].id);
 
         //once downloaded, check if the file exists. If it does, add the name to a .txt file, and add the path to pathArr

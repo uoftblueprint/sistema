@@ -13,7 +13,7 @@ if (__DEV__) {
         return {
           ...arg,
           key: index,
-        }
+        };
       }
     }
     errorWarn(...arg);

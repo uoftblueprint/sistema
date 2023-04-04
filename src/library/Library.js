@@ -51,20 +51,20 @@ const Library = ({ navigation, route }) => {
             });
           }
         }
-          if (defL) {
-            for (let lp = 0; lp < defL.length; lp++) {
-              lessonPlanInfo.push({
-                name: JSON.parse(defL[lp].name),
-                isFavorited: false,
-                lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                }),
-                lastEditedDate: defL[lp].mtime,
-              });
-            }
+        if (defL) {
+          for (let lp = 0; lp < defL.length; lp++) {
+            lessonPlanInfo.push({
+              name: JSON.parse(defL[lp].name),
+              isFavorited: false,
+              lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              }),
+              lastEditedDate: defL[lp].mtime,
+            });
           }
+        }
         setList(lessonPlanInfo);
       }
       getPlans();
@@ -75,7 +75,6 @@ const Library = ({ navigation, route }) => {
     if (lpList !== null && sortType !== null) {
       setLoaded(true);
     }
-    
   }, [lpList, sortType]);
 
   const openLessonPlan = () => {

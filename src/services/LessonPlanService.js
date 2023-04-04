@@ -107,27 +107,29 @@ const LessonPlanService = {
 
       // read in the file from RNFS
       let str;
-      readFile(path).then(r => {
-        str = r;
-      }).then(() => {
-        json = JSON.parse(str);
-        console.log("here is json: " + str);
+      readFile(path)
+        .then(r => {
+          str = r;
+        })
+        .then(() => {
+          json = JSON.parse(str);
+          console.log('here is json: ' + str);
 
-        // create Module objects from JSON
-        // warmUpList = [Module(..), Module(..)]
-        const warmUpList = json.warmUp.map(createModules);
-        const mainLessonList = json.mainLesson.map(createModules);
-        const coolDownList = json.coolDown.map(createModules);
-        
-        // create LessonPlan object from JSON
-        lessonPlanObj = new LessonPlan(
-          json.name,
-          warmUpList,
-          mainLessonList,
-          coolDownList,
-          json.notes,
-        );
-      });
+          // create Module objects from JSON
+          // warmUpList = [Module(..), Module(..)]
+          const warmUpList = json.warmUp.map(createModules);
+          const mainLessonList = json.mainLesson.map(createModules);
+          const coolDownList = json.coolDown.map(createModules);
+
+          // create LessonPlan object from JSON
+          lessonPlanObj = new LessonPlan(
+            json.name,
+            warmUpList,
+            mainLessonList,
+            coolDownList,
+            json.notes,
+          );
+        });
       return lessonPlanObj;
     } catch (e) {
       console.error('Error getLessonPlan: ', e);
@@ -208,7 +210,7 @@ const LessonPlanService = {
         combined = favouritedLessonPlans;
 
         if (option === 0) {
-          for (var i = 0; i < defaultLessonPlans.length; i++) {
+          for (var i = 0; i < defaultLessonPlans?.length; i++) {
             combined.push(defaultLessonPlans[i]);
           }
         }
@@ -216,8 +218,8 @@ const LessonPlanService = {
         combined = defaultLessonPlans;
       }
 
-      const lpInfo = combined.reduce(function(result, dirItem) {
-        if (dirItem.name !== ".DS_Store") {
+      const lpInfo = combined.reduce(function (result, dirItem) {
+        if (dirItem.name !== '.DS_Store') {
           result.push({ mtime: dirItem.mtime, name: dirItem.name });
         }
         return result;
@@ -288,7 +290,7 @@ const LessonPlanService = {
 
       var files = await readDirectory(oldpath);
 
-      for (var i = 0; i < files.length; i++) {
+      for (var i = 0; i < files?.length; i++) {
         await moveFile(oldpath + files[i], newpath + files[i]);
       }
 
@@ -318,7 +320,7 @@ const LessonPlanService = {
 
       var files = await readDirectory(oldpath);
 
-      for (var i = 0; i < files.length; i++) {
+      for (var i = 0; i < files?.length; i++) {
         await moveFile(oldpath + files[i], newpath + files[i]);
       }
 

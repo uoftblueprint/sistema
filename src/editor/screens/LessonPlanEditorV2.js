@@ -9,7 +9,12 @@ import {
 } from 'react-native';
 import { grabNextKey } from '../../services/helpers';
 
-import { addToNote, addToSection, getLessonSection, setLessonPlanName } from '../../services/editor/lessonPlanSlice';
+import {
+  addToNote,
+  addToSection,
+  getLessonSection,
+  setLessonPlanName,
+} from '../../services/editor/lessonPlanSlice';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
@@ -28,7 +33,6 @@ import {
 } from '../../services/editor/lessonPlanSlice';
 import { addLessonPlanName } from '../../services/editor/lessonPlanSlice';
 
-
 // dummy last edited date
 const lastEditedDummy = 'Jan 1, 2023';
 
@@ -36,7 +40,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   const [isSaved, setIsSaved] = useState(route.params ? true : false);
   const lessonPlanName = route.params ? route.params : null;
   const dispath = useDispatch();
-  
+
   if (route.params) {
     setIsSaved(true);
     const { lessonPlanName } = route.params;
@@ -53,63 +57,73 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       const notes = JSON.parse(lessonPlanObj.notes);
       dispath(addToNote({ note: JSON.parse(notes) }));
       for (let module of lessonPlanObj.warmUpList) {
-        dispath(addToSection({
-          type: JSON.parse(module.type),
-          content: JSON.parse(module.content),
-          name: JSON.parse(module.name),
-          key: nextKey,
-        }));
+        dispath(
+          addToSection({
+            type: JSON.parse(module.type),
+            content: JSON.parse(module.content),
+            name: JSON.parse(module.name),
+            key: nextKey,
+          }),
+        );
       }
-      
       for (let module of lessonPlanObj.mainLessonList) {
-        dispath(addToSection({
-          type: JSON.parse(module.type),
-          content: JSON.parse(module.content),
-          name: JSON.parse(module.name),
-          key: nextKey,
-        }));
+        dispath(
+          addToSection({
+            type: JSON.parse(module.type),
+            content: JSON.parse(module.content),
+            name: JSON.parse(module.name),
+            key: nextKey,
+          }),
+        );
       }
-      
       for (let module of lessonPlanObj.coolDownList) {
-        dispath(addToSection({
-          type: JSON.parse(module.type),
-          content: JSON.parse(module.content),
-          name: JSON.parse(module.name),
-          key: nextKey,
-        }));
+        dispath(
+          addToSection({
+            type: JSON.parse(module.type),
+            content: JSON.parse(module.content),
+            name: JSON.parse(module.name),
+            key: nextKey,
+          }),
+        );
       }
     }, [isSaved]);
-  };
+  }
 
     let lessonNameGET = state => getLessonPlanName(state.lessonPlan);
-    let warmUpGET = state =>
-      getLessonSection(state.lessonPlan, SectionName.warmUp);
-    let mainLessonGET = state =>
-      getLessonSection(state.lessonPlan, SectionName.mainLesson);
-    let coolDownGET = state =>
-      getLessonSection(state.lessonPlan, SectionName.coolDown);
-    let notesGET = state => getLessonSection(state.lessonPlan, SectionName.notes);
+  let warmUpGET = state =>
+    getLessonSection(state.lessonPlan, SectionName.warmUp);
+  let mainLessonGET = state =>
+    getLessonSection(state.lessonPlan, SectionName.mainLesson);
+  let coolDownGET = state =>
+    getLessonSection(state.lessonPlan, SectionName.coolDown);
+  let notesGET = state => getLessonSection(state.lessonPlan, SectionName.notes);
 
-      let lessonName = useSelector(lessonNameGET); //TODO: why cant??
-    let warmUp = useSelector(warmUpGET); //returns an array
-    let mainLesson = useSelector(mainLessonGET);
-    let coolDown = useSelector(coolDownGET);
+  let lessonName = useSelector(lessonNameGET); //TODO: why cant??
+  let warmUp = useSelector(warmUpGET); //returns an array
+  let mainLesson = useSelector(mainLessonGET);
+  let coolDown = useSelector(coolDownGET);
   let notes = useSelector(notesGET);
-  
+
   const saveLessonPlan = () => {
     setIsSaved(true);
-      
+
+    //Remove keys
+    for (let module in warmUp) {
+      delete (module[key]);
+    }
+    for (let module in mainLesson) {
+      delete (module[key]);
+    }
+    for (let module in coolDown) {
+      delete (module[key]);
+    }
     //stringify all
-    //TODO: remove key from module
-    // }
-    //1. Get from Redux
     lessonName = JSON.stringify(lessonName);
     warmUp = JSON.stringify(warmUp);
     mainLesson = JSON.stringify(mainLesson);
     coolDown = JSON.stringify(coolDown);
     notes = JSON.stringify(notes);
-    
-    // //TODO: remove keys
+
     const lessonPlanObject = new LessonPlan(
       lessonName,
       warmUp,
@@ -118,13 +132,13 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       notes,
     );
 
-      //2. Save to RNFS
-      async function saveLessonPlanToRNFS(lessonPlanObj) {
-        await LessonPlanService.saveLessonPlan(lessonPlanObj);
-      }
-      saveLessonPlanToRNFS(lessonPlanObject);
+    //2. Save to RNFS
+    async function saveLessonPlanToRNFS(lessonPlanObj) {
+      await LessonPlanService.saveLessonPlan(lessonPlanObj);
+    }
+    saveLessonPlanToRNFS(lessonPlanObject);
 
-        navigation.navigate(STACK_SCREENS.LIBRARY, { sortT: 0 });
+    navigation.navigate(STACK_SCREENS.LIBRARY, { sortT: 0 });
   };
 
   return (

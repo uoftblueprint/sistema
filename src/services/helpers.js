@@ -24,7 +24,7 @@ export function printAxiosError(error) {
  * @returns module key in format module-\<num\>
  */
 export const grabNextKey = currKeys => {
-  if (currKeys.length <= 0) {
+  if (currKeys?.length <= 0) {
     return 'module-0'; // If empty, return starting key number
   }
 

@@ -48,7 +48,6 @@ const LessonSectionDraggable = ({ sectionType, navigation, isSaved }) => {
     });
   };
 
-
   // MODULE MENU FUNCTIONS
   const deleteModule = keyToDelete => {
     // Remove the module with matching key
