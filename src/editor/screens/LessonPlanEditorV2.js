@@ -31,7 +31,6 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       
       // Opening existing lesson plan in editor
       if (lessonPlanName) { 
-        console.log("FOUND YA", lessonPlanName);
         // Get the lesson plan from RNFS backend
         await LessonPlanService.getLessonPlan(lessonPlanName)
           .then((lpObj) => {

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,29 +8,23 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import EditIcon from '../../../assets/edit.svg';
 import Menu from '../../../assets/menu.svg';
 import BackArrow from '../../../assets/backArrow.svg';
 import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
+import { getLessonPlanName, setLessonPlanName } from '../../services/editor/lessonPlanSlice';
 
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
 const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
-  const [isEditable, setIsEditable] = useState(false);
-  const [lessonPlanName, setLessonPlanName] = useState('');
+  const dispatch = useDispatch();
+  const lessonPlanName = useSelector(state => getLessonPlanName(state.lessonPlan));
 
-  useEffect(() => {
-    const todayDate = new Date().toLocaleDateString('en-us', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-    setLessonPlanName(todayDate);
-  }, []);
+  const [isEditable, setIsEditable] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,7 +39,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
               style={[styles.input, TextStyle.h1]}
               value={lessonPlanName}
               onChangeText={newText => {
-                setLessonPlanName(newText);
+                dispatch(setLessonPlanName(newText))
               }}
               onBlur={() => {
                 setIsEditable(false);
