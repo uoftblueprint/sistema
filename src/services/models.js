@@ -36,10 +36,12 @@ export class LessonPlan {
 /**
  * @property {string} type type of module content: "text" or "activity card"
  * @property {string} content text: "ALL_CONTENT", activity card: "PATH_TO_IMAGE_IN_DEFAULT_DIR"
+ * @property {string} name text: empty string, activity card: name of activity card
  */
 export class Module {
-  constructor(type, content) {
+  constructor(type, content, name='') {
     this.type = type;
     this.content = content;
+    this.name = name;
   }
 }

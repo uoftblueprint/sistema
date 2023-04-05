@@ -3,7 +3,9 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import DotsGraphic from '../../../assets/dots.svg';
 import EmptyHeart from '../../../assets/heartOutline.svg';
 import FilledHeart from '../../../assets/favoriteIcon.svg';
-import { STACK_SCREENS } from '../constants';
+import { STACK_SCREENS as LIBRARY_STACK } from '../constants';
+import { STACK_SCREENS as EDITOR_STACK } from '../../editor/constants';
+import { TextStyle } from '../../Styles.config';
 
 const LessonPlanButton = ({
   index,
@@ -16,8 +18,13 @@ const LessonPlanButton = ({
 }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.titleContainer}>
-        <Text style={styles.title}>{name}</Text>
+      <TouchableOpacity style={styles.titleContainer} onPress={() => {
+        navigation.navigate(EDITOR_STACK.NAVIGATOR, { 
+          screen: EDITOR_STACK.LESSON_PLAN_EDITOR_V2,
+          params: { lessonPlanName: name }
+        });
+      }}>
+        <Text style={TextStyle.label}>{name}</Text>
       </TouchableOpacity>
       <SafeAreaView style={styles.icons}>
         <TouchableOpacity onPress={() => toggleFavorite(!isFavorited, index)}>
@@ -29,7 +36,7 @@ const LessonPlanButton = ({
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
+            navigation.navigate(LIBRARY_STACK.LESSON_PLAN_MENU_OVERLAY, {
               lastEdited: lastEditedDate,
               lessonPlanName: lessonPlan,
             })
@@ -54,20 +61,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 22,
   },
-  title: {
-    fontFamily: 'Mulish-Regular',
-    fontSize: 16,
-    letterSpacing: 0.3,
-    color: 'black',
-  },
   icons: {
     display: 'flex',
     flexDirection: 'row',
     margin: 14,
   },
   titleContainer: {
-    maxWidth: '60%',
-    margin: 14,
+    width: '60%',
+    padding: 14,
   },
   heart: {
     // center heart SVG

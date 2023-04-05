@@ -12,6 +12,7 @@ export const lessonPlanSlice = createSlice({
    * @property {string} key Unique in that section. For example, 'module-0'.
    */
   initialState: {
+    lessonPlanName: '',
     [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
@@ -19,6 +20,29 @@ export const lessonPlanSlice = createSlice({
     isDirty: false, // TODO: wipe the entire lessonPlan state store to default when you exit the editor
   },
   reducers: {
+    /**
+     * Load the redux store with a data from an existing lesson plan.
+     * isDirty stays false.
+     * @property {LessonPlan} action.payload
+     */
+    loadInitialLessonPlan: (state, action) => {
+      return {
+        ...state,
+        lessonPlanName: action.payload.name,
+        [SectionName.warmUp]: action.payload.warmUp,
+        [SectionName.mainLesson]: action.payload.mainLesson,
+        [SectionName.coolDown]: action.payload.coolDown,
+        [SectionName.notes]: action.payload.notes ?? '',
+        isDirty: false,
+      }
+    },
+    setLessonPlanName: (state, action) => {
+      return {
+        ...state,
+        lessonPlanName: action.payload,
+        isDirty: true,
+      };
+    },
     replaceSection: (state, action) => {
       // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
@@ -58,18 +82,6 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
-    removeFromSection: (state, action) => {
-      // TODO: remove this reducer if not being used anymore after you're done
-      const section = action.payload.section;
-      const indx = state[section].findIndex(
-        e => e.content === action.payload.content,
-      );
-      return {
-        ...state,
-        isDirty: true,
-        [action.payload.section]: state[section].filter((_, i) => i !== indx),
-      };
-    },
     addToNote: (state, action) => {
       return {
         ...state,
@@ -92,6 +104,8 @@ export const {
   addToNote,
   removeNote,
   replaceSection,
+  setLessonPlanName,
+  loadInitialLessonPlan,
 } = lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
@@ -103,6 +117,17 @@ export const getLessonSection = (state, sectionName) => {
       `getLessonSection: Could not grab lesson plan section ${sectionName} from redux.`,
     );
     return [];
+  }
+};
+
+export const getLessonPlanName = state => {
+  try {
+    return state.lessonPlanName;
+  } catch {
+    console.error(
+      'getLessonPlanName: Could not grab lesson plan name from redux.',
+    );
+    return '';
   }
 };
 

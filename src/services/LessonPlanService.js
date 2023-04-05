@@ -9,7 +9,7 @@ import {
   readDDirectory,
   cpyFile,
 } from './routes/Local';
-import { MAINDIRECTORY } from './constants';
+import { MAINDIRECTORY, SectionName } from './constants';
 import { LessonPlan, Module } from './models';
 
 const LessonPlanService = {
@@ -97,27 +97,27 @@ const LessonPlanService = {
       }
 
       // read in the file from RNFS
-      let str = await readFile(path);
+      let lpStr = await readFile(path);
       // convert string to JSON object
-      let json = JSON.parse(str);
-
-      // create Module objects from JSON
-      const warmUpList = json.warmUp.map(createModules);
-      const mainLessonList = json.mainLesson.map(createModules);
-      const coolDownList = json.coolDown.map(createModules);
+      let lpObj = JSON.parse(lpStr);
 
       // helper function to create Module objects for .map()
       function createModules(module) {
-        return new Module(module.type, module.content);
+        return new Module(module.type, module.content, module.name);
       }
+
+      // create Module objects from JSON
+      const warmUpList = lpObj[SectionName.warmUp].map(createModules);
+      const mainLessonList = lpObj[SectionName.mainLesson].map(createModules);
+      const coolDownList = lpObj[SectionName.coolDown].map(createModules);
 
       // create LessonPlan object from JSON
       lessonPlanObj = new LessonPlan(
-        json.name,
+        lpObj.name,
         warmUpList,
         mainLessonList,
         coolDownList,
-        json.notes,
+        lpObj.notes,
       );
 
       return lessonPlanObj;
