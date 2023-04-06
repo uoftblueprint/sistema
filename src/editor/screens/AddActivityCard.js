@@ -22,12 +22,12 @@ import BackArrow from '../../../assets/backArrow.svg';
 import LeftArrow from '../../../assets/leftArrow.svg';
 import RightArrow from '../../../assets/rightArrow.svg';
 
-import axios from 'axios';
-import { DRIVE_API_URLS } from '../../services/config.json';
-
 import ActivityCardService from '../../services/ActivityCardService';
 import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
+
+// react query
+import { useQuery } from '@tanstack/react-query';
 
 const AddActivityCard = function ({ navigation, route }) {
   const { sectionType } = route.params;
@@ -38,54 +38,17 @@ const AddActivityCard = function ({ navigation, route }) {
   const onChangeSearch = query => {
     setSearchQuery(query);
   };
-  const [activityList, setActivityList] = useState([]);
+  const { data: activityCards } = useQuery({
+    queryKey: ['activityCards'],
+    queryFn: ActivityCardService.getAllActivityCards,
+  });
+  const [matchSearch, setMatchSearch] = useState([]);
+
   // previewInfo has id, name, and url.
   const [previewInfo, setPreviewInfo] = useState(null);
   const showNoCards = useRef(false);
 
   // to detect when user stops typing. Source: https://stackoverflow.com/questions/42217121/how-to-start-search-only-when-user-stops-typing
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      // Send Axios request here
-      if (!searchQuery) {
-        showNoCards.current = false;
-        setActivityList([]);
-        setPreviewInfo(null);
-      } else {
-        const nameSearchTerm = `and name contains '${searchQuery}'`;
-        const tagSearchTerm = TAGS.map((tag, index) => {
-          if (activeTags[index]) {
-            return ` and fullText contains '${tag}'`;
-          }
-        }).join('');
-        const ACTVTTerm = " and fullText contains 'ACTVT'";
-
-        axios
-          .get(DRIVE_API_URLS.SEARCH_FILES, {
-            params: {
-              trashed: 'false',
-              supportsAllDrives: 'true',
-              includeItemsFromAllDrives: 'true',
-              q:
-                "name contains '-' and mimeType='image/jpeg' " +
-                nameSearchTerm +
-                tagSearchTerm +
-                ACTVTTerm,
-            },
-          })
-          .then(response => {
-            const data = response.data.files;
-            if (data.length != 0) {
-              showNoCards.current = false;
-            } else {
-              showNoCards.current = true;
-            }
-            setActivityList(data);
-          });
-      }
-    }, 300);
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchQuery]);
 
   // ************ SEARCH RELATED VARS END *********
 
@@ -111,6 +74,23 @@ const AddActivityCard = function ({ navigation, route }) {
     'Group Activity',
     'Scale',
   ];
+
+  useEffect(() => {
+    if (activityCards !== undefined) {
+      setMatchSearch(
+        activityCards?.filter(
+          card =>
+            card.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            (TAGS.filter(
+              (s, i) =>
+                activeTags[i] &&
+                card.description.toLowerCase().includes(s.toLowerCase()),
+            ).length > 0 ||
+              !activeTags.includes(true)),
+        ),
+      );
+    }
+  }, [searchQuery, activityCards, activeTags]);
 
   // ************* TAG RELATED VARS END ************
 
@@ -175,7 +155,9 @@ const AddActivityCard = function ({ navigation, route }) {
 
   //onPress function for add Card button
   const addCard = async () => {
-    const rnfsPath = ActivityCardService.downloadActivityCard(previewInfo.id);
+    const rnfsPath = await ActivityCardService.downloadActivityCard(
+      previewInfo?.id,
+    );
     dispatch(
       addToSection({
         type: 'activity',
@@ -225,11 +207,9 @@ const AddActivityCard = function ({ navigation, route }) {
             setActiveTags={setActiveTags}
           />
           <Searchbar
-            placeholder="Search by title or keyword"
             onChangeText={onChangeSearch}
             onFocus={collapse}
-            value={searchQuery}
-            activityList={activityList}
+            activityList={matchSearch}
             focused={focused}
             setPreviewInfo={setPreviewInfo}
             showNoCards={showNoCards}

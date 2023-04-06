@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { StyleSheet, TextInput, View, Platform, FlatList } from 'react-native';
 import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
@@ -13,8 +13,6 @@ const Searchbar = ({
   setPreviewInfo,
   showNoCards,
 }) => {
-  useEffect(() => {}, [activityList]);
-
   const [highlightedID, setHighlightedID] = useState(null);
 
   return (
