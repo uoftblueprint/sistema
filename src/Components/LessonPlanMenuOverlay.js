@@ -12,8 +12,7 @@ const LessonPlanMenuOverlay = ({ navigation, route }) => {
           isLessonPlanEditor={isLessonPlanEditor}
           lastEdited={lastEdited}
           navigation={navigation}
-          style={styles.menu}
-          lessonPlan={lessonPlanName}
+          lessonPlanName={lessonPlanName}
         />
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -27,9 +26,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(217,217,217, 0.8)',
     justifyContent: 'flex-end',
     flex: 1,
-  },
-  menu: {
-    alignSelf: 'stretch',
   },
 });
 

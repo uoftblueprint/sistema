@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,33 +8,43 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import { useEffect, useState } from 'react';
 import EditIcon from '../../../assets/edit.svg';
 import Menu from '../../../assets/menu.svg';
 import BackArrow from '../../../assets/backArrow.svg';
 import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  getLessonPlanName,
+  setLessonPlanName,
+  getDirty,
+  reset,
+} from '../../services/editor/lessonPlanSlice';
 
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
-const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
-  const [isEditable, setIsEditable] = useState(false);
-  const [lessonPlanName, setLessonPlanName] = useState('');
+const LessonPlanHeader = ({ navigation, lastEditedDate, showOptions }) => {
+  const dispatch = useDispatch();
+  const lessonPlanName = useSelector(state =>
+    getLessonPlanName(state.lessonPlan),
+  );
+  const isDirty = useSelector(state => getDirty(state.lessonPlan));
 
-  useEffect(() => {
-    const todayDate = new Date().toLocaleDateString('en-us', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-    setLessonPlanName(todayDate);
-  }, []);
+  const [isEditable, setIsEditable] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={{ marginLeft: scale(horizontalMargin) }}>
+      <TouchableOpacity
+        style={{ marginLeft: scale(horizontalMargin) }}
+        onPress={() => {
+          // TODO: throw up popup if isDirty
+          // For now just clear redux and route params
+          dispatch(reset());
+          navigation.setParams({ lessonPlanName: '' });
+          navigation.goBack();
+        }}>
         <BackArrow height={headerIconSize} width={headerIconSize} />
       </TouchableOpacity>
 
@@ -44,7 +55,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
               style={[styles.input, TextStyle.h1]}
               value={lessonPlanName}
               onChangeText={newText => {
-                setLessonPlanName(newText);
+                dispatch(setLessonPlanName(newText));
               }}
               onBlur={() => {
                 setIsEditable(false);
@@ -62,21 +73,23 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
             onPress={() => {
               setIsEditable(true);
             }}>
-            <EditIcon
-              height={headerIconSize - 5}
-              width={headerIconSize - 5}
-              marginRight={scale(15)}
-            />
+            <EditIcon height={headerIconSize - 5} width={headerIconSize - 5} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
-                isLessonPlanEditor: true,
-                lastEdited: lastEditedDate,
-              })
-            }>
-            <Menu height={headerIconSize} width={headerIconSize} />
-          </TouchableOpacity>
+          {showOptions && (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
+                  isLessonPlanEditor: true,
+                  lastEdited: lastEditedDate,
+                })
+              }>
+              <Menu
+                height={headerIconSize}
+                width={headerIconSize}
+                marginLeft={scale(15)}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </SafeAreaView>
     </SafeAreaView>

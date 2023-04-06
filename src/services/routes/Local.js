@@ -37,7 +37,7 @@ export async function readDDirectory(dirpath) {
  * @return {String} File you want to read
  */
 export async function readFile(filepath) {
-  return RNFS.readFile(filepath)
+  return await RNFS.readFile(filepath)
     .then(result => {
       console.log('GOT FILE: ', filepath);
       return result;
@@ -48,26 +48,22 @@ export async function readFile(filepath) {
 }
 
 /**
- * Write to the local storage with some file in utf8 encoding.
+ * Write to the local storage with some file in encoding.
+ * @param {Boolean} isImage If file to write is an image, encoding type changes.
  * @param {String} filepath Full file path to delete
  * @param {String} content Content to write to given file path
  */
 export async function writeFile(isImage, filepath, content) {
-  const options = {
-    encoding: '',
-  };
-
   //set up the encoding based on wether or not content is an image
-  options.encoding = isImage ? 'base64' : 'utf8';
+  let encoding = isImage ? 'base64' : 'utf8';
   const data = isImage ? content.toString('base64') : content;
 
-  return RNFS.writeFile(filepath, data, options.encoding)
+  return RNFS.writeFile(filepath, data, encoding)
     .then(success => {
       console.log(`FILE WRITTEN!: ${filepath}`);
     })
     .catch(err => {
       console.error(`RNFS writeFile: ${err.message}`);
-      console.log(`RNFS writeFile: ${err.message}`);
     });
 }
 

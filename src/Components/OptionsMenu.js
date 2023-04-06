@@ -8,16 +8,33 @@ import HeartIcon from '../../assets/heartIcon.svg';
 import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView } from 'react-native';
+import LessonPlanService from '../services/LessonPlanService';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
   lastEdited,
-  lessonPlan,
+  lessonPlanName,
   navigation,
 }) => {
   const [isFavorited, setFavorited] = useState(false);
   const [isBannerVisible, setBannerVisible] = useState(false);
 
+  // FUNCTIONS FOR BUTTONS
+  const copyLessonPlan = () => {
+    LessonPlanService.copyLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const deleteLessonPlan = async () => {
+    await LessonPlanService.deleteLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const defaultPress = () => {
+    console.log('This function is not implemented yet.', lessonPlanName);
+  };
+
+  // ALL OPTION BUTTONS
   const editorButtons = [
     {
       name: 'Export Lesson Plan',
@@ -26,10 +43,6 @@ const OptionsMenu = ({
     {
       name: 'Favorites',
       icon: <HeartIcon />,
-    },
-    {
-      name: 'Delete Lesson Plan',
-      icon: <TrashIcon />,
     },
   ];
 
@@ -66,12 +79,23 @@ const OptionsMenu = ({
               />
             );
           } else {
+            let handlePress;
+            switch (button.name) {
+              case 'Copy Lesson Plan':
+                handlePress = copyLessonPlan;
+                break;
+              case 'Delete Lesson Plan':
+                handlePress = deleteLessonPlan;
+                break;
+              default:
+                handlePress = defaultPress;
+            }
             return (
               <OptionsMenuButton
                 key={i}
                 text={button.name}
                 icon={button.icon}
-                lessonName={lessonPlan}
+                onPress={handlePress}
               />
             );
           }

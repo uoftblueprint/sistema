@@ -6,24 +6,13 @@ import {
   Dimensions,
 } from 'react-native';
 import { OptionsMenuPadding } from '../Styles.config';
-import LessonPlanService from '../services/LessonPlanService';
 
 const windowWidth = Dimensions.get('window').width;
 
-const handleOnPress = (text, name) => {
-  if (text === 'Copy Lesson Plan') {
-    LessonPlanService.copyLessonPlan(name);
-  }
-};
-
-const OptionsMenuButton = ({ text, icon, lessonName }) => {
+const OptionsMenuButton = ({ text, icon, onPress }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        style={[styles.buttonContainer]}
-        onPress={() => {
-          handleOnPress(text, lessonName);
-        }}>
+      <TouchableOpacity style={[styles.buttonContainer]} onPress={onPress}>
         <SafeAreaView
           style={{
             width: 22,
