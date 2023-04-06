@@ -11,9 +11,9 @@ const SearchResults = ({
 }) => {
   const display_preview = () => {
     const baseQuery = DRIVE_API_URLS.SEARCH_FILES;
-    const params = '?supportsAllDrives=true&fields=thumbnailLink';
+
     axios
-      .get(`${baseQuery}${id}?`, {
+      .get(`${baseQuery}/${id}`, {
         params: {
           supportsAllDrives: 'true',
           fields: 'thumbnailLink',
@@ -26,7 +26,10 @@ const SearchResults = ({
           name: name,
           id: id,
         });
-        console.log(response.data.thumbnailLink);
+      })
+      .catch(function (error) {
+        console.log("Couldn't get thumbnail link");
+        console.error(error);
       });
   };
 

@@ -26,6 +26,8 @@ import axios from 'axios';
 import { DRIVE_API_URLS } from '../../services/config.json';
 
 import ActivityCardService from '../../services/ActivityCardService';
+import LessonPlanService from '../../services/LessonPlanService';
+
 import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 
@@ -81,9 +83,12 @@ const AddActivityCard = function ({ navigation, route }) {
               showNoCards.current = true;
             }
             setActivityList(data);
+          })
+          .catch(error => {
+            console.error(error);
           });
       }
-    }, 300);
+    }, 100);
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
@@ -175,7 +180,12 @@ const AddActivityCard = function ({ navigation, route }) {
 
   //onPress function for add Card button
   const addCard = async () => {
-    const rnfsPath = ActivityCardService.downloadActivityCard(previewInfo.id);
+    const rnfsPath = await ActivityCardService.downloadActivityCard(
+      previewInfo.id,
+      'Downloaded',
+      previewInfo.name,
+    );
+
     dispatch(
       addToSection({
         type: 'activity',
