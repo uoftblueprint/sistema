@@ -230,9 +230,12 @@ const LessonPlanService = {
         combined = defaultLessonPlans;
       }
 
-      const lpInfo = combined.map(dirItem => {
-        return { mtime: dirItem.mtime, name: dirItem.name };
-      });
+      const lpInfo = combined.reduce(function (result, dirItem) {
+        if (dirItem.name !== '.DS_Store') {
+          result.push({ mtime: dirItem.mtime, name: dirItem.name });
+        }
+        return result;
+      }, []);
 
       return lpInfo;
     } catch (e) {
