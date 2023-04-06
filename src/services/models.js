@@ -22,7 +22,7 @@ export class AccessToken {
  * @property {string} name text: empty string, activity card: name of activity card
  */
 export class Module {
-  constructor(type, content, name='') {
+  constructor(type, content, name = '') {
     this.type = type;
     this.content = content;
     this.name = name;

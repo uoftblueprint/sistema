@@ -34,7 +34,7 @@ export const lessonPlanSlice = createSlice({
         [SectionName.coolDown]: action.payload[SectionName.coolDown],
         [SectionName.notes]: action.payload[SectionName.notes] ?? '',
         isDirty: false,
-      }
+      };
     },
     setLessonPlanName: (state, action) => {
       return {
@@ -95,7 +95,7 @@ export const lessonPlanSlice = createSlice({
       };
     },
     reset: () => {
-      console.log("Reseting redux...");
+      console.log('Reseting redux...');
       return {
         lessonPlanName: '',
         [SectionName.warmUp]: [],
@@ -149,10 +149,10 @@ export const getDirty = state => {
 
 export const getLessonPlan = state => {
   try {
-    const removeModuleKey = (module) => {
+    const removeModuleKey = module => {
       const { key, ...rest } = module; // using rest parameter to store properties other than key
       return rest;
-    }
+    };
     const warmUp = state[SectionName.warmUp].map(removeModuleKey);
     const mainLesson = state[SectionName.mainLesson].map(removeModuleKey);
     const coolDown = state[SectionName.coolDown].map(removeModuleKey);
@@ -163,11 +163,9 @@ export const getLessonPlan = state => {
       [SectionName.mainLesson]: mainLesson,
       [SectionName.coolDown]: coolDown,
       [SectionName.notes]: state[SectionName.notes],
-    }
+    };
   } catch {
-    console.error(
-      'getLessonPlan: Could not grab lesson plan from redux.',
-    );
+    console.error('getLessonPlan: Could not grab lesson plan from redux.');
     return {};
   }
 };

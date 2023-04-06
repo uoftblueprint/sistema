@@ -10,26 +10,26 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
 
   return (
     <SafeAreaView>
-      <TouchableOpacity 
-        style={styles.buttonContainer} 
+      <TouchableOpacity
+        style={styles.buttonContainer}
         onPress={async () => {
-          if (!isLessonPlanLoading) { // Prevents user from pressing save before lesson plan is loaded in
+          if (!isLessonPlanLoading) {
+            // Prevents user from pressing save before lesson plan is loaded in
             // Disable user changes
-            setLoading(true);       
+            setLoading(true);
 
             // Write changes from redux to RNFS
             await LessonPlanService.saveLessonPlan(lessonPlanObj);
 
             // Clear redux and route params
             dispatch(reset());
-            navigation.setParams({lessonPlanName: ''});
+            navigation.setParams({ lessonPlanName: '' });
 
             // Navigate back to Library
-            setLoading(false); 
+            setLoading(false);
             navigation.goBack();
-          }            
-        }}
-      >
+          }
+        }}>
         <SaveIcon height={'20'} width={'20'} />
         <Text style={styles.textContainer}>Save plan</Text>
       </TouchableOpacity>

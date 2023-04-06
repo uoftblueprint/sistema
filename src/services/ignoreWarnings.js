@@ -4,18 +4,22 @@ if (__DEV__) {
     'VirtualizedLists should never be nested inside plain ScrollViews',
   ];
 
-  if (global && global.console && global.console.error){
+  if (global && global.console && global.console.error) {
     const errorWarn = global.console.error;
     global.console.error = (...arg) => {
       if (arg) {
         for (const error of ignoreWarns) {
-          if (arg && arg[0] && arg[0].startsWith(error)) {
+          if (
+            error &&
+            error[0] &&
+            typeof error[0] === 'string' &&
+            error[0].startsWith(error)
+          ) {
             return;
           }
         }
-        errorWarn(...arg);        
+        errorWarn(...arg);
       }
-
     };
   }
 }

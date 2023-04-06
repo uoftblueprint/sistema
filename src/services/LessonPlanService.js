@@ -58,7 +58,7 @@ const LessonPlanService = {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
       const name = lesson.lessonPlanName;
-      
+
       const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
       const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
       let path;
@@ -100,7 +100,7 @@ const LessonPlanService = {
     try {
       let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/${name}.json`;
       let defaultPath = `${MAINDIRECTORY}/Default/${name}/${name}.json`;
-      
+
       let path;
       // check if file exists, assigning appropriate path if so
       if (await checkFileExists(favouritedPath)) {
@@ -265,10 +265,12 @@ const LessonPlanService = {
       if (!defaultExists) {
         makeDirectory(MAINDIRECTORY + '/Default/');
         console.log('initializeEmptyDirectories: Created Default directory.');
-      } 
+      }
       if (!favouritedExists) {
         makeDirectory(MAINDIRECTORY + '/Favourited/');
-        console.log('initializeEmptyDirectories: Created Favourited directory.');
+        console.log(
+          'initializeEmptyDirectories: Created Favourited directory.',
+        );
       }
     } catch (e) {
       console.error('Error initializing directories: ', e);

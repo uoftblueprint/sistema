@@ -18,12 +18,14 @@ const LessonPlanButton = ({
 }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.titleContainer} onPress={() => {
-        navigation.navigate(EDITOR_STACK.NAVIGATOR, { 
-          screen: EDITOR_STACK.LESSON_PLAN_EDITOR_V2,
-          params: { lessonPlanName: name }
-        });
-      }}>
+      <TouchableOpacity
+        style={styles.titleContainer}
+        onPress={() => {
+          navigation.navigate(EDITOR_STACK.NAVIGATOR, {
+            screen: EDITOR_STACK.LESSON_PLAN_EDITOR_V2,
+            params: { lessonPlanName: name },
+          });
+        }}>
         <Text style={TextStyle.label}>{name}</Text>
       </TouchableOpacity>
       <SafeAreaView style={styles.icons}>

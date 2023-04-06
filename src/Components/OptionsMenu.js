@@ -23,16 +23,16 @@ const OptionsMenu = ({
   const copyLessonPlan = () => {
     LessonPlanService.copyLessonPlan(lessonPlanName);
     navigation.goBack();
-  }
+  };
 
   const deleteLessonPlan = async () => {
     await LessonPlanService.deleteLessonPlan(lessonPlanName);
     navigation.goBack();
-  }
+  };
 
   const defaultPress = () => {
     console.log('This function is not implemented yet.', lessonPlanName);
-  }
+  };
 
   // ALL OPTION BUTTONS
   const editorButtons = [

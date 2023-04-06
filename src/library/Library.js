@@ -51,7 +51,7 @@ const Library = ({ navigation, route }) => {
               lastEditedDate: lpList[lp].mtime,
             });
           }
-        }
+        };
 
         setLPInfo(favL, true);
         setLPInfo(defL, false);
@@ -102,7 +102,7 @@ const Library = ({ navigation, route }) => {
           showBackButton={false}
         />
         <SafeAreaView style={styles.inlineTitle}>
-          <Text style={TextStyle.h1}>Lesson Plans</Text>     
+          <Text style={TextStyle.h1}>Lesson Plans</Text>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(STACK_SCREENS.LESSON_PLAN_SORTING_MENU)
