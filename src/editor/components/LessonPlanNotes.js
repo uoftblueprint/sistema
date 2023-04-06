@@ -7,7 +7,10 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { replaceNote, getLessonSection } from '../../services/editor/lessonPlanSlice';
+import {
+  replaceNote,
+  getLessonSection,
+} from '../../services/editor/lessonPlanSlice';
 import { TextStyle } from '../../Styles.config';
 
 const LessonPlanNotes = ({ sectionType }) => {
@@ -23,14 +26,12 @@ const LessonPlanNotes = ({ sectionType }) => {
         <TextInput
           style={TextStyle.body}
           placeholder={'Add lesson notes here...'}
-          placeholderTextColor={'#453E3D'} 
+          placeholderTextColor={'#453E3D'}
           value={currNotes}
           multiline
           returnKeyType="next"
           onChangeText={newText => {
-            dispatch(
-              replaceNote(newText),
-            );
+            dispatch(replaceNote(newText));
           }}
         />
       </View>
