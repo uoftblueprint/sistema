@@ -13,6 +13,7 @@ export const lessonPlanSlice = createSlice({
    */
   initialState: {
     lessonPlanName: '',
+    initialLessonPlanName: '',
     [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
@@ -29,6 +30,7 @@ export const lessonPlanSlice = createSlice({
       return {
         ...state,
         lessonPlanName: action.payload.lessonPlanName,
+        initialLessonPlanName: action.payload.lessonPlanName,
         [SectionName.warmUp]: action.payload[SectionName.warmUp],
         [SectionName.mainLesson]: action.payload[SectionName.mainLesson],
         [SectionName.coolDown]: action.payload[SectionName.coolDown],
@@ -39,8 +41,8 @@ export const lessonPlanSlice = createSlice({
     setLessonPlanName: (state, action) => {
       return {
         ...state,
-        lessonPlanName: action.payload,
-        isDirty: true,
+        lessonPlanName: action.payload.name,
+        isDirty: action.payload.isDirty,
       };
     },
     replaceSection: (state, action) => {
@@ -82,22 +84,18 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
-    addToNote: (state, action) => {
+    replaceNote: (state, action) => {
       return {
         ...state,
-        notes: action.payload.content,
-      };
-    },
-    removeNote: (state, _) => {
-      return {
-        ...state,
-        notes: '',
+        [SectionName.notes]: action.payload,
+        isDirty: true,
       };
     },
     reset: () => {
       console.log('Reseting redux...');
       return {
         lessonPlanName: '',
+        initialLessonPlanName: '',
         [SectionName.warmUp]: [],
         [SectionName.mainLesson]: [],
         [SectionName.coolDown]: [],
@@ -112,8 +110,7 @@ export const lessonPlanSlice = createSlice({
 export const {
   addToSection,
   removeFromSection,
-  addToNote,
-  removeNote,
+  replaceNote,
   replaceSection,
   setLessonPlanName,
   loadInitialLessonPlan,
@@ -145,6 +142,10 @@ export const getLessonPlanName = state => {
 
 export const getDirty = state => {
   return state.isDirty;
+};
+
+export const getInitialLessonPlanName = state => {
+  return state.initialLessonPlanName;
 };
 
 export const getLessonPlan = state => {

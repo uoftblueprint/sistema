@@ -6,11 +6,14 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
+  Text,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
+import Overlay from '../../Components/Overlay';
+import SistemaButton from '../../Components/SistemaButton';
 import SaveButton from '../components/SaveButton.js';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName } from '../../services/constants.js';
@@ -20,7 +23,9 @@ import {
   loadInitialLessonPlan,
   setLessonPlanName,
   getLessonPlanName,
+  reset,
 } from '../../services/editor/lessonPlanSlice.js';
+import { TextStyle } from '../../Styles.config.js';
 
 const lastEditedDummy = 'Jan 1, 2023';
 
@@ -35,6 +40,15 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   // COMPONENT STATES
   const [isLoading, setLoading] = useState(false);
   const [isNewLP, setNew] = useState(true);
+  const [overlayVisible, toggleUnsavedChanges] = useState(false);
+
+  // Clear redux and route params
+  const leaveEditor = () => {
+    dispatch(reset());
+    navigation.setParams({ lessonPlanName: '' });
+    toggleUnsavedChanges(false);
+    navigation.goBack();
+  };
 
   // Fetch and set lesson plan data
   useEffect(() => {
@@ -88,7 +102,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           month: 'short',
           day: 'numeric',
         });
-        dispatch(setLessonPlanName(todayDate));
+        dispatch(setLessonPlanName({ name: todayDate, isDirty: false }));
       }
       setLoading(false);
     };
@@ -105,6 +119,8 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         navigation={navigation}
         lastEditedDate={lastEditedDummy} // TODO: [SIS-136] Set last edited date in LessonPlanHeader
         showOptions={!isNewLP} // Don't show buttons to access LP options menu if LP is brand new (nothing to delete, favourite, etc.)
+        toggleUnsavedChanges={toggleUnsavedChanges}
+        handleBackButton={leaveEditor}
       />
 
       <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
@@ -125,7 +141,6 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             <LessonPlanNotes
               navigation={navigation}
               sectionType={SectionName.notes}
-              placeholder={''}
             />
           </View>
         </TouchableWithoutFeedback>
@@ -138,6 +153,28 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           setLoading={setLoading}
         />
       </View>
+      {/* Unsaved changes overlay */}
+      <Overlay
+        close={toggleUnsavedChanges}
+        visible={overlayVisible}
+        style={styles.overlayContainer}>
+        <View style={styles.textColumn}>
+          <Text style={[TextStyle.label, styles.overlayTitle]}>
+            You have unsaved changes.
+          </Text>
+          <Text style={TextStyle.body}>
+            Are you sure you want to leave this page?
+          </Text>
+          <View style={styles.buttonContainer}>
+            <SistemaButton onPress={toggleUnsavedChanges}>
+              <Text style={TextStyle.body}> Stay on page </Text>
+            </SistemaButton>
+            <SistemaButton onPress={leaveEditor} color={'blue'}>
+              <Text style={TextStyle.body}> Leave page </Text>
+            </SistemaButton>
+          </View>
+        </View>
+      </Overlay>
     </SafeAreaView>
   );
 };
@@ -157,6 +194,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     bottom: verticalScale(30),
+  },
+  overlayContainer: {
+    flexDirection: 'row',
+    height: 'auto',
+  },
+  overlayTitle: {
+    fontWeight: 'bold',
+    marginBottom: verticalScale(10),
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    paddingTop: verticalScale(15),
+    justifyContent: 'space-evenly',
+  },
+  textColumn: {
+    flex: 5,
+    flexDirection: 'column',
   },
 });
 

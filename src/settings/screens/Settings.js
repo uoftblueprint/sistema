@@ -13,6 +13,7 @@ import WarningIcon from '../../../assets/errorAlert.svg';
 import SistemaButton from '../../Components/SistemaButton';
 import RNRestart from 'react-native-restart';
 import { MAINDIRECTORY } from '../../services/constants';
+import { verticalScale, scale } from 'react-native-size-matters';
 
 const Settings = ({ navigation }) => {
   const [deleteOverlayVisible, toggleDeleteOverlay] = useState(false);
@@ -87,22 +88,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5',
   },
   title: {
-    marginHorizontal: 30,
-    marginBottom: 10,
+    marginHorizontal: scale(30),
+    marginBottom: verticalScale(10),
   },
   buttonContainer: {
-    marginHorizontal: 30,
+    marginHorizontal: scale(30),
     display: 'flex',
     flexDirection: 'column',
   },
   buttonContainer2: {
     flexDirection: 'row',
-    paddingTop: '10%',
+    paddingTop: verticalScale(15),
     justifyContent: 'space-evenly',
   },
   deleteOverlayContainer: {
     flexDirection: 'row',
-    height: '20%',
+    height: 'auto',
   },
   textColumn: {
     flex: 5,

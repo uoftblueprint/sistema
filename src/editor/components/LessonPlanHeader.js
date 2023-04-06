@@ -19,13 +19,18 @@ import {
   getLessonPlanName,
   setLessonPlanName,
   getDirty,
-  reset,
 } from '../../services/editor/lessonPlanSlice';
 
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
-const LessonPlanHeader = ({ navigation, lastEditedDate, showOptions }) => {
+const LessonPlanHeader = ({
+  navigation,
+  lastEditedDate,
+  showOptions,
+  handleBackButton,
+  toggleUnsavedChanges,
+}) => {
   const dispatch = useDispatch();
   const lessonPlanName = useSelector(state =>
     getLessonPlanName(state.lessonPlan),
@@ -39,11 +44,12 @@ const LessonPlanHeader = ({ navigation, lastEditedDate, showOptions }) => {
       <TouchableOpacity
         style={{ marginLeft: scale(horizontalMargin) }}
         onPress={() => {
-          // TODO: throw up popup if isDirty
-          // For now just clear redux and route params
-          dispatch(reset());
-          navigation.setParams({ lessonPlanName: '' });
-          navigation.goBack();
+          if (isDirty) {
+            // Warn the user that there are unsaved changes
+            toggleUnsavedChanges(true);
+          } else {
+            handleBackButton();
+          }
         }}>
         <BackArrow height={headerIconSize} width={headerIconSize} />
       </TouchableOpacity>
@@ -55,7 +61,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate, showOptions }) => {
               style={[styles.input, TextStyle.h1]}
               value={lessonPlanName}
               onChangeText={newText => {
-                dispatch(setLessonPlanName(newText));
+                dispatch(setLessonPlanName({ name: newText, isDirty: true }));
               }}
               onBlur={() => {
                 setIsEditable(false);
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
     width: '100%',
     color: '#000',
     borderColor: 'transparent',
-    borderRadius: 7.69,
+    borderRadius: 8,
     paddingLeft: scale(15),
   },
 });

@@ -2,10 +2,17 @@ import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import SaveIcon from '../../../assets/save.svg';
 import LessonPlanService from '../../services/LessonPlanService';
 import { useSelector, useDispatch } from 'react-redux';
-import { getLessonPlan, reset } from '../../services/editor/lessonPlanSlice';
+import {
+  getLessonPlan,
+  getInitialLessonPlanName,
+  reset,
+} from '../../services/editor/lessonPlanSlice';
 
 const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
   const lessonPlanObj = useSelector(state => getLessonPlan(state.lessonPlan));
+  const lessonPlanInitialName = useSelector(state =>
+    getInitialLessonPlanName(state.lessonPlan),
+  );
   const dispatch = useDispatch();
 
   return (
@@ -19,7 +26,19 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
             setLoading(true);
 
             // Write changes from redux to RNFS
-            await LessonPlanService.saveLessonPlan(lessonPlanObj);
+            if (
+              lessonPlanInitialName &&
+              lessonPlanInitialName != lessonPlanObj.lessonPlanName
+            ) {
+              // Lesson plan was renamed so need to handle old file
+              await LessonPlanService.saveLessonPlan(
+                lessonPlanObj,
+                true,
+                lessonPlanInitialName,
+              );
+            } else {
+              await LessonPlanService.saveLessonPlan(lessonPlanObj, false);
+            }
 
             // Clear redux and route params
             dispatch(reset());
