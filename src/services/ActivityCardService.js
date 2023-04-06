@@ -100,14 +100,12 @@ const ActivityCardService = {
       //check if file exists
       if (await checkFileExists(filePath)) {
         return filePath;
-        // throw new Error('This Activity Card is already downloaded');
       }
 
       //set up the get URL, then call axios for response
       const downloadUrl =
         DRIVE_API_URLS.SEARCH_FILES + id + DRIVE_API_URLS.SEARCH_PARAMETERS;
-      console.log('DOWNLOAD url' + downloadUrl);
-      console.log(id);
+      console.log('DOWNLOAD url: ' + downloadUrl);
 
       const response = await axios.get(downloadUrl, { params }).catch(error => {
         console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
@@ -123,6 +121,7 @@ const ActivityCardService = {
       console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
     }
   },
+
   /**
    * get metadata on all activity cards
    *
