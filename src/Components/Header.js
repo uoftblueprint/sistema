@@ -86,7 +86,7 @@ const Header = ({ navigation, isHome, showBackButton }) => {
               {'Theme '}
             </Text>
             {
-              'will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm".\nThere are four'
+              'will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm".\n\nThere are four'
             }
             <Text style={[TextStyle.body, styles.textBody, styles.bold]}>
               {' Activity Types'}
@@ -100,13 +100,13 @@ const Header = ({ navigation, isHome, showBackButton }) => {
               height={13}
               fill={AppColors.primary}
             />
-            {', Action '}
+            {' , Action '}
             <Circle width={13} height={13} fill={AppColors.quaternary} />
-            {', Perception '}
+            {' , Perception '}
             <Circle width={13} height={13} fill={AppColors.secondary} />
-            {', and Creation '}
+            {' , and Creation '}
             <Circle width={13} height={13} fill={AppColors.senary} />
-            {'.\nThe'}
+            {' .\n\nThe'}
             <Text style={[TextStyle.body, styles.textBody, styles.bold]}>
               {' Activity Title '}
             </Text>
