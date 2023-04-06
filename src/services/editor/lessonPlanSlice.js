@@ -13,6 +13,7 @@ export const lessonPlanSlice = createSlice({
    */
   initialState: {
     lessonPlanName: '',
+    initialLessonPlanName: '',
     [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
@@ -29,6 +30,7 @@ export const lessonPlanSlice = createSlice({
       return {
         ...state,
         lessonPlanName: action.payload.lessonPlanName,
+        initialLessonPlanName: action.payload.lessonPlanName,
         [SectionName.warmUp]: action.payload[SectionName.warmUp],
         [SectionName.mainLesson]: action.payload[SectionName.mainLesson],
         [SectionName.coolDown]: action.payload[SectionName.coolDown],
@@ -98,6 +100,7 @@ export const lessonPlanSlice = createSlice({
       console.log('Reseting redux...');
       return {
         lessonPlanName: '',
+        initialLessonPlanName: '',
         [SectionName.warmUp]: [],
         [SectionName.mainLesson]: [],
         [SectionName.coolDown]: [],
@@ -146,6 +149,11 @@ export const getLessonPlanName = state => {
 export const getDirty = state => {
   return state.isDirty;
 };
+
+export const getInitialLessonPlanName = state => {
+  return state.initialLessonPlanName;
+};
+
 
 export const getLessonPlan = state => {
   try {

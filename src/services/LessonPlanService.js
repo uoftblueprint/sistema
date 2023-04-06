@@ -52,8 +52,10 @@ const LessonPlanService = {
    * Be sure to think about how to save activity card .pngs later down the line
    * as well!
    * @param {Object} lesson LessonPlan object to save to local storage
+   * @param {Boolean} hasNewName if the LP has been renamed
+   * @param {String} oldLPName to delete old files and directories
    */
-  saveLessonPlan: async function (lesson) {
+  saveLessonPlan: async function (lesson, hasNewName=false, oldLPName='') {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
@@ -83,6 +85,11 @@ const LessonPlanService = {
         .then(r => {
           console.log('Successfully saved lesson plan: ' + name);
         });
+      
+        // If the LP has been renamed, we need to delete its old file and directory
+        if (hasNewName) {
+          await this.deleteLessonPlan(oldLPName);
+        }
     } catch (e) {
       // There was an error, catch it and do something with it
       console.error('Error saving lesson plan: ', e);
