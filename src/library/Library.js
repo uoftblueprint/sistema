@@ -149,7 +149,7 @@ const Library = ({ navigation, route }) => {
               })
               .map((lessonPlan, i) => (
                 <LessonPlanButton
-                  key={i} // TODO: if lesson plan has a unique id, replace key with it
+                  key={i}
                   index={i}
                   name={lessonPlan.name}
                   navigation={navigation}

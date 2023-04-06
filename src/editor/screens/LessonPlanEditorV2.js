@@ -141,7 +141,6 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             <LessonPlanNotes
               navigation={navigation}
               sectionType={SectionName.notes}
-              placeholder={''}
             />
           </View>
         </TouchableWithoutFeedback>

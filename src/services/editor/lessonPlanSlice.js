@@ -84,16 +84,11 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
-    addToNote: (state, action) => {
+    replaceNote: (state, action) => {
       return {
         ...state,
-        notes: action.payload.content,
-      };
-    },
-    removeNote: (state, _) => {
-      return {
-        ...state,
-        notes: '',
+        [SectionName.notes]: action.payload,
+        isDirty: true,
       };
     },
     reset: () => {
@@ -115,8 +110,7 @@ export const lessonPlanSlice = createSlice({
 export const {
   addToSection,
   removeFromSection,
-  addToNote,
-  removeNote,
+  replaceNote,
   replaceSection,
   setLessonPlanName,
   loadInitialLessonPlan,

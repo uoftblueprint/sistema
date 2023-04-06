@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -32,22 +32,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   };
 
   // COMPONENT STATES
-  const [isLoaded, setLoaded] = useState(false);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
-
-  // Equivalent to componentDidMount
-  useEffect(() => {
-    // TODO: Do all your fetching data here like grab lesson plan from RNFS, and set it to redux.
-    // Make sure to add an indexing key to each module when you send it to redux (necessary for keyExtractor in NestableDraggableFlatList)
-    // Like so:
-    // .map((module, i) => {
-    //   return {
-    //     ...module,
-    //     key: `module-${i}`,   // Whatever key you use, make sure it will work with the regex in grabNextKey inside helpers.js. Must be a string.
-    //   }
-    // })
-    setLoaded(true); // Disable stuff until everything is loaded
-  }, []);
 
   // ADD LESSON CONTENT FUNCTIONS
   const addTextModule = () => {
