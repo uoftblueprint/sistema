@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import { readFile } from '../../services/routes/Local.js';
 import { useState, useEffect } from 'react';
-const windowWidth = Dimensions.get('window').width;
+import { scale, verticalScale } from 'react-native-size-matters';
+
 const windowHeight = Dimensions.get('window').height;
 
 const RecentCard = ({ navigation, cardPath }) => {
@@ -66,13 +67,13 @@ const RecentCard = ({ navigation, cardPath }) => {
       justifyContent: 'center',
       overflow: 'hidden',
       marginVertical: 15,
-      width: '87%',
+      width: '100%',
       height: windowHeight * 0.25,
     },
     scrollview: {
       backgroundColor: 'white',
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
     },
     titleBar: {
       borderBottomLeftRadius: 18,
@@ -80,20 +81,19 @@ const RecentCard = ({ navigation, cardPath }) => {
       width: '100%',
       height: '19%',
       backgroundColor: backgroundColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 20,
     },
     title: {
-      fontFamily: 'Mulish-Regular',
+      fontFamily: 'Mulish-Italic',
       color: '#FFFFFF',
       width: '100%',
-      fontSize: 17,
-      marginTop: 7,
-      fontStyle: 'italic',
     },
     cardImage: {
-      width: windowWidth * 0.865, // 80% of window width
-      height: windowHeight * 0.75, // 30% of window height
-      alignItems: 'center',
-      justifyContent: 'center',
+      width: scale(290), // 80% of window width
+      height: verticalScale(290), // 30% of window height
+      paddingTop: scale(500),
     },
   });
 
@@ -109,11 +109,11 @@ const RecentCard = ({ navigation, cardPath }) => {
               />
             </ScrollView>
             <SafeAreaView style={styles.titleBar}>
-              <SafeAreaView style={{ marginHorizontal: 20 }}>
+              {/* <SafeAreaView style={{ marginHorizontal: 20 }}> */}
                 <Text style={styles.title} numberOfLines={1}>
                   {title}
                 </Text>
-              </SafeAreaView>
+              {/* </SafeAreaView> */}
             </SafeAreaView>
           </SafeAreaView>
         </SafeAreaView>
@@ -122,43 +122,43 @@ const RecentCard = ({ navigation, cardPath }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    marginVertical: 15,
-    width: '100%',
-    height: windowHeight * 0.25,
-  },
-  scrollview: {
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  titleBar: {
-    borderBottomLeftRadius: 18,
-    borderBottomRightRadius: 18,
-    width: '100%',
-    height: '19%',
-    backgroundColor: '#4D8ECB',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontFamily: 'Mulish-Italic',
-    color: '#FFFFFF',
-    width: '100%',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   box: {
+//     backgroundColor: 'white',
+//     borderWidth: 1,
+//     borderColor: 'black',
+//     borderRadius: 20,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     overflow: 'hidden',
+//     marginVertical: 15,
+//     width: '100%',
+//     height: windowHeight * 0.25,
+//   },
+//   scrollview: {
+//     backgroundColor: 'white',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   titleBar: {
+//     borderBottomLeftRadius: 18,
+//     borderBottomRightRadius: 18,
+//     width: '100%',
+//     height: '19%',
+//     backgroundColor: '#4D8ECB',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     paddingHorizontal: 20,
+//   },
+//   title: {
+//     fontFamily: 'Mulish-Italic',
+//     color: '#FFFFFF',
+//     width: '100%',
+//   },
+// });
 
 export default RecentCard;
