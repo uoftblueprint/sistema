@@ -11,7 +11,7 @@ import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
 import NoCardsFound from './NoCardsFound';
 import { TextStyle } from '../../Styles.config';
-import { scale } from 'react-native-size-matters';
+import { scale, moderateVerticalScale } from 'react-native-size-matters';
 
 const Searchbar = ({
   onChangeText,
@@ -83,7 +83,8 @@ const Searchbar = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
+    height: moderateVerticalScale(160, 2.5),
+    backgroundColor: 'red',
     width: '100%',
   },
   searchContainer: {
