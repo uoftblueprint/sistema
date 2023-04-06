@@ -8,6 +8,10 @@ import HeartIcon from '../../assets/heartIcon.svg';
 import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView } from 'react-native';
+import { useSelector } from 'react-redux';
+import { createPDF } from '../services/pdf';
+import { deleteFile } from '../services/routes/Local';
+import Share from 'react-native-share';
 import LessonPlanService from '../services/LessonPlanService';
 
 const OptionsMenu = ({
@@ -18,6 +22,7 @@ const OptionsMenu = ({
 }) => {
   const [isFavorited, setFavorited] = useState(false);
   const [isBannerVisible, setBannerVisible] = useState(false);
+  const lessonPlan = useSelector(state => state.lessonPlan);
 
   // FUNCTIONS FOR BUTTONS
   const copyLessonPlan = () => {
@@ -30,8 +35,18 @@ const OptionsMenu = ({
     navigation.goBack();
   };
 
-  const defaultPress = () => {
-    console.log('This function is not implemented yet.', lessonPlanName);
+  const exportLessonPlan = async () => {
+    let pdf = await createPDF(lessonPlan);
+    try {
+      await Share.open({
+        url: 'file://' + pdf.filePath,
+        type: 'application/pdf',
+      });
+      console.log('File shared');
+    } catch {
+      console.log('File not shared');
+    }
+    await deleteFile(pdf.filePath);
   };
 
   // ALL OPTION BUTTONS
@@ -69,6 +84,10 @@ const OptionsMenu = ({
         <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
+          var onPress;
+          if (button.name === 'Export Lesson Plan') {
+            onPress = exportLessonPlan;
+          }
           if (button.name === 'Favorites') {
             return (
               <FavoriteButton
@@ -88,7 +107,7 @@ const OptionsMenu = ({
                 handlePress = deleteLessonPlan;
                 break;
               default:
-                handlePress = defaultPress;
+                handlePress = exportLessonPlan;
             }
             return (
               <OptionsMenuButton

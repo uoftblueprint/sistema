@@ -3,6 +3,7 @@ import {
   writeFile,
   makeDirectory,
   deleteFile,
+  readFile,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { Buffer } from 'buffer';
