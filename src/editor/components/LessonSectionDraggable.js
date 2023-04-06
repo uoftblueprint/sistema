@@ -93,6 +93,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           drag={drag}
           dragIsActive={isActive}
           data={item}
+          navigation={navigation}
         />
       </ScaleDecorator>
     );
