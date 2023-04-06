@@ -1,6 +1,6 @@
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { DRIVE_API_URLS } from '../../services/config.json';
+import ActivityCardService from '../../services/ActivityCardService';
 
 const SearchResults = ({
   name,
@@ -9,25 +9,21 @@ const SearchResults = ({
   setHighlightedID,
   isHighlighted,
 }) => {
+  const { data: activityCards } = useQuery({
+    queryKey: ['activityCards'],
+    queryFn: ActivityCardService.getAllActivityCards,
+  });
   const display_preview = () => {
-    const baseQuery = DRIVE_API_URLS.SEARCH_FILES;
-    const params = '?supportsAllDrives=true&fields=thumbnailLink';
-    axios
-      .get(`${baseQuery}${id}?`, {
-        params: {
-          supportsAllDrives: 'true',
-          fields: 'thumbnailLink',
-        },
-      })
-      .then(function (response) {
+    activityCards?.forEach(card => {
+      if (card.id === id) {
         setHighlightedID(id);
         setPreviewInfo({
-          url: response.data.thumbnailLink,
-          name: name,
-          id: id,
+          url: card.thumbnailLink,
+          name: card.name,
+          id: card.id,
         });
-        console.log(response.data.thumbnailLink);
-      });
+      }
+    });
   };
 
   return (
