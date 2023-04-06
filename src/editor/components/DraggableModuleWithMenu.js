@@ -16,7 +16,6 @@ import { TextStyle } from '../../Styles.config';
 import ImageIcon from '../../../assets/imageIcon.svg';
 import { scale, verticalScale } from 'react-native-size-matters';
 
-
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
 
 export default class DraggableModuleWithMenu extends React.Component {
@@ -95,26 +94,6 @@ export default class DraggableModuleWithMenu extends React.Component {
     }
   };
 
-  // useEffect(() => {
-  //   const readCardTitle = async () => {
-  //     try {
-  //       const cardTitlePath = cardPath + 'cardName.txt';
-  //       let cardNames = await readFile(cardTitlePath, 'utf-8');
-  //       cardNames = cardNames.substring(0, cardNames.length - 5);
-  //       setCardImagePath(cardPath + 'cardImage.jpg');
-
-  //       let titleSegment = cardNames.split(' - ');
-  //       setTheme(titleSegment[0]);
-  //       setActivityType(titleSegment[1]);
-  //       setTitle(titleSegment[2]);
-  //     } catch (err) {
-  //       console.warn(err);
-  //       setTitle('Could not load card preview. Please try again.');
-  //     }
-  //   };
-  //   readCardTitle();
-  // }, []);
-
   render() {
     return (
       <View>
@@ -125,34 +104,32 @@ export default class DraggableModuleWithMenu extends React.Component {
           onLongPress={this.props.drag}
           disabled={this.props.dragIsActive} // disable interactions while being dragged
           style={styles.module}>
-          {
-            this.props.data.type == ModuleType.text ? (
-              <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
-                <TextInput
-                  ref={input => {
-                    this.textInputRef = input;
-                  }}
-                  editable={this.state.isEditable}
-                  style={TextStyle.body}
-                  multiline
-                  defaultValue={this.props.data.content}
-                  onEndEditing={e => {
-                    const currText = e.nativeEvent.text;
-                    this.props.handleEdit(this.props.data.key, currText);
-                    this.setState({ isEditable: false });
-                  }}
-                />
-              </View>
-            ) : (
-              <SafeAreaView style={styles.box}>
-                <Image
-                  source={{ uri: `file://${this.props.data.content}` }}
-                  style={styles.cardImage}
-                  resizeMode="contain"
-                />
-              </SafeAreaView>
-            )
-          }
+          {this.props.data.type == ModuleType.text ? (
+            <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
+              <TextInput
+                ref={input => {
+                  this.textInputRef = input;
+                }}
+                editable={this.state.isEditable}
+                style={TextStyle.body}
+                multiline
+                defaultValue={this.props.data.content}
+                onEndEditing={e => {
+                  const currText = e.nativeEvent.text;
+                  this.props.handleEdit(this.props.data.key, currText);
+                  this.setState({ isEditable: false });
+                }}
+              />
+            </View>
+          ) : (
+            <SafeAreaView style={styles.box}>
+              <Image
+                source={{ uri: `file://${this.props.data.content}` }}
+                style={styles.cardImage}
+                resizeMode="contain"
+              />
+            </SafeAreaView>
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -216,7 +193,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    paddingVertical: Platform.OS === "ios" ? 0 : verticalScale(10),
+    paddingVertical: Platform.OS === 'ios' ? 0 : verticalScale(10),
     height: 'auto',
   },
 });
