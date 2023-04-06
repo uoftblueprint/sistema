@@ -1,37 +1,56 @@
-import { useState } from 'react';
-import { StyleSheet, TextInput, View, Platform, FlatList } from 'react-native';
+import { useState, useRef } from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Platform,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
 import NoCardsFound from './NoCardsFound';
 import { TextStyle } from '../../Styles.config';
+import { scale } from 'react-native-size-matters';
 
 const Searchbar = ({
   onChangeText,
   onFocus,
+  value,
   activityList,
   focused,
   setPreviewInfo,
   showNoCards,
+  navigation,
+  section,
 }) => {
   const [highlightedID, setHighlightedID] = useState(null);
+  const refSearch = useRef();
 
   return (
     <View>
-      <View style={styles.container}>
-        <SearchLogo style={styles.IconStyle} width={25} height={25} />
-        <TextInput
-          style={TextStyle.h3}
-          placeholder="Search by title or keyword"
-          placeholderTextColor={'black'}
-          onChangeText={onChangeText}
-          onFocus={onFocus}
-        />
-      </View>
+      <TouchableOpacity onPress={() => refSearch.current.focus()}>
+        <View style={styles.searchContainer}>
+          <SearchLogo style={styles.IconStyle} width={25} height={25} />
+          <TextInput
+            style={[TextStyle.h3, styles.InputStyle]}
+            placeholder="Search by title or keyword"
+            placeholderTextColor={'black'}
+            onChangeText={onChangeText}
+            onFocus={onFocus}
+            ref={refSearch}
+          />
+        </View>
+      </TouchableOpacity>
       {focused ? (
-        <View style={{ paddingLeft: '4%', height: 200 }}>
+        <View style={styles.container}>
           {showNoCards.current ? (
             <>
-              <NoCardsFound />
+              <NoCardsFound
+                text={value}
+                navigation={navigation}
+                section={section}
+              />
             </>
           ) : (
             <>
@@ -64,6 +83,10 @@ const Searchbar = ({
 
 const styles = StyleSheet.create({
   container: {
+    height: 200,
+    width: '100%',
+  },
+  searchContainer: {
     marginTop: '1%',
     borderRadius: 10,
     borderWidth: 1,
@@ -72,11 +95,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#FFFAF5',
     alignItems: 'center',
+    justifyContent: 'flex-start',
     paddingHorizontal: '3%',
     ...Platform.select({
       ios: {
         zIndex: 999,
-        paddingVertical: '2%',
+        paddingVertical: '3%',
         shadowOffset: { width: 1, height: 1 },
         shadowColor: 'gray',
         shadowRadius: 3,
@@ -92,7 +116,10 @@ const styles = StyleSheet.create({
     }),
   },
   IconStyle: {
-    marginHorizontal: '1.5%',
+    marginRight: Platform.OS === 'ios' ? '2.5%' : '2%',
+  },
+  InputStyle: {
+    width: Platform.OS === 'ios' ? scale(260) : scale(270),
   },
 });
 

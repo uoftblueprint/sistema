@@ -50,6 +50,22 @@ const AddActivityCard = function ({ navigation, route }) {
   const [previewInfo, setPreviewInfo] = useState(null);
   const showNoCards = useRef(false);
 
+  // to detect when user stops typing. Source: https://stackoverflow.com/questions/42217121/how-to-start-search-only-when-user-stops-typing
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (!searchQuery) {
+        showNoCards.current = false;
+      } else {
+        if (matchSearch.length != 0) {
+          showNoCards.current = false;
+        } else {
+          showNoCards.current = true;
+        }
+      }
+    }, 100);
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
+
   // ************ SEARCH RELATED VARS END *********
 
   // ************ TAG RELATED VARS *************
@@ -121,6 +137,7 @@ const AddActivityCard = function ({ navigation, route }) {
     }).start();
     Keyboard.dismiss();
   };
+
   // **************** ANIMATION RELATED STUFF END *********
 
   // **************** PREVIEW RELATED VARS ***************
@@ -128,6 +145,7 @@ const AddActivityCard = function ({ navigation, route }) {
   //Subscribe to keyboard events on component mount
   const dispatch = useDispatch();
   const [keyboardVisible, setKeyBoardVisible] = useState(false);
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -145,7 +163,7 @@ const AddActivityCard = function ({ navigation, route }) {
       },
     );
 
-    //return a cleanup function to remove the event listeners on component unmount
+    // return a cleanup function to remove the event listeners on component unmount
     return () => {
       console.log('Keyboard is unmounted.');
       keyboardDidShowListener.remove();
@@ -160,13 +178,24 @@ const AddActivityCard = function ({ navigation, route }) {
       'Downloaded',
       previewInfo.name,
     );
-    
+
     dispatch(
       addToSection({
         type: 'activity',
         name: previewInfo?.name,
         section: sectionType,
         content: rnfsPath,
+      }),
+    );
+    navigation.goBack();
+  };
+
+  const addAsText = async () => {
+    dispatch(
+      addToSection({
+        type: 'text',
+        section: sectionType,
+        content: searchQuery,
       }),
     );
     navigation.goBack();
@@ -185,10 +214,9 @@ const AddActivityCard = function ({ navigation, route }) {
               <>
                 <View
                   style={[
+                    { alignItems: 'center' },
                     styles.flexRow,
-                    styles.alignCenter,
                     styles.marginT5,
-                    styles.marginB5,
                   ]}>
                   <TouchableOpacity
                     style={styles.backButton}
@@ -212,10 +240,13 @@ const AddActivityCard = function ({ navigation, route }) {
           <Searchbar
             onChangeText={onChangeSearch}
             onFocus={collapse}
+            value={searchQuery}
             activityList={matchSearch}
             focused={focused}
             setPreviewInfo={setPreviewInfo}
             showNoCards={showNoCards}
+            navigation={navigation}
+            section={sectionType}
           />
           {!keyboardVisible ? (
             <>
@@ -229,16 +260,29 @@ const AddActivityCard = function ({ navigation, route }) {
                         marginTop: focused ? '5%' : '12%',
                       },
                     ]}>
-                    <View style={(styles.flex1, styles.alignCenter)}>
+                    <View
+                      style={[
+                        { alignSelf: 'center', alignItems: 'flex-end' },
+                        styles.flex1,
+                      ]}>
                       <LeftArrow height={30} width={20} />
                     </View>
-                    <View style={[styles.flex4, styles.alignCenter]}>
+                    <View
+                      style={[
+                        { marginBottom: '2%' },
+                        styles.flex4,
+                        styles.alignCenter,
+                      ]}>
                       <Image
                         style={styles.previewImage}
                         source={{ uri: previewInfo?.url }}
                       />
                     </View>
-                    <View style={(styles.flex1, styles.alignCenter)}>
+                    <View
+                      style={[
+                        { alignSelf: 'center', alignItems: 'flex-start' },
+                        styles.flex1,
+                      ]}>
                       <RightArrow height={30} width={20} />
                     </View>
                   </View>
@@ -252,7 +296,12 @@ const AddActivityCard = function ({ navigation, route }) {
                       ]}>
                       {` ${previewInfo?.name} `}
                     </Text>
-                    <View style={[styles.alignCenter, styles.flexRow]}>
+                    <View
+                      style={[
+                        { marginVertical: '3%' },
+                        styles.alignCenter,
+                        styles.flexRow,
+                      ]}>
                       <SistemaButton onPress={addCard}>
                         <Text
                           style={[
@@ -263,7 +312,9 @@ const AddActivityCard = function ({ navigation, route }) {
                           Add Card
                         </Text>
                       </SistemaButton>
-                      <TouchableOpacity style={{ marginLeft: '5%' }}>
+                      <TouchableOpacity
+                        onPress={addAsText}
+                        style={{ marginLeft: '5%' }}>
                         <Text
                           numberOfLines={1}
                           style={[

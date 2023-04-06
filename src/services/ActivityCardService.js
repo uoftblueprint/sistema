@@ -33,6 +33,7 @@ const ActivityCardService = {
         "modifiedTime >= '" +
         weekAgo +
         "' and mimeType contains 'image/' and fullText contains 'ACTVT'";
+
       const params = {
         q: searchQuery,
         fields:
@@ -41,7 +42,7 @@ const ActivityCardService = {
 
       //Retreive all Drive files meeting the params
       const response = await axios.get(downloadUrl, { params }).catch(error => {
-        console.log('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
+        console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
       });
 
       //Access the Array of all files and set up path Array (to be returned)
@@ -63,7 +64,7 @@ const ActivityCardService = {
 
       //if new cards were found, save them into the empty directory path
       for (var i = 0; i < files_list.length; i++) {
-        this.downloadActivityCard(
+        await this.downloadActivityCard(
           files_list[i].id,
           'Featured',
           files_list[i].name,
@@ -82,7 +83,7 @@ const ActivityCardService = {
       return pathArr;
     } catch (e) {
       // There was an error, catch it and do something with it
-      console.log('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
+      console.error('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
       return [];
     }
   },
