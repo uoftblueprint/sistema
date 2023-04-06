@@ -1,5 +1,6 @@
-import { SafeAreaView, Text, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, ScrollView, View } from 'react-native';
 import Header from '../../Components/Header';
+import LinkButton from '../components/LinkButton';
 
 const TemplatePolicy = ({ navigation, route }) => {
   const { pageTitle, pageContent } = route.params;
@@ -15,6 +16,12 @@ const TemplatePolicy = ({ navigation, route }) => {
       <Text style={styles.title}>{pageTitle}</Text>
       <ScrollView>
         <Text style={styles.text}>{pageContent}</Text>
+        {(pageTitle == 'About Sistema') &&
+          <View style={styles.linkContainers}>
+            <LinkButton title={'www.sistema-toronto.ca'} url={'https://www.sistema-toronto.ca/'} />
+            <LinkButton title={'info@sistema-toronto.ca'} url={'mailto:info@sistema-toronto.ca'} />
+          </View>
+        }
       </ScrollView>
     </SafeAreaView>
   );
@@ -46,6 +53,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginBottom: 30,
   },
+  linkContainers: {
+    flexDirection: 'column',
+    marginHorizontal: 30,
+    marginBottom: 30,
+  }
 });
 
 export default TemplatePolicy;
