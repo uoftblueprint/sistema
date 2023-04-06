@@ -21,7 +21,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
   );
-  console.log(sectionType, sectionData); // TODO: delete once you're done, helpful to see for now
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
     dispatch(

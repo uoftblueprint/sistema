@@ -47,6 +47,7 @@ export const TextStyle = StyleSheet.create({
     color: '#000000',
     fontFamily: 'Mulish-Regular',
     fontSize: 16,
+    letterSpacing: 0.3,
   },
 });
 

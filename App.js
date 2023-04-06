@@ -16,6 +16,8 @@ import EditorNavigator from './src/editor/EditorNavigator';
 import LibraryNavigator from './src/library/LibraryNavigator';
 import SettingsNavigator from './src/settings/SettingsNavigator';
 import { STACK_SCREENS as SETTINGS_STACK } from './src/settings/constants';
+import { STACK_SCREENS as LIBRARY_STACK } from './src/library/constants';
+import { STACK_SCREENS as EDITOR_STACK } from './src/editor/constants';
 
 import { Provider } from 'react-redux';
 import configureStore from './src/services/configureStore';
@@ -39,9 +41,9 @@ const queryClient = new QueryClient({
 
 const STACK_SCREENS = {
   HOME: 'HomeNavigator',
-  EDITOR: 'LessonPlanEditorNavigator',
-  LIBRARY: 'LibraryNavigator',
-  SETTINGS: SETTINGS_STACK.NAVIGATOR,
+  EDITOR: EDITOR_STACK.NAVIGATOR,
+  LIBRARY: LIBRARY_STACK.NAVIGATOR,
+  SETTINGS: SETTINGS_STACK.NAVIGATOR
 };
 
 const tabIcon = (iconSVG, isFocused) => {
@@ -101,8 +103,8 @@ const MainNavigator = () => {
           component={EditorNavigator}
           options={{
             tabBarShowLabel: false,
-            tabBarIcon: ({ focused }) =>
-              tabIcon(LessonPlanEditorNavIcon, focused),
+            tabBarIcon: ({ focused }) => tabIcon(LessonPlanEditorNavIcon, focused),
+            tabBarStyle: { display: 'none' },
           }}
         />
         <Tab.Screen
