@@ -81,6 +81,7 @@ const AddActivityCard = function ({ navigation, route }) {
   ]);
 
   const TAGS = [
+    'Recently Added', // TODO: [SIS-142] "Recently added" activity card search filter
     'Warm Up',
     'No Equipment',
     'Beginner',
