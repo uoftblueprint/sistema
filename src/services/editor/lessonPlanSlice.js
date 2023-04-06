@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SectionName } from '../constants';
 import { grabNextKey } from '../helpers';
-import { LessonPlan } from '../models';
 
 export const lessonPlanSlice = createSlice({
   name: 'lessonPlan',

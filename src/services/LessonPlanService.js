@@ -10,7 +10,7 @@ import {
   cpyFile,
 } from './routes/Local';
 import { MAINDIRECTORY, SectionName } from './constants';
-import { LessonPlan, Module } from './models';
+import { Module } from './models';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
@@ -51,7 +51,7 @@ const LessonPlanService = {
    *
    * Be sure to think about how to save activity card .pngs later down the line
    * as well!
-   * @param {LessonPlan} lesson LessonPlan object to save to local storage
+   * @param {Object} lesson LessonPlan object to save to local storage
    */
   saveLessonPlan: async function (lesson) {
     try {
