@@ -20,7 +20,7 @@ import { getLessonPlanName, setLessonPlanName, getDirty, reset } from '../../ser
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
-const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
+const LessonPlanHeader = ({ navigation, lastEditedDate, showOptions }) => {
   const dispatch = useDispatch();
   const lessonPlanName = useSelector(state => getLessonPlanName(state.lessonPlan));
   const isDirty = useSelector(state => getDirty(state.lessonPlan));
@@ -70,18 +70,19 @@ const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
             <EditIcon
               height={headerIconSize - 5}
               width={headerIconSize - 5}
-              marginRight={scale(15)}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
-                isLessonPlanEditor: true,
-                lastEdited: lastEditedDate,
-              })
-            }>
-            <Menu height={headerIconSize} width={headerIconSize} />
-          </TouchableOpacity>
+          {showOptions &&
+            (<TouchableOpacity
+              onPress={() =>
+                navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
+                  isLessonPlanEditor: true,
+                  lastEdited: lastEditedDate,
+                })
+              }>
+              <Menu height={headerIconSize} width={headerIconSize} marginLeft={scale(15)} />
+            </TouchableOpacity>)
+          }
         </View>
       </SafeAreaView>
     </SafeAreaView>

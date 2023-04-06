@@ -30,11 +30,13 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
   // COMPONENT STATES
   const [isLoading, setLoading] = useState(false);
+  const [isNewLP, setNew] = useState(true);
 
   // Fetch and set lesson plan data
   useEffect(() => {
     const fetchLPData = async () => {
       setLoading(true);
+      setNew(true);
       let doneFetching = false;
 
       // Opening existing lesson plan in editor
@@ -60,6 +62,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             // Dispatch it to redux for the rest of the editor to render
             dispatch(loadInitialLessonPlan({...lpObj}));
             doneFetching = true;
+            setNew(false);
           })
           .catch(() => {
             // TODO: [SIS-123] Open error overlay if lesson plan could not be opened
@@ -90,6 +93,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       <LessonPlanHeader
         navigation={navigation}
         lastEditedDate={lastEditedDummy} // TODO: [SIS-136] Set last edited date in LessonPlanHeader
+        showOptions={!isNewLP} // Don't show buttons to access LP options menu if LP is brand new (nothing to delete, favourite, etc.)
       />
 
       <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
