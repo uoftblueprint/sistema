@@ -49,7 +49,7 @@ const ActivityCardService = {
       const files_list = driveFiles.files;
       var pathArr = [];
 
-      if(files_list.length == 0){
+      if (files_list.length == 0) {
         return [];
       }
 
@@ -60,7 +60,6 @@ const ActivityCardService = {
       } else {
         return;
       }
-
 
       //if new cards were found, save them into the empty directory path
       for (var i = 0; i < files_list.length; i++) {
@@ -123,7 +122,7 @@ const ActivityCardService = {
         .catch(error => {
           console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
         });
-      
+
       //make directory for the newly downloaded card, write the card into this path and return
 
       await makeDirectory(dirPath);
