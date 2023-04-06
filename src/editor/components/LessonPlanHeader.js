@@ -24,7 +24,13 @@ import {
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
-const LessonPlanHeader = ({ navigation, lastEditedDate, showOptions, handleBackButton, toggleUnsavedChanges }) => {
+const LessonPlanHeader = ({
+  navigation,
+  lastEditedDate,
+  showOptions,
+  handleBackButton,
+  toggleUnsavedChanges,
+}) => {
   const dispatch = useDispatch();
   const lessonPlanName = useSelector(state =>
     getLessonPlanName(state.lessonPlan),
@@ -55,7 +61,7 @@ const LessonPlanHeader = ({ navigation, lastEditedDate, showOptions, handleBackB
               style={[styles.input, TextStyle.h1]}
               value={lessonPlanName}
               onChangeText={newText => {
-                dispatch(setLessonPlanName({name: newText, isDirty: true}));
+                dispatch(setLessonPlanName({ name: newText, isDirty: true }));
               }}
               onBlur={() => {
                 setIsEditable(false);

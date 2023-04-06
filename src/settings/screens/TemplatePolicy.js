@@ -18,12 +18,18 @@ const TemplatePolicy = ({ navigation, route }) => {
       <Text style={[TextStyle.h1, styles.title]}>{pageTitle}</Text>
       <ScrollView>
         <Text style={[TextStyle.label, styles.text]}>{pageContent}</Text>
-        {(pageTitle == 'About Sistema') &&
+        {pageTitle == 'About Sistema' && (
           <View style={styles.linkContainers}>
-            <LinkButton title={'www.sistema-toronto.ca'} url={'https://www.sistema-toronto.ca/'} />
-            <LinkButton title={'info@sistema-toronto.ca'} url={'mailto:info@sistema-toronto.ca'} />
+            <LinkButton
+              title={'www.sistema-toronto.ca'}
+              url={'https://www.sistema-toronto.ca/'}
+            />
+            <LinkButton
+              title={'info@sistema-toronto.ca'}
+              url={'mailto:info@sistema-toronto.ca'}
+            />
           </View>
-        }
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -51,7 +57,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginHorizontal: scale(30),
     marginBottom: verticalScale(30),
-  }
+  },
 });
 
 export default TemplatePolicy;

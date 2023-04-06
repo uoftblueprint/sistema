@@ -110,9 +110,9 @@ const RecentCard = ({ navigation, cardPath }) => {
             </ScrollView>
             <SafeAreaView style={styles.titleBar}>
               {/* <SafeAreaView style={{ marginHorizontal: 20 }}> */}
-                <Text style={styles.title} numberOfLines={1}>
-                  {title}
-                </Text>
+              <Text style={styles.title} numberOfLines={1}>
+                {title}
+              </Text>
               {/* </SafeAreaView> */}
             </SafeAreaView>
           </SafeAreaView>

@@ -154,7 +154,6 @@ export const getInitialLessonPlanName = state => {
   return state.initialLessonPlanName;
 };
 
-
 export const getLessonPlan = state => {
   try {
     const removeModuleKey = module => {

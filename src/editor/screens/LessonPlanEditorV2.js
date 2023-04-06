@@ -48,7 +48,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     navigation.setParams({ lessonPlanName: '' });
     toggleUnsavedChanges(false);
     navigation.goBack();
-  }
+  };
 
   // Fetch and set lesson plan data
   useEffect(() => {
@@ -102,7 +102,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           month: 'short',
           day: 'numeric',
         });
-        dispatch(setLessonPlanName({name: todayDate, isDirty: false}));
+        dispatch(setLessonPlanName({ name: todayDate, isDirty: false }));
       }
       setLoading(false);
     };
@@ -163,14 +163,14 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           <Text style={[TextStyle.label, styles.overlayTitle]}>
             You have unsaved changes.
           </Text>
-          <Text style={TextStyle.body}>Are you sure you want to leave this page?</Text>
+          <Text style={TextStyle.body}>
+            Are you sure you want to leave this page?
+          </Text>
           <View style={styles.buttonContainer}>
             <SistemaButton onPress={toggleUnsavedChanges}>
               <Text style={TextStyle.body}> Stay on page </Text>
             </SistemaButton>
-            <SistemaButton
-              onPress={leaveEditor}
-              color={'blue'}>
+            <SistemaButton onPress={leaveEditor} color={'blue'}>
               <Text style={TextStyle.body}> Leave page </Text>
             </SistemaButton>
           </View>
