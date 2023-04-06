@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
   },
   buttonContainer2: {
     flexDirection: 'row',
-    paddingTop: '10%',
+    paddingTop: verticalScale(15),
     justifyContent: 'space-evenly',
   },
   deleteOverlayContainer: {
     flexDirection: 'row',
-    height: '20%',
+    height: 'auto',
   },
   textColumn: {
     flex: 5,
