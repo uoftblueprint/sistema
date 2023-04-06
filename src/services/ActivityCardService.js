@@ -22,7 +22,7 @@ const ActivityCardService = {
     try {
       //Retrieve the last week from browser, convert to ISO for use in query
       const weekAgo = new Date(
-        Date.now() - 15 * 24 * 60 * 60 * 1000,
+        Date.now() - 8 * 24 * 60 * 60 * 1000,
       ).toISOString();
 
       //Set up GET url, query, and path to Featured Card directory
@@ -33,6 +33,7 @@ const ActivityCardService = {
         "modifiedTime >= '" +
         weekAgo +
         "' and mimeType contains 'image/' and fullText contains 'ACTVT'";
+
       const params = {
         q: searchQuery,
         fields:
@@ -41,7 +42,7 @@ const ActivityCardService = {
 
       //Retreive all Drive files meeting the params
       const response = await axios.get(downloadUrl, { params }).catch(error => {
-        console.log('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
+        console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
       });
 
       //Access the Array of all files and set up path Array (to be returned)
@@ -63,16 +64,14 @@ const ActivityCardService = {
 
       //if new cards were found, save them into the empty directory path
       for (var i = 0; i < files_list.length; i++) {
-        await this.downloadActivityCard(files_list[i].id);
+        await this.downloadActivityCard(
+          files_list[i].id,
+          'Featured',
+          files_list[i].name,
+        );
 
         //once downloaded, check if the file exists. If it does, add the name to a .txt file, and add the path to pathArr
         if (await checkFileExists(path + files_list[i].id + '/')) {
-          const cardName = files_list[i].name;
-          await writeFile(
-            false,
-            path + files_list[i].id + '/' + 'cardName.txt',
-            cardName + '\n',
-          );
           pathArr.push(path + files_list[i].id + '/');
         } else {
           throw new Error(
@@ -84,7 +83,7 @@ const ActivityCardService = {
       return pathArr;
     } catch (e) {
       // There was an error, catch it and do something with it
-      console.log('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
+      console.error('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
       return [];
     }
   },
@@ -93,15 +92,26 @@ const ActivityCardService = {
    * Given the Google Drive ID of an activity card, download the card
    * directly into local storage.
    * @param {String} id ID of the activity card to retrieve
+   * @param {String} type Whether the activity card is a "Featured" or "Downloaded" card
+   * * @param {String} name Name of the activity card
    * @return {String} The requested ActivityCard object
    */
-  downloadActivityCard: async function (id) {
+  downloadActivityCard: async function (id, type, name) {
+    // Assert that the "type" parameter is valid
+    if (!(type === 'Featured' || type === 'Downloaded')) {
+      throw new Error('Invalid type for Activity Card');
+    }
+
     try {
       const params = {
         alt: 'media',
         responseType: 'arraybuffer',
       };
-      const dirPath = MAINDIRECTORY + '/FeaturedActivityCards/' + id;
+
+      const dirPath =
+        type === 'Featured'
+          ? MAINDIRECTORY + '/FeaturedActivityCards/' + id
+          : MAINDIRECTORY + '/DownloadedActivityCards/' + id;
       const filePath = `${dirPath}/cardImage.jpg`;
 
       //check if file exists
@@ -120,17 +130,19 @@ const ActivityCardService = {
       const response = await axios
         .get(downloadUrl, { params: params, responseType: 'arraybuffer' })
         .catch(error => {
-          console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
+          console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
         });
 
       //make directory for the newly downloaded card, write the card into this path and return
-
       await makeDirectory(dirPath);
+      // Write the .jpg file to the directory
       await writeFile(true, filePath, Buffer.from(response.data, 'base64'));
+      // Add the name of the activity card into the cardName.txt file
+      await writeFile(false, dirPath + '/cardName.txt', name + '\n');
 
       return filePath;
     } catch (e) {
-      console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
+      console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
     }
   },
 
