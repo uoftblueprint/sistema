@@ -3,14 +3,14 @@ import {
   SafeAreaView,
   Text,
   ScrollView,
-  Dimensions,
   Image,
+  Platform,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { readFile } from '../services/routes/Local.js';
 import Header from '../Components/Header';
 import { TextStyle } from '../Styles.config';
-import { verticalScale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const ExpandedCard = ({ route, navigation }) => {
   const { cardPath } = route.params;
@@ -27,7 +27,7 @@ const ExpandedCard = ({ route, navigation }) => {
         cardNames = cardNames.substring(0, cardNames.length - 5);
         setCardImagePath(cardPath + 'cardImage.jpg');
 
-        let titleSegment = cardNames.split('-');
+        let titleSegment = cardNames.split(' - ');
         setTheme(titleSegment[0]);
         setActivityType(titleSegment[1]);
         setTitle(titleSegment[2]);
@@ -47,17 +47,17 @@ const ExpandedCard = ({ route, navigation }) => {
         showBackButton={true}
       />
 
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={[styles.title, TextStyle.h2]}> {title} </Text>
+          <Text style={[styles.title, TextStyle.h2]}>{title}</Text>
           <Text style={[TextStyle.h3, styles.subtitle]}>
             Theme:
-            <Text style={TextStyle.h3}> {theme} </Text>
+            <Text style={TextStyle.h3}> {theme}</Text>
           </Text>
           <Text style={[TextStyle.h3, styles.subtitle]}>
             Activity Type:
-            <Text style={TextStyle.h3}> {activityType} </Text>
+            <Text style={TextStyle.h3}> {activityType}</Text>
           </Text>
           <SafeAreaView style={styles.box}>
             {cardImagePath && (
@@ -87,9 +87,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    width: '65%',
+    width: '75%',
     marginTop: 30,
-    height: verticalScale(400),
+    height: 'auto',
+  },
+  scrollContainer: {
+    paddingBottom: verticalScale(30),
   },
   title: {
     width: '75%',
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     width: '100%',
-    height: '100%',
+    height: scale(463),
     alignItems: 'center',
     justifyContent: 'center',
   },
