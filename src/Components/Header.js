@@ -16,12 +16,8 @@ import Overlay from './Overlay';
 import { STACK_SCREENS as SETTINGS_SCREENS } from '../settings/constants';
 import { TextStyle } from '../Styles.config';
 import { verticalScale } from 'react-native-size-matters';
-
-const activityCardNamingExplanation =
-  'Activity Card names have three parts:\n\nTheme - Activity Type - Activity Title\n\n' +
-  'The theme will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm"\n\n' +
-  'There are four Activity Types, each describing a different way to approach learning about the social or musical theme: Knowledge, Action, Perception, and Creation.\n\n' +
-  'The Activity Title identifies the specific activity or activities on the card, for example, "Roses and Thorns", or "Naming Intervals". Sometimes the names are jokes or puns, sometimes just a shorthand for what the activity will involve.';
+import Circle from '../../assets/circle.svg';
+import { AppColors } from '../Styles.config';
 
 const Header = ({ navigation, isHome, showBackButton }) => {
   const [isVisible, setVisible] = useState(false);
@@ -81,7 +77,45 @@ const Header = ({ navigation, isHome, showBackButton }) => {
         </Text>
         <ScrollView style={styles.overlayScroll}>
           <Text style={[TextStyle.body, styles.textBody]}>
-            {activityCardNamingExplanation}
+            {'Activity Card names have three parts:\n\n'}
+            <Text style={[TextStyle.body, styles.textBody, styles.bold]}>
+              {'Theme - Activity Type - Activity Title\n\n'}
+            </Text>
+            {'The '}
+            <Text style={[TextStyle.body, styles.textBody, styles.bold]}>
+              {'Theme '}
+            </Text>
+            {
+              'will be the Social or Theory and Musicianship theme the activity was developed for, for example "Identity", "Problem Solving", or Rhythm".\n\nThere are four'
+            }
+            <Text style={[TextStyle.body, styles.textBody, styles.bold]}>
+              {' Activity Types'}
+            </Text>
+            {
+              ', each describing a different way to approach learning about the social or musical theme: Knowledge '
+            }
+            <Circle
+              style={styles.inlineCircle}
+              width={13}
+              height={13}
+              fill={AppColors.primary}
+            />
+            {' , Action '}
+            <Circle width={13} height={13} fill={AppColors.quaternary} />
+            {' , Perception '}
+            <Circle width={13} height={13} fill={AppColors.secondary} />
+            {' , and Creation '}
+            <Circle width={13} height={13} fill={AppColors.senary} />
+            {' .\n\nThe'}
+            <Text style={[TextStyle.body, styles.textBody, styles.bold]}>
+              {' Activity Title '}
+            </Text>
+            {
+              'identifies the specific activity or activities on the card, for example, "Roses and Thorns", or "Naming Intervals". '
+            }
+            {
+              'Sometimes the names are jokes or puns, sometimes just a shorthand for what the activity will involve.'
+            }
           </Text>
         </ScrollView>
 
@@ -124,6 +158,7 @@ const styles = StyleSheet.create({
   },
   textBody: {
     marginBottom: verticalScale(10),
+    lineHeight: 24,
   },
   overlayStyle: {
     paddingHorizontal: '5%',
@@ -132,6 +167,9 @@ const styles = StyleSheet.create({
   overlayScroll: {
     paddingRight: '5%',
     marginBottom: '5%',
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });
 

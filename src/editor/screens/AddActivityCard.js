@@ -10,11 +10,9 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Image,
-  ScrollView,
 } from 'react-native';
 
 //Component dependencies
-import TagFilter from '../components/TagFilter';
 import SistemaButton from '../../Components/SistemaButton';
 import Searchbar from '../components/Searchbar';
 import TagCarousel from '../components/TagCarousel';
@@ -24,68 +22,48 @@ import BackArrow from '../../../assets/backArrow.svg';
 import LeftArrow from '../../../assets/leftArrow.svg';
 import RightArrow from '../../../assets/rightArrow.svg';
 
-import axios from 'axios';
-import { DRIVE_API_URLS } from '../../services/config.json';
-
 import ActivityCardService from '../../services/ActivityCardService';
+import LessonPlanService from '../../services/LessonPlanService';
+
+import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
-import store from '../../services/configureStore';
+
+// react query
+import { useQuery } from '@tanstack/react-query';
 
 const AddActivityCard = function ({ navigation, route }) {
+  const { sectionType } = route.params;
+
   // *************** SEARCH RELATED VARS *******************
 
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = query => {
     setSearchQuery(query);
   };
-  const [activityList, setActivityList] = useState([]);
-  //previewInfo has id, name, and url.
+  const { data: activityCards } = useQuery({
+    queryKey: ['activityCards'],
+    queryFn: ActivityCardService.getAllActivityCards,
+  });
+  const [matchSearch, setMatchSearch] = useState([]);
+
+  // previewInfo has id, name, and url.
   const [previewInfo, setPreviewInfo] = useState(null);
   const showNoCards = useRef(false);
 
   // to detect when user stops typing. Source: https://stackoverflow.com/questions/42217121/how-to-start-search-only-when-user-stops-typing
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      // Send Axios request here
       if (!searchQuery) {
         showNoCards.current = false;
-        setActivityList([]);
-        setPreviewInfo(null);
       } else {
-        const nameSearchTerm = `and name contains '${searchQuery}'`;
-        const tagSearchTerm = TAGS.map((tag, index) => {
-          if (activeTags[index]) {
-            return ` and fullText contains '${tag}'`;
-          }
-        }).join('');
-        const ACTVTTerm = " and fullText contains 'ACTVT'";
-        axios
-          .get(DRIVE_API_URLS.SEARCH_FILES, {
-            params: {
-              trashed: 'false',
-              supportsAllDrives: 'true',
-              includeItemsFromAllDrives: 'true',
-              q:
-                "name contains '-' and mimeType='image/jpeg' " +
-                nameSearchTerm +
-                tagSearchTerm,
-            },
-          })
-          .then(function (response) {
-            const data = response.data.files;
-            console.log(data);
-            if (data.length != 0) {
-              showNoCards.current = false;
-            } else {
-              showNoCards.current = true;
-            }
-            setActivityList(data);
-          });
+        if (matchSearch.length != 0) {
+          showNoCards.current = false;
+        } else {
+          showNoCards.current = true;
+        }
       }
-    }, 300);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, 100);
     return () => clearTimeout(delayDebounceFn);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   // ************ SEARCH RELATED VARS END *********
@@ -112,6 +90,23 @@ const AddActivityCard = function ({ navigation, route }) {
     'Group Activity',
     'Scale',
   ];
+
+  useEffect(() => {
+    if (activityCards !== undefined) {
+      setMatchSearch(
+        activityCards?.filter(
+          card =>
+            card.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            (TAGS.filter(
+              (s, i) =>
+                activeTags[i] &&
+                card.description.toLowerCase().includes(s.toLowerCase()),
+            ).length > 0 ||
+              !activeTags.includes(true)),
+        ),
+      );
+    }
+  }, [searchQuery, activityCards, activeTags]);
 
   // ************* TAG RELATED VARS END ************
 
@@ -142,12 +137,15 @@ const AddActivityCard = function ({ navigation, route }) {
     }).start();
     Keyboard.dismiss();
   };
+
   // **************** ANIMATION RELATED STUFF END *********
 
   // **************** PREVIEW RELATED VARS ***************
 
   //Subscribe to keyboard events on component mount
+  const dispatch = useDispatch();
   const [keyboardVisible, setKeyBoardVisible] = useState(false);
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -165,7 +163,7 @@ const AddActivityCard = function ({ navigation, route }) {
       },
     );
 
-    //return a cleanup function to remove the event listeners on component unmount
+    // return a cleanup function to remove the event listeners on component unmount
     return () => {
       console.log('Keyboard is unmounted.');
       keyboardDidShowListener.remove();
@@ -177,15 +175,27 @@ const AddActivityCard = function ({ navigation, route }) {
   const addCard = async () => {
     const rnfsPath = await ActivityCardService.downloadActivityCard(
       previewInfo.id,
+      'Downloaded',
+      previewInfo.name,
     );
-    console.log(rnfsPath);
 
-    store.dispatch(
+    dispatch(
       addToSection({
         type: 'activity',
         name: previewInfo?.name,
-        section: route.params.sectionType,
+        section: sectionType,
         content: rnfsPath,
+      }),
+    );
+    navigation.goBack();
+  };
+
+  const addAsText = async () => {
+    dispatch(
+      addToSection({
+        type: 'text',
+        section: sectionType,
+        content: searchQuery,
       }),
     );
     navigation.goBack();
@@ -204,10 +214,9 @@ const AddActivityCard = function ({ navigation, route }) {
               <>
                 <View
                   style={[
+                    { alignItems: 'center' },
                     styles.flexRow,
-                    styles.alignCenter,
                     styles.marginT5,
-                    styles.marginB5,
                   ]}>
                   <TouchableOpacity
                     style={styles.backButton}
@@ -215,8 +224,7 @@ const AddActivityCard = function ({ navigation, route }) {
                     <BackArrow height={25} width={25} />
                   </TouchableOpacity>
                   <Text style={styles.header}>
-                    {' '}
-                    {route.params.header} Activity Card{' '}
+                    {` ${sectionType} Activity Card `}
                   </Text>
                 </View>
               </>
@@ -230,14 +238,15 @@ const AddActivityCard = function ({ navigation, route }) {
             setActiveTags={setActiveTags}
           />
           <Searchbar
-            placeholder="Search by title or keyword"
             onChangeText={onChangeSearch}
             onFocus={collapse}
             value={searchQuery}
-            activityList={activityList}
+            activityList={matchSearch}
             focused={focused}
             setPreviewInfo={setPreviewInfo}
             showNoCards={showNoCards}
+            navigation={navigation}
+            section={sectionType}
           />
           {!keyboardVisible ? (
             <>
@@ -251,16 +260,29 @@ const AddActivityCard = function ({ navigation, route }) {
                         marginTop: focused ? '5%' : '12%',
                       },
                     ]}>
-                    <View style={(styles.flex1, styles.alignCenter)}>
+                    <View
+                      style={[
+                        { alignSelf: 'center', alignItems: 'flex-end' },
+                        styles.flex1,
+                      ]}>
                       <LeftArrow height={30} width={20} />
                     </View>
-                    <View style={[styles.flex4, styles.alignCenter]}>
+                    <View
+                      style={[
+                        { marginBottom: '2%' },
+                        styles.flex4,
+                        styles.alignCenter,
+                      ]}>
                       <Image
                         style={styles.previewImage}
                         source={{ uri: previewInfo?.url }}
                       />
                     </View>
-                    <View style={(styles.flex1, styles.alignCenter)}>
+                    <View
+                      style={[
+                        { alignSelf: 'center', alignItems: 'flex-start' },
+                        styles.flex1,
+                      ]}>
                       <RightArrow height={30} width={20} />
                     </View>
                   </View>
@@ -272,10 +294,14 @@ const AddActivityCard = function ({ navigation, route }) {
                         styles.marginV2,
                         styles.bodyFontSize,
                       ]}>
-                      {' '}
-                      {previewInfo?.name}{' '}
+                      {` ${previewInfo?.name} `}
                     </Text>
-                    <View style={[styles.alignCenter, styles.flexRow]}>
+                    <View
+                      style={[
+                        { marginVertical: '3%' },
+                        styles.alignCenter,
+                        styles.flexRow,
+                      ]}>
                       <SistemaButton onPress={addCard}>
                         <Text
                           style={[
@@ -286,7 +312,9 @@ const AddActivityCard = function ({ navigation, route }) {
                           Add Card
                         </Text>
                       </SistemaButton>
-                      <TouchableOpacity style={{ marginLeft: '5%' }}>
+                      <TouchableOpacity
+                        onPress={addAsText}
+                        style={{ marginLeft: '5%' }}>
                         <Text
                           numberOfLines={1}
                           style={[

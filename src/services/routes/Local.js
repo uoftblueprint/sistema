@@ -37,7 +37,7 @@ export async function readDDirectory(dirpath) {
  * @return {String} File you want to read
  */
 export async function readFile(filepath) {
-  return RNFS.readFile(filepath)
+  return await RNFS.readFile(filepath)
     .then(result => {
       console.log('GOT FILE: ', filepath);
       return result;
@@ -48,21 +48,17 @@ export async function readFile(filepath) {
 }
 
 /**
- * Write to the local storage with some file in utf8 encoding.
+ * Write to the local storage with some file in encoding.
+ * @param {Boolean} isImage If file to write is an image, encoding type changes.
  * @param {String} filepath Full file path to delete
  * @param {String} content Content to write to given file path
  */
 export async function writeFile(isImage, filepath, content) {
-  const options = {
-    encoding: '',
-  };
-  if (isImage) {
-    options.encoding = 'base64';
-    content = content.toString('base64');
-  } else {
-    options.encoding = 'utf8';
-  }
-  return RNFS.writeFile(filepath, content, options.encoding)
+  //set up the encoding based on wether or not content is an image
+  let encoding = isImage ? 'base64' : 'utf8';
+  const data = isImage ? content.toString('base64') : content;
+
+  return RNFS.writeFile(filepath, data, encoding)
     .then(success => {
       console.log(`FILE WRITTEN!: ${filepath}`);
     })
@@ -137,5 +133,22 @@ export async function makeDirectory(dirPath) {
     })
     .catch(err => {
       console.error(`RNFS makeDirectory: ${err.message}`);
+    });
+}
+
+/**
+ * Copies the file located at filepath to destPath.
+
+   Note: On Android copyFile will overwrite destPath if it already exists. On iOS an error will be thrown if the file already exists.
+ * @param {String} filepath the original path to be copied from
+ * @param {String} destPath where the file is going
+ */
+export async function cpyFile(filepath, destPath) {
+  return RNFS.copyFile(filepath, destPath)
+    .then(() => {
+      console.log(`FILE COPIED! ${filepath} => ${destPath}`);
+    })
+    .catch(err => {
+      console.error(`RNFS cpyFile: ${err.message}`);
     });
 }

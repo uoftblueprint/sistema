@@ -12,12 +12,44 @@ import { useSelector } from 'react-redux';
 import { createPDF } from '../services/pdf';
 import { deleteFile } from '../services/routes/Local';
 import Share from 'react-native-share';
+import LessonPlanService from '../services/LessonPlanService';
 
-const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
+const OptionsMenu = ({
+  isLessonPlanEditor,
+  lastEdited,
+  lessonPlanName,
+  navigation,
+}) => {
   const [isFavorited, setFavorited] = useState(false);
   const [isBannerVisible, setBannerVisible] = useState(false);
   const lessonPlan = useSelector(state => state.lessonPlan);
 
+  // FUNCTIONS FOR BUTTONS
+  const copyLessonPlan = () => {
+    LessonPlanService.copyLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const deleteLessonPlan = async () => {
+    await LessonPlanService.deleteLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const exportLessonPlan = async () => {
+    let pdf = await createPDF(lessonPlan);
+    try {
+      await Share.open({
+        url: 'file://' + pdf.filePath,
+        type: 'application/pdf',
+      });
+      console.log('File shared');
+    } catch {
+      console.log('File not shared');
+    }
+    await deleteFile(pdf.filePath);
+  };
+
+  // ALL OPTION BUTTONS
   const editorButtons = [
     {
       name: 'Export Lesson Plan',
@@ -26,10 +58,6 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
     {
       name: 'Favorites',
       icon: <HeartIcon />,
-    },
-    {
-      name: 'Delete Lesson Plan',
-      icon: <TrashIcon />,
     },
   ];
 
@@ -47,20 +75,6 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
       icon: <TrashIcon />,
     },
   ];
-
-  const exportLessonPlan = async () => {
-    let pdf = await createPDF(lessonPlan);
-    try {
-      await Share.open({
-        url: 'file://' + pdf.filePath,
-        type: 'application/pdf',
-      });
-      console.log('File shared');
-    } catch {
-      console.log('File not shared');
-    }
-    await deleteFile(pdf.filePath);
-  };
 
   const buttons = isLessonPlanEditor ? editorButtons : libraryButtons;
 
@@ -84,12 +98,23 @@ const OptionsMenu = ({ isLessonPlanEditor, lastEdited, navigation }) => {
               />
             );
           } else {
+            let handlePress;
+            switch (button.name) {
+              case 'Copy Lesson Plan':
+                handlePress = copyLessonPlan;
+                break;
+              case 'Delete Lesson Plan':
+                handlePress = deleteLessonPlan;
+                break;
+              default:
+                handlePress = exportLessonPlan;
+            }
             return (
               <OptionsMenuButton
                 key={i}
                 text={button.name}
                 icon={button.icon}
-                onPress={onPress}
+                onPress={handlePress}
               />
             );
           }

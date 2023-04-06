@@ -10,7 +10,6 @@ import {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
-import { ModuleType } from '../../services/constants';
 import { SafeAreaView } from 'react-native';
 import ContentCard from './ContentCard';
 import AddLessonContentButton from './AddLessonContentButton';
@@ -22,7 +21,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
   );
-  console.log(sectionType, sectionData); // TODO: delete once you're done, helpful to see for now
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
     dispatch(
@@ -58,7 +56,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
 
   const addActivityCard = () => {
     navigation.navigate(STACK_SCREENS.ADD_ACTIVITY_CARD, {
-      header: sectionType,
       sectionType: sectionType,
     });
   };
@@ -70,6 +67,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
       module => module.key != keyToDelete,
     );
     updateRedux(newSectionData);
+    //
   };
 
   const editModule = (keyToEdit, newContent) => {
@@ -95,6 +93,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           drag={drag}
           dragIsActive={isActive}
           data={item}
+          navigation={navigation}
         />
       </ScaleDecorator>
     );

@@ -21,37 +21,15 @@ export class AccessToken {
   }
 }
 
-export class LessonPlan {
-  name;
-  warmUp;
-  mainLesson;
-  notes;
-  /**
-   * @param {string} name Name of the lesson plan
-   * @param {Module[]} warmUp warmUp module of the lesson
-   * @param {Module[]} mainLesson mainLesson module of the lesson
-   * @param {Module[]} coolDown coolDown module of the lesson
-   * @param {string} notes notes, containing strings
-   */
-  constructor(name, warmUp, mainLesson, coolDown, notes) {
-    this.name = name;
-    this.warmUp = warmUp;
-    this.mainLesson = mainLesson;
-    this.coolDown = coolDown;
-    this.notes = notes;
-  }
-}
-
+/**
+ * @property {string} type type of module content: "text" or "activity card"
+ * @property {string} content text: "ALL_CONTENT", activity card: "PATH_TO_IMAGE_IN_DEFAULT_DIR"
+ * @property {string} name text: empty string, activity card: name of activity card
+ */
 export class Module {
-  type;
-  content;
-  /**
-   * @param {"text" | "activity card"} type type of module content: "text" or "activity card"
-   * @param {string} content text: "ALL_CONTENT", activity card: "PATH_TO_IMAGE_IN_DEFAULT_DIR"
-   */
-
-  constructor(type, content) {
+  constructor(type, content, name = '') {
     this.type = type;
     this.content = content;
+    this.name = name;
   }
 }
