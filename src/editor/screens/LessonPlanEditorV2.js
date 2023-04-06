@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   saveButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: verticalScale(20),
+    bottom: verticalScale(30),
   },
   overlayContainer: {
     flexDirection: 'row',
