@@ -161,7 +161,7 @@ export default class DraggableModuleWithMenu extends React.Component {
 
 const styles = StyleSheet.create({
   module: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: '#FDFBF7',
     height: 'auto',
     width: '100%',
     borderWidth: 0.77,
@@ -209,9 +209,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   box: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: '#FDFBF7',
     borderWidth: 1,
-    borderColor: '#FFFAF5',
+    borderColor: '#FDFBF7',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',

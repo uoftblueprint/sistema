@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
       },
     }),
     flexDirection: 'column',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: '#FDFBF7',
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,

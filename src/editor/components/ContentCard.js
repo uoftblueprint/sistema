@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: '#FDFBF7',
     height: 'auto',
     borderWidth: 0.77,
     borderColor: '#000',
