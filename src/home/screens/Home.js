@@ -20,7 +20,7 @@ import {
   checkFileExists,
 } from '../../services/routes/Local.js';
 import { TextStyle } from '../../Styles.config';
-import { scale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const Home = ({ navigation }) => {
   const [date, setDate] = useState('');
@@ -77,7 +77,7 @@ const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.background}>
       <Header isHome={true} navigation={navigation} showBackButton={false} />
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.headContainer}>
         <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
         <SafeAreaView style={styles.subContainer}>
           <Text style={[styles.subtitle, TextStyle.h3]}>
@@ -89,7 +89,7 @@ const Home = ({ navigation }) => {
         </SafeAreaView>
       </SafeAreaView>
 
-      <SafeAreaView style={{ height: '100%' }}>
+      <SafeAreaView style={styles.flatListContainer}>
         <FlatList
           data={pathArr}
           renderItem={({ item }) => (
@@ -103,6 +103,7 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
           )}
           keyExtractor={(item, index) => index.toString()}
+          style={styles.flatListStyle}
         />
       </SafeAreaView>
     </SafeAreaView>
@@ -114,8 +115,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFAF5',
     height: '100%',
   },
-  scrollContainer: {
-    height: '100%',
+  headContainer: {
+    paddingHorizontal: scale(30),
+    marginBottom: verticalScale(5),
+  },
+  flatListContainer: {
+    flex: 1,
+  },
+  flatListStyle: {
     paddingHorizontal: scale(30),
   },
   container: {
