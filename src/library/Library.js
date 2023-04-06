@@ -37,30 +37,25 @@ const Library = ({ navigation, route }) => {
         let favL = await LessonPlanService.getAllLessonPlanNames(1);
         let defL = await LessonPlanService.getAllLessonPlanNames(2);
         let lessonPlanInfo = [];
-        for (let lp = 0; lp < favL.length; lp++) {
-          lessonPlanInfo.push({
-            name: favL[lp].name,
-            isFavorited: true,
-            lastEdited: favL[lp].mtime.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
-            }),
-            lastEditedDate: favL[lp].mtime,
-          });
+
+        const setLPInfo = (lpList, isFaved) => {
+          for (let lp = 0; lp < lpList.length; lp++) {
+            lessonPlanInfo.push({
+              name: lpList[lp].name,
+              isFavorited: isFaved,
+              lastEdited: lpList[lp].mtime.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              }),
+              lastEditedDate: lpList[lp].mtime,
+            });
+          }
         }
-        for (let lp = 0; lp < defL.length; lp++) {
-          lessonPlanInfo.push({
-            name: defL[lp].name,
-            isFavorited: false,
-            lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
-            }),
-            lastEditedDate: defL[lp].mtime,
-          });
-        }
+
+        setLPInfo(favL, true);
+        setLPInfo(defL, false);
+
         setList(lessonPlanInfo);
       }
 
@@ -107,7 +102,7 @@ const Library = ({ navigation, route }) => {
           showBackButton={false}
         />
         <SafeAreaView style={styles.inlineTitle}>
-          <Text style={TextStyle.h1}>Lesson Plans</Text>
+          <Text style={TextStyle.h1}>Lesson Plans</Text>     
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(STACK_SCREENS.LESSON_PLAN_SORTING_MENU)

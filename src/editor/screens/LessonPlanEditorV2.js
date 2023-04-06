@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LessonPlanHeader from '../components/LessonPlanHeader.js';
 import {
   StyleSheet,
@@ -7,31 +7,41 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName } from '../../services/constants.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LessonPlanService from '../../services/LessonPlanService.js';
-import { loadInitialLessonPlan, setLessonPlanName } from '../../services/editor/lessonPlanSlice.js';
+import { loadInitialLessonPlan, setLessonPlanName, getLessonPlanName } from '../../services/editor/lessonPlanSlice.js';
 
-// dummy last edited date
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
-  const dispatch = useDispatch();
+  // NAVIGATION STATES
+  const isFocused = useIsFocused();
 
-  // Equivalent to componentDidMount
+  // REDUX STATES
+  const dispatch = useDispatch();
+  const nameLoaded = useSelector(state => getLessonPlanName(state.lessonPlan));
+
+  // COMPONENT STATES
+  const [isLoading, setLoading] = useState(false);
+
+  // Fetch and set lesson plan data
   useEffect(() => {
     const fetchLPData = async () => {
-      const { lessonPlanName } = route.params;
-      let doneFetching;
-      
+      setLoading(true);
+      let doneFetching = false;
+
       // Opening existing lesson plan in editor
-      if (lessonPlanName) { 
+      if (route.params && route.params.lessonPlanName) { 
+        const lessonPlanName = route.params.lessonPlanName;
         // Get the lesson plan from RNFS backend
+        console.log(`LessonPlanEditorV2: Fetching data for ${lessonPlanName}...`);
         await LessonPlanService.getLessonPlan(lessonPlanName)
           .then((lpObj) => {
             // Set a unique key for each module per section
@@ -43,9 +53,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
                 key: `module-${i}`
               }
             };
-            lpObj.warmUp = lpObj.warmUp.map(setKeyForModule);
-            lpObj.mainLesson = lpObj.mainLesson.map(setKeyForModule);
-            lpObj.coolDown = lpObj.coolDown.map(setKeyForModule);
+            lpObj[SectionName.warmUp] = lpObj[SectionName.warmUp].map(setKeyForModule);
+            lpObj[SectionName.mainLesson] = lpObj[SectionName.mainLesson].map(setKeyForModule);
+            lpObj[SectionName.coolDown] = lpObj[SectionName.coolDown].map(setKeyForModule);
 
             // Dispatch it to redux for the rest of the editor to render
             dispatch(loadInitialLessonPlan({...lpObj}));
@@ -59,6 +69,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
       // Opening new lesson plan or if fetching failed
       if (!doneFetching) {
+        console.log("LessonPlanEditorV2: Opening blank lesson plan!");
         // Default lesson plan name is today's date
         const todayDate = new Date().toLocaleDateString('en-us', {
           year: 'numeric',
@@ -67,15 +78,18 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         });
         dispatch(setLessonPlanName(todayDate));
       }
+      setLoading(false);
     };
-    fetchLPData();
-  }, []);
+    
+    // If lesson plan name is currently blank and the screen is focused, populate the editor with smthg
+    if (!nameLoaded && isFocused) fetchLPData();
+  }, [isFocused])
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
         navigation={navigation}
-        lastEditedDate={lastEditedDummy}
+        lastEditedDate={lastEditedDummy} // TODO: [SIS-136] Set last edited date in LessonPlanHeader
       />
 
       <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
@@ -103,7 +117,11 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       </NestableScrollContainer>
 
       <View style={styles.saveButton}>
-        <SaveButton />
+        <SaveButton 
+          navigation={navigation}
+          isLessonPlanLoading={isLoading}
+          setLoading={setLoading}
+        />
       </View>
     </SafeAreaView>
   );

@@ -8,14 +8,14 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
 import EditIcon from '../../../assets/edit.svg';
 import Menu from '../../../assets/menu.svg';
 import BackArrow from '../../../assets/backArrow.svg';
 import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
-import { getLessonPlanName, setLessonPlanName } from '../../services/editor/lessonPlanSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { getLessonPlanName, setLessonPlanName, getDirty, reset } from '../../services/editor/lessonPlanSlice';
 
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
@@ -23,12 +23,22 @@ const horizontalMargin = 30;
 const LessonPlanHeader = ({ navigation, lastEditedDate }) => {
   const dispatch = useDispatch();
   const lessonPlanName = useSelector(state => getLessonPlanName(state.lessonPlan));
+  const isDirty = useSelector(state => getDirty(state.lessonPlan));
 
   const [isEditable, setIsEditable] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={{ marginLeft: scale(horizontalMargin) }}>
+      <TouchableOpacity 
+        style={{ marginLeft: scale(horizontalMargin) }}
+        onPress={() => {
+          // TODO: throw up popup if isDirty
+          // For now just clear redux and route params
+          dispatch(reset());
+          navigation.setParams({lessonPlanName: ''});
+          navigation.goBack();
+        }}
+      >
         <BackArrow height={headerIconSize} width={headerIconSize} />
       </TouchableOpacity>
 

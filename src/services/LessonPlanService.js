@@ -23,8 +23,8 @@ const LessonPlanService = {
    */
   deleteLessonPlan: async function (name) {
     try {
-      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-      let defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
       let path;
 
       // check if file exists, assigning appropriate path if so
@@ -57,15 +57,31 @@ const LessonPlanService = {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
+      const name = lesson.lessonPlanName;
+      
+      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+      let path;
+
+      // Check if file exists, assigning appropriate path if so
+      if (await checkFileExists(favouritedPath)) {
+        path = favouritedPath;
+      } else if (await checkFileExists(defaultPath)) {
+        path = defaultPath;
+      } else {
+        path = defaultPath; // By default, new lesson plans should not be favourited
+      }
+
       // Then, write to local storage with an RNFS call via Local.js
-      // By default, new lesson plans should not be favourited
-      var path = MAINDIRECTORY + '/Default/' + lesson.name + '/';
-      makeDirectory(path)
-        .then(() => {
-          return writeFile(path + lesson.name + '.json', lessonJSON);
+      await makeDirectory(path)
+        .then(async () => {
+          await checkFileExists(path);
+        })
+        .then(async () => {
+          await writeFile(false, path + name + '.json', lessonJSON);
         })
         .then(r => {
-          console.log('Successfully saved lesson plan: ' + lesson.name);
+          console.log('Successfully saved lesson plan: ' + name);
         });
     } catch (e) {
       // There was an error, catch it and do something with it
@@ -78,15 +94,14 @@ const LessonPlanService = {
    * into its directory, checking for the .json file, and later down the line,
    * also its associated .png activity cards.
    * @param {String} name Name of the lesson plan to retrieve
-   * @return {LessonPlan} The requested LessonPlan object
+   * @return {Object} the requested lesson plan
    */
   getLessonPlan: async function (name) {
     try {
       let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/${name}.json`;
       let defaultPath = `${MAINDIRECTORY}/Default/${name}/${name}.json`;
+      
       let path;
-      let lessonPlanObj;
-
       // check if file exists, assigning appropriate path if so
       if (await checkFileExists(favouritedPath)) {
         path = favouritedPath;
@@ -112,13 +127,13 @@ const LessonPlanService = {
       const coolDownList = lpObj[SectionName.coolDown].map(createModules);
 
       // create LessonPlan object from JSON
-      lessonPlanObj = new LessonPlan(
-        lpObj.name,
-        warmUpList,
-        mainLessonList,
-        coolDownList,
-        lpObj.notes,
-      );
+      let lessonPlanObj = {
+        lessonPlanName: lpObj.lessonPlanName,
+        [SectionName.warmUp]: warmUpList,
+        [SectionName.mainLesson]: mainLessonList,
+        [SectionName.coolDown]: coolDownList,
+        [SectionName.notes]: lpObj[SectionName.notes],
+      };
 
       return lessonPlanObj;
     } catch (e) {
@@ -239,16 +254,21 @@ const LessonPlanService = {
 
   initializeEmptyDirectories: async function () {
     try {
-      if (
-        !(
-          (await checkFileExists(MAINDIRECTORY + '/Default')) &&
-          !(await checkFileExists(MAINDIRECTORY + '/Favourited'))
-        )
-      ) {
-        await makeDirectory(MAINDIRECTORY + '/Default/');
-        await makeDirectory(MAINDIRECTORY + '/Favourited/');
-      } else {
-        console.log('Directories already exist');
+      let defaultExists = await checkFileExists(MAINDIRECTORY + '/Default');
+      let favouritedExists = await checkFileExists(MAINDIRECTORY + '/Default');
+
+      if (defaultExists && favouritedExists) {
+        console.log('initializeEmptyDirectories: Directories already exist.');
+        return;
+      }
+
+      if (!defaultExists) {
+        makeDirectory(MAINDIRECTORY + '/Default/');
+        console.log('initializeEmptyDirectories: Created Default directory.');
+      } 
+      if (!favouritedExists) {
+        makeDirectory(MAINDIRECTORY + '/Favourited/');
+        console.log('initializeEmptyDirectories: Created Favourited directory.');
       }
     } catch (e) {
       console.error('Error initializing directories: ', e);
