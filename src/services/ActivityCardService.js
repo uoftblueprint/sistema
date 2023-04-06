@@ -96,6 +96,7 @@ const ActivityCardService = {
    * @return {String} The requested ActivityCard object
    */
   downloadActivityCard: async function (id, type, name) {
+    // Assert that the "type" parameter is valid
     if (!(type === 'Featured' || type === 'Downloaded')) {
       throw new Error('Invalid type for Activity Card');
     }
