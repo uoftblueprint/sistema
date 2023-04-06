@@ -1,6 +1,8 @@
 import { SafeAreaView, Text, StyleSheet, ScrollView, View } from 'react-native';
 import Header from '../../Components/Header';
 import LinkButton from '../components/LinkButton';
+import { scale, verticalScale } from 'react-native-size-matters';
+import { TextStyle } from '../../Styles.config';
 
 const TemplatePolicy = ({ navigation, route }) => {
   const { pageTitle, pageContent } = route.params;
@@ -13,9 +15,9 @@ const TemplatePolicy = ({ navigation, route }) => {
         showBackButton={true}
       />
 
-      <Text style={styles.title}>{pageTitle}</Text>
+      <Text style={[TextStyle.h1, styles.title]}>{pageTitle}</Text>
       <ScrollView>
-        <Text style={styles.text}>{pageContent}</Text>
+        <Text style={[TextStyle.label, styles.text]}>{pageContent}</Text>
         {(pageTitle == 'About Sistema') &&
           <View style={styles.linkContainers}>
             <LinkButton title={'www.sistema-toronto.ca'} url={'https://www.sistema-toronto.ca/'} />
@@ -37,26 +39,18 @@ const styles = StyleSheet.create({
   title: {
     height: 'auto',
     width: 'auto',
-    fontFamily: 'Poppins-Bold',
-    fontSize: 28,
-    letterSpacing: 0.3,
-    color: '#453E3D',
     textAlign: 'center',
-    marginHorizontal: 30,
-    marginBottom: 10,
+    marginHorizontal: scale(30),
+    marginBottom: verticalScale(10),
   },
   text: {
-    fontFamily: 'Mulish-Regular',
-    fontSize: 16,
-    letterSpacing: 0.3,
-    color: '#000000',
-    marginHorizontal: 30,
-    marginBottom: 30,
+    marginHorizontal: scale(30),
+    marginBottom: verticalScale(30),
   },
   linkContainers: {
     flexDirection: 'column',
-    marginHorizontal: 30,
-    marginBottom: 30,
+    marginHorizontal: scale(30),
+    marginBottom: verticalScale(30),
   }
 });
 
