@@ -84,7 +84,6 @@ const Searchbar = ({
 const styles = StyleSheet.create({
   container: {
     height: moderateVerticalScale(160, 2.5),
-    backgroundColor: 'red',
     width: '100%',
   },
   searchContainer: {
