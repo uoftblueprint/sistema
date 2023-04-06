@@ -56,17 +56,18 @@ export async function writeFile(isImage, filepath, content) {
   const options = {
     encoding: '',
   };
-  if (isImage) {
-    options.encoding = 'base64';
-  } else {
-    options.encoding = 'utf8';
-  }
-  return RNFS.writeFile(filepath, content, options)
+
+  //set up the encoding based on wether or not content is an image
+  options.encoding = isImage ? 'base64' : 'utf8';
+  const data = isImage ? content.toString('base64') : content;
+
+  return RNFS.writeFile(filepath, data, options.encoding)
     .then(success => {
       console.log(`FILE WRITTEN!: ${filepath}`);
     })
     .catch(err => {
       console.error(`RNFS writeFile: ${err.message}`);
+      console.log(`RNFS writeFile: ${err.message}`);
     });
 }
 
