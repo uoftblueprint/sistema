@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LessonPlanHeader from '../components/LessonPlanHeader.js';
 import {
   StyleSheet,
@@ -6,183 +6,175 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
+  Text,
 } from 'react-native';
-import { grabNextKey } from '../../services/helpers';
-
-import {
-  addToNote,
-  addToSection,
-  getLessonSection,
-  setLessonPlanName,
-} from '../../services/editor/lessonPlanSlice';
+import { useIsFocused } from '@react-navigation/native';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
+import Overlay from '../../Components/Overlay';
+import SistemaButton from '../../Components/SistemaButton';
 import SaveButton from '../components/SaveButton.js';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { SectionName, MAINDIRECTORY } from '../../services/constants.js';
-import { STACK_SCREENS } from '../constants';
-
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SectionName } from '../../services/constants.js';
+import { useDispatch, useSelector } from 'react-redux';
 import LessonPlanService from '../../services/LessonPlanService.js';
-import { useSelector, useDispatch } from 'react-redux';
-import { LessonPlan } from '../../services/models.js';
 import {
+  loadInitialLessonPlan,
+  setLessonPlanName,
   getLessonPlanName,
-  getLessonPlanSection,
-} from '../../services/editor/lessonPlanSlice';
-import { addLessonPlanName } from '../../services/editor/lessonPlanSlice';
+  reset,
+} from '../../services/editor/lessonPlanSlice.js';
+import { TextStyle } from '../../Styles.config.js';
 
-// dummy last edited date
 const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
-  const [isSaved, setIsSaved] = useState(route.params ? true : false);
-  const lessonPlanName = route.params ? route.params : null;
-  const dispath = useDispatch();
+  // NAVIGATION STATES
+  const isFocused = useIsFocused();
 
-  if (route.params) {
-    setIsSaved(true);
-    const { lessonPlanName } = route.params;
-    useEffect(() => {
-      async function getLessonPlan(LessonName) {
-        await LessonPlanService.getLessonPlan(LessonName);
-      }
-      let lessonPlanObj = getLessonPlan(lessonPlanName);
-      const listOfKeys = lessonPlanObj.warmUpList.map(({ key }) => key); // Get a list of all keys in the section
-      const nextKey = grabNextKey(listOfKeys);
-      const lessName = JSON.parse(lessonPlanObj.name);
-      dispath(setLessonPlanName({ name: JSON.parse(lessName) }));
+  // REDUX STATES
+  const dispatch = useDispatch();
+  const nameLoaded = useSelector(state => getLessonPlanName(state.lessonPlan));
 
-      const notes = JSON.parse(lessonPlanObj.notes);
-      dispath(addToNote({ note: JSON.parse(notes) }));
-      for (let module of lessonPlanObj.warmUpList) {
-        dispath(
-          addToSection({
-            type: JSON.parse(module.type),
-            content: JSON.parse(module.content),
-            name: JSON.parse(module.name),
-            key: nextKey,
-          }),
-        );
-      }
-      for (let module of lessonPlanObj.mainLessonList) {
-        dispath(
-          addToSection({
-            type: JSON.parse(module.type),
-            content: JSON.parse(module.content),
-            name: JSON.parse(module.name),
-            key: nextKey,
-          }),
-        );
-      }
-      for (let module of lessonPlanObj.coolDownList) {
-        dispath(
-          addToSection({
-            type: JSON.parse(module.type),
-            content: JSON.parse(module.content),
-            name: JSON.parse(module.name),
-            key: nextKey,
-          }),
-        );
-      }
-    }, [isSaved]);
-  }
+  // COMPONENT STATES
+  const [isLoading, setLoading] = useState(false);
+  const [isNewLP, setNew] = useState(true);
+  const [overlayVisible, toggleUnsavedChanges] = useState(false);
 
-    let lessonNameGET = state => getLessonPlanName(state.lessonPlan);
-  let warmUpGET = state =>
-    getLessonSection(state.lessonPlan, SectionName.warmUp);
-  let mainLessonGET = state =>
-    getLessonSection(state.lessonPlan, SectionName.mainLesson);
-  let coolDownGET = state =>
-    getLessonSection(state.lessonPlan, SectionName.coolDown);
-  let notesGET = state => getLessonSection(state.lessonPlan, SectionName.notes);
-
-  let lessonName = useSelector(lessonNameGET); //TODO: why cant??
-  let warmUp = useSelector(warmUpGET); //returns an array
-  let mainLesson = useSelector(mainLessonGET);
-  let coolDown = useSelector(coolDownGET);
-  let notes = useSelector(notesGET);
-
-  const saveLessonPlan = () => {
-    setIsSaved(true);
-
-    //Remove keys
-    for (let module in warmUp) {
-      delete (module[key]);
-    }
-    for (let module in mainLesson) {
-      delete (module[key]);
-    }
-    for (let module in coolDown) {
-      delete (module[key]);
-    }
-    //stringify all
-    lessonName = JSON.stringify(lessonName);
-    warmUp = JSON.stringify(warmUp);
-    mainLesson = JSON.stringify(mainLesson);
-    coolDown = JSON.stringify(coolDown);
-    notes = JSON.stringify(notes);
-
-    const lessonPlanObject = new LessonPlan(
-      lessonName,
-      warmUp,
-      mainLesson,
-      coolDown,
-      notes,
-    );
-
-    //2. Save to RNFS
-    async function saveLessonPlanToRNFS(lessonPlanObj) {
-      await LessonPlanService.saveLessonPlan(lessonPlanObj);
-    }
-    saveLessonPlanToRNFS(lessonPlanObject);
-
-    navigation.navigate(STACK_SCREENS.LIBRARY, { sortT: 0 });
+  // Clear redux and route params
+  const leaveEditor = () => {
+    dispatch(reset());
+    navigation.setParams({ lessonPlanName: '' });
+    toggleUnsavedChanges(false);
+    navigation.goBack();
   };
+
+  // Fetch and set lesson plan data
+  useEffect(() => {
+    const fetchLPData = async () => {
+      setLoading(true);
+      setNew(true);
+      let doneFetching = false;
+
+      // Opening existing lesson plan in editor
+      if (route.params && route.params.lessonPlanName) {
+        const lessonPlanName = route.params.lessonPlanName;
+        // Get the lesson plan from RNFS backend
+        console.log(
+          `LessonPlanEditorV2: Fetching data for ${lessonPlanName}...`,
+        );
+        await LessonPlanService.getLessonPlan(lessonPlanName)
+          .then(lpObj => {
+            // Set a unique key for each module per section
+            const setKeyForModule = (module, i) => {
+              return {
+                type: module.type,
+                content: module.content ?? '',
+                name: module.name ?? '',
+                key: `module-${i}`,
+              };
+            };
+            lpObj[SectionName.warmUp] =
+              lpObj[SectionName.warmUp].map(setKeyForModule);
+            lpObj[SectionName.mainLesson] =
+              lpObj[SectionName.mainLesson].map(setKeyForModule);
+            lpObj[SectionName.coolDown] =
+              lpObj[SectionName.coolDown].map(setKeyForModule);
+
+            // Dispatch it to redux for the rest of the editor to render
+            dispatch(loadInitialLessonPlan({ ...lpObj }));
+            doneFetching = true;
+            setNew(false);
+          })
+          .catch(() => {
+            // TODO: [SIS-123] Open error overlay if lesson plan could not be opened
+            doneFetching = false;
+          });
+      }
+
+      // Opening new lesson plan or if fetching failed
+      if (!doneFetching) {
+        console.log('LessonPlanEditorV2: Opening blank lesson plan!');
+        // Default lesson plan name is today's date
+        const todayDate = new Date().toLocaleDateString('en-us', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        });
+        dispatch(setLessonPlanName({ name: todayDate, isDirty: false }));
+      }
+      setLoading(false);
+    };
+
+    // If lesson plan name is currently blank and the screen is focused, populate the editor with smthg
+    if (!nameLoaded && isFocused) {
+      fetchLPData();
+    }
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
         navigation={navigation}
-        lastEditedDate={lastEditedDummy}
-        lessonName={lessonPlanName}
-        isSaved={isSaved}
+        lastEditedDate={lastEditedDummy} // TODO: [SIS-136] Set last edited date in LessonPlanHeader
+        showOptions={!isNewLP} // Don't show buttons to access LP options menu if LP is brand new (nothing to delete, favourite, etc.)
+        toggleUnsavedChanges={toggleUnsavedChanges}
+        handleBackButton={leaveEditor}
       />
+
       <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
             <LessonSectionDraggable
-              isSaved={isSaved}
               navigation={navigation}
               sectionType={SectionName.warmUp}
             />
             <LessonSectionDraggable
-              isSaved={isSaved}
               navigation={navigation}
               sectionType={SectionName.mainLesson}
             />
             <LessonSectionDraggable
-              isSaved={isSaved}
               navigation={navigation}
               sectionType={SectionName.coolDown}
             />
             <LessonPlanNotes
-              isSaved={isSaved}
               navigation={navigation}
               sectionType={SectionName.notes}
-              placeholder={''}
             />
           </View>
         </TouchableWithoutFeedback>
       </NestableScrollContainer>
 
       <View style={styles.saveButton}>
-        <TouchableOpacity onPress={saveLessonPlan}>
-          <SaveButton />
-          {/* take redux, save to rnfs. when saving, strinfy the lessonapln object (and remove key)when displaying, JSON.parse*/}
-        </TouchableOpacity>
+        <SaveButton
+          navigation={navigation}
+          isLessonPlanLoading={isLoading}
+          setLoading={setLoading}
+        />
       </View>
+      {/* Unsaved changes overlay */}
+      <Overlay
+        close={toggleUnsavedChanges}
+        visible={overlayVisible}
+        style={styles.overlayContainer}>
+        <View style={styles.textColumn}>
+          <Text style={[TextStyle.label, styles.overlayTitle]}>
+            You have unsaved changes.
+          </Text>
+          <Text style={TextStyle.body}>
+            Are you sure you want to leave this page?
+          </Text>
+          <View style={styles.buttonContainer}>
+            <SistemaButton onPress={toggleUnsavedChanges}>
+              <Text style={TextStyle.body}> Stay on page </Text>
+            </SistemaButton>
+            <SistemaButton onPress={leaveEditor} color={'blue'}>
+              <Text style={TextStyle.body}> Leave page </Text>
+            </SistemaButton>
+          </View>
+        </View>
+      </Overlay>
     </SafeAreaView>
   );
 };
@@ -201,7 +193,24 @@ const styles = StyleSheet.create({
   saveButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: verticalScale(20),
+    bottom: verticalScale(30),
+  },
+  overlayContainer: {
+    flexDirection: 'row',
+    height: 'auto',
+  },
+  overlayTitle: {
+    fontWeight: 'bold',
+    marginBottom: verticalScale(10),
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    paddingTop: verticalScale(15),
+    justifyContent: 'space-evenly',
+  },
+  textColumn: {
+    flex: 5,
+    flexDirection: 'column',
   },
 });
 

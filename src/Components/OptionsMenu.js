@@ -8,16 +8,48 @@ import HeartIcon from '../../assets/heartIcon.svg';
 import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView } from 'react-native';
+import { useSelector } from 'react-redux';
+import { createPDF } from '../services/pdf';
+import { deleteFile } from '../services/routes/Local';
+import Share from 'react-native-share';
+import LessonPlanService from '../services/LessonPlanService';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
   lastEdited,
-  lessonPlan,
+  lessonPlanName,
   navigation,
 }) => {
   const [isFavorited, setFavorited] = useState(false);
   const [isBannerVisible, setBannerVisible] = useState(false);
+  const lessonPlan = useSelector(state => state.lessonPlan);
 
+  // FUNCTIONS FOR BUTTONS
+  const copyLessonPlan = () => {
+    LessonPlanService.copyLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const deleteLessonPlan = async () => {
+    await LessonPlanService.deleteLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const exportLessonPlan = async () => {
+    let pdf = await createPDF(lessonPlan);
+    try {
+      await Share.open({
+        url: 'file://' + pdf.filePath,
+        type: 'application/pdf',
+      });
+      console.log('File shared');
+    } catch {
+      console.log('File not shared');
+    }
+    await deleteFile(pdf.filePath);
+  };
+
+  // ALL OPTION BUTTONS
   const editorButtons = [
     {
       name: 'Export Lesson Plan',
@@ -26,10 +58,6 @@ const OptionsMenu = ({
     {
       name: 'Favorites',
       icon: <HeartIcon />,
-    },
-    {
-      name: 'Delete Lesson Plan',
-      icon: <TrashIcon />,
     },
   ];
 
@@ -56,6 +84,10 @@ const OptionsMenu = ({
         <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
+          var onPress;
+          if (button.name === 'Export Lesson Plan') {
+            onPress = exportLessonPlan;
+          }
           if (button.name === 'Favorites') {
             return (
               <FavoriteButton
@@ -66,12 +98,23 @@ const OptionsMenu = ({
               />
             );
           } else {
+            let handlePress;
+            switch (button.name) {
+              case 'Copy Lesson Plan':
+                handlePress = copyLessonPlan;
+                break;
+              case 'Delete Lesson Plan':
+                handlePress = deleteLessonPlan;
+                break;
+              default:
+                handlePress = exportLessonPlan;
+            }
             return (
               <OptionsMenuButton
                 key={i}
                 text={button.name}
                 icon={button.icon}
-                lessonName={lessonPlan}
+                onPress={handlePress}
               />
             );
           }

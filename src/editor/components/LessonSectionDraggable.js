@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -10,19 +10,17 @@ import {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
-import { ModuleType } from '../../services/constants';
 import { SafeAreaView } from 'react-native';
 import ContentCard from './ContentCard';
 import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS } from '../constants';
 import { TextStyle } from '../../Styles.config';
 
-const LessonSectionDraggable = ({ sectionType, navigation, isSaved }) => {
+const LessonSectionDraggable = ({ sectionType, navigation }) => {
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
   );
-  //console.log(sectionType, sectionData); // TODO: delete once you're done, helpful to see for now
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
     dispatch(
@@ -34,7 +32,6 @@ const LessonSectionDraggable = ({ sectionType, navigation, isSaved }) => {
   };
 
   // COMPONENT STATES
-  const [isLoaded, setLoaded] = useState(false);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
 
   // ADD LESSON CONTENT FUNCTIONS
@@ -55,6 +52,7 @@ const LessonSectionDraggable = ({ sectionType, navigation, isSaved }) => {
       module => module.key != keyToDelete,
     );
     updateRedux(newSectionData);
+    //
   };
 
   const editModule = (keyToEdit, newContent) => {
@@ -102,7 +100,6 @@ const LessonSectionDraggable = ({ sectionType, navigation, isSaved }) => {
           placeholder={'Input text'}
           handleClick={addTextModule}
         />
-
         <AddLessonContentButton
           placeholder={'Add activity cards'}
           handleClick={addActivityCard}

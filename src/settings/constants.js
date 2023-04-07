@@ -5,17 +5,16 @@ export const STACK_SCREENS = {
 };
 
 export const policyPages = [
-  // TODO: replace content once Alex sends
   {
     title: 'Terms of Use',
-    text: 'Terms of use here.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis congue laoreet. In lobortis, dolor at placerat semper, mauris nibh facilisis massa, vitae tempus leo erat sed neque. Sed auctor condimentum blandit. Maecenas vitae faucibus lectus. Etiam eget ex at sapien imperdiet ultricies in ut augue. Proin sollicitudin sagittis eros a condimentum. Donec pellentesque nulla sit amet magna laoreet fringilla. Donec dignissim diam ac ullamcorper aliquet. Quisque consequat arcu sodales lectus volutpat, in ultricies libero luctus.\n\nDonec aliquet, diam ac commodo placerat, enim nisi rutrum dolor, a convallis erat purus vel nulla. Maecenas venenatis sodales elit, a porttitor ex sollicitudin a. Phasellus pellentesque vestibulum porttitor. In eget aliquam nunc. Aenean sollicitudin odio a justo malesuada, quis suscipit lacus congue. Quisque convallis purus lectus, sit amet vulputate lacus feugiat eget. Proin eleifend dui at sagittis dictum. Vestibulum lacinia risus sit amet malesuada molestie. Quisque vitae est nunc. Quisque aliquam elit vel odio cursus, in blandit dui elementum. Donec vel massa a ex gravida congue. Vestibulum eu dictum lectus. Curabitur suscipit sed quam ut malesuada. Mauris ac tortor a risus tincidunt molestie.',
+    text: 'This application is intended for use by Sistema Toronto Academy staff. The contents of the app were created by and are the property of Sistema Toronto Academy. This app and the included materials should only be used by Sistema Toronto Academy students and staff for the benefit of the program.',
   },
   {
     title: 'Privacy Policy',
-    text: 'Privacy policy here.',
+    text: 'Sistema Toronto Academy will not collect, share, or distribute any personal information or metadata through this app. Any user data saved within the app will not be tracked or shared.',
   },
   {
     title: 'About Sistema',
-    text: 'About Sistema here.',
+    text: 'Sistema Toronto provides musical and intellectual opportunities to children in vulnerable communities, with the goal of transformative social change. We build stronger communities by enabling children from marginalized neighbourhoods to overcome poverty, grow, and thrive as engaged citizens and future leaders.\n\nSistema Toronto is first and foremost a social development program, using ensemble-based music education to transform the lives of children. Sistema Toronto students work together for 10 hours of weekly instruction. They learn strings (violin, viola, cello, or double bass), percussion, choir and Music & Movement while developing important life skills like problem solving, empathy, and self-advocacy.',
   },
 ];

@@ -9,8 +9,8 @@ import {
   readDDirectory,
   cpyFile,
 } from './routes/Local';
-import { MAINDIRECTORY, ModuleType } from './constants';
-import { ActivityCardModule, LessonPlan, Module } from './models';
+import { MAINDIRECTORY, SectionName } from './constants';
+import { Module } from './models';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
@@ -23,8 +23,8 @@ const LessonPlanService = {
    */
   deleteLessonPlan: async function (name) {
     try {
-      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-      let defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
       let path;
 
       // check if file exists, assigning appropriate path if so
@@ -51,22 +51,45 @@ const LessonPlanService = {
    *
    * Be sure to think about how to save activity card .pngs later down the line
    * as well!
-   * @param {LessonPlan} lesson LessonPlan object to save to local storage
+   * @param {Object} lesson LessonPlan object to save to local storage
+   * @param {Boolean} hasNewName if the LP has been renamed
+   * @param {String} oldLPName to delete old files and directories
    */
-  saveLessonPlan: async function (lesson) {
+  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '') {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
-      //const lessonJSON = JSON.stringify(lesson);
+      const lessonJSON = JSON.stringify(lesson);
+      const name = lesson.lessonPlanName;
+
+      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+      let path;
+
+      // Check if file exists, assigning appropriate path if so
+      if (await checkFileExists(favouritedPath)) {
+        path = favouritedPath;
+      } else if (await checkFileExists(defaultPath)) {
+        path = defaultPath;
+      } else {
+        path = defaultPath; // By default, new lesson plans should not be favourited
+      }
+
       // Then, write to local storage with an RNFS call via Local.js
-      // By default, new lesson plans should not be favourited
-      var path = MAINDIRECTORY + '/Default/' + lesson.name + '/';
       await makeDirectory(path)
-        .then(() => {
-          return writeFile(false, path + lesson.name + '.json', lesson);
+        .then(async () => {
+          await checkFileExists(path);
+        })
+        .then(async () => {
+          await writeFile(false, path + name + '.json', lessonJSON);
         })
         .then(r => {
-          console.log('Successfully saved lesson plan: ' + lesson.name);
+          console.log('Successfully saved lesson plan: ' + name);
         });
+
+      // If the LP has been renamed, we need to delete its old file and directory
+      if (hasNewName) {
+        await this.deleteLessonPlan(oldLPName);
+      }
     } catch (e) {
       // There was an error, catch it and do something with it
       console.error('Error saving lesson plan: ', e);
@@ -78,24 +101,14 @@ const LessonPlanService = {
    * into its directory, checking for the .json file, and later down the line,
    * also its associated .png activity cards.
    * @param {String} name Name of the lesson plan to retrieve
-   * @return {LessonPlan} The requested LessonPlan object
+   * @return {Object} the requested lesson plan
    */
   getLessonPlan: async function (name) {
     try {
-      // helper function to create Module objects for .map()
-      function createModules(module) {
-        if (module.type === ModuleType.text) {
-          return new Module(module.type, module.content, '');
-        } else {
-          return new Module(module.type, module.content, module.name);
-        }
-      }
-
       let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/${name}.json`;
       let defaultPath = `${MAINDIRECTORY}/Default/${name}/${name}.json`;
-      let path;
-      let lessonPlanObj;
 
+      let path;
       // check if file exists, assigning appropriate path if so
       if (await checkFileExists(favouritedPath)) {
         path = favouritedPath;
@@ -106,30 +119,29 @@ const LessonPlanService = {
       }
 
       // read in the file from RNFS
-      let str;
-      readFile(path)
-        .then(r => {
-          str = r;
-        })
-        .then(() => {
-          json = JSON.parse(str);
-          console.log('here is json: ' + str);
+      let lpStr = await readFile(path);
+      // convert string to JSON object
+      let lpObj = JSON.parse(lpStr);
 
-          // create Module objects from JSON
-          // warmUpList = [Module(..), Module(..)]
-          const warmUpList = json.warmUp.map(createModules);
-          const mainLessonList = json.mainLesson.map(createModules);
-          const coolDownList = json.coolDown.map(createModules);
+      // helper function to create Module objects for .map()
+      function createModules(module) {
+        return new Module(module.type, module.content, module.name);
+      }
 
-          // create LessonPlan object from JSON
-          lessonPlanObj = new LessonPlan(
-            json.name,
-            warmUpList,
-            mainLessonList,
-            coolDownList,
-            json.notes,
-          );
-        });
+      // create Module objects from JSON
+      const warmUpList = lpObj[SectionName.warmUp].map(createModules);
+      const mainLessonList = lpObj[SectionName.mainLesson].map(createModules);
+      const coolDownList = lpObj[SectionName.coolDown].map(createModules);
+
+      // create LessonPlan object from JSON
+      let lessonPlanObj = {
+        lessonPlanName: lpObj.lessonPlanName,
+        [SectionName.warmUp]: warmUpList,
+        [SectionName.mainLesson]: mainLessonList,
+        [SectionName.coolDown]: coolDownList,
+        [SectionName.notes]: lpObj[SectionName.notes],
+      };
+
       return lessonPlanObj;
     } catch (e) {
       console.error('Error getLessonPlan: ', e);
@@ -210,7 +222,7 @@ const LessonPlanService = {
         combined = favouritedLessonPlans;
 
         if (option === 0) {
-          for (var i = 0; i < defaultLessonPlans?.length; i++) {
+          for (var i = 0; i < defaultLessonPlans.length; i++) {
             combined.push(defaultLessonPlans[i]);
           }
         }
@@ -252,16 +264,23 @@ const LessonPlanService = {
 
   initializeEmptyDirectories: async function () {
     try {
-      if (
-        !(
-          (await checkFileExists(MAINDIRECTORY + '/Default')) &&
-          !(await checkFileExists(MAINDIRECTORY + '/Favourited'))
-        )
-      ) {
-        await makeDirectory(MAINDIRECTORY + '/Default/');
-        await makeDirectory(MAINDIRECTORY + '/Favourited/');
-      } else {
-        console.log('Directories already exist');
+      let defaultExists = await checkFileExists(MAINDIRECTORY + '/Default');
+      let favouritedExists = await checkFileExists(MAINDIRECTORY + '/Default');
+
+      if (defaultExists && favouritedExists) {
+        console.log('initializeEmptyDirectories: Directories already exist.');
+        return;
+      }
+
+      if (!defaultExists) {
+        makeDirectory(MAINDIRECTORY + '/Default/');
+        console.log('initializeEmptyDirectories: Created Default directory.');
+      }
+      if (!favouritedExists) {
+        makeDirectory(MAINDIRECTORY + '/Favourited/');
+        console.log(
+          'initializeEmptyDirectories: Created Favourited directory.',
+        );
       }
     } catch (e) {
       console.error('Error initializing directories: ', e);
@@ -290,7 +309,7 @@ const LessonPlanService = {
 
       var files = await readDirectory(oldpath);
 
-      for (var i = 0; i < files?.length; i++) {
+      for (var i = 0; i < files.length; i++) {
         await moveFile(oldpath + files[i], newpath + files[i]);
       }
 
@@ -320,7 +339,7 @@ const LessonPlanService = {
 
       var files = await readDirectory(oldpath);
 
-      for (var i = 0; i < files?.length; i++) {
+      for (var i = 0; i < files.length; i++) {
         await moveFile(oldpath + files[i], newpath + files[i]);
       }
 

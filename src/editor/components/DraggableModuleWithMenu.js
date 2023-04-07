@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Platform,
   ActionSheetIOS,
@@ -7,14 +7,14 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  Text,
   TextInput,
+  SafeAreaView,
+  Image,
 } from 'react-native';
 import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
-import ChosenActivityCard from './ChosenActivityCard';
-import { STACK_SCREENS } from '../constants';
-import { useSelector, useDispatch } from 'react-redux';
+import ImageIcon from '../../../assets/imageIcon.svg';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
 
@@ -23,7 +23,8 @@ export default class DraggableModuleWithMenu extends React.Component {
     super(props);
     this.menuRef; // Assigned upon render
     this.textInputRef; // Assigned upon render
-    // TODO: Options change if (this.props.data.type == ModuleType.activityCard). We only want "Delete" (and if iOS, "Cancel" too).
+
+    // If the module is a text module, add the edit option to the menu
     if (this.props.data.type == ModuleType.text) {
       this.options =
         Platform.OS === 'ios'
@@ -34,7 +35,7 @@ export default class DraggableModuleWithMenu extends React.Component {
       this.options = Platform.OS === 'ios' ? ['Delete', 'Cancel'] : ['Delete'];
       this.actions = [this.deleteModule];
     }
-    this.actions = [this.toggleEdit, this.deleteModule];
+
     this.state = {
       isEditable: false,
     };
@@ -54,10 +55,12 @@ export default class DraggableModuleWithMenu extends React.Component {
 
   /** Based on what menu option the user clicks, execute the function corresponding with the same index in this.actions. */
   handleClick = index => {
-    for (var i = 0; i < this.options?.length; i++) {
+    for (var i = 0; i < this.options.length; i++) {
       if (index === i) {
-        if (this.actions[i] !== null) {
-          this.actions[i];
+        if (Platform.OS === 'ios' && index === this.options.length - 1) {
+          // Do nothing
+        } else if (this.actions[i] !== null) {
+          this.actions[i]();
         }
       }
     }
@@ -70,7 +73,7 @@ export default class DraggableModuleWithMenu extends React.Component {
         {
           options: this.options,
           destructiveButtonIndex: this.options.indexOf('Delete'),
-          cancelButtonIndex: this.options?.length - 1, // index of "Cancel" which is always last
+          cancelButtonIndex: this.options.length - 1, // index of "Cancel" which is always last
         },
         buttonIndex => {
           this.handleClick(buttonIndex);
@@ -81,7 +84,7 @@ export default class DraggableModuleWithMenu extends React.Component {
         findNodeHandle(this.menuRef),
         this.options,
         () =>
-          console.log(
+          console.warn(
             `Something went wrong with the Android popup menu inside DraggableModuleWithMenu ${this.props.data.key}.`,
           ),
         (_, i) => {
@@ -101,55 +104,32 @@ export default class DraggableModuleWithMenu extends React.Component {
           onLongPress={this.props.drag}
           disabled={this.props.dragIsActive} // disable interactions while being dragged
           style={styles.module}>
-          {
-            this.props.data.type == ModuleType.text ? (
-              <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
-                <TextInput
-                  ref={input => {
-                    this.textInputRef = input;
-                  }}
-                  editable={this.state.isEditable}
-                  style={TextStyle.body}
-                  multiline
-                  defaultValue={this.props.data.content}
-                  onEndEditing={e => {
-                    const currText = e.nativeEvent.text;
-                    this.props.handleEdit(this.props.data.key, currText);
-                    this.setState({ isEditable: false });
-                  }}
-                />
-              </View>
-            ) : (
-              <ChosenActivityCard
-                key={this.props.name}
-                handleClick={() => {
-                  const { navigate } = this.props.navigation;
-                  navigate(STACK_SCREENS.EXPANDED_ACTIVITY_CARD, {
-                    cardName: this.props.data.name,
-                    cardPath: this.props.data.content,
-                  });
+          {this.props.data.type == ModuleType.text ? (
+            <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
+              <TextInput
+                ref={input => {
+                  this.textInputRef = input;
                 }}
-                cardName={this.props.data.name}
-                cardPath={this.props.data.content}
-                placeholder={this.props.data.content}
+                editable={this.state.isEditable}
+                style={TextStyle.body}
+                multiline
+                defaultValue={this.props.data.content}
                 onEndEditing={e => {
                   const currText = e.nativeEvent.text;
                   this.props.handleEdit(this.props.data.key, currText);
                   this.setState({ isEditable: false });
                 }}
               />
-              // <TextInput
-              //   style={TextStyle.body}
-              //   multiline
-              //   defaultValue={this.props.data.name}
-              //   // onEndEditing={e => {
-              //   //   const currText = e.nativeEvent.text;
-              //   //   this.props.handleEdit(this.props.data.key, currText);
-              //   //   this.setState({ isEditable: false });
-              //   // }}
-              // />
-            ) // TODO: replace <Text> with component for ModuleType.activityCard
-          }
+            </View>
+          ) : (
+            <SafeAreaView style={styles.box}>
+              <Image
+                source={{ uri: `file://${this.props.data.content}` }}
+                style={styles.cardImage}
+                resizeMode="contain"
+              />
+            </SafeAreaView>
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -158,7 +138,7 @@ export default class DraggableModuleWithMenu extends React.Component {
 
 const styles = StyleSheet.create({
   module: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: '#FDFBF7',
     height: 'auto',
     width: '100%',
     borderWidth: 0.77,
@@ -184,5 +164,36 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
       },
     }),
+  },
+  CardStyle: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingLeft: 15,
+    marginRight: 10,
+    marginVertical: 10,
+  },
+  cardName: {
+    fontFamily: 'Poppins-Medium',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 15,
+  },
+  cardImage: {
+    width: '100%',
+    height: scale(463),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  box: {
+    backgroundColor: '#FDFBF7',
+    borderWidth: 1,
+    borderColor: '#FDFBF7',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    paddingVertical: Platform.OS === 'ios' ? 0 : verticalScale(10),
+    height: 'auto',
   },
 });

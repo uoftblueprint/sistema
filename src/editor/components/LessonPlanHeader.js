@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,7 +8,6 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import { useEffect, useState } from 'react';
 import EditIcon from '../../../assets/edit.svg';
 import Menu from '../../../assets/menu.svg';
 import BackArrow from '../../../assets/backArrow.svg';
@@ -15,37 +15,42 @@ import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
 import { useSelector, useDispatch } from 'react-redux';
-import store from '../../services/configureStore';
 import {
-  setLessonPlanName,
   getLessonPlanName,
+  setLessonPlanName,
+  getDirty,
 } from '../../services/editor/lessonPlanSlice';
+
 const headerIconSize = moderateScale(25);
 const horizontalMargin = 30;
 
 const LessonPlanHeader = ({
   navigation,
-  lessonNamePlan,
   lastEditedDate,
-  isSaved,
+  showOptions,
+  handleBackButton,
+  toggleUnsavedChanges,
 }) => {
-  const [isEditable, setIsEditable] = useState(false);
-  const todayDate = new Date().toLocaleDateString('en-us', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-  const [lessonName, setLessonName] = useState(
-    lessonNamePlan ? lessonNamePlan : todayDate.toString(),
-  );
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setLessonPlanName({ name: lessonName }));
-  }, [lessonName]);
-  let reduxName = useSelector(state => getLessonPlanName(state.lessonPlan)); //TODO: why cant??
+  const lessonPlanName = useSelector(state =>
+    getLessonPlanName(state.lessonPlan),
+  );
+  const isDirty = useSelector(state => getDirty(state.lessonPlan));
+
+  const [isEditable, setIsEditable] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={{ marginLeft: scale(horizontalMargin) }}>
+      <TouchableOpacity
+        style={{ marginLeft: scale(horizontalMargin) }}
+        onPress={() => {
+          if (isDirty) {
+            // Warn the user that there are unsaved changes
+            toggleUnsavedChanges(true);
+          } else {
+            handleBackButton();
+          }
+        }}>
         <BackArrow height={headerIconSize} width={headerIconSize} />
       </TouchableOpacity>
 
@@ -54,14 +59,9 @@ const LessonPlanHeader = ({
           {isEditable ? (
             <TextInput
               style={[styles.input, TextStyle.h1]}
-              value={lessonName}
+              value={lessonPlanName}
               onChangeText={newText => {
-                setLessonName(newText);
-                dispatch(
-                  setLessonPlanName({
-                    name: lessonName,
-                  }),
-                );
+                dispatch(setLessonPlanName({ name: newText, isDirty: true }));
               }}
               onBlur={() => {
                 setIsEditable(false);
@@ -70,7 +70,7 @@ const LessonPlanHeader = ({
             />
           ) : (
             <Text style={[styles.text, TextStyle.h1]} numberOfLines={1}>
-              {lessonName}
+              {lessonPlanName}
             </Text>
           )}
         </View>
@@ -79,25 +79,23 @@ const LessonPlanHeader = ({
             onPress={() => {
               setIsEditable(true);
             }}>
-            <EditIcon
-              height={headerIconSize - 5}
-              width={headerIconSize - 5}
-              marginRight={scale(15)}
-            />
+            <EditIcon height={headerIconSize - 5} width={headerIconSize - 5} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
-                isLessonPlanEditor: true,
-                lastEdited: lastEditedDate,
-              })
-            }>
-            <Menu
-              display={!isSaved}
-              height={headerIconSize}
-              width={headerIconSize}
-            />
-          </TouchableOpacity>
+          {showOptions && (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
+                  isLessonPlanEditor: true,
+                  lastEdited: lastEditedDate,
+                })
+              }>
+              <Menu
+                height={headerIconSize}
+                width={headerIconSize}
+                marginLeft={scale(15)}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </SafeAreaView>
     </SafeAreaView>
@@ -169,7 +167,7 @@ const styles = StyleSheet.create({
     width: '100%',
     color: '#000',
     borderColor: 'transparent',
-    borderRadius: 7.69,
+    borderRadius: 8,
     paddingLeft: scale(15),
   },
 });

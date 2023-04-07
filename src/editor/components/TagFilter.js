@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
 const TagFilter = function (props) {

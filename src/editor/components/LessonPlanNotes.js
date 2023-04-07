@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Text,
   SafeAreaView,
@@ -7,12 +7,17 @@ import {
   Platform,
   View,
 } from 'react-native';
-import { addToNote, removeNote } from '../../services/editor/lessonPlanSlice';
-import store from '../../services/configureStore';
+import {
+  replaceNote,
+  getLessonSection,
+} from '../../services/editor/lessonPlanSlice';
 import { TextStyle } from '../../Styles.config';
 
-const LessonPlanNotes = ({ sectionType, placeholder }) => {
-  const [sectionContent, setSectionContent] = useState(placeholder); // TODO: fix
+const LessonPlanNotes = ({ sectionType }) => {
+  const dispatch = useDispatch();
+  const currNotes = useSelector(state =>
+    getLessonSection(state.lessonPlan, sectionType),
+  );
 
   return (
     <SafeAreaView width={'100%'}>
@@ -20,22 +25,13 @@ const LessonPlanNotes = ({ sectionType, placeholder }) => {
       <View style={styles.SectionStyle}>
         <TextInput
           style={TextStyle.body}
+          placeholder={'Add lesson notes here...'}
+          placeholderTextColor={'#453E3D'}
+          value={currNotes}
           multiline
-          placeholder={'Add lesson notes here'}
           returnKeyType="next"
-          onEndEditing={e => {
-            if (e.nativeEvent.text) {
-              setSectionContent(e.nativeEvent.text);
-              store.dispatch(
-                addToNote({
-                  section: sectionType,
-                  content: e.nativeEvent.text,
-                }),
-              );
-            } else {
-              setSectionContent(placeholder);
-              store.dispatch(removeNote());
-            }
+          onChangeText={newText => {
+            dispatch(replaceNote(newText));
           }}
         />
       </View>
@@ -59,7 +55,7 @@ const styles = StyleSheet.create({
       },
     }),
     flexDirection: 'column',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: '#FDFBF7',
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,

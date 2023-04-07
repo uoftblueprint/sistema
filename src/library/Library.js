@@ -37,36 +37,28 @@ const Library = ({ navigation, route }) => {
         let favL = await LessonPlanService.getAllLessonPlanNames(1);
         let defL = await LessonPlanService.getAllLessonPlanNames(2);
         let lessonPlanInfo = [];
-        if (favL) {
-          for (let lp = 0; lp < favL.length; lp++) {
+
+        const setLPInfo = (lpList, isFaved) => {
+          for (let lp = 0; lp < lpList.length; lp++) {
             lessonPlanInfo.push({
-              name: JSON.parse(favL[lp].name),
-              isFavorited: true,
-              lastEdited: favL[lp].mtime.toLocaleDateString('en-US', {
+              name: lpList[lp].name,
+              isFavorited: isFaved,
+              lastEdited: lpList[lp].mtime.toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
                 year: 'numeric',
               }),
-              lastEditedDate: favL[lp].mtime,
+              lastEditedDate: lpList[lp].mtime,
             });
           }
-        }
-        if (defL) {
-          for (let lp = 0; lp < defL.length; lp++) {
-            lessonPlanInfo.push({
-              name: JSON.parse(defL[lp].name),
-              isFavorited: false,
-              lastEdited: defL[lp].mtime.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-              }),
-              lastEditedDate: defL[lp].mtime,
-            });
-          }
-        }
+        };
+
+        setLPInfo(favL, true);
+        setLPInfo(defL, false);
+
         setList(lessonPlanInfo);
       }
+
       getPlans();
     }, []),
   );
@@ -76,10 +68,6 @@ const Library = ({ navigation, route }) => {
       setLoaded(true);
     }
   }, [lpList, sortType]);
-
-  const openLessonPlan = () => {
-    navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2);
-  };
 
   if (loaded) {
     const handleFavoriteChange = (newFavState, index) => {
@@ -102,7 +90,7 @@ const Library = ({ navigation, route }) => {
           });
         })
         .catch(err => {
-          console.log(`Library favourite lesson plan: ${err}`);
+          console.error(`Library favourite lesson plan: ${err}`);
         });
     };
 
@@ -160,42 +148,17 @@ const Library = ({ navigation, route }) => {
                   : -1;
               })
               .map((lessonPlan, i) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2, {
-                      lessonPlanName: lessonPlan.name,
-                    });
-                  }}>
-                  <LessonPlanButton
-                    key={i} // TODO: if lesson plan has a unique id, replace key with it
-                    index={i}
-                    name={lessonPlan.name}
-                    navigation={navigation}
-                    isFavorited={lessonPlan.isFavorited}
-                    toggleFavorite={handleFavoriteChange}
-                    lastEditedDate={lessonPlan.lastEdited}
-                    handleClick={openLessonPlan}
-                  />
-                </TouchableOpacity>
+                <LessonPlanButton
+                  key={i}
+                  index={i}
+                  name={lessonPlan.name}
+                  navigation={navigation}
+                  isFavorited={lessonPlan.isFavorited}
+                  toggleFavorite={handleFavoriteChange}
+                  lastEditedDate={lessonPlan.lastEdited}
+                  lessonPlan={lessonPlan.name}
+                />
               ))}
-            {/* DUMMY LESSON PLAN */}
-            {/* <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(STACK_SCREENS.LESSON_PLAN_EDITOR_V2, {
-                  lessonPlanName: 'Apr 2, 2023',
-                });
-              }}>
-              <LessonPlanButton
-                key={1} // TODO: if lesson plan has a unique id, replace key with it
-                index={0}
-                name={'Demo Plan'}
-                navigation={navigation}
-                isFavorited={false}
-                toggleFavorite={handleFavoriteChange}
-                lastEditedDate={'March 1'}
-                handleClick={openLessonPlan}
-              />
-            </TouchableOpacity> */}
           </SafeAreaView>
         </ScrollView>
       </SafeAreaView>

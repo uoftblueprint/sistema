@@ -2,14 +2,13 @@ import {
   checkFileExists,
   writeFile,
   makeDirectory,
-  moveFile,
   deleteFile,
+  readFile,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
-import { AccessToken } from './models';
+import { Buffer } from 'buffer';
 import axios from 'axios';
 import { DRIVE_API_URLS } from './config.json';
-import configureStore from './configureStore';
 
 const ActivityCardService = {
   // All APIs for ActivityCards should be here
@@ -30,9 +29,12 @@ const ActivityCardService = {
       //Set up GET url, query, and path to Featured Card directory
       var downloadUrl =
         DRIVE_API_URLS.SEARCH_FILES + DRIVE_API_URLS.SEARCH_PARAMETERS;
-      const searchQuery =
-        "modifiedTime >= '" + weekAgo + "' and mimeType contains 'image/'";
       var path = MAINDIRECTORY + '/FeaturedActivityCards/';
+      const searchQuery =
+        "modifiedTime >= '" +
+        weekAgo +
+        "' and mimeType contains 'image/' and fullText contains 'ACTVT'";
+
       const params = {
         q: searchQuery,
         fields:
@@ -49,8 +51,12 @@ const ActivityCardService = {
       const files_list = driveFiles.files;
       var pathArr = [];
 
+      if (files_list.length == 0) {
+        return [];
+      }
+
       //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
-      if (files_list?.length != 0) {
+      if (files_list.length !== 0) {
         await deleteFile(path);
         await makeDirectory(path);
       } else {
@@ -58,17 +64,16 @@ const ActivityCardService = {
       }
 
       //if new cards were found, save them into the empty directory path
-      for (var i = 0; i < files_list?.length; i++) {
-        await this.downloadActivityCard(files_list[i].id);
+      for (var i = 0; i < files_list.length; i++) {
+        await this.downloadActivityCard(
+          files_list[i].id,
+          'Featured',
+          files_list[i].name,
+        );
 
         //once downloaded, check if the file exists. If it does, add the name to a .txt file, and add the path to pathArr
-        if (await checkFileExists(path + '/' + files_list[i].id + '/')) {
-          await writeFile(
-            false,
-            path + '/' + files_list[i].id + '/' + 'cardName.txt',
-            files_list[i].name,
-          );
-          pathArr.push(path + '/' + files_list[i].id + '/');
+        if (await checkFileExists(path + files_list[i].id + '/')) {
+          pathArr.push(path + files_list[i].id + '/');
         } else {
           throw new Error(
             'Error occurred in downloading a Featured Activity Card.',
@@ -79,7 +84,8 @@ const ActivityCardService = {
       return pathArr;
     } catch (e) {
       // There was an error, catch it and do something with it
-      console.log('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
+      console.error('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
+      return [];
     }
   },
 
@@ -87,44 +93,80 @@ const ActivityCardService = {
    * Given the Google Drive ID of an activity card, download the card
    * directly into local storage.
    * @param {String} id ID of the activity card to retrieve
+   * @param {String} type Whether the activity card is a "Featured" or "Downloaded" card
+   * * @param {String} name Name of the activity card
    * @return {String} The requested ActivityCard object
    */
-  downloadActivityCard: async function (id) {
+  downloadActivityCard: async function (id, type, name) {
+    // Assert that the "type" parameter is valid
+    if (!(type === 'Featured' || type === 'Downloaded')) {
+      throw new Error('Invalid type for Activity Card');
+    }
+
     try {
       const params = {
-        fields:
-          'kind,driveId,mimeType,id,name,teamDriveId,thumbnailLink,webContentLink,modifiedTime',
         alt: 'media',
+        responseType: 'arraybuffer',
       };
-      const dirPath = MAINDIRECTORY + '/FeaturedActivityCards';
-      const filePath = `${dirPath}/${id}.jpg`;
-      let card = {};
+
+      const dirPath =
+        type === 'Featured'
+          ? MAINDIRECTORY + '/FeaturedActivityCards/' + id
+          : MAINDIRECTORY + '/DownloadedActivityCards/' + id;
+      const filePath = `${dirPath}/cardImage.jpg`;
 
       //check if file exists
       if (await checkFileExists(filePath)) {
-        throw new Error('This Activity Card is already downloaded');
+        return filePath;
       }
 
       //set up the get URL, then call axios for response
       const downloadUrl =
-        DRIVE_API_URLS.SEARCH_FILES + id + DRIVE_API_URLS.SEARCH_PARAMETERS;
-      console.log('DOWNLOAD url' + downloadUrl);
-      console.log(id);
+        DRIVE_API_URLS.SEARCH_FILES +
+        '/' +
+        id +
+        DRIVE_API_URLS.SEARCH_PARAMETERS;
 
-      const response = await axios.get(downloadUrl, { params }).catch(error => {
-        console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
-      });
-
-      console.log(response);
-      card = response.data;
+      //get the response as an arrayBuffer to be read by RNFS
+      const response = await axios
+        .get(downloadUrl, { params: params, responseType: 'arraybuffer' })
+        .catch(error => {
+          console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
+        });
 
       //make directory for the newly downloaded card, write the card into this path and return
       await makeDirectory(dirPath);
-      await writeFile(true, filePath, card);
+      // Write the .jpg file to the directory
+      await writeFile(true, filePath, Buffer.from(response.data, 'base64'));
+      // Add the name of the activity card into the cardName.txt file
+      await writeFile(false, dirPath + '/cardName.txt', name + '\n');
+
       return filePath;
     } catch (e) {
-      console.log('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
+      console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
     }
+  },
+
+  /**
+   * get metadata on all activity cards
+   *
+   * @async
+   * @returns {Promise<{id: string, name: string, thumbnailLink: string, description: string}[]>}
+   */
+  getAllActivityCards: async function () {
+    const ACTVTTerm = " and fullText contains 'ACTVT'";
+    return (
+      await axios.get(DRIVE_API_URLS.SEARCH_FILES, {
+        params: {
+          trashed: 'false',
+          supportsAllDrives: 'true',
+          includeItemsFromAllDrives: 'true',
+          fields: 'files(id, name, thumbnailLink, description)',
+          q: "mimeType='image/jpeg' " + ACTVTTerm,
+          pageSize: 1000,
+        },
+      })
+    ).data.files;
   },
 };
 

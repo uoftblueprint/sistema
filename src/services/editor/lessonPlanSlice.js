@@ -12,19 +12,37 @@ export const lessonPlanSlice = createSlice({
    * @property {string} key Unique in that section. For example, 'module-0'.
    */
   initialState: {
-    lessonPlanName: ' ',
+    lessonPlanName: '',
+    initialLessonPlanName: '',
     [SectionName.warmUp]: [],
     [SectionName.mainLesson]: [],
     [SectionName.coolDown]: [],
     [SectionName.notes]: '',
-    isDirty: false, // TODO: wipe the entire lessonPlan state store to default when you exit the editor
+    isDirty: false,
   },
   reducers: {
+    /**
+     * Load the redux store with a data from an existing lesson plan.
+     * isDirty stays false.
+     * @property {Object} action.payload
+     */
+    loadInitialLessonPlan: (state, action) => {
+      return {
+        ...state,
+        lessonPlanName: action.payload.lessonPlanName,
+        initialLessonPlanName: action.payload.lessonPlanName,
+        [SectionName.warmUp]: action.payload[SectionName.warmUp],
+        [SectionName.mainLesson]: action.payload[SectionName.mainLesson],
+        [SectionName.coolDown]: action.payload[SectionName.coolDown],
+        [SectionName.notes]: action.payload[SectionName.notes] ?? '',
+        isDirty: false,
+      };
+    },
     setLessonPlanName: (state, action) => {
       return {
         ...state,
         lessonPlanName: action.payload.name,
-        isDirty: true,
+        isDirty: action.payload.isDirty,
       };
     },
     replaceSection: (state, action) => {
@@ -45,7 +63,6 @@ export const lessonPlanSlice = createSlice({
       };
     },
     addToSection: (state, action) => {
-      //add one module
       // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
       //     type: ModuleType.text || ModuleType.activityCard
@@ -67,16 +84,23 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
-    addToNote: (state, action) => {
+    replaceNote: (state, action) => {
       return {
         ...state,
-        notes: action.payload.content,
+        [SectionName.notes]: action.payload,
+        isDirty: true,
       };
     },
-    removeNote: (state, _) => {
+    reset: () => {
+      console.log('Reseting redux...');
       return {
-        ...state,
-        notes: '',
+        lessonPlanName: '',
+        initialLessonPlanName: '',
+        [SectionName.warmUp]: [],
+        [SectionName.mainLesson]: [],
+        [SectionName.coolDown]: [],
+        [SectionName.notes]: '',
+        isDirty: false,
       };
     },
   },
@@ -86,10 +110,11 @@ export const lessonPlanSlice = createSlice({
 export const {
   addToSection,
   removeFromSection,
-  addToNote,
-  removeNote,
+  replaceNote,
   replaceSection,
   setLessonPlanName,
+  loadInitialLessonPlan,
+  reset,
 } = lessonPlanSlice.actions;
 
 // Selector actions to "read" from redux'
@@ -111,7 +136,38 @@ export const getLessonPlanName = state => {
     console.error(
       'getLessonPlanName: Could not grab lesson plan name from redux.',
     );
-    return [];
+    return '';
+  }
+};
+
+export const getDirty = state => {
+  return state.isDirty;
+};
+
+export const getInitialLessonPlanName = state => {
+  return state.initialLessonPlanName;
+};
+
+export const getLessonPlan = state => {
+  try {
+    const removeModuleKey = module => {
+      const { key, ...rest } = module; // using rest parameter to store properties other than key
+      return rest;
+    };
+    const warmUp = state[SectionName.warmUp].map(removeModuleKey);
+    const mainLesson = state[SectionName.mainLesson].map(removeModuleKey);
+    const coolDown = state[SectionName.coolDown].map(removeModuleKey);
+
+    return {
+      lessonPlanName: state.lessonPlanName,
+      [SectionName.warmUp]: warmUp,
+      [SectionName.mainLesson]: mainLesson,
+      [SectionName.coolDown]: coolDown,
+      [SectionName.notes]: state[SectionName.notes],
+    };
+  } catch {
+    console.error('getLessonPlan: Could not grab lesson plan from redux.');
+    return {};
   }
 };
 
