@@ -47,27 +47,35 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   };
 
   // MODULE MENU FUNCTIONS
-  const deleteModule = (keyToDelete, item) => {
+  const deleteModule = (keyToDelete) => {
     // Remove the module with matching key
     const newSectionData = sectionData.filter(
       module => module.key != keyToDelete,
     );
     updateRedux(newSectionData);
 
-    const moduleToDelete = sectionData.find(module => module.key === keyToDelete)
-    const idToDelete = moduleToDelete.id;
-    console.log("Activity Card id to delete: "+ idToDelete);
-      
-    const deleteCardStatus = deleteCardHelper(idToDelete); 
-
+    //if the module is an Activity Card, find the card id from redux
+    const moduleToDelete = sectionData.find(
+      module => module.key === keyToDelete && module.type === 'activity',
+    );
+    
+    if (moduleToDelete) {
+      const idToDelete = moduleToDelete.id;
+      console.log('Activity Card id to delete: ' + idToDelete);
+  
+      // Call helper function to deal with async
+      const deleteCardStatus = deleteCardHelper(idToDelete);
+    } else {
+      console.log('No activity module found with the provided key');
+    }
   };
 
-  const deleteCardHelper = async (id) => {
+  const deleteCardHelper = async id => {
     try {
       await ActivityCardService.deleteActivityCard(id);
     } catch (error) {
       console.error('Error while deleting the activity card: ' + error);
-    } 
+    }
   };
 
   const editModule = (keyToEdit, newContent) => {

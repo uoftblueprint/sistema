@@ -54,7 +54,7 @@ const ActivityCardService = {
       //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
       if (files_list.length == 0) {
         return [];
-      }else{
+      } else {
         await deleteFile(path);
         await makeDirectory(path);
       }
@@ -177,6 +177,8 @@ const ActivityCardService = {
       try {
         const filePath = MAINDIRECTORY + '/DownloadedActivityCards/' + id;
         console.log(filePath);
+
+        //check if file exists first. if yes, use RNFS.unlink, otherwise throw an error
         if (await checkFileExists(filePath)) {
           await deleteFile(filePath);
           resolve(`Activity card deleted successfully.`);
@@ -187,7 +189,7 @@ const ActivityCardService = {
         reject('Error in deleting activity card: ' + e);
       }
     });
-  }
+  },
 };
 
 export default ActivityCardService;
