@@ -184,6 +184,7 @@ const AddActivityCard = function ({ navigation, route }) {
       addToSection({
         type: 'activity',
         name: previewInfo?.name,
+        id: previewInfo?.id,
         section: sectionType,
         content: rnfsPath,
       }),

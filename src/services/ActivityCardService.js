@@ -51,16 +51,12 @@ const ActivityCardService = {
       const files_list = driveFiles.files;
       var pathArr = [];
 
+      //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
       if (files_list.length == 0) {
         return [];
-      }
-
-      //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
-      if (files_list.length !== 0) {
+      }else{
         await deleteFile(path);
         await makeDirectory(path);
-      } else {
-        return;
       }
 
       //if new cards were found, save them into the empty directory path
@@ -168,6 +164,30 @@ const ActivityCardService = {
       })
     ).data.files;
   },
+
+  /**
+   * delete activity card from local storage
+   *
+   * @async
+   * * @param {String} id ID of the activity card to delete
+   * @returns {Promise}
+   */
+  deleteActivityCard: async function (id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const filePath = MAINDIRECTORY + '/DownloadedActivityCards/' + id;
+        console.log(filePath);
+        if (await checkFileExists(filePath)) {
+          await deleteFile(filePath);
+          resolve(`Activity card deleted successfully.`);
+        } else {
+          reject(`Error: Activity card does not exist.`);
+        }
+      } catch (e) {
+        reject('Error in deleting activity card: ' + e);
+      }
+    });
+  }
 };
 
 export default ActivityCardService;

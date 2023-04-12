@@ -12,8 +12,9 @@ import {
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
 import { SafeAreaView } from 'react-native';
 import ContentCard from './ContentCard';
+import ActivityCardService from '../../services/ActivityCardService';
 import AddLessonContentButton from './AddLessonContentButton';
-import { STACK_SCREENS } from '../constants';
+import { STACK_SCREENS, ModuleType } from '../constants';
 import { TextStyle } from '../../Styles.config';
 
 const LessonSectionDraggable = ({ sectionType, navigation }) => {
@@ -46,13 +47,27 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
   };
 
   // MODULE MENU FUNCTIONS
-  const deleteModule = keyToDelete => {
+  const deleteModule = (keyToDelete, item) => {
     // Remove the module with matching key
     const newSectionData = sectionData.filter(
       module => module.key != keyToDelete,
     );
     updateRedux(newSectionData);
-    //
+
+    const moduleToDelete = sectionData.find(module => module.key === keyToDelete)
+    const idToDelete = moduleToDelete.id;
+    console.log("Activity Card id to delete: "+ idToDelete);
+      
+    const deleteCardStatus = deleteCardHelper(idToDelete); 
+
+  };
+
+  const deleteCardHelper = async (id) => {
+    try {
+      await ActivityCardService.deleteActivityCard(id);
+    } catch (error) {
+      console.error('Error while deleting the activity card: ' + error);
+    } 
   };
 
   const editModule = (keyToEdit, newContent) => {
