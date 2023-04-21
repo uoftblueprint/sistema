@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
     const filePath = `${datePath}/date.txt`;
     const cards = await ActivityCardService.getFeaturedActivityCards();
 
-    //update the last refreshed date
+    //update the last refreshed date and card array if new cards were found
     if (cards.length != 0) {
       setPathArr(cards);
 
@@ -66,7 +66,11 @@ const Home = ({ navigation }) => {
           if (tempArr.length != 0) {
             setPathArr(tempArr);
           }
+        }else{
+          //very first time loading the app, no cards in RNFS
+          handleRefreshPress();
         }
+
       } catch (error) {
         console.error(error);
       }
