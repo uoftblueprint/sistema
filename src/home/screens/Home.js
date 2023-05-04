@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import RecentCard from '../components/RecentCard';
@@ -25,8 +26,10 @@ import { scale, verticalScale } from 'react-native-size-matters';
 const Home = ({ navigation }) => {
   const [date, setDate] = useState('');
   const [pathArr, setPathArr] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   const handleRefreshPress = async () => {
+    setVisible(true);
     const datePath = MAINDIRECTORY + '/RefreshedDate';
     const filePath = `${datePath}/date.txt`;
     const cards = await ActivityCardService.getFeaturedActivityCards();
@@ -40,6 +43,7 @@ const Home = ({ navigation }) => {
       await makeDirectory(datePath);
       await writeFile(false, filePath, today);
     }
+    setVisible(false);
   };
 
   //load the save data when Home.js mounts
@@ -66,11 +70,10 @@ const Home = ({ navigation }) => {
           if (tempArr.length != 0) {
             setPathArr(tempArr);
           }
-        }else{
+        } else {
           //very first time loading the app, no cards in RNFS
           handleRefreshPress();
         }
-
       } catch (error) {
         console.error(error);
       }
@@ -93,8 +96,8 @@ const Home = ({ navigation }) => {
         </SafeAreaView>
       </SafeAreaView>
 
-      <SafeAreaView style={styles.flatListContainer}>
-        <FlatList
+      <SafeAreaView style={styles.flatListContainer}>  
+        {!visible ? <FlatList
           data={pathArr}
           renderItem={({ item }) => (
             <TouchableOpacity
@@ -108,7 +111,13 @@ const Home = ({ navigation }) => {
           )}
           keyExtractor={(item, index) => index.toString()}
           style={styles.flatListStyle}
-        />
+        /> 
+        :
+        //Loading Animation Component 
+        <ActivityIndicator 
+          animating={visible}
+          size="large"
+        /> }
       </SafeAreaView>
     </SafeAreaView>
   );
@@ -148,6 +157,9 @@ const styles = StyleSheet.create({
   refreshIcon: {
     fill: '#453E3D',
   },
+  loadingIcon: {
+    color: "#453E3D"
+  }
 });
 
 export default Home;
