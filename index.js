@@ -1,7 +1,3 @@
-/**
- * @format
- */
-
 import { AppRegistry } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
@@ -13,6 +9,7 @@ import {
 import store from './src/services/configureStore';
 import { setNewToken } from './src/services/login/authSlice';
 import { printAxiosError } from './src/services/helpers';
+import { AccessToken } from './src/services/models';
 
 // Add axios interceptor at root level to check and if needed, refresh, for valid token every time an HTTP request is made
 
@@ -47,6 +44,13 @@ axios.interceptors.response.use(
     return response; // Do nothing
   },
   error => {
+    // If 4xx client error, purposefully set an invalid token to trigger token refresh on next request
+    if (error?.response?.status >= 400  && error?.response?.status < 500) {
+      console.warn("Reseting token to refresh on next HTTP request due to 4xx client error.");
+      invalidToken = new AccessToken(); // default has automatically invalid expiry time
+      store.dispatch(setNewToken(invalidToken)); // set invalid token to redux (isTokenValid checks redux)
+    }
+
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     printAxiosError(error);
     return Promise.reject(error);
