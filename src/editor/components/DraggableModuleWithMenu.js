@@ -29,11 +29,19 @@ export default class DraggableModuleWithMenu extends React.Component {
 
     // If the module is a text module, add the edit option to the menu
     if (this.props.data.type == ModuleType.text) {
-      this.options = Platform.OS === 'ios' ? [...this.textMenu, 'Cancel'] : this.textMenu;
+      this.options =
+        Platform.OS === 'ios' ? [...this.textMenu, 'Cancel'] : this.textMenu;
       this.actions = [this.toggleEdit, this.deleteModule]; // matches order of this.options
     } else {
-      this.options = Platform.OS === 'ios' ? [...this.activityCardMenu, 'Cancel'] : this.activityCardMenu;
-      this.actions = [this.moveModuleUp, this.moveModuleDown, this.deleteModule]; // matches order of this.options
+      this.options =
+        Platform.OS === 'ios'
+          ? [...this.activityCardMenu, 'Cancel']
+          : this.activityCardMenu;
+      this.actions = [
+        this.moveModuleUp,
+        this.moveModuleDown,
+        this.deleteModule,
+      ]; // matches order of this.options
     }
 
     this.state = {
@@ -55,13 +63,13 @@ export default class DraggableModuleWithMenu extends React.Component {
 
   /** Moves the activity card module in the draggable flatlist up */
   moveModuleUp = () => {
-    this.props.handleMove(this.props.data.key, swapUp=true)
-  }
+    this.props.handleMove(this.props.data.key, true); // swapUp=true
+  };
 
   /** Moves the activity card module in the draggable flatlist down */
   moveModuleDown = () => {
-    this.props.handleMove(this.props.data.key, swapUp=false)
-  }
+    this.props.handleMove(this.props.data.key, false); // swapUp=false
+  };
 
   /** Based on what menu option the user clicks, execute the function corresponding with the same index in this.actions. */
   handleClick = index => {

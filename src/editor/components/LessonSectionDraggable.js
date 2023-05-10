@@ -86,7 +86,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
         updateRedux(newSection);
       }
     }
-  }
+  };
 
   // To render each module in DraggableFlatList
   const renderModule = ({ item, drag, isActive }) => {
