@@ -51,16 +51,17 @@ const ActivityCardService = {
       const files_list = driveFiles.files;
       var pathArr = [];
 
+      //no new files found, return an empty array (old Activity Cards are mapped onto frontend)
       if (files_list.length == 0) {
         return [];
       }
 
-      //Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
-      if (files_list.length !== 0) {
+      //Delete anything that may currently be in the Featured Cards directory, make the new path with no content
+      if (await checkFileExists(path)) {
         await deleteFile(path);
         await makeDirectory(path);
-      } else {
-        return;
+      }else{
+        await makeDirectory(path);
       }
 
       //if new cards were found, save them into the empty directory path

@@ -2,8 +2,10 @@ import {
   StyleSheet,
   SafeAreaView,
   Text,
+  View,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import RecentCard from '../components/RecentCard';
@@ -11,6 +13,7 @@ import Header from '../../Components/Header';
 import RefreshIcon from '../../../assets/refreshIcon.svg';
 import { MAINDIRECTORY } from '../../services/constants';
 import { STACK_SCREENS } from '../constants';
+import { AppColors } from '../../Styles.config';
 import ActivityCardService from '../../services/ActivityCardService';
 import {
   makeDirectory,
@@ -25,13 +28,15 @@ import { scale, verticalScale } from 'react-native-size-matters';
 const Home = ({ navigation }) => {
   const [date, setDate] = useState('');
   const [pathArr, setPathArr] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   const handleRefreshPress = async () => {
+    setVisible(true);
     const datePath = MAINDIRECTORY + '/RefreshedDate';
     const filePath = `${datePath}/date.txt`;
     const cards = await ActivityCardService.getFeaturedActivityCards();
 
-    //update the last refreshed date
+    //update the last refreshed date and card array if new cards were found
     if (cards.length != 0) {
       setPathArr(cards);
 
@@ -40,6 +45,7 @@ const Home = ({ navigation }) => {
       await makeDirectory(datePath);
       await writeFile(false, filePath, today);
     }
+    setVisible(false);
   };
 
   //load the save data when Home.js mounts
@@ -66,6 +72,9 @@ const Home = ({ navigation }) => {
           if (tempArr.length != 0) {
             setPathArr(tempArr);
           }
+        } else {
+          //very first time loading the app, no cards in RNFS
+          handleRefreshPress();
         }
       } catch (error) {
         console.error(error);
@@ -89,23 +98,33 @@ const Home = ({ navigation }) => {
         </SafeAreaView>
       </SafeAreaView>
 
-      <SafeAreaView style={styles.flatListContainer}>
-        <FlatList
-          data={pathArr}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
-                  cardPath: item,
-                })
-              }>
-              <RecentCard cardPath={item} />
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          style={styles.flatListStyle}
-        />
-      </SafeAreaView>
+      {!visible 
+        ? <SafeAreaView style={styles.flatListContainer}>  
+            <FlatList
+            data={pathArr}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
+                    cardPath: item,
+                  })
+                }>
+                <RecentCard cardPath={item} />
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.flatListStyle}
+            /> 
+          </SafeAreaView>
+        :
+        //Loading Animation Component
+        <SafeAreaView style={[styles.loadingView]}>
+          <ActivityIndicator 
+            // animating={visible}
+            size="large"
+            color={AppColors.secondary}
+          />
+        </SafeAreaView>}
     </SafeAreaView>
   );
 };
@@ -114,6 +133,12 @@ const styles = StyleSheet.create({
   background: {
     backgroundColor: '#FFFAF5',
     height: '100%',
+  },
+  loadingView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: verticalScale(30),
   },
   headContainer: {
     paddingHorizontal: scale(30),
@@ -144,6 +169,9 @@ const styles = StyleSheet.create({
   refreshIcon: {
     fill: '#453E3D',
   },
+  loadingIcon: {
+    color: "#453E3D"
+  }
 });
 
 export default Home;
