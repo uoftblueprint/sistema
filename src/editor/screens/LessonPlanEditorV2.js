@@ -36,7 +36,8 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   const nameLoaded = useSelector(state => getLessonPlanName(state.lessonPlan));
 
   // COMPONENT STATES
-  const [isLoading, setLoading] = useState(false);
+  const [isFetching, setFetching] = useState(false);
+  const [isSaving, setSaving] = useState(false);
   const [isNewLP, setNew] = useState(true);
   const [unsavedOverlayVisible, toggleUnsavedChanges] = useState(false);
   const [errorOverlayVisible, toggleLoadingError] = useState(false);
@@ -52,9 +53,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   // Fetch and set lesson plan data
   useEffect(() => {
     const fetchLPData = async () => {
-      setLoading(true);
+      setFetching(true);
       setNew(true);
-      let doneFetching = false;
+      let fetchSuccess = false;
 
       // Opening existing lesson plan in editor
       if (route.params && route.params.lessonPlanName) {
@@ -83,19 +84,19 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
             // Dispatch it to redux for the rest of the editor to render
             dispatch(loadInitialLessonPlan({ ...lpObj }));
-            doneFetching = true;
+            fetchSuccess = true;
             setNew(false);
           })
           .catch(() => {
             // Open error overlay if lesson plan could not be opened
             toggleLoadingError(true);
             // Open a blank lesson plan
-            doneFetching = false;
+            fetchSuccess = false;
           });
       }
 
       // Opening new lesson plan or if fetching failed
-      if (!doneFetching) {
+      if (!fetchSuccess) {
         console.log('LessonPlanEditorV2: Opening blank lesson plan!');
         // Default lesson plan name is today's date
         const todayDate = new Date().toLocaleDateString('en-us', {
@@ -105,7 +106,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         });
         dispatch(setLessonPlanName({ name: todayDate, isDirty: false }));
       }
-      setLoading(false);
+      setFetching(false);
     };
 
     // If lesson plan name is currently blank and the screen is focused, populate the editor with smthg
@@ -122,6 +123,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         showOptions={!isNewLP} // Don't show buttons to access LP options menu if LP is brand new (nothing to delete, favourite, etc.)
         toggleUnsavedChanges={toggleUnsavedChanges}
         handleBackButton={leaveEditor}
+        disableEditName={isFetching || isSaving}
       />
 
       <NestableScrollContainer contentContainerStyle={styles.viewStyle}>
@@ -130,18 +132,24 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             <LessonSectionDraggable
               navigation={navigation}
               sectionType={SectionName.warmUp}
+              isFetching={isFetching}
+              disableInteractions={isFetching || isSaving}
             />
             <LessonSectionDraggable
               navigation={navigation}
               sectionType={SectionName.mainLesson}
+              isFetching={isFetching}
+              disableInteractions={isFetching || isSaving}
             />
             <LessonSectionDraggable
               navigation={navigation}
               sectionType={SectionName.coolDown}
+              isFetching={isFetching}
+              disableInteractions={isFetching || isSaving}
             />
             <LessonPlanNotes
-              navigation={navigation}
               sectionType={SectionName.notes}
+              isDisabled={isFetching || isSaving}
             />
           </View>
         </TouchableWithoutFeedback>
@@ -150,8 +158,8 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       <View style={styles.saveButton}>
         <SaveButton
           navigation={navigation}
-          isLessonPlanLoading={isLoading}
-          setLoading={setLoading}
+          isLessonPlanLoading={isFetching || isSaving}
+          setLoading={setSaving}
         />
       </View>
 

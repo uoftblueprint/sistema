@@ -102,7 +102,7 @@ export default class DraggableModuleWithMenu extends React.Component {
           onPress={this.handlePress}
           delayLongPress={this.props.longPressTriggerMs} // ms to trigger a LongPress
           onLongPress={this.props.drag}
-          disabled={this.props.dragIsActive} // disable interactions while being dragged
+          disabled={this.props.dragIsActive || this.props.isMenuDisabled} // disable interactions while being dragged or when saving
           style={styles.module}>
           {this.props.data.type == ModuleType.text ? (
             <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>

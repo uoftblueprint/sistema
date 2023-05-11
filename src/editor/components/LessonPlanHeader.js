@@ -30,6 +30,7 @@ const LessonPlanHeader = ({
   showOptions,
   handleBackButton,
   toggleUnsavedChanges,
+  disableEditName,
 }) => {
   const dispatch = useDispatch();
   const lessonPlanName = useSelector(state =>
@@ -76,6 +77,7 @@ const LessonPlanHeader = ({
         </View>
         <View style={styles.rightToolbar}>
           <TouchableOpacity
+            disabled={disableEditName}
             onPress={() => {
               setIsEditable(true);
             }}>
