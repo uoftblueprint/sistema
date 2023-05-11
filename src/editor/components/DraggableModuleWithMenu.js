@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Platform,
   ActionSheetIOS,
@@ -13,12 +13,15 @@ import {
 } from 'react-native';
 import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
-import ImageIcon from '../../../assets/imageIcon.svg';
 import { scale, verticalScale } from 'react-native-size-matters';
 
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
 
 export default class DraggableModuleWithMenu extends React.Component {
+  // Menu that appears when you tap the module
+  textMenu = ['Edit', 'Delete'];
+  activityCardMenu = ['Move up', 'Move down', 'Delete'];
+
   constructor(props) {
     super(props);
     this.menuRef; // Assigned upon render
@@ -27,13 +30,18 @@ export default class DraggableModuleWithMenu extends React.Component {
     // If the module is a text module, add the edit option to the menu
     if (this.props.data.type == ModuleType.text) {
       this.options =
-        Platform.OS === 'ios'
-          ? ['Edit', 'Delete', 'Cancel']
-          : ['Edit', 'Delete'];
-      this.actions = [this.toggleEdit, this.deleteModule];
+        Platform.OS === 'ios' ? [...this.textMenu, 'Cancel'] : this.textMenu;
+      this.actions = [this.toggleEdit, this.deleteModule]; // matches order of this.options
     } else {
-      this.options = Platform.OS === 'ios' ? ['Delete', 'Cancel'] : ['Delete'];
-      this.actions = [this.deleteModule];
+      this.options =
+        Platform.OS === 'ios'
+          ? [...this.activityCardMenu, 'Cancel']
+          : this.activityCardMenu;
+      this.actions = [
+        this.moveModuleUp,
+        this.moveModuleDown,
+        this.deleteModule,
+      ]; // matches order of this.options
     }
 
     this.state = {
@@ -51,6 +59,16 @@ export default class DraggableModuleWithMenu extends React.Component {
   deleteModule = () => {
     // TODO: [SIS-118] Warn user before deleting lesson plan module
     this.props.handleDelete(this.props.data.key);
+  };
+
+  /** Moves the activity card module in the draggable flatlist up */
+  moveModuleUp = () => {
+    this.props.handleMove(this.props.data.key, true); // swapUp=true
+  };
+
+  /** Moves the activity card module in the draggable flatlist down */
+  moveModuleDown = () => {
+    this.props.handleMove(this.props.data.key, false); // swapUp=false
   };
 
   /** Based on what menu option the user clicks, execute the function corresponding with the same index in this.actions. */

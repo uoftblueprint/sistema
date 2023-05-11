@@ -65,6 +65,29 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
     updateRedux(newSectionData);
   };
 
+  const moveModule = (keyToMove, swapUp) => {
+    // Moving up or down is equivalent to swapping with module before or after it
+    if (swapUp) {
+      let index = sectionData.findIndex(module => module.key == keyToMove);
+      // Swap if element isn't first
+      if (index > 0) {
+        let newSection = [...sectionData];
+        newSection[index] = newSection[index - 1];
+        newSection[index - 1] = sectionData[index];
+        updateRedux(newSection);
+      }
+    } else {
+      let index = sectionData.findIndex(module => module.key == keyToMove);
+      // Swap if element isn't last
+      if (index !== -1 && index < sectionData.length - 1) {
+        let newSection = [...sectionData];
+        newSection[index] = newSection[index + 1];
+        newSection[index + 1] = sectionData[index];
+        updateRedux(newSection);
+      }
+    }
+  };
+
   // To render each module in DraggableFlatList
   const renderModule = ({ item, drag, isActive }) => {
     return (
@@ -74,6 +97,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
         <DraggableModuleWithMenu
           handleEdit={editModule}
           handleDelete={deleteModule}
+          handleMove={moveModule}
           longPressTriggerMs={200} // ms it takes to trigger a LongPress and drag
           drag={drag}
           dragIsActive={isActive}
