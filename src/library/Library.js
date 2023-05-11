@@ -112,53 +112,59 @@ const Library = ({ navigation, route }) => {
         </SafeAreaView>
         <ScrollView>
           <SafeAreaView style={styles.content}>
-            {lpList
-              .sort((x, y) => {
-                switch (sortType) {
-                  case 1:
-                    // A to Z
-                    return x.name === y.name ? 0 : x.name > y.name ? 1 : -1;
-                  case 2:
-                    // Z to A
-                    return x.name === y.name ? 0 : x.name < y.name ? 1 : -1;
-                  case 3:
-                    // Oldest
-                    // + prefix is used to compare the miliseconds
-                    return +x.lastEditedDate === +y.lastEditedDate
-                      ? 0
-                      : x.lastEditedDate > y.lastEditedDate
-                      ? 1
-                      : -1;
-                  default:
-                    // Last Edited
-                    // if no sort type is chosen, sort by last edited
-                    return +x.lastEditedDate === +y.lastEditedDate
-                      ? 0
-                      : x.lastEditedDate < y.lastEditedDate
-                      ? 1
-                      : -1;
-                }
-              })
-              .sort((x, y) => {
-                // Always display favorited lesson plans first
-                return x.isFavorited === y.isFavorited
-                  ? 0
-                  : y.isFavorited
-                  ? 1
-                  : -1;
-              })
-              .map((lessonPlan, i) => (
-                <LessonPlanButton
-                  key={i}
-                  index={i}
-                  name={lessonPlan.name}
-                  navigation={navigation}
-                  isFavorited={lessonPlan.isFavorited}
-                  toggleFavorite={handleFavoriteChange}
-                  lastEditedDate={lessonPlan.lastEdited}
-                  lessonPlan={lessonPlan.name}
-                />
-              ))}
+            {loaded 
+              ? (
+                lpList.length > 0
+                  ? lpList
+                    .sort((x, y) => {
+                      switch (sortType) {
+                        case 1:
+                          // A to Z
+                          return x.name === y.name ? 0 : x.name > y.name ? 1 : -1;
+                        case 2:
+                          // Z to A
+                          return x.name === y.name ? 0 : x.name < y.name ? 1 : -1;
+                        case 3:
+                          // Oldest
+                          // + prefix is used to compare the miliseconds
+                          return +x.lastEditedDate === +y.lastEditedDate
+                            ? 0
+                            : x.lastEditedDate > y.lastEditedDate
+                            ? 1
+                            : -1;
+                        default:
+                          // Last Edited
+                          // if no sort type is chosen, sort by last edited
+                          return +x.lastEditedDate === +y.lastEditedDate
+                            ? 0
+                            : x.lastEditedDate < y.lastEditedDate
+                            ? 1
+                            : -1;
+                      }
+                    })
+                    .sort((x, y) => {
+                      // Always display favorited lesson plans first
+                      return x.isFavorited === y.isFavorited
+                        ? 0
+                        : y.isFavorited
+                        ? 1
+                        : -1;
+                    })
+                    .map((lessonPlan, i) => (
+                      <LessonPlanButton
+                        key={i}
+                        index={i}
+                        name={lessonPlan.name}
+                        navigation={navigation}
+                        isFavorited={lessonPlan.isFavorited}
+                        toggleFavorite={handleFavoriteChange}
+                        lastEditedDate={lessonPlan.lastEdited}
+                        lessonPlan={lessonPlan.name}
+                      />
+                    ))
+                  : <Text style={TextStyle.body}>Nothing's here. Get started by creating a lesson plan!</Text>
+              )
+              : <Text style={TextStyle.body}>Loading...</Text>}
           </SafeAreaView>
         </ScrollView>
       </SafeAreaView>
