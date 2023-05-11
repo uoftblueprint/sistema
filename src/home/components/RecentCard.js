@@ -71,7 +71,7 @@ const RecentCard = ({ navigation, cardPath }) => {
       height: windowHeight * 0.25,
     },
     scrollview: {
-      backgroundColor: 'white',
+      backgroundColor: '#000000',
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
     },
@@ -94,6 +94,7 @@ const RecentCard = ({ navigation, cardPath }) => {
       width: scale(290), // 80% of window width
       height: verticalScale(290), // 30% of window height
       paddingTop: scale(500),
+      opacity: 0.8, // darken the tint of the thumbnail
     },
   });
 
@@ -109,11 +110,9 @@ const RecentCard = ({ navigation, cardPath }) => {
               />
             </ScrollView>
             <SafeAreaView style={styles.titleBar}>
-              {/* <SafeAreaView style={{ marginHorizontal: 20 }}> */}
               <Text style={styles.title} numberOfLines={1}>
                 {title}
               </Text>
-              {/* </SafeAreaView> */}
             </SafeAreaView>
           </SafeAreaView>
         </SafeAreaView>
@@ -121,44 +120,5 @@ const RecentCard = ({ navigation, cardPath }) => {
     </SafeAreaView>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   box: {
-//     backgroundColor: 'white',
-//     borderWidth: 1,
-//     borderColor: 'black',
-//     borderRadius: 20,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     overflow: 'hidden',
-//     marginVertical: 15,
-//     width: '100%',
-//     height: windowHeight * 0.25,
-//   },
-//   scrollview: {
-//     backgroundColor: 'white',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   titleBar: {
-//     borderBottomLeftRadius: 18,
-//     borderBottomRightRadius: 18,
-//     width: '100%',
-//     height: '19%',
-//     backgroundColor: '#4D8ECB',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     paddingHorizontal: 20,
-//   },
-//   title: {
-//     fontFamily: 'Mulish-Italic',
-//     color: '#FFFFFF',
-//     width: '100%',
-//   },
-// });
 
 export default RecentCard;

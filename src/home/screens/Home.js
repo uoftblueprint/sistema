@@ -2,6 +2,7 @@ import {
   StyleSheet,
   SafeAreaView,
   Text,
+  View,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
@@ -12,6 +13,7 @@ import Header from '../../Components/Header';
 import RefreshIcon from '../../../assets/refreshIcon.svg';
 import { MAINDIRECTORY } from '../../services/constants';
 import { STACK_SCREENS } from '../constants';
+import { AppColors } from '../../Styles.config';
 import ActivityCardService from '../../services/ActivityCardService';
 import {
   makeDirectory,
@@ -96,29 +98,33 @@ const Home = ({ navigation }) => {
         </SafeAreaView>
       </SafeAreaView>
 
-      <SafeAreaView style={styles.flatListContainer}>  
-        {!visible ? <FlatList
-          data={pathArr}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
-                  cardPath: item,
-                })
-              }>
-              <RecentCard cardPath={item} />
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          style={styles.flatListStyle}
-        /> 
+      {!visible 
+        ? <SafeAreaView style={styles.flatListContainer}>  
+            <FlatList
+            data={pathArr}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
+                    cardPath: item,
+                  })
+                }>
+                <RecentCard cardPath={item} />
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.flatListStyle}
+            /> 
+          </SafeAreaView>
         :
-        //Loading Animation Component 
-        <ActivityIndicator 
-          animating={visible}
-          size="large"
-        /> }
-      </SafeAreaView>
+        //Loading Animation Component
+        <SafeAreaView style={[styles.loadingView]}>
+          <ActivityIndicator 
+            // animating={visible}
+            size="large"
+            color={AppColors.secondary}
+          />
+        </SafeAreaView>}
     </SafeAreaView>
   );
 };
@@ -127,6 +133,12 @@ const styles = StyleSheet.create({
   background: {
     backgroundColor: '#FFFAF5',
     height: '100%',
+  },
+  loadingView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: verticalScale(30),
   },
   headContainer: {
     paddingHorizontal: scale(30),
