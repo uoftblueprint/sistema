@@ -7,6 +7,7 @@ import {
   getInitialLessonPlanName,
   reset,
 } from '../../services/editor/lessonPlanSlice';
+import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants';
 
 const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
   const lessonPlanObj = useSelector(state => getLessonPlan(state.lessonPlan));
@@ -46,7 +47,7 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
 
             // Navigate back to Library
             setLoading(false);
-            navigation.goBack();
+            navigation.navigate(LIBRARY_STACK.LIBRARY);
           }
         }}>
         <SaveIcon height={'20'} width={'20'} />

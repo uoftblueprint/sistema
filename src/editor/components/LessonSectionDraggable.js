@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   replaceSection,
@@ -10,13 +10,18 @@ import {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
-import { SafeAreaView } from 'react-native';
+import SkeletonModule from './SkeletonModule';
 import ContentCard from './ContentCard';
 import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS } from '../constants';
 import { TextStyle } from '../../Styles.config';
 
-const LessonSectionDraggable = ({ sectionType, navigation }) => {
+const LessonSectionDraggable = ({
+  sectionType,
+  navigation,
+  isFetching,
+  disableInteractions,
+}) => {
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
@@ -52,7 +57,6 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
       module => module.key != keyToDelete,
     );
     updateRedux(newSectionData);
-    //
   };
 
   const editModule = (keyToEdit, newContent) => {
@@ -103,6 +107,7 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
           dragIsActive={isActive}
           data={item}
           navigation={navigation}
+          isMenuDisabled={disableInteractions}
         />
       </ScaleDecorator>
     );
@@ -123,19 +128,25 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
         <AddLessonContentButton
           placeholder={'Input text'}
           handleClick={addTextModule}
+          isDisabled={disableInteractions}
         />
         <AddLessonContentButton
           placeholder={'Add activity cards'}
           handleClick={addActivityCard}
+          isDisabled={disableInteractions}
         />
 
-        {/* Stack of content already inserted, available for further editing/removing */}
-        <NestableDraggableFlatList
-          data={sectionData}
-          onDragEnd={({ data }) => updateRedux(data)}
-          keyExtractor={item => item.key}
-          renderItem={renderModule}
-        />
+        {isFetching ? (
+          <SkeletonModule />
+        ) : (
+          /* Stack of content already inserted, available for further editing/removing */
+          <NestableDraggableFlatList
+            data={sectionData}
+            onDragEnd={({ data }) => updateRedux(data)}
+            keyExtractor={item => item.key}
+            renderItem={renderModule}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

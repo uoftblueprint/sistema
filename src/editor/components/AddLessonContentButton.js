@@ -10,9 +10,9 @@ import AddIcon from '../../../assets/add.svg';
 import { TextStyle } from '../../Styles.config';
 import { verticalScale } from 'react-native-size-matters';
 
-const AddLessonContentButton = ({ placeholder, handleClick }) => {
+const AddLessonContentButton = ({ placeholder, handleClick, isDisabled }) => {
   return (
-    <TouchableOpacity onPress={handleClick}>
+    <TouchableOpacity onPress={handleClick} disabled={isDisabled}>
       <SafeAreaView style={styles.sectionStyle}>
         <AddIcon height={'30'} width={'30'} />
         <View style={styles.input}>
