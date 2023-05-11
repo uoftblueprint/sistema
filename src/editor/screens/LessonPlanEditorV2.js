@@ -12,8 +12,6 @@ import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
-import { scale, verticalScale } from 'react-native-size-matters';
-import { SectionName } from '../../services/constants.js';
 import { useDispatch, useSelector } from 'react-redux';
 import LessonPlanService from '../../services/LessonPlanService.js';
 import {
@@ -24,6 +22,9 @@ import {
 } from '../../services/editor/lessonPlanSlice.js';
 import UnsavedChangesOverlay from '../components/overlays/UnsavedChangesOverlay.js';
 import ErrorLoadingLPOverlay from '../components/overlays/ErrorLoadingLPOverlay.js';
+import { scale, verticalScale } from 'react-native-size-matters';
+import { SectionName } from '../../services/constants.js';
+import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants.js';
 
 const lastEditedDummy = 'Jan 1, 2023';
 
@@ -47,7 +48,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     dispatch(reset());
     navigation.setParams({ lessonPlanName: '' });
     toggleUnsavedChanges(false);
-    navigation.goBack();
+    navigation.navigate(LIBRARY_STACK.LIBRARY); // Go to the library
   };
 
   // Fetch and set lesson plan data
