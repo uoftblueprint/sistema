@@ -156,8 +156,15 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       </View>
 
       {/* Overlays */}
-      <UnsavedChangesOverlay visible={unsavedOverlayVisible} handleStay={toggleUnsavedChanges} handleLeave={leaveEditor} />
-      <ErrorLoadingLPOverlay visible={errorOverlayVisible} handleClose={toggleLoadingError} />
+      <UnsavedChangesOverlay
+        visible={unsavedOverlayVisible}
+        handleStay={toggleUnsavedChanges}
+        handleLeave={leaveEditor}
+      />
+      <ErrorLoadingLPOverlay
+        visible={errorOverlayVisible}
+        handleClose={toggleLoadingError}
+      />
     </SafeAreaView>
   );
 };

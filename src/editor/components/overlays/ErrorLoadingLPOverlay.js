@@ -15,16 +15,21 @@ const ErrorLoadingLPOverlay = ({ visible, handleClose }) => {
       style={styles.overlayContainer}>
       <View style={styles.textColumn}>
         <View style={styles.row}>
-          <AlertErrorIcon height={iconSize} width={iconSize} style={styles.icon} />
+          <AlertErrorIcon
+            height={iconSize}
+            width={iconSize}
+            style={styles.icon}
+          />
           <Text style={[TextStyle.label, styles.overlayTitle]}>
             This lesson plan could not be loaded.
           </Text>
         </View>
-        
+
         <Text style={TextStyle.body}>
-          Please try again. If this keeps on happening, the file may be corrupted and irretrievable. 
+          Please try again. If this keeps on happening, the file may be
+          corrupted and irretrievable.
         </Text>
-        
+
         <View style={styles.buttonContainer}>
           <SistemaButton onPress={handleClose}>
             <Text style={TextStyle.body}> Okay </Text>
