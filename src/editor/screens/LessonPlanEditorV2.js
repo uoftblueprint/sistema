@@ -23,6 +23,7 @@ import {
   reset,
 } from '../../services/editor/lessonPlanSlice.js';
 import UnsavedChangesOverlay from '../components/overlays/UnsavedChangesOverlay.js';
+import ErrorLoadingLPOverlay from '../components/overlays/ErrorLoadingLPOverlay.js';
 
 const lastEditedDummy = 'Jan 1, 2023';
 
@@ -37,7 +38,8 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   // COMPONENT STATES
   const [isLoading, setLoading] = useState(false);
   const [isNewLP, setNew] = useState(true);
-  const [overlayVisible, toggleUnsavedChanges] = useState(false);
+  const [unsavedOverlayVisible, toggleUnsavedChanges] = useState(false);
+  const [errorOverlayVisible, toggleLoadingError] = useState(false);
 
   // Clear redux and route params
   const leaveEditor = () => {
@@ -85,10 +87,8 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             setNew(false);
           })
           .catch(() => {
-            // TODO: [SIS-123] Open error overlay if lesson plan could not be opened
-            
             // Open error overlay if lesson plan could not be opened
-
+            toggleLoadingError(true);
             // Open a blank lesson plan
             doneFetching = false;
           });
@@ -154,9 +154,10 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           setLoading={setLoading}
         />
       </View>
-      
+
       {/* Overlays */}
-      <UnsavedChangesOverlay visible={overlayVisible} handleStay={toggleUnsavedChanges} handleLeave={leaveEditor} />
+      <UnsavedChangesOverlay visible={unsavedOverlayVisible} handleStay={toggleUnsavedChanges} handleLeave={leaveEditor} />
+      <ErrorLoadingLPOverlay visible={errorOverlayVisible} handleClose={toggleLoadingError} />
     </SafeAreaView>
   );
 };
