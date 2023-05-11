@@ -8,21 +8,22 @@ import AlertErrorIcon from '../../assets/errorAlert.svg';
 const windowWidth = Dimensions.get('window').width;
 
 const OptionsMenuBanner = ({ isFavoritedPlan }) => {
-  const fontColor = isFavoritedPlan ? '#375238' : '#471612'; 
-  const backgroundColor = isFavoritedPlan ? '#DEFCDF' : '#FCE5E3'; 
+  const fontColor = isFavoritedPlan ? '#375238' : '#471612';
+  const backgroundColor = isFavoritedPlan ? '#DEFCDF' : '#FCE5E3';
   const displayText = isFavoritedPlan
     ? 'Lesson Plan Added to Favorites'
     : 'Lesson Plan Removed from Favorites';
-  const icon = isFavoritedPlan 
-    ? <CheckMarkIcon style={styles.iconBanner} /> 
-    : <AlertErrorIcon style={styles.iconBanner} />;
+  const icon = isFavoritedPlan ? (
+    <CheckMarkIcon style={styles.iconBanner} />
+  ) : (
+    <AlertErrorIcon style={styles.iconBanner} />
+  );
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: backgroundColor}]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: backgroundColor }]}>
       {icon}
-      <Text style={[styles.text, {color: fontColor}]}>
-        {displayText}
-      </Text>
+      <Text style={[styles.text, { color: fontColor }]}>{displayText}</Text>
     </SafeAreaView>
   );
 };
