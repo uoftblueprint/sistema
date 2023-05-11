@@ -6,14 +6,11 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
-  Text,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 import LessonSectionDraggable from '../components/LessonSectionDraggable.js';
 import LessonPlanNotes from '../components/LessonPlanNotes.js';
-import Overlay from '../../Components/Overlay';
-import SistemaButton from '../../Components/SistemaButton';
 import SaveButton from '../components/SaveButton.js';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName } from '../../services/constants.js';
@@ -25,7 +22,7 @@ import {
   getLessonPlanName,
   reset,
 } from '../../services/editor/lessonPlanSlice.js';
-import { TextStyle } from '../../Styles.config.js';
+import UnsavedChangesOverlay from '../components/overlays/UnsavedChangesOverlay.js';
 
 const lastEditedDummy = 'Jan 1, 2023';
 
@@ -89,6 +86,10 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           })
           .catch(() => {
             // TODO: [SIS-123] Open error overlay if lesson plan could not be opened
+            
+            // Open error overlay if lesson plan could not be opened
+
+            // Open a blank lesson plan
             doneFetching = false;
           });
       }
@@ -153,28 +154,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           setLoading={setLoading}
         />
       </View>
-      {/* Unsaved changes overlay */}
-      <Overlay
-        close={toggleUnsavedChanges}
-        visible={overlayVisible}
-        style={styles.overlayContainer}>
-        <View style={styles.textColumn}>
-          <Text style={[TextStyle.label, styles.overlayTitle]}>
-            You have unsaved changes.
-          </Text>
-          <Text style={TextStyle.body}>
-            Are you sure you want to leave this page?
-          </Text>
-          <View style={styles.buttonContainer}>
-            <SistemaButton onPress={toggleUnsavedChanges}>
-              <Text style={TextStyle.body}> Stay on page </Text>
-            </SistemaButton>
-            <SistemaButton onPress={leaveEditor} color={'blue'}>
-              <Text style={TextStyle.body}> Leave page </Text>
-            </SistemaButton>
-          </View>
-        </View>
-      </Overlay>
+      
+      {/* Overlays */}
+      <UnsavedChangesOverlay visible={overlayVisible} handleStay={toggleUnsavedChanges} handleLeave={leaveEditor} />
     </SafeAreaView>
   );
 };

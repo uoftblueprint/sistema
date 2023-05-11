@@ -164,7 +164,8 @@ const Library = ({ navigation, route }) => {
                     ))
                   : <Text style={TextStyle.body}>Nothing's here. Get started by creating a lesson plan!</Text>
               )
-              : <Text style={TextStyle.body}>Loading...</Text>}
+              : <Text style={TextStyle.body}>Loading...</Text>
+            }
           </SafeAreaView>
         </ScrollView>
       </SafeAreaView>
