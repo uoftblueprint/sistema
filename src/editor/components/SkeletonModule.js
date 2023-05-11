@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Animated, StyleSheet } from 'react-native';
+import { Animated, StyleSheet, Platform } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 
 const SkeletonModule = () => {
@@ -11,7 +11,7 @@ const SkeletonModule = () => {
       toValue: 0,
       duration: 1000,
       useNativeDriver: true,
-    }),    
+    }),
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 1000,
@@ -32,11 +32,8 @@ const SkeletonModule = () => {
     ]),
   ).start();
 
-  return (
-    <Animated.View style={[styles.module, { opacity: fadeAnim }]} />
-  );
+  return <Animated.View style={[styles.module, { opacity: fadeAnim }]} />;
 };
-
 
 const styles = StyleSheet.create({
   module: {

@@ -16,7 +16,12 @@ import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS } from '../constants';
 import { TextStyle } from '../../Styles.config';
 
-const LessonSectionDraggable = ({ sectionType, navigation, isFetching, disableInteractions }) => {
+const LessonSectionDraggable = ({
+  sectionType,
+  navigation,
+  isFetching,
+  disableInteractions,
+}) => {
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
@@ -107,17 +112,17 @@ const LessonSectionDraggable = ({ sectionType, navigation, isFetching, disableIn
           isDisabled={disableInteractions}
         />
 
-        {isFetching 
-          ? <SkeletonModule />
-          : 
-            /* Stack of content already inserted, available for further editing/removing */
-            <NestableDraggableFlatList
-              data={sectionData}
-              onDragEnd={({ data }) => updateRedux(data)}
-              keyExtractor={item => item.key}
-              renderItem={renderModule}
-            />
-        }
+        {isFetching ? (
+          <SkeletonModule />
+        ) : (
+          /* Stack of content already inserted, available for further editing/removing */
+          <NestableDraggableFlatList
+            data={sectionData}
+            onDragEnd={({ data }) => updateRedux(data)}
+            keyExtractor={item => item.key}
+            renderItem={renderModule}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
