@@ -13,7 +13,7 @@ import {
 } from '../../services/editor/lessonPlanSlice';
 import { TextStyle } from '../../Styles.config';
 
-const LessonPlanNotes = ({ sectionType }) => {
+const LessonPlanNotes = ({ sectionType, isDisabled }) => {
   const dispatch = useDispatch();
   const currNotes = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
@@ -24,6 +24,7 @@ const LessonPlanNotes = ({ sectionType }) => {
       <Text style={[styles.title, TextStyle.h2]}>{sectionType}</Text>
       <View style={styles.SectionStyle}>
         <TextInput
+          editable={!isDisabled}
           style={TextStyle.body}
           placeholder={'Add lesson notes here...'}
           placeholderTextColor={'#453E3D'}

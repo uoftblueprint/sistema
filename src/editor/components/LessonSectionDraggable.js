@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   replaceSection,
@@ -10,14 +10,19 @@ import {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
-import { SafeAreaView } from 'react-native';
+import SkeletonModule from './SkeletonModule';
 import ContentCard from './ContentCard';
 import ActivityCardService from '../../services/ActivityCardService';
 import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS, ModuleType } from '../constants';
 import { TextStyle } from '../../Styles.config';
 
-const LessonSectionDraggable = ({ sectionType, navigation }) => {
+const LessonSectionDraggable = ({
+  sectionType,
+  navigation,
+  isFetching,
+  disableInteractions,
+}) => {
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
@@ -88,6 +93,29 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
     updateRedux(newSectionData);
   };
 
+  const moveModule = (keyToMove, swapUp) => {
+    // Moving up or down is equivalent to swapping with module before or after it
+    if (swapUp) {
+      let index = sectionData.findIndex(module => module.key == keyToMove);
+      // Swap if element isn't first
+      if (index > 0) {
+        let newSection = [...sectionData];
+        newSection[index] = newSection[index - 1];
+        newSection[index - 1] = sectionData[index];
+        updateRedux(newSection);
+      }
+    } else {
+      let index = sectionData.findIndex(module => module.key == keyToMove);
+      // Swap if element isn't last
+      if (index !== -1 && index < sectionData.length - 1) {
+        let newSection = [...sectionData];
+        newSection[index] = newSection[index + 1];
+        newSection[index + 1] = sectionData[index];
+        updateRedux(newSection);
+      }
+    }
+  };
+
   // To render each module in DraggableFlatList
   const renderModule = ({ item, drag, isActive }) => {
     return (
@@ -97,11 +125,13 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
         <DraggableModuleWithMenu
           handleEdit={editModule}
           handleDelete={deleteModule}
+          handleMove={moveModule}
           longPressTriggerMs={200} // ms it takes to trigger a LongPress and drag
           drag={drag}
           dragIsActive={isActive}
           data={item}
           navigation={navigation}
+          isMenuDisabled={disableInteractions}
         />
       </ScaleDecorator>
     );
@@ -122,19 +152,25 @@ const LessonSectionDraggable = ({ sectionType, navigation }) => {
         <AddLessonContentButton
           placeholder={'Input text'}
           handleClick={addTextModule}
+          isDisabled={disableInteractions}
         />
         <AddLessonContentButton
           placeholder={'Add activity cards'}
           handleClick={addActivityCard}
+          isDisabled={disableInteractions}
         />
 
-        {/* Stack of content already inserted, available for further editing/removing */}
-        <NestableDraggableFlatList
-          data={sectionData}
-          onDragEnd={({ data }) => updateRedux(data)}
-          keyExtractor={item => item.key}
-          renderItem={renderModule}
-        />
+        {isFetching ? (
+          <SkeletonModule />
+        ) : (
+          /* Stack of content already inserted, available for further editing/removing */
+          <NestableDraggableFlatList
+            data={sectionData}
+            onDragEnd={({ data }) => updateRedux(data)}
+            keyExtractor={item => item.key}
+            renderItem={renderModule}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
