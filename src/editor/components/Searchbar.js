@@ -11,14 +11,12 @@ import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
 import NoCardsFound from './NoCardsFound';
 import { TextStyle } from '../../Styles.config';
-import { scale, moderateVerticalScale } from 'react-native-size-matters';
+import { scale, verticalScale, moderateVerticalScale } from 'react-native-size-matters';
 
 const Searchbar = ({
   onChangeText,
-  onFocus,
   value,
   activityList,
-  focused,
   setPreviewInfo,
   showNoCards,
   navigation,
@@ -28,7 +26,7 @@ const Searchbar = ({
   const refSearch = useRef();
 
   return (
-    <View>
+    <View style={{marginVertical: verticalScale(10)}}>
       <TouchableOpacity onPress={() => refSearch.current.focus()}>
         <View style={styles.searchContainer}>
           <SearchLogo style={styles.IconStyle} width={25} height={25} />
@@ -37,46 +35,37 @@ const Searchbar = ({
             placeholder="Search by title or keyword"
             placeholderTextColor={'black'}
             onChangeText={onChangeText}
-            onFocus={onFocus}
             ref={refSearch}
           />
         </View>
       </TouchableOpacity>
-      {focused ? (
-        <View style={styles.container}>
-          {showNoCards.current ? (
-            <>
-              <NoCardsFound
-                text={value}
-                navigation={navigation}
-                section={section}
-              />
-            </>
-          ) : (
-            <>
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                style={{ height: '100%', flex: 1 }}
-                data={activityList}
-                renderItem={({ item }) => {
-                  return (
-                    <SearchResults
-                      name={item?.name}
-                      id={item?.id}
-                      setPreviewInfo={setPreviewInfo}
-                      setHighlightedID={setHighlightedID}
-                      isHighlighted={highlightedID === item?.id}
-                    />
-                  );
-                }}
-                keyExtractor={item => item.id.toString()}
-              />
-            </>
-          )}
-        </View>
-      ) : (
-        <></>
-      )}
+      <View style={styles.container}>
+        {showNoCards.current ? (
+          <NoCardsFound
+            text={value}
+            navigation={navigation}
+            section={section}
+          />
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            style={{ height: '100%' }}
+            data={activityList}
+            renderItem={({ item }) => {
+              return (
+                <SearchResults
+                  name={item?.name}
+                  id={item?.id}
+                  setPreviewInfo={setPreviewInfo}
+                  setHighlightedID={setHighlightedID}
+                  isHighlighted={highlightedID === item?.id}
+                />
+              );
+            }}
+            keyExtractor={item => item.id.toString()}
+          />
+        )}
+      </View>
     </View>
   );
 };
@@ -87,7 +76,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   searchContainer: {
-    marginTop: '1%',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#453E3D',

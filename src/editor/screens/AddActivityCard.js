@@ -1,16 +1,17 @@
 //react dependencies
 import { useState, useRef, useEffect } from 'react';
 import {
-  Animated,
   SafeAreaView,
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Keyboard,
-  TouchableWithoutFeedback,
   Image,
+  ScrollView,
 } from 'react-native';
+import { verticalScale } from 'react-native-size-matters';
+import { TextStyle } from '../../Styles.config';
 
 //Component dependencies
 import SistemaButton from '../../Components/SistemaButton';
@@ -19,11 +20,8 @@ import TagCarousel from '../components/TagCarousel';
 
 //SVGs
 import BackArrow from '../../../assets/backArrow.svg';
-import LeftArrow from '../../../assets/leftArrow.svg';
-import RightArrow from '../../../assets/rightArrow.svg';
 
 import ActivityCardService from '../../services/ActivityCardService';
-import LessonPlanService from '../../services/LessonPlanService';
 
 import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
@@ -111,36 +109,6 @@ const AddActivityCard = function ({ navigation, route }) {
 
   // ************* TAG RELATED VARS END ************
 
-  // ************* ANIMATION RELATED VARS/FUNCS *****************
-  const HEIGHT = 10;
-  const heightAnim = useRef(new Animated.Value(HEIGHT)).current;
-  const [focused, setFocused] = useState(false);
-  const animViewHeight = heightAnim.interpolate({
-    inputRange: [0, HEIGHT],
-    outputRange: ['0%', `${HEIGHT}%`],
-  });
-
-  const collapse = () => {
-    setFocused(true);
-    Animated.timing(heightAnim, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const uncollapse = () => {
-    setFocused(false);
-    Animated.timing(heightAnim, {
-      toValue: HEIGHT,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-    Keyboard.dismiss();
-  };
-
-  // **************** ANIMATION RELATED STUFF END *********
-
   // **************** PREVIEW RELATED VARS ***************
 
   //Subscribe to keyboard events on component mount
@@ -205,33 +173,24 @@ const AddActivityCard = function ({ navigation, route }) {
   // *************** PREVIEW RELATED VARS END ***********
 
   return (
-    <TouchableWithoutFeedback onPress={uncollapse} flex={1} height={'100%'}>
-      <SafeAreaView style={styles.safeContainer}>
+    <SafeAreaView style={styles.safeContainer}>
+      <ScrollView style={styles.scrollContainer}>
         <View style={styles.paddingContainer}>
-          <Animated.View style={{ height: animViewHeight }}>
-            {focused ? (
-              <></>
-            ) : (
-              <>
-                <View
-                  style={[
-                    { alignItems: 'center' },
-                    styles.flexRow,
-                    styles.marginT5,
-                  ]}>
-                  <TouchableOpacity
-                    style={styles.backButton}
-                    onPress={() => navigation.goBack()}>
-                    <BackArrow height={25} width={25} />
-                  </TouchableOpacity>
-                  <Text style={styles.header}>
-                    {` ${sectionType} Activity Card `}
-                  </Text>
-                </View>
-              </>
-            )}
-          </Animated.View>
-
+          <View
+            style={[
+              { alignItems: 'center' },
+              styles.flexRow,
+              styles.marginT5,
+            ]}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}>
+              <BackArrow height={25} width={25} />
+            </TouchableOpacity>
+            <Text style={styles.header}>
+              {`${sectionType} Activity Card`}
+            </Text>
+          </View>
           <Text style={styles.tags}> Tags: </Text>
           <TagCarousel
             tagsList={TAGS}
@@ -240,120 +199,75 @@ const AddActivityCard = function ({ navigation, route }) {
           />
           <Searchbar
             onChangeText={onChangeSearch}
-            onFocus={collapse}
             value={searchQuery}
             activityList={matchSearch}
-            focused={focused}
             setPreviewInfo={setPreviewInfo}
             showNoCards={showNoCards}
             navigation={navigation}
             section={sectionType}
           />
-          {!keyboardVisible ? (
-            <>
-              {previewInfo ? (
-                <>
-                  <View
-                    style={[
-                      styles.previewContainer,
-                      {
-                        height: focused ? '30%' : '40%',
-                        marginTop: focused ? '5%' : '12%',
-                      },
-                    ]}>
-                    <View
-                      style={[
-                        { alignSelf: 'center', alignItems: 'flex-end' },
-                        styles.flex1,
-                      ]}>
-                      <LeftArrow height={30} width={20} />
-                    </View>
-                    <View
-                      style={[
-                        { marginBottom: '2%' },
-                        styles.flex4,
-                        styles.alignCenter,
-                      ]}>
-                      <Image
-                        style={styles.previewImage}
-                        source={{ uri: previewInfo?.url }}
-                      />
-                    </View>
-                    <View
-                      style={[
-                        { alignSelf: 'center', alignItems: 'flex-start' },
-                        styles.flex1,
-                      ]}>
-                      <RightArrow height={30} width={20} />
-                    </View>
-                  </View>
+          {previewInfo &&
+          <View style={{flexDirection: 'column', alignItems: 'center', width: '100%', marginTop: verticalScale(10)}}>
+            
+            {/* ADD ACTIVITY CARD BUTTONS */}
+            <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', width: '100%'}}>
+              <SistemaButton onPress={addCard}>
+                <Text
+                  style={[
+                    styles.mulishFont,
+                    styles.marginH2, 
+                    styles.bodyFontSize,
+                  ]}>
+                  Add Card
+                </Text>
+              </SistemaButton>
+              <TouchableOpacity onPress={addAsText}>
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    styles.mulishFont,
+                    styles.marginH2,
+                    styles.azureRadiance,
+                  ]}>
+                  INSERT AS TEXT INSTEAD
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-                  <View style={[styles.flexColumn, styles.alignCenter]}>
-                    <Text
-                      style={[
-                        styles.mulishFont,
-                        styles.marginV2,
-                        styles.bodyFontSize,
-                      ]}>
-                      {` ${previewInfo?.name} `}
-                    </Text>
-                    <View
-                      style={[
-                        { marginVertical: '3%' },
-                        styles.alignCenter,
-                        styles.flexRow,
-                      ]}>
-                      <SistemaButton onPress={addCard}>
-                        <Text
-                          style={[
-                            styles.mulishFont,
-                            styles.marginH2,
-                            styles.bodyFontSize,
-                          ]}>
-                          Add Card
-                        </Text>
-                      </SistemaButton>
-                      <TouchableOpacity
-                        onPress={addAsText}
-                        style={{ marginLeft: '5%' }}>
-                        <Text
-                          numberOfLines={1}
-                          style={[
-                            styles.mulishFont,
-                            styles.marginH2,
-                            styles.azureRadiance,
-                          ]}>
-                          INSERT AS TEXT INSTEAD
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </>
-              ) : (
-                <></>
-              )}
-            </>
-          ) : (
-            <></>
-          )}
+            {/* ACTIVITY CARD PREVIEW */}
+            <Text style={[TextStyle.label, {color: '#000000de', textAlign: 'center', marginVertical: verticalScale(15)}]}>
+              {previewInfo?.name}
+            </Text>
+            <Image
+              style={{ height: 300, width: 300, resizeMode: 'contain', marginBottom: verticalScale(15) }}
+              source={{ uri: previewInfo?.url }}
+            />
+
+          </View>}
         </View>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+      </ScrollView>
+    </SafeAreaView>
+  
   );
 };
 
 const styles = StyleSheet.create({
+  // TODO: clean up unused styles
   safeContainer: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#FFFAF5',
+  },
+  scrollContainer: {
     flexDirection: 'column',
     width: '100%',
     backgroundColor: '#FFFAF5',
-    height: '100%',
   },
   paddingContainer: {
     width: '100%',
     height: '100%',
     paddingHorizontal: '5%',
+    paddingVertical: verticalScale(15),
   },
   tagContainer: {
     height: '20%',
