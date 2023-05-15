@@ -26,8 +26,9 @@ import BackArrow from '../../../assets/backArrow.svg';
 // Backend
 import { useQuery } from '@tanstack/react-query';
 import ActivityCardService from '../../services/ActivityCardService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
+import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
 
 const AddActivityCard = function ({ navigation, route }) {
   const { sectionType } = route.params;
@@ -54,10 +55,11 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
     false,
     false,
+    false,
   ]);
 
   const TAGS = [
-    'Recently Added', // TODO: [SIS-142] "Recently added" activity card search filter
+    'Recently Added', // Keep at index 0
     'Warm Up',
     'No Equipment',
     'Beginner',
@@ -68,25 +70,56 @@ const AddActivityCard = function ({ navigation, route }) {
     'Scale',
   ];
 
+  const recentActivityCards = useSelector(state => getCardNames(state.recentActivityCards));
+
+  /**
+   * Checks that an activity card matches all selected tags and the search query
+   * @param card 
+   * @returns {boolean}
+   */
+  const matchesAllConditions = (card) => {
+    // Slice up tag array into 'Recently Added' tag and other
+    const recentTagActive = activeTags[0];
+    const otherTags = TAGS.slice(1);
+    const otherTagsActivity = activeTags.slice(1);
+    const otherTagsActive = otherTagsActivity.includes(true);
+
+    // Helper functions
+    const isRecentAC = () => {
+      return recentActivityCards.filter((recentCardName) => 
+        card.name.toLowerCase().includes(recentCardName.toLowerCase())
+      ).length > 0;
+    }
+    const containsAtLeastOneActiveTag = () => {
+      return otherTags.filter(
+        (tag, i) => 
+          otherTagsActivity[i] && // tag is active
+          card.description.toLowerCase().includes(tag.toLowerCase()) // card metadata includes tag
+      ).length > 0;
+    }
+
+    const nameIncludesQuery = card.name.toLowerCase().includes(searchQuery.trim().toLowerCase());
+
+    switch (true) {
+      case recentTagActive && otherTagsActive:
+        return nameIncludesQuery && isRecentAC() && containsAtLeastOneActiveTag();
+      case recentTagActive && !otherTagsActive:
+        return nameIncludesQuery && isRecentAC();
+      case !recentTagActive && otherTagsActive:
+        return nameIncludesQuery && containsAtLeastOneActiveTag();
+      default:
+        return nameIncludesQuery;
+    }
+  }
+
   const searchActivityCards = () => {
     // Clear previewed image on new search
     setHighlightedID('');
     setPreviewInfo(null);
 
-    // Filter matches on metadata of all activity cards
+    // Set list of cards that match all search conditions
     if (activityCards !== undefined) {
-      setMatchSearch(
-        activityCards?.filter(
-          card =>
-            card.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            (TAGS.filter(
-              (s, i) =>
-                activeTags[i] &&
-                card.description.toLowerCase().includes(s.toLowerCase()),
-            ).length > 0 ||
-              !activeTags.includes(true)),
-        ),
-      );
+      setMatchSearch(activityCards?.filter(card => matchesAllConditions(card)));
     }
   }
 
@@ -106,8 +139,7 @@ const AddActivityCard = function ({ navigation, route }) {
   // ************ SEARCH RELATED VARS END *********
 
   // **************** PREVIEW RELATED VARS ***************
-  // previewInfo has id, name, and url.
-  const [previewInfo, setPreviewInfo] = useState(null);
+  const [previewInfo, setPreviewInfo] = useState(null);  // previewInfo has id, name, and url
 
   const dispatch = useDispatch();
 
@@ -178,8 +210,9 @@ const AddActivityCard = function ({ navigation, route }) {
               style={styles.searchResultContainer}
             >
               {matchSearch.length > 0
-                ? matchSearch.map((item) => 
+                ? matchSearch.map((item, i) => 
                     <SearchResults
+                      key={i}
                       name={item?.name}
                       id={item?.id}
                       setPreviewInfo={setPreviewInfo}
