@@ -1,28 +1,18 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import {
   StyleSheet,
   TextInput,
   View,
   Platform,
-  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import SearchLogo from '../../../assets/Search.svg';
-import SearchResults from './SearchResults';
-import NoCardsFound from './NoCardsFound';
 import { TextStyle } from '../../Styles.config';
-import { scale, verticalScale, moderateVerticalScale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const Searchbar = ({
   onChangeText,
-  value,
-  activityList,
-  setPreviewInfo,
-  showNoCards,
-  navigation,
-  section,
 }) => {
-  const [highlightedID, setHighlightedID] = useState(null);
   const refSearch = useRef();
 
   return (
@@ -39,45 +29,14 @@ const Searchbar = ({
           />
         </View>
       </TouchableOpacity>
-      <View style={styles.container}>
-        {showNoCards.current ? (
-          <NoCardsFound
-            text={value}
-            navigation={navigation}
-            section={section}
-          />
-        ) : (
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            style={{ height: '100%' }}
-            data={activityList}
-            renderItem={({ item }) => {
-              return (
-                <SearchResults
-                  name={item?.name}
-                  id={item?.id}
-                  setPreviewInfo={setPreviewInfo}
-                  setHighlightedID={setHighlightedID}
-                  isHighlighted={highlightedID === item?.id}
-                />
-              );
-            }}
-            keyExtractor={item => item.id.toString()}
-          />
-        )}
-      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    height: moderateVerticalScale(160, 2.5),
-    width: '100%',
-  },
   searchContainer: {
     borderRadius: 10,
-    borderWidth: 1,
+    borderWidth: 0.77,
     borderColor: '#453E3D',
     width: '100%',
     flexDirection: 'row',
