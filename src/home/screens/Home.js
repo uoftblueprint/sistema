@@ -101,26 +101,25 @@ const Home = ({ navigation }) => {
       {!visible 
         ? <SafeAreaView style={styles.flatListContainer}>  
             <FlatList
-            data={pathArr}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
-                    cardPath: item,
-                  })
-                }>
-                <RecentCard cardPath={item} />
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            style={styles.flatListStyle}
+              data={pathArr}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate(STACK_SCREENS.EXPANDED_CARD, {
+                      cardPath: item,
+                    })
+                  }>
+                  <RecentCard cardPath={item} />
+                </TouchableOpacity>
+              )}
+              keyExtractor={(_, index) => index.toString()}
+              style={styles.flatListStyle}
             /> 
           </SafeAreaView>
         :
         //Loading Animation Component
         <SafeAreaView style={[styles.loadingView]}>
           <ActivityIndicator 
-            // animating={visible}
             size="large"
             color={AppColors.secondary}
           />
