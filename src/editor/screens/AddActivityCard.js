@@ -10,7 +10,7 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import { verticalScale, moderateVerticalScale } from 'react-native-size-matters';
+import { verticalScale, moderateVerticalScale, scale } from 'react-native-size-matters';
 import { TextStyle } from '../../Styles.config';
 
 // Component dependencies
@@ -58,7 +58,7 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
   ]);
 
-  const TAGS = [
+  const mainTags = [
     'Recently Added', // Keep at index 0
     'Warm Up',
     'No Equipment',
@@ -70,6 +70,18 @@ const AddActivityCard = function ({ navigation, route }) {
     'Scale',
   ];
 
+  const [durationActiveTags, setDurActiveTags] = useState([
+    false,
+    false,
+    false,
+  ]);
+
+  const durationTags = [
+    '5-10 mins',
+    '10-15 mins',
+    '15+ mins'
+  ];
+
   const recentActivityCards = useSelector(state => getCardNames(state.recentActivityCards));
 
   /**
@@ -78,11 +90,11 @@ const AddActivityCard = function ({ navigation, route }) {
    * @returns {boolean}
    */
   const matchesAllConditions = (card) => {
-    // Slice up tag array into 'Recently Added' tag and other
+    // See which conditions are active 
     const recentTagActive = activeTags[0];
-    const otherTags = TAGS.slice(1);
-    const otherTagsActivity = activeTags.slice(1);
-    const otherTagsActive = otherTagsActivity.includes(true);
+    const mainTagsActivity = activeTags.slice(1);
+    const mainTagsActive = mainTagsActivity.includes(true);
+    const durationTagsActive = durationActiveTags.includes(true);
 
     // Helper functions
     const isRecentAC = () => {
@@ -91,25 +103,33 @@ const AddActivityCard = function ({ navigation, route }) {
       ).length > 0;
     }
     const containsAllActiveTags = () => {
-      const activeTags = otherTags.filter((_, i) => otherTagsActivity[i]);
+      const tagNames = mainTags.slice(1);
+      const activeTags = tagNames.filter((_, i) => mainTagsActivity[i]);
       const cardTags = activeTags.filter((tag) => 
         card.description.toLowerCase().includes(tag.toLowerCase()) // card metadata includes tag
       );
       return activeTags.every((tag,i) => tag === cardTags[i]); 
     }
+    const isWithinDuration = () => {
+      let duration = durationTags[durationActiveTags.indexOf(true)];
+      duration = duration.toLowerCase().replace('mins', 'minutes');
+      return card.description.toLowerCase().includes(duration); // card metadata includes tag
+    }
 
     const nameIncludesQuery = card.name.toLowerCase().includes(searchQuery.trim().toLowerCase());
 
-    switch (true) {
-      case recentTagActive && otherTagsActive:
-        return nameIncludesQuery && isRecentAC() && containsAllActiveTags();
-      case recentTagActive && !otherTagsActive:
-        return nameIncludesQuery && isRecentAC();
-      case !recentTagActive && otherTagsActive:
-        return nameIncludesQuery && containsAllActiveTags();
-      default:
-        return nameIncludesQuery;
+    let passesChecks = nameIncludesQuery;
+    if (passesChecks && recentTagActive) {
+      passesChecks = passesChecks && isRecentAC();
     }
+    if (passesChecks && mainTagsActive) {
+      passesChecks = passesChecks && containsAllActiveTags();
+    }
+    if (passesChecks && durationTagsActive) {
+      passesChecks = passesChecks && isWithinDuration();
+    }
+
+    return passesChecks;
   }
 
   const searchActivityCards = () => {
@@ -134,7 +154,7 @@ const AddActivityCard = function ({ navigation, route }) {
   useEffect(() => {
     // Search if tags OR background activityCards data changes
     searchActivityCards();
-  }, [activityCards, activeTags]);
+  }, [activityCards, activeTags, durationActiveTags]);
 
   // ************ SEARCH RELATED VARS END *********
 
@@ -180,27 +200,28 @@ const AddActivityCard = function ({ navigation, route }) {
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.paddingContainer}>
         
-          <View
-            style={[
-              { alignItems: 'center' },
-              styles.flexRow,
-              styles.marginT5,
-            ]}>
+          <View style={styles.header}>
             <TouchableOpacity
               style={styles.backButton}
               onPress={() => navigation.goBack()}>
-              <BackArrow height={25} width={25} /> 
+              <BackArrow height={scale(25)} width={scale(25)} /> 
             </TouchableOpacity>
-            <Text style={styles.header}>
+            <Text style={[styles.headerTitle, TextStyle.h1]}>
               {`${sectionType} Activity Card`}
             </Text>
           </View>
 
-          <Text style={styles.tags}> Tags: </Text>
           <TagCarousel
-            tagsList={TAGS}
+            tagsList={mainTags}
             activeTags={activeTags}
             setActiveTags={setActiveTags}
+            selectOnlyOne={false}
+          />
+          <TagCarousel
+            tagsList={durationTags}
+            activeTags={durationActiveTags}
+            setActiveTags={setDurActiveTags}
+            selectOnlyOne={true}
           />
 
           <View>
@@ -289,8 +310,25 @@ const styles = StyleSheet.create({
   paddingContainer: {
     width: '100%',
     height: '100%',
-    paddingHorizontal: '5%',
+    paddingHorizontal: scale(15),
     paddingVertical: verticalScale(15),
+  },
+  header: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'flex-start',
+    marginTop: verticalScale(15),
+  },
+  headerTitle: {
+    verticalAlign: 'top',
+    lineHeight: 30,
+    flex: 1,
+  },
+  backButton: {
+    height: scale(40),
+    width: scale(40),
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   searchResultContainer: {
     maxHeight: moderateVerticalScale(230, 2.5),
@@ -326,31 +364,6 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '100%',
     resizeMode: 'contain',
-  },
-  header: {
-    color: 'black',
-    fontSize: 24,
-    fontFamily: 'Poppins-Bold',
-    marginLeft: '2%',
-  },
-  tags: {
-    color: 'black',
-    fontSize: 18,
-    fontFamily: 'Mulish-Regular',
-    marginTop: '5%',
-    marginBottom: '2%',
-  },
-  backText: {
-    color: 'black',
-    fontSize: 18,
-    fontFamily: 'Mulish-Regular',
-  },
-  backButton: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    paddingBottom: '1%',
   },
   alignCenter: {
     justifyContent: 'center',

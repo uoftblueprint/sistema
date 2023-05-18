@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Animated, View, ScrollView, StyleSheet } from 'react-native';
 import TagFilter from './TagFilter';
 
-const TagCarousel = ({ tagsList, activeTags, setActiveTags }) => {
+const TagCarousel = ({ tagsList, activeTags, setActiveTags, selectOnlyOne }) => {
   const scrollBarPosition = useRef(new Animated.Value(0)).current;
   const scrollBarPositionPercentage = scrollBarPosition.interpolate({
     inputRange: [0, 1],
@@ -36,8 +36,17 @@ const TagCarousel = ({ tagsList, activeTags, setActiveTags }) => {
               active={activeTags[index]}
               onPress={() => {
                 // make a copy of the active tags
-                const newActiveTags = activeTags.slice();
-                newActiveTags[index] = !newActiveTags[index];
+                let newActiveTags = activeTags.slice();
+                if (
+                  selectOnlyOne && 
+                  !activeTags[index] && // if planning to activate tag
+                  activeTags.includes(true) // and other tags are already active
+                ) {
+                  // turn off all tags since we can only have one active
+                  newActiveTags = new Array(activeTags).fill(false); 
+                }
+                // toggle current tag
+                newActiveTags[index] = !newActiveTags[index]; 
                 setActiveTags(newActiveTags);
               }}
             />
