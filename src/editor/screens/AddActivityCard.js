@@ -90,23 +90,23 @@ const AddActivityCard = function ({ navigation, route }) {
         card.name.toLowerCase().includes(recentCardName.toLowerCase())
       ).length > 0;
     }
-    const containsAtLeastOneActiveTag = () => {
-      return otherTags.filter(
-        (tag, i) => 
-          otherTagsActivity[i] && // tag is active
-          card.description.toLowerCase().includes(tag.toLowerCase()) // card metadata includes tag
-      ).length > 0;
+    const containsAllActiveTags = () => {
+      const activeTags = otherTags.filter((_, i) => otherTagsActivity[i]);
+      const cardTags = activeTags.filter((tag) => 
+        card.description.toLowerCase().includes(tag.toLowerCase()) // card metadata includes tag
+      );
+      return activeTags.every((tag,i) => tag === cardTags[i]); 
     }
 
     const nameIncludesQuery = card.name.toLowerCase().includes(searchQuery.trim().toLowerCase());
 
     switch (true) {
       case recentTagActive && otherTagsActive:
-        return nameIncludesQuery && isRecentAC() && containsAtLeastOneActiveTag();
+        return nameIncludesQuery && isRecentAC() && containsAllActiveTags();
       case recentTagActive && !otherTagsActive:
         return nameIncludesQuery && isRecentAC();
       case !recentTagActive && otherTagsActive:
-        return nameIncludesQuery && containsAtLeastOneActiveTag();
+        return nameIncludesQuery && containsAllActiveTags();
       default:
         return nameIncludesQuery;
     }
