@@ -10,7 +10,11 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import { verticalScale, moderateVerticalScale, scale } from 'react-native-size-matters';
+import {
+  verticalScale,
+  moderateVerticalScale,
+  scale,
+} from 'react-native-size-matters';
 import { TextStyle } from '../../Styles.config';
 
 // Component dependencies
@@ -55,7 +59,6 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
     false,
     false,
-    false,
   ]);
 
   const mainTags = [
@@ -65,7 +68,6 @@ const AddActivityCard = function ({ navigation, route }) {
     'Beginner',
     'Rhythm',
     'Note Reading',
-    'Quick',
     'Group Activity',
     'Scale',
   ];
@@ -76,21 +78,19 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
   ]);
 
-  const durationTags = [
-    '5-10 mins',
-    '10-15 mins',
-    '15+ mins'
-  ];
+  const durationTags = ['5-10 mins', '10-15 mins', '15+ mins'];
 
-  const recentActivityCards = useSelector(state => getCardNames(state.recentActivityCards));
+  const recentActivityCards = useSelector(state =>
+    getCardNames(state.recentActivityCards),
+  );
 
   /**
    * Checks that an activity card matches all selected tags and the search query
-   * @param card 
+   * @param card
    * @returns {boolean}
    */
-  const matchesAllConditions = (card) => {
-    // See which conditions are active 
+  const matchesAllConditions = card => {
+    // See which conditions are active
     const recentTagActive = activeTags[0];
     const mainTagsActivity = activeTags.slice(1);
     const mainTagsActive = mainTagsActivity.includes(true);
@@ -98,25 +98,29 @@ const AddActivityCard = function ({ navigation, route }) {
 
     // Helper functions
     const isRecentAC = () => {
-      return recentActivityCards.filter((recentCardName) => 
-        card.name.toLowerCase().includes(recentCardName.toLowerCase())
-      ).length > 0;
-    }
+      return (
+        recentActivityCards.filter(recentCardName =>
+          card.name.toLowerCase().includes(recentCardName.toLowerCase()),
+        ).length > 0
+      );
+    };
     const containsAllActiveTags = () => {
       const tagNames = mainTags.slice(1);
       const activeTags = tagNames.filter((_, i) => mainTagsActivity[i]);
-      const cardTags = activeTags.filter((tag) => 
-        card.description.toLowerCase().includes(tag.toLowerCase()) // card metadata includes tag
+      const cardTags = activeTags.filter(
+        tag => card.description.toLowerCase().includes(tag.toLowerCase()), // card metadata includes tag
       );
-      return activeTags.every((tag,i) => tag === cardTags[i]); 
-    }
+      return activeTags.every((tag, i) => tag === cardTags[i]);
+    };
     const isWithinDuration = () => {
       let duration = durationTags[durationActiveTags.indexOf(true)];
-      duration = duration.toLowerCase().replace('mins', 'minutes');
+      duration = duration.toLowerCase().replace('mins', '').trim();
       return card.description.toLowerCase().includes(duration); // card metadata includes tag
-    }
+    };
 
-    const nameIncludesQuery = card.name.toLowerCase().includes(searchQuery.trim().toLowerCase());
+    const nameIncludesQuery = card.name
+      .toLowerCase()
+      .includes(searchQuery.trim().toLowerCase());
 
     let passesChecks = nameIncludesQuery;
     if (passesChecks && recentTagActive) {
@@ -130,7 +134,7 @@ const AddActivityCard = function ({ navigation, route }) {
     }
 
     return passesChecks;
-  }
+  };
 
   const searchActivityCards = () => {
     // Clear previewed image on new search
@@ -141,7 +145,7 @@ const AddActivityCard = function ({ navigation, route }) {
     if (activityCards !== undefined) {
       setMatchSearch(activityCards?.filter(card => matchesAllConditions(card)));
     }
-  }
+  };
 
   useEffect(() => {
     // Only search after user stops typing
@@ -159,7 +163,7 @@ const AddActivityCard = function ({ navigation, route }) {
   // ************ SEARCH RELATED VARS END *********
 
   // **************** PREVIEW RELATED VARS ***************
-  const [previewInfo, setPreviewInfo] = useState(null);  // previewInfo has id, name, and url
+  const [previewInfo, setPreviewInfo] = useState(null); // previewInfo has id, name, and url
 
   const dispatch = useDispatch();
 
@@ -199,12 +203,11 @@ const AddActivityCard = function ({ navigation, route }) {
     <SafeAreaView style={styles.safeContainer}>
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.paddingContainer}>
-        
           <View style={styles.header}>
             <TouchableOpacity
               style={styles.backButton}
               onPress={() => navigation.goBack()}>
-              <BackArrow height={scale(25)} width={scale(25)} /> 
+              <BackArrow height={scale(25)} width={scale(25)} />
             </TouchableOpacity>
             <Text style={[styles.headerTitle, TextStyle.h1]}>
               {`${sectionType} Activity Card`}
@@ -227,38 +230,50 @@ const AddActivityCard = function ({ navigation, route }) {
           <View>
             <Searchbar onChangeText={onChangeSearch} />
             <ScrollView
-              nestedScrollEnabled={true} 
-              style={styles.searchResultContainer}
-            >
-              {matchSearch.length > 0
-                ? matchSearch.map((item, i) => 
-                    <SearchResults
-                      key={i}
-                      name={item?.name}
-                      id={item?.id}
-                      setPreviewInfo={setPreviewInfo}
-                      setHighlightedID={setHighlightedID}
-                      isHighlighted={highlightedID === item?.id}
-                    />)
-                : <NoCardsFound
-                    text={searchQuery}
-                    navigation={navigation}
-                    section={sectionType}
+              nestedScrollEnabled={true}
+              style={styles.searchResultContainer}>
+              {matchSearch.length > 0 ? (
+                matchSearch.map((item, i) => (
+                  <SearchResults
+                    key={i}
+                    name={item?.name}
+                    id={item?.id}
+                    setPreviewInfo={setPreviewInfo}
+                    setHighlightedID={setHighlightedID}
+                    isHighlighted={highlightedID === item?.id}
                   />
-              }
+                ))
+              ) : (
+                <NoCardsFound
+                  text={searchQuery}
+                  navigation={navigation}
+                  section={sectionType}
+                />
+              )}
             </ScrollView>
           </View>
-          
-          {previewInfo &&
-            <View style={{flexDirection: 'column', alignItems: 'center', width: '100%', marginTop: verticalScale(10)}}>
-              
+
+          {previewInfo && (
+            <View
+              style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%',
+                marginTop: verticalScale(10),
+              }}>
               {/* ADD ACTIVITY CARD BUTTONS */}
-              <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', width: '100%'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                  alignItems: 'center',
+                  width: '100%',
+                }}>
                 <SistemaButton onPress={addCard}>
                   <Text
                     style={[
                       styles.mulishFont,
-                      styles.marginH2, 
+                      styles.marginH2,
                       styles.bodyFontSize,
                     ]}>
                     Add Card
@@ -278,20 +293,31 @@ const AddActivityCard = function ({ navigation, route }) {
               </View>
 
               {/* ACTIVITY CARD PREVIEW */}
-              <Text style={[TextStyle.label, {color: '#000000de', textAlign: 'center', marginVertical: verticalScale(15)}]}>
+              <Text
+                style={[
+                  TextStyle.label,
+                  {
+                    color: '#000000de',
+                    textAlign: 'center',
+                    marginVertical: verticalScale(15),
+                  },
+                ]}>
                 {previewInfo?.name}
               </Text>
               <Image
-                style={{ height: 300, width: 300, resizeMode: 'contain', marginBottom: verticalScale(15) }}
+                style={{
+                  height: 300,
+                  width: 300,
+                  resizeMode: 'contain',
+                  marginBottom: verticalScale(15),
+                }}
                 source={{ uri: previewInfo?.url }}
               />
-
             </View>
-          }
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
-  
   );
 };
 
