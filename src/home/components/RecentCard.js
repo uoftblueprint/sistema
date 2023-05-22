@@ -71,7 +71,8 @@ const RecentCard = ({ cardPath }) => {
                 style={styles.cardImage}
               />
             </ScrollView>
-            <SafeAreaView style={[styles.titleBar, {backgroundColor: backgroundColor}]}>
+            <SafeAreaView
+              style={[styles.titleBar, { backgroundColor: backgroundColor }]}>
               <Text style={styles.title} numberOfLines={1}>
                 {title}
               </Text>

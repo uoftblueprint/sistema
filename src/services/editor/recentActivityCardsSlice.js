@@ -8,10 +8,10 @@ export const recentActivityCardsSlice = createSlice({
   reducers: {
     appendCardName: (state, action) => {
       // Removes duplicate names
-      const set = [...new Set([...state.cardNames, action.payload.trim()])]
+      const set = [...new Set([...state.cardNames, action.payload.trim()])];
       return {
-        ...state, 
-        cardNames: set, 
+        ...state,
+        cardNames: set,
       };
     },
   },
@@ -21,7 +21,7 @@ export const recentActivityCardsSlice = createSlice({
 export const { appendCardName } = recentActivityCardsSlice.actions;
 
 // Selector actions to "read" from redux'
-export const getCardNames = (state) => {
+export const getCardNames = state => {
   try {
     return state.cardNames;
   } catch {

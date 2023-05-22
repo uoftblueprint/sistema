@@ -12,7 +12,7 @@ const SearchResults = ({
   // Remove '.jpg' at end of name
   let displayName;
   if (name && name.includes('.jpg')) {
-    const regex = /^(.*)(\.jpg)$/m; 
+    const regex = /^(.*)(\.jpg)$/m;
     displayName = name.match(regex)[1];
   }
 
@@ -37,9 +37,12 @@ const SearchResults = ({
     <View style={styles.column}>
       <TouchableOpacity
         onPress={display_preview}
-        style={[styles.container, isHighlighted && styles.containerHighlighted]}>
+        style={[
+          styles.container,
+          isHighlighted && styles.containerHighlighted,
+        ]}>
         <Text style={styles.textStyle}>{displayName ?? ''}</Text>
-      </TouchableOpacity>  
+      </TouchableOpacity>
       <View style={styles.separator} />
     </View>
   );
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2', // light grey
     width: '100%',
     height: 1,
-  }
+  },
 });
 
 export default SearchResults;

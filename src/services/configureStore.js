@@ -8,7 +8,7 @@ export default configureStore({
   reducer: {
     auth: authReducer,
     lessonPlan: lessonPlanReducer,
-    recentActivityCards: recentActivityCardsReducer
+    recentActivityCards: recentActivityCardsReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

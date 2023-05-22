@@ -10,13 +10,11 @@ import SearchLogo from '../../../assets/Search.svg';
 import { TextStyle } from '../../Styles.config';
 import { scale, verticalScale } from 'react-native-size-matters';
 
-const Searchbar = ({
-  onChangeText,
-}) => {
+const Searchbar = ({ onChangeText }) => {
   const refSearch = useRef();
 
   return (
-    <View style={{marginVertical: verticalScale(10)}}>
+    <View style={{ marginVertical: verticalScale(10) }}>
       <TouchableOpacity onPress={() => refSearch.current.focus()}>
         <View style={styles.searchContainer}>
           <SearchLogo style={styles.IconStyle} width={25} height={25} />
