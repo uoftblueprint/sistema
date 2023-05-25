@@ -33,9 +33,13 @@ const Searchbar = ({ onChangeText }) => {
 
 const styles = StyleSheet.create({
   searchContainer: {
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: 0,
     borderWidth: 0.77,
     borderColor: '#453E3D',
+    borderBottomColor: '#FFFAF5',  
     width: '100%',
     flexDirection: 'row',
     backgroundColor: '#FFFAF5',
