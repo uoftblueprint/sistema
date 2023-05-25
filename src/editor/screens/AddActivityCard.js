@@ -63,7 +63,7 @@ const AddActivityCard = function ({ navigation, route }) {
 
   const mainTags = [
     'Recently Added', // Keep at index 0
-    'Warm Up',
+    // 'Warm Up',
     'No Equipment',
     'Beginner',
     'Rhythm',
