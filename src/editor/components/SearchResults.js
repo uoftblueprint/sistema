@@ -4,6 +4,7 @@ import ActivityCardService from '../../services/ActivityCardService';
 import { TextStyle } from '../../Styles.config';
 
 const SearchResults = ({
+  key,
   name,
   id,
   setPreviewInfo,
