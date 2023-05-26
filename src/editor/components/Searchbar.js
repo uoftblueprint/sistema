@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.77,
     borderColor: '#453E3D',
     backgroundColor: '#FDFBF7',
-    overflow: 'hidden',
+    // overflow: 'hidden',
     ...Platform.select({
       ios: {
         zIndex: 999,
@@ -100,6 +100,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDFBF7',
     borderTopColor: '#D9D9D9',
     borderTopWidth: 0.77,
+    
+    borderWidth: 0.77,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderColor: '#453E3D',
+
   },
   IconStyle: {
     marginRight: Platform.OS === 'ios' ? '2.5%' : '2%',
