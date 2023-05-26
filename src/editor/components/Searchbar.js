@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     shadowColor: '#453E3D',
     shadowOffset: {
-      width: 3,
-      height: 4,
+      width: 1,
+      height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 99,
+    shadowRadius: 10,
+    elevation: 5,
   },
   searchbarContainer: { 
     width: '100%',
