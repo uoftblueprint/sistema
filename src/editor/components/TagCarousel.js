@@ -87,6 +87,7 @@ const TagCarousel = ({
 const styles = StyleSheet.create({
   carousel: {
     marginBottom: 10,
+    maxWidth: '100%',
   },
   segment: {
     width: '40%',
