@@ -18,8 +18,9 @@ const Searchbar = ({ navigation, onChangeText, resultData, setPreviewInfo, setHi
 
   return (
     <View style={styles.column}>
-      <TouchableOpacity onPress={() => refSearch.current.focus()}>
-        <View style={styles.searchbarContainer}>
+      <TouchableOpacity 
+        style={styles.searchbarContainer}
+        onPress={() => refSearch.current.focus()}>
           <SearchLogo style={styles.IconStyle} width={25} height={25} />
           <TextInput
             style={[TextStyle.h3, styles.InputStyle]}
@@ -28,7 +29,6 @@ const Searchbar = ({ navigation, onChangeText, resultData, setPreviewInfo, setHi
             onChangeText={onChangeText}
             ref={refSearch}
           />
-        </View>
       </TouchableOpacity>
       <ScrollView
         nestedScrollEnabled={true}
