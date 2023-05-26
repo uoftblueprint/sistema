@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.77,
     borderColor: '#453E3D',
+    backgroundColor: '#FDFBF7',
     overflow: 'hidden',
     ...Platform.select({
       ios: {
@@ -87,8 +88,6 @@ const styles = StyleSheet.create({
   },
   searchbarContainer: { 
     width: '100%',
-    height: 'auto',
-    backgroundColor: 'red',
     flexDirection: 'row',
     backgroundColor: '#FDFBF7',
     alignItems: 'center',
