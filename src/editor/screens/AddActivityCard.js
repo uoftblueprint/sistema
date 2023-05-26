@@ -227,40 +227,16 @@ const AddActivityCard = function ({ navigation, route }) {
             selectOnlyOne={true}
           />
 
-          <View>
-            <Searchbar 
-              navigation={navigation}
-              onChangeText={onChangeSearch} 
-              resultData={matchSearch}
-              setPreviewInfo={setPreviewInfo}
-              setHighlightedID={setHighlightedID}
-              highlightedID={highlightedID}
-              searchQuery={searchQuery}
-              sectionType={sectionType}
-            />
-            {/* <ScrollView
-              nestedScrollEnabled={true}
-              style={styles.searchResultContainer}>
-              {matchSearch.length > 0 ? (
-                matchSearch.map((item, i) => (
-                  <SearchResults
-                    key={i}
-                    name={item?.name}
-                    id={item?.id}
-                    setPreviewInfo={setPreviewInfo}
-                    setHighlightedID={setHighlightedID}
-                    isHighlighted={highlightedID === item?.id}
-                  />
-                ))
-              ) : (
-                <NoCardsFound
-                  text={searchQuery}
-                  navigation={navigation}
-                  section={sectionType}
-                />
-              )}
-            </ScrollView> */}
-          </View>
+          <Searchbar 
+            navigation={navigation}
+            onChangeText={onChangeSearch} 
+            resultData={matchSearch}
+            setPreviewInfo={setPreviewInfo}
+            setHighlightedID={setHighlightedID}
+            highlightedID={highlightedID}
+            searchQuery={searchQuery}
+            sectionType={sectionType}
+          />
 
           {previewInfo && (
             <View
