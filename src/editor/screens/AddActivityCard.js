@@ -210,7 +210,7 @@ const AddActivityCard = function ({ navigation, route }) {
               <BackArrow height={scale(25)} width={scale(25)} />
             </TouchableOpacity>
             <Text style={[styles.headerTitle, TextStyle.h1]}>
-              {`${sectionType} Activity Card testing super long title here`}
+              {`${sectionType} Activity Card`}
             </Text>
           </View>
 
