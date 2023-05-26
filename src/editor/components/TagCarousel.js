@@ -67,6 +67,7 @@ const TagCarousel = ({
               width: '100%',
               borderBottomWidth: 1.5,
               borderBottomColor: '#C7BCBC87',
+              marginBottom: 10,
             }}
           >
             <Animated.View
@@ -85,7 +86,7 @@ const TagCarousel = ({
 
 const styles = StyleSheet.create({
   carousel: {
-    marginBottom: 15,
+    marginBottom: 10,
   },
   segment: {
     width: '40%',
