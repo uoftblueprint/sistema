@@ -65,15 +65,25 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.77,
     borderColor: '#453E3D',
+    ...Platform.select({
+      ios: {
+        zIndex: 999,
+        paddingVertical: '3%',
+        shadowOffset: { width: 1, height: 1 },
+        shadowColor: 'gray',
+        shadowRadius: 3,
+        shadowOpacity: 0.4,
+      },
+      android: {
+        elevation: 5,
+        shadowOffset: { width: 10, height: 10 },
+        shadowColor: 'black',
+        shadowRadius: 2,
+        shadowOpacity: 1,
+      },
+    }),
   },
-  searchbarContainer: {
-    // borderTopLeftRadius: 10,
-    // borderTopRightRadius: 10,
-    // borderBottomRightRadius: 0,
-    // borderBottomLeftRadius: 0,
-    // borderWidth: 0.77,
-    // borderColor: '#453E3D',
-    // borderBottomColor: '#FDFBF7',  
+  searchbarContainer: { 
     width: '100%',
     flexDirection: 'row',
     backgroundColor: '#FDFBF7',
@@ -104,23 +114,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDFBF7',
     borderTopColor: '#D9D9D9',
     borderTopWidth: 0.77
-    // ...Platform.select({ TODO: delete
-    //   ios: {
-    //     zIndex: 999,
-    //     paddingVertical: '3%',
-    //     shadowOffset: { width: 1, height: 1 },
-    //     shadowColor: 'gray',
-    //     shadowRadius: 3,
-    //     shadowOpacity: 0.4,
-    //   },
-    //   android: {
-    //     elevation: 5,
-    //     shadowOffset: { width: 10, height: 10 },
-    //     shadowColor: 'black',
-    //     shadowRadius: 2,
-    //     shadowOpacity: 1,
-    //   },
-    // }),
   },
   IconStyle: {
     marginRight: Platform.OS === 'ios' ? '2.5%' : '2%',
