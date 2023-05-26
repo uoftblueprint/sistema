@@ -26,7 +26,7 @@ const AddLessonContentButton = ({ placeholder, handleClick, isDisabled }) => {
 const styles = StyleSheet.create({
   input: {
     flex: 1,
-    // shadowColor: '#453E3D',
+    shadowColor: '#453E3D',
     paddingLeft: 12,
   },
   sectionStyle: {

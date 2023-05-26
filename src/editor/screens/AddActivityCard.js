@@ -342,27 +342,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
-  searchResultContainer: {
-    maxHeight: moderateVerticalScale(230, 2.5),
-    width: '100%',
-    ...Platform.select({
-      ios: {
-        zIndex: 999,
-        paddingVertical: '3%',
-        shadowOffset: { width: 1, height: 1 },
-        shadowColor: 'gray',
-        shadowRadius: 3,
-        shadowOpacity: 0.4,
-      },
-      android: {
-        elevation: 5,
-        shadowOffset: { width: 10, height: 10 },
-        shadowColor: 'black',
-        shadowRadius: 2,
-        shadowOpacity: 1,
-      },
-    }),
-  },
   tagContainer: {
     height: '20%',
   },
