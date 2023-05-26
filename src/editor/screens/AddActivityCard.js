@@ -228,8 +228,17 @@ const AddActivityCard = function ({ navigation, route }) {
           />
 
           <View>
-            <Searchbar onChangeText={onChangeSearch} />
-            <ScrollView
+            <Searchbar 
+              navigation={navigation}
+              onChangeText={onChangeSearch} 
+              resultData={matchSearch}
+              setPreviewInfo={setPreviewInfo}
+              setHighlightedID={setHighlightedID}
+              highlightedID={highlightedID}
+              searchQuery={searchQuery}
+              sectionType={sectionType}
+            />
+            {/* <ScrollView
               nestedScrollEnabled={true}
               style={styles.searchResultContainer}>
               {matchSearch.length > 0 ? (
@@ -250,7 +259,7 @@ const AddActivityCard = function ({ navigation, route }) {
                   section={sectionType}
                 />
               )}
-            </ScrollView>
+            </ScrollView> */}
           </View>
 
           {previewInfo && (
