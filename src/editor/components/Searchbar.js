@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
     borderColor: '#453E3D',
     backgroundColor: '#FDFBF7',
     overflow: 'hidden',
-    shadowColor: '#00000040',
+    shadowColor: '#000',
     shadowOffset: {
-      width: 4,
+      width: 0,
       height: 4,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 10,
+    shadowRadius: 4,
     elevation: 5,
   },
   searchbarContainer: { 
