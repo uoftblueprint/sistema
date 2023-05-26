@@ -4,12 +4,12 @@ import ActivityCardService from '../../services/ActivityCardService';
 import { TextStyle } from '../../Styles.config';
 
 const SearchResults = ({
-  key,
   name,
   id,
   setPreviewInfo,
   setHighlightedID,
   isHighlighted,
+  isFirst,
 }) => {
   let fullName;
   let title;
@@ -62,7 +62,7 @@ const SearchResults = ({
         style={[
           styles.container,
           isHighlighted && styles.containerHighlighted,
-          (key == 0) && {borderTopWidth: 0} // first element has no border
+          isFirst && {borderTopWidth: 0} // first element has no border
         ]}>
         <Text style={TextStyle.label}>{title ?? 'Name error'}</Text>
         {subtitle && <Text style={[TextStyle.label, {fontSize: 13}]}>{subtitle}</Text>}

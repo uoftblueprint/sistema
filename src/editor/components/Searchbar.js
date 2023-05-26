@@ -42,6 +42,7 @@ const Searchbar = ({ navigation, onChangeText, resultData, setPreviewInfo, setHi
               setPreviewInfo={setPreviewInfo}
               setHighlightedID={setHighlightedID}
               isHighlighted={highlightedID === item?.id}
+              isFirst={i == 0 ? true : false}
             />
           ))
         ) : (
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.77,
     borderColor: '#453E3D',
+    overflow: hidden,
     ...Platform.select({
       ios: {
         zIndex: 999,
