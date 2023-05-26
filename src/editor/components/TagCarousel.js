@@ -7,7 +7,7 @@ const TagCarousel = ({
   activeTags,
   setActiveTags,
   selectOnlyOne,
-  showBottomScroll,
+  showBottomScrollbar,
 }) => {
   const scrollBarPosition = useRef(new Animated.Value(0)).current;
   const scrollBarPositionPercentage = scrollBarPosition.interpolate({
@@ -16,7 +16,7 @@ const TagCarousel = ({
   });
 
   const handleScroll = event => {
-    if (showBottomScroll) {
+    if (showBottomScrollbar) {
       const { x } = event.nativeEvent.contentOffset;
       const { width } = event.nativeEvent.contentSize;
       const maxScrollX = width;
@@ -31,7 +31,7 @@ const TagCarousel = ({
 
   return (
     <View style={{ height: 80, flexDirection: 'column' }}>
-      <View style={{ height: '60%', backgroundColor: 'red' }}>
+      <View style={{ backgroundColor: 'red' }}>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -61,7 +61,7 @@ const TagCarousel = ({
             />
           ))}
         </ScrollView>
-        {showBottomScroll && 
+        {showBottomScrollbar && 
           <View>
             <View
               style={{
