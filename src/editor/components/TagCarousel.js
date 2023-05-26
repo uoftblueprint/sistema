@@ -68,8 +68,10 @@ const TagCarousel = ({
             style={{
               width: '100%',
               maxWidth: '100%',
-              borderBottomWidth: 1.5,
-              borderBottomColor: '#C7BCBC87',
+              height: 1.5,
+              backgroundColor: 'C7BCBC87',
+              // borderBottomWidth: 1.5,
+              // borderBottomColor: '#C7BCBC87',
               marginBottom: 10,
               overflow: 'hidden',
             }}
@@ -95,8 +97,10 @@ const styles = StyleSheet.create({
   },
   segment: {
     width: '40%',
-    borderBottomWidth: 1.5,
-    borderBottomColor: 'black',
+    height: 1.5,
+    backgroundColor: '#000',
+    // borderBottomWidth: 1.5,
+    // borderBottomColor: 'black',
     position: 'absolute',
     top: 0,
   },
