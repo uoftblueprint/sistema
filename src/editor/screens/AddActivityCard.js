@@ -20,8 +20,6 @@ import { TextStyle } from '../../Styles.config';
 // Component dependencies
 import SistemaButton from '../../Components/SistemaButton';
 import Searchbar from '../components/Searchbar';
-import SearchResults from '../components/SearchResults';
-import NoCardsFound from '../components/NoCardsFound';
 import TagCarousel from '../components/TagCarousel';
 
 // SVGs
@@ -219,12 +217,14 @@ const AddActivityCard = function ({ navigation, route }) {
             activeTags={activeTags}
             setActiveTags={setActiveTags}
             selectOnlyOne={false}
+            showBottomScroll={true}
           />
           <TagCarousel
             tagsList={durationTags}
             activeTags={durationActiveTags}
             setActiveTags={setDurActiveTags}
             selectOnlyOne={true}
+            showBottomScroll={false}
           />
 
           <Searchbar 

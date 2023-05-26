@@ -7,6 +7,7 @@ const TagCarousel = ({
   activeTags,
   setActiveTags,
   selectOnlyOne,
+  showBottomScroll,
 }) => {
   const scrollBarPosition = useRef(new Animated.Value(0)).current;
   const scrollBarPositionPercentage = scrollBarPosition.interpolate({
@@ -57,23 +58,27 @@ const TagCarousel = ({
             />
           ))}
         </ScrollView>
-        <View
-          style={{
-            width: '100%',
-            borderBottomWidth: 1.5,
-            borderBottomColor: '#C7BCBC87',
-            position: 'absolute',
-            top: '130%',
-          }}
-        />
-        <Animated.View
-          style={[
-            styles.segment,
-            {
-              left: scrollBarPositionPercentage,
-            },
-          ]}
-        />
+        {showBottomScroll && 
+          <View>
+            <View
+              style={{
+                width: '100%',
+                borderBottomWidth: 1.5,
+                borderBottomColor: '#C7BCBC87',
+                position: 'absolute',
+                top: '130%',
+              }}
+            />
+            <Animated.View
+              style={[
+                styles.segment,
+                {
+                  left: scrollBarPositionPercentage,
+                },
+              ]}
+            />
+          </View>
+        }
       </View>
     </View>
   );
