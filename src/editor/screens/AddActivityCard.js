@@ -328,7 +328,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     alignItems: 'flex-start',
-    marginVertical: verticalScale(15),
+    marginTop: verticalScale(15),
+    marginBottom: verticalScale(10),
   },
   headerTitle: {
     verticalAlign: 'top',
