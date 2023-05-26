@@ -70,16 +70,32 @@ const styles = StyleSheet.create({
     borderColor: '#453E3D',
     backgroundColor: '#FDFBF7',
     overflow: 'hidden',
+    ...Platform.select({
+      android: {
+        shadowColor: '#453E3D',
+        shadowOffset: {
+          width: 1,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        elevation: 5,
+      },
+    }),
   },
   shadow: {
-    shadowColor: '#453E3D',
-    shadowOffset: {
-      width: 1,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#453E3D',
+        shadowOffset: {
+          width: 1,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        elevation: 5,
+      },
+    }),
   },
   searchbarContainer: { 
     width: '100%',
