@@ -68,22 +68,14 @@ const styles = StyleSheet.create({
     borderColor: '#453E3D',
     backgroundColor: '#FDFBF7',
     overflow: 'hidden',
-    ...Platform.select({
-      ios: {
-        zIndex: 999,
-        shadowOffset: { width: 1, height: 1 },
-        shadowColor: 'gray',
-        shadowRadius: 3,
-        shadowOpacity: 0.4,
-      },
-      android: {
-        elevation: 5,
-        shadowOffset: { width: 10, height: 10 },
-        shadowColor: 'black',
-        shadowRadius: 2,
-        shadowOpacity: 1,
-      },
-    }),
+    shadowColor: '#453E3D',
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
   },
   searchbarContainer: { 
     width: '100%',
