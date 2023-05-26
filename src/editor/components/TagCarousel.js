@@ -71,8 +71,6 @@ const TagCarousel = ({
               height: 1.5,
               backgroundColor: '#C7BCBC87',
               borderRadius: 2,
-              // borderBottomWidth: 1.5,
-              // borderBottomColor: '#C7BCBC87',
               marginBottom: 10,
               overflow: 'hidden',
             }}
@@ -100,8 +98,6 @@ const styles = StyleSheet.create({
     width: '40%',
     height: 1.5,
     backgroundColor: '#000',
-    // borderBottomWidth: 1.5,
-    // borderBottomColor: 'black',
     position: 'absolute',
     top: 0,
   },

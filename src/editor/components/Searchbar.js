@@ -17,6 +17,7 @@ const Searchbar = ({ navigation, onChangeText, resultData, setPreviewInfo, setHi
   const refSearch = useRef();
 
   return (
+    <View style={styles.shadow}>
     <View style={styles.column}>
       <TouchableOpacity 
         style={styles.searchbarContainer}
@@ -54,6 +55,7 @@ const Searchbar = ({ navigation, onChangeText, resultData, setPreviewInfo, setHi
         )}
       </ScrollView>
     </View>
+    </View>
   );
 };
 
@@ -68,13 +70,15 @@ const styles = StyleSheet.create({
     borderColor: '#453E3D',
     backgroundColor: '#FDFBF7',
     overflow: 'hidden',
-    shadowColor: '#000',
+  },
+  shadow: {
+    shadowColor: '#453E3D',
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowRadius: 2,
     elevation: 5,
   },
   searchbarContainer: { 
