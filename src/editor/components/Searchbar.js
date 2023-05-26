@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         zIndex: 999,
-        // paddingVertical: '3%',
         shadowOffset: { width: 1, height: 1 },
         shadowColor: 'gray',
         shadowRadius: 3,
@@ -92,7 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDFBF7',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingHorizontal: '3%',
+    paddingHorizontal: scale(14),
+    paddingVertical: verticalScale(12),
   },
   searchResultContainer: {
     maxHeight: moderateVerticalScale(200, 2.5),
