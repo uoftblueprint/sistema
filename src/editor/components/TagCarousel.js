@@ -30,7 +30,7 @@ const TagCarousel = ({
   };
 
   return (
-    <View style={{ height: 80, flexDirection: 'column' }}>
+    <View style={{ flexDirection: 'column' }}>
       <View style={{ backgroundColor: 'red' }}>
         <ScrollView
           horizontal={true}
