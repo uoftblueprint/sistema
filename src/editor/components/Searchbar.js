@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '3%',
   },
   searchResultContainer: {
-    maxHeight: moderateVerticalScale(230, 2.5),
+    maxHeight: moderateVerticalScale(200, 2.5),
     width: '100%',
     backgroundColor: '#FDFBF7',
     borderTopColor: '#D9D9D9',
