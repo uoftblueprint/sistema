@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import ActivityCardService from '../../services/ActivityCardService';
+import { TextStyle } from '../../Styles.config';
 
 const SearchResults = ({
   name,
@@ -9,11 +10,31 @@ const SearchResults = ({
   setHighlightedID,
   isHighlighted,
 }) => {
+  let fullName;
+  let title;
+  let subtitle;
+
   // Remove '.jpg' at end of name
-  let displayName;
   if (name && name.includes('.jpg')) {
     const regex = /^(.*)(\.jpg)$/m;
-    displayName = name.match(regex)[1];
+    fullName = name.match(regex)[1];
+
+    // Split name into title and subtitle
+    const parts = fullName.split('-', 3);
+    if (parts.length == 3) {
+      let theme = parts[0].trim();
+      let type = parts[1].trim();
+
+      title = parts[3].trim();
+      subtitle = theme + ' - ' + type; 
+    } else if (parts.length == 2) {
+      let theme = parts[0].trim();
+      
+      title = parts[1].trim();
+      subtitle = theme;
+    } else {
+      title = fullName;
+    }
   }
 
   const { data: activityCards } = useQuery({
@@ -26,7 +47,7 @@ const SearchResults = ({
         setHighlightedID(id);
         setPreviewInfo({
           url: card.thumbnailLink,
-          name: displayName,
+          name: fullName,
           id: card.id,
         });
       }
@@ -40,8 +61,10 @@ const SearchResults = ({
         style={[
           styles.container,
           isHighlighted && styles.containerHighlighted,
+          (key == 0) && {borderTopWidth: 0} // first element has no border
         ]}>
-        <Text style={styles.textStyle}>{displayName ?? ''}</Text>
+        <Text style={TextStyle.label}>{title ?? 'Name error'}</Text>
+        {subtitle && <Text style={[TextStyle.label, {fontSize: 13}]}>{subtitle}</Text>}
       </TouchableOpacity>
       <View style={styles.separator} />
     </View>
@@ -56,21 +79,14 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '100%',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FDFBF7',
     paddingVertical: 10,
     paddingHorizontal: 12,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: '#ffffff',
+    borderTopColor: '#D9D9D9',
+    borderTopWidth: 0.77,
   },
   containerHighlighted: {
-    borderColor: '#36ABFF',
-  },
-  textStyle: {
-    fontFamily: 'Mulish-Regular',
-    width: '100%',
-    fontSize: 17,
-    color: 'black',
+    backgroundColor: '#68577766',
   },
   separator: {
     backgroundColor: '#f2f2f2', // light grey
