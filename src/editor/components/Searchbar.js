@@ -42,7 +42,7 @@ const Searchbar = ({ navigation, onChangeText, resultData, setPreviewInfo, setHi
               setPreviewInfo={setPreviewInfo}
               setHighlightedID={setHighlightedID}
               isHighlighted={highlightedID === item?.id}
-              isFirst={i == 0 ? true : false}
+              isFirst={i == 0}
             />
           ))
         ) : (

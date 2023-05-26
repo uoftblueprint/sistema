@@ -41,6 +41,8 @@ const TagCarousel = ({
         {tagsList.map((tag, index) => (
           <TagFilter
             key={index}
+            isFirst={index == 0}
+            isLast={index == tagsList.length - 1}
             tagContent={tag}
             active={activeTags[index]}
             onPress={() => {
