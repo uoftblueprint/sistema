@@ -16,25 +16,28 @@ const TagCarousel = ({
   });
 
   const handleScroll = event => {
-    const { x } = event.nativeEvent.contentOffset;
-    const { width } = event.nativeEvent.contentSize;
-    const maxScrollX = width;
-    const scrollPercentage = x / maxScrollX;
-    Animated.timing(scrollBarPosition, {
-      toValue: scrollPercentage,
-      duration: 0,
-      useNativeDriver: false,
-    }).start();
+    if (showBottomScroll) {
+      const { x } = event.nativeEvent.contentOffset;
+      const { width } = event.nativeEvent.contentSize;
+      const maxScrollX = width;
+      const scrollPercentage = x / maxScrollX;
+      Animated.timing(scrollBarPosition, {
+        toValue: scrollPercentage,
+        duration: 0,
+        useNativeDriver: false,
+      }).start();
+    }
   };
 
   return (
     <View style={{ height: 80, flexDirection: 'column' }}>
-      <View style={{ height: '60%' }}>
+      <View style={{ height: '60%', backgroundColor: 'red' }}>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           onScroll={handleScroll}
-          scrollEventThrottle={16}>
+          scrollEventThrottle={16}
+          nestedScrollEnabled={true}>
           {tagsList.map((tag, index) => (
             <TagFilter
               key={index}

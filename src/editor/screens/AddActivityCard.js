@@ -217,7 +217,7 @@ const AddActivityCard = function ({ navigation, route }) {
             activeTags={activeTags}
             setActiveTags={setActiveTags}
             selectOnlyOne={false}
-            showBottomScroll={true}
+            showBottomScroll={false}
           />
           <TagCarousel
             tagsList={durationTags}
