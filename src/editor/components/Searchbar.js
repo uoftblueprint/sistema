@@ -87,6 +87,8 @@ const styles = StyleSheet.create({
   },
   searchbarContainer: { 
     width: '100%',
+    height: 'auto',
+    backgroundColor: 'red',
     flexDirection: 'row',
     backgroundColor: '#FDFBF7',
     alignItems: 'center',
