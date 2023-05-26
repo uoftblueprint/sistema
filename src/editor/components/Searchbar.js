@@ -92,7 +92,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingHorizontal: scale(14),
-    // paddingVertical: verticalScale(10),
+    ...Platform.select({
+      ios: {
+        paddingVertical: verticalScale(10),
+      },
+    }),
   },
   searchResultContainer: {
     maxHeight: moderateVerticalScale(200, 2.5),
