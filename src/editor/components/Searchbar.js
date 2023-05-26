@@ -18,43 +18,43 @@ const Searchbar = ({ navigation, onChangeText, resultData, setPreviewInfo, setHi
 
   return (
     <View style={styles.shadow}>
-    <View style={styles.column}>
-      <TouchableOpacity 
-        style={styles.searchbarContainer}
-        onPress={() => refSearch.current.focus()}>
-          <SearchLogo style={styles.IconStyle} width={25} height={25} />
-          <TextInput
-            style={[TextStyle.h3, styles.InputStyle]}
-            placeholder="Search by title or keyword"
-            placeholderTextColor={'black'}
-            onChangeText={onChangeText}
-            ref={refSearch}
-          />
-      </TouchableOpacity>
-      <ScrollView
-        nestedScrollEnabled={true}
-        style={styles.searchResultContainer}>
-        {resultData.length > 0 ? (
-          resultData.map((item, i) => (
-            <SearchResults
-              key={i}
-              name={item?.name}
-              id={item?.id}
-              setPreviewInfo={setPreviewInfo}
-              setHighlightedID={setHighlightedID}
-              isHighlighted={highlightedID === item?.id}
-              isFirst={i == 0}
+      <View style={styles.column}>
+        <TouchableOpacity 
+          style={styles.searchbarContainer}
+          onPress={() => refSearch.current.focus()}>
+            <SearchLogo style={styles.IconStyle} width={25} height={25} />
+            <TextInput
+              style={[TextStyle.h3, styles.InputStyle]}
+              placeholder="Search by title or keyword"
+              placeholderTextColor={'black'}
+              onChangeText={onChangeText}
+              ref={refSearch}
             />
-          ))
-        ) : (
-          <NoCardsFound
-            text={searchQuery}
-            navigation={navigation}
-            section={sectionType}
-          />
-        )}
-      </ScrollView>
-    </View>
+        </TouchableOpacity>
+        <ScrollView
+          nestedScrollEnabled={true}
+          style={styles.searchResultContainer}>
+          {resultData.length > 0 ? (
+            resultData.map((item, i) => (
+              <SearchResults
+                key={i}
+                name={item?.name}
+                id={item?.id}
+                setPreviewInfo={setPreviewInfo}
+                setHighlightedID={setHighlightedID}
+                isHighlighted={highlightedID === item?.id}
+                isFirst={i == 0}
+              />
+            ))
+          ) : (
+            <NoCardsFound
+              text={searchQuery}
+              navigation={navigation}
+              section={sectionType}
+            />
+          )}
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     borderColor: '#453E3D',
     backgroundColor: '#FDFBF7',
     overflow: 'hidden',
-    ...Platform.select({
+    ...Platform.select({ // shadow for android
       android: {
         shadowColor: '#453E3D',
         shadowOffset: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  shadow: {
+  shadow: { // shadow for ios
     ...Platform.select({
       ios: {
         shadowColor: '#453E3D',

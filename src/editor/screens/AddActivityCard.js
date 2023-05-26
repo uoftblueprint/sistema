@@ -8,11 +8,9 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Platform,
 } from 'react-native';
 import {
   verticalScale,
-  moderateVerticalScale,
   scale,
 } from 'react-native-size-matters';
 import { TextStyle } from '../../Styles.config';
@@ -76,7 +74,11 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
   ]);
 
-  const durationTags = ['5-10 mins', '10-15 mins', '15+ mins'];
+  const durationTags = [
+    '5-10 mins', 
+    '10-15 mins', 
+    '15+ mins'
+  ];
 
   const recentActivityCards = useSelector(state =>
     getCardNames(state.recentActivityCards),
@@ -307,7 +309,6 @@ const AddActivityCard = function ({ navigation, route }) {
 };
 
 const styles = StyleSheet.create({
-  // TODO: clean up unused styles
   safeContainer: {
     width: '100%',
     height: '100%',
@@ -342,36 +343,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
-  tagContainer: {
-    height: '20%',
-  },
-  previewContainer: {
-    height: '30%',
-    width: '100%',
-    flexDirection: 'row',
-    marginTop: 20,
-  },
-  previewImage: {
-    width: '80%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-  alignCenter: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   mulishFont: {
     fontFamily: 'Mulish-Regular',
     color: 'black',
   },
-  flexRow: {
-    flexDirection: 'row',
-  },
   marginH2: {
     marginHorizontal: '2%',
-  },
-  marginT5: {
-    marginTop: '5%',
   },
   bodyFontSize: {
     fontSize: 14,
