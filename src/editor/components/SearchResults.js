@@ -25,11 +25,11 @@ const SearchResults = ({
       let theme = parts[0].trim();
       let type = parts[1].trim();
 
-      title = parts[3].trim();
+      title = parts[2].trim();
       subtitle = theme + ' - ' + type; 
     } else if (parts.length == 2) {
       let theme = parts[0].trim();
-      
+
       title = parts[1].trim();
       subtitle = theme;
     } else {
