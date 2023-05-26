@@ -91,6 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDFBF7',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    borderBottomColor: '#D9D9D9',
+    borderBottomWidth: 0.77,
     paddingHorizontal: scale(14),
     ...Platform.select({
       ios: {
@@ -102,8 +104,6 @@ const styles = StyleSheet.create({
     maxHeight: moderateVerticalScale(200, 2.5),
     width: '100%',
     backgroundColor: '#FDFBF7',
-    borderTopColor: '#D9D9D9',
-    borderTopWidth: 0.77,
   },
   IconStyle: {
     marginRight: Platform.OS === 'ios' ? '2.5%' : '2%',
