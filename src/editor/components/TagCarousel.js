@@ -65,9 +65,11 @@ const TagCarousel = ({
           <View
             style={{
               width: '100%',
+              maxWidth: '100%',
               borderBottomWidth: 1.5,
               borderBottomColor: '#C7BCBC87',
               marginBottom: 10,
+              overflow: 'hidden',
             }}
           >
             <Animated.View
