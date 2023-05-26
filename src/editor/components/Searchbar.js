@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
-    borderRadius: 10,
-    borderWidth: 0.77,
-    borderColor: '#453E3D',
+    // borderRadius: 10,
+    // borderWidth: 0.77,
+    // borderColor: '#453E3D',
     backgroundColor: '#FDFBF7',
     // overflow: 'hidden',
     ...Platform.select({
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDFBF7',
     borderTopColor: '#D9D9D9',
     borderTopWidth: 0.77,
-    
+
     borderWidth: 0.77,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
