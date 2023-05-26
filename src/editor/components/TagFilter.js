@@ -1,17 +1,15 @@
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
 const TagFilter = function (props) {
-  const bgColor = props.active ? '#68577766' : 'transparent';
-  const margins = {
-    marginLeft: props.isFirst ? 0 : 5,
-    marginRight: props.isLast ? 0 : 5,
-  }
-
   return (
     <TouchableOpacity
       style={[
         styles.tagContainer,
-        { backgroundColor: bgColor, marginHorizontal: margins },
+        { 
+          backgroundColor: props.active ? '#68577766' : 'transparent', 
+          marginLeft: props.isFirst ? 0 : 5,
+          marginRight: props.isLast ? 0 : 5,
+        },
       ]}
       onPress={props.onPress}>
       <Text style={styles.text}>{props.tagContent}</Text>
