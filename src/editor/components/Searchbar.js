@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         zIndex: 999,
-        paddingVertical: '3%',
+        // paddingVertical: '3%',
         shadowOffset: { width: 1, height: 1 },
         shadowColor: 'gray',
         shadowRadius: 3,
