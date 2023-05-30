@@ -7,7 +7,8 @@ import {
   deleteFile,
   makeDirectory,
   readDDirectory,
-  cpyFile,
+  copyFile,
+  copyDir,
 } from './routes/Local';
 import { MAINDIRECTORY, SectionName } from './constants';
 import { Module } from './models';
@@ -55,40 +56,73 @@ const LessonPlanService = {
    * @param {Boolean} hasNewName if the LP has been renamed
    * @param {String} oldLPName to delete old files and directories
    */
-  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '') {
+  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '', newLesson) {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
       const name = lesson.lessonPlanName;
 
-      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-      const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
       let path;
 
-      // Check if file exists, assigning appropriate path if so
-      if (await checkFileExists(favouritedPath)) {
-        path = favouritedPath;
-      } else if (await checkFileExists(defaultPath)) {
-        path = defaultPath;
-      } else {
-        path = defaultPath; // By default, new lesson plans should not be favourited
-      }
-
-      // Then, write to local storage with an RNFS call via Local.js
-      await makeDirectory(path)
-        .then(async () => {
-          await checkFileExists(path);
-        })
-        .then(async () => {
-          await writeFile(false, path + name + '.json', lessonJSON);
-        })
-        .then(r => {
-          console.log('Successfully saved lesson plan: ' + name);
-        });
-
-      // If the LP has been renamed, we need to delete its old file and directory
       if (hasNewName) {
-        await this.deleteLessonPlan(oldLPName);
+        console.log("The lesson plan was saved with a new name.");
+
+        const favouritedPath = `${MAINDIRECTORY}/Favourited/${oldLPName}/`;
+        const defaultPath = `${MAINDIRECTORY}/Default/${oldLPName}/`;
+
+        let oldPath;
+
+        // Check if file exists, assigning appropriate path if so
+        if (await checkFileExists(favouritedPath)) {
+          console.log("The lesson plan exists in Favourites.");
+          path = `${MAINDIRECTORY}/Favourited/${name}/`;
+          oldPath = favouritedPath;
+        } else if (await checkFileExists(defaultPath)) {
+          console.log("The lesson plan exists in Default.");
+          path = `${MAINDIRECTORY}/Default/${name}/`;
+          oldPath = defaultPath;
+        } else {
+          throw new Error(`${oldLPName} does not exist`); // If the LP has a new name, it has to already exist
+        }
+
+        // If the LP has been renamed, we need to delete its old file and directory
+        // As well as copy over all the innards of the old directory to the new one
+        await copyDir(oldPath, path)
+          .then(() => {
+            writeFile(false, path + name + '.json', lessonJSON);
+          })
+          .then(() => {
+            deleteFile(path + oldLPName + '.json');
+          })
+          .then(() => {
+            this.deleteLessonPlan(oldLPName);
+          });
+      } else {
+        console.log("The lesson plan was saved without a new name.");
+
+        const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+        const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
+
+        // Check if file exists, assigning appropriate path if so
+        if (await checkFileExists(favouritedPath)) {
+          path = favouritedPath;
+        } else if (await checkFileExists(defaultPath)) {
+          path = defaultPath;
+        } else {
+          path = defaultPath; // By default, new lesson plans should not be favourited
+        }
+
+        // Then, write to local storage with an RNFS call via Local.js
+        await makeDirectory(path)
+          .then(async () => {
+            await checkFileExists(path);
+          })
+          .then(async () => {
+            await writeFile(false, path + name + '.json', lessonJSON);
+          })
+          .then(() => {
+            console.log('Successfully saved lesson plan: ' + name);
+          });
       }
     } catch (e) {
       // There was an error, catch it and do something with it
@@ -147,6 +181,7 @@ const LessonPlanService = {
       console.error('Error getLessonPlan: ', e);
     }
   },
+  
   /**
    * Given the name of the lesson plan, copy all files in its directory
    * into a new directory named lesson plan name (i) in the default
@@ -168,34 +203,21 @@ const LessonPlanService = {
       ) {
         j++;
       }
+
       const destPath = MAINDIRECTORY + '/Default/' + name + ' (' + j + ')/';
 
-      // make new directory for the copied file
-      await makeDirectory(destPath);
-
-      var filepath;
-
       // find the original filepath
+      let filepath;
       if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + name)) {
         filepath = MAINDIRECTORY + '/Favourited/' + name + '/';
       } else {
         filepath = MAINDIRECTORY + '/Default/' + name + '/';
       }
 
-      var files = await readDirectory(filepath);
-
-      // copy all the files in the lesson plans directory to the new directory
-      for (var i = 0; i < files.length; i++) {
-        // if this is the lesson plan, rename with the new name, otherwise just copy
-        if (files[i] === `${name}.json`) {
-          await cpyFile(
-            filepath + files[i],
-            destPath + name + ' (' + j + ').json',
-          );
-        } else {
-          await cpyFile(filepath + files[i], destPath + files[i]);
-        }
-      }
+      // copy lesson plan directory recursively
+      await copyDir(filepath, destPath);
+      // rename the lesson plan .json inside the copied lesson plan directory
+      await moveFile(`${destPath}${name}.json`, `${destPath}${name} (${j}).json`);
     } catch (e) {
       console.error('Error copyLessonPlan: ', e);
     }
@@ -211,10 +233,10 @@ const LessonPlanService = {
   getAllLessonPlanNames: async function (option = 0) {
     try {
       var favouritedLessonPlans = await readDDirectory(
-        MAINDIRECTORY + '/Favourited/',
+        MAINDIRECTORY + '/Favourited',
       );
       var defaultLessonPlans = await readDDirectory(
-        MAINDIRECTORY + '/Default/',
+        MAINDIRECTORY + '/Default',
       );
       var combined = [];
 
@@ -240,21 +262,6 @@ const LessonPlanService = {
       return lpInfo;
     } catch (e) {
       console.error('Error getAllLessonPlanNames: ', e);
-    }
-  },
-
-  /**
-   * Rename a lesson plan. Throw an error if the lesson DNE or if it's renamed
-   * to an existing name.
-   * Use RNFS.moveFile() with the original filename and the new filename!
-   * @param {String} old_name Old name of lesson plan
-   * @param {String} new_name New name of lesson plan
-   */
-  setLessonPlanName: async function (oldName, newName) {
-    try {
-      // ...
-    } catch (e) {
-      // ...
     }
   },
 

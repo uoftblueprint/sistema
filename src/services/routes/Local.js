@@ -137,16 +137,47 @@ export async function makeDirectory(dirPath) {
 }
 
 /**
- * Copies the file located at filepath to destPath.
+ * Copies the folder located at filepath to destpath recursively.
 
-   Note: On Android copyFile will overwrite destPath if it already exists. On iOS an error will be thrown if the file already exists.
- * @param {String} filepath the original path to be copied from
- * @param {String} destPath where the file is going
+ * Note: On Android copyFile will overwrite destpath if it already exists. 
+ * On iOS an error will be thrown if the file already exists.
+ * @param {String} dirpath the original path to be copied from
+ * @param {String} destpath where the file is going
  */
-export async function cpyFile(filepath, destPath) {
-  return RNFS.copyFile(filepath, destPath)
+export async function copyDir(dirpath, destpath) {
+  try {
+    const items = await RNFS.readDir(dirpath);
+      await RNFS.mkdir(destpath);
+
+      await items.forEach(async item => {
+        const dest = destpath[-1] === "/" ? `${destpath}${item.name}` : `${destpath}/${item.name}`;
+
+        // If item is a directory, recurse into it
+        // Otherwise, simply copy the file and move onto the next item
+        if (item.isDirectory()) {
+          await RNFS.mkdir(dest);
+          await copyFileRecursive(item.path, dest);
+        } else {
+          await RNFS.copyFile(item.path, dest);
+        }
+      });
+  } catch (e) {
+    console.error(`RNFS copyFileRecursive: ${e.message}`);
+  }
+}
+
+/**
+ * Copies the file located at filepath to destpath.
+
+ * Note: On Android copyFile will overwrite destpath if it already exists. 
+ * On iOS an error will be thrown if the file already exists.
+ * @param {String} filepath the original path to be copied from
+ * @param {String} destpath where the file is going
+ */
+export async function copyFile(filepath, destpath) {
+  return RNFS.copyFile(filepath, destpath)
     .then(() => {
-      console.log(`FILE COPIED! ${filepath} => ${destPath}`);
+      console.log(`FILE COPIED! ${filepath} => ${destpath}`);
     })
     .catch(err => {
       console.error(`RNFS cpyFile: ${err.message}`);

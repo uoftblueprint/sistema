@@ -25,8 +25,8 @@ import RightArrow from '../../../assets/rightArrow.svg';
 import ActivityCardService from '../../services/ActivityCardService';
 import LessonPlanService from '../../services/LessonPlanService';
 
-import { useDispatch } from 'react-redux';
-import { addToSection } from '../../services/editor/lessonPlanSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToSection, getInitialLessonPlanName, getLessonPlan } from '../../services/editor/lessonPlanSlice';
 
 // react query
 import { useQuery } from '@tanstack/react-query';
@@ -172,13 +172,27 @@ const AddActivityCard = function ({ navigation, route }) {
     };
   }, []);
 
+  // Get initial lesson plan name for activity card download
+  const lessonPlanInitialName = useSelector(state =>
+    getInitialLessonPlanName(state.lessonPlan),
+  );
+
+  const lessonPlanState = useSelector(state =>
+    getLessonPlan(state.lessonPlan),
+  );
+
   //onPress function for add Card button
   const addCard = async () => {
+    const initialName = lessonPlanInitialName === "" ? lessonPlanState.lessonPlanName : lessonPlanInitialName;
     const rnfsPath = await ActivityCardService.downloadActivityCard(
       previewInfo.id,
       'Downloaded',
       previewInfo.name,
+      initialName,
     );
+    
+    console.log(lessonPlanState);
+    console.log(lessonPlanInitialName);
 
     dispatch(
       addToSection({
