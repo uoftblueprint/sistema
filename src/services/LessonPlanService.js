@@ -147,6 +147,27 @@ const LessonPlanService = {
       console.error('Error getLessonPlan: ', e);
     }
   },
+
+  /**
+   * Find out whether or not a given LP is favourited
+   * @param {String} name Name of the lesson plan to check for
+   * @return {Boolean} True if the lesson plan is favourited
+   */
+  isLessonPlanFavourited: async function (name) {
+    try {
+      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+
+      // check if file exists in the favourites folder
+      if (await checkFileExists(favouritedPath)) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      console.error('deleteLessonPlan error: ', e);
+    }
+  },
+  
   /**
    * Given the name of the lesson plan, copy all files in its directory
    * into a new directory named lesson plan name (i) in the default
