@@ -57,7 +57,6 @@ export default class DraggableModuleWithMenu extends React.Component {
 
   /** Removes the module from this section. Deletes this component. */
   deleteModule = () => {
-    // TODO: [SIS-118] Warn user before deleting lesson plan module
     this.props.handleDelete(this.props.data.key);
   };
 

@@ -6,13 +6,17 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
-import { readFile } from '../../services/routes/Local.js';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { readFile } from '../../services/routes/Local.js';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { appendCardName } from '../../services/editor/recentActivityCardsSlice.js';
 
 const windowHeight = Dimensions.get('window').height;
 
-const RecentCard = ({ navigation, cardPath }) => {
+const RecentCard = ({ cardPath }) => {
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState('');
   const [backgroundColor, setBackgroundColor] = useState('#9D649F');
   const [cardImagePath, setCardImagePath] = useState('');
@@ -26,8 +30,11 @@ const RecentCard = ({ navigation, cardPath }) => {
         cardNames = cardNames.substring(0, cardNames.length - 5);
         setTitle(cardNames);
 
-        //read and store the image to, while we're at it
+        //While we're at it...
+        //Set the card image path to read from
         setCardImagePath(cardPath + 'cardImage.jpg');
+        //Add the card name to redux to filter on inside AddActivityCard.js
+        dispatch(appendCardName(cardNames));
 
         //Set the title.bar colour of RecentCard component depending on the type of Activity Card
         switch (true) {
@@ -53,51 +60,6 @@ const RecentCard = ({ navigation, cardPath }) => {
     readCardTitle();
   }, [cardPath]);
 
-  const styles = StyleSheet.create({
-    container: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    box: {
-      backgroundColor: 'white',
-      borderWidth: 1,
-      borderColor: 'black',
-      borderRadius: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-      overflow: 'hidden',
-      marginVertical: 15,
-      width: '100%',
-      height: windowHeight * 0.25,
-    },
-    scrollview: {
-      backgroundColor: '#000000',
-      alignItems: 'flex-start',
-      justifyContent: 'flex-start',
-    },
-    titleBar: {
-      borderBottomLeftRadius: 18,
-      borderBottomRightRadius: 18,
-      width: '100%',
-      height: '19%',
-      backgroundColor: backgroundColor,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: 20,
-    },
-    title: {
-      fontFamily: 'Mulish-Italic',
-      color: '#FFFFFF',
-      width: '100%',
-    },
-    cardImage: {
-      width: scale(290), // 80% of window width
-      height: verticalScale(290), // 30% of window height
-      paddingTop: scale(500),
-      opacity: 0.8, // darken the tint of the thumbnail
-    },
-  });
-
   return (
     <SafeAreaView>
       {cardImagePath && (
@@ -109,7 +71,8 @@ const RecentCard = ({ navigation, cardPath }) => {
                 style={styles.cardImage}
               />
             </ScrollView>
-            <SafeAreaView style={styles.titleBar}>
+            <SafeAreaView
+              style={[styles.titleBar, { backgroundColor: backgroundColor }]}>
               <Text style={styles.title} numberOfLines={1}>
                 {title}
               </Text>
@@ -120,5 +83,49 @@ const RecentCard = ({ navigation, cardPath }) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  box: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginVertical: 15,
+    width: '100%',
+    height: windowHeight * 0.25,
+  },
+  scrollview: {
+    backgroundColor: '#000000',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  titleBar: {
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
+    width: '100%',
+    height: '19%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontFamily: 'Mulish-Italic',
+    color: '#FFFFFF',
+    width: '100%',
+  },
+  cardImage: {
+    width: scale(290), // 80% of window width
+    height: verticalScale(290), // 30% of window height
+    paddingTop: scale(500),
+    opacity: 0.8, // darken the tint of the thumbnail
+  },
+});
 
 export default RecentCard;

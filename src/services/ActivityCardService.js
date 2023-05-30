@@ -60,7 +60,7 @@ const ActivityCardService = {
       if (await checkFileExists(path)) {
         await deleteFile(path);
         await makeDirectory(path);
-      }else{
+      } else {
         await makeDirectory(path);
       }
 

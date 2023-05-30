@@ -5,7 +5,11 @@ const TagFilter = function (props) {
     <TouchableOpacity
       style={[
         styles.tagContainer,
-        { backgroundColor: props.active ? '#68577766' : 'transparent' },
+        { 
+          backgroundColor: props.active ? '#68577766' : 'transparent', 
+          marginLeft: props.isFirst ? 0 : 5,
+          marginRight: props.isLast ? 0 : 5,
+        },
       ]}
       onPress={props.onPress}>
       <Text style={styles.text}>{props.tagContent}</Text>
@@ -20,7 +24,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: '#afafaf',
-    marginHorizontal: 5,
     marginVertical: 4,
   },
   text: {

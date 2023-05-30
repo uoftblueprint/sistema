@@ -1,35 +1,34 @@
-//react dependencies
-import { useState, useRef, useEffect } from 'react';
+// React dependencies
+import { useState, useEffect } from 'react';
 import {
-  Animated,
   SafeAreaView,
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Keyboard,
-  TouchableWithoutFeedback,
   Image,
+  ScrollView,
 } from 'react-native';
+import {
+  verticalScale,
+  scale,
+} from 'react-native-size-matters';
+import { TextStyle } from '../../Styles.config';
 
-//Component dependencies
+// Component dependencies
 import SistemaButton from '../../Components/SistemaButton';
 import Searchbar from '../components/Searchbar';
 import TagCarousel from '../components/TagCarousel';
 
-//SVGs
+// SVGs
 import BackArrow from '../../../assets/backArrow.svg';
-import LeftArrow from '../../../assets/leftArrow.svg';
-import RightArrow from '../../../assets/rightArrow.svg';
 
-import ActivityCardService from '../../services/ActivityCardService';
-import LessonPlanService from '../../services/LessonPlanService';
-
-import { useDispatch } from 'react-redux';
-import { addToSection } from '../../services/editor/lessonPlanSlice';
-
-// react query
+// Backend
 import { useQuery } from '@tanstack/react-query';
+import ActivityCardService from '../../services/ActivityCardService';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToSection } from '../../services/editor/lessonPlanSlice';
+import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
 
 const AddActivityCard = function ({ navigation, route }) {
   const { sectionType } = route.params;
@@ -45,30 +44,8 @@ const AddActivityCard = function ({ navigation, route }) {
     queryFn: ActivityCardService.getAllActivityCards,
   });
   const [matchSearch, setMatchSearch] = useState([]);
+  const [highlightedID, setHighlightedID] = useState('');
 
-  // previewInfo has id, name, and url.
-  const [previewInfo, setPreviewInfo] = useState(null);
-  const showNoCards = useRef(false);
-
-  // to detect when user stops typing. Source: https://stackoverflow.com/questions/42217121/how-to-start-search-only-when-user-stops-typing
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (!searchQuery) {
-        showNoCards.current = false;
-      } else {
-        if (matchSearch.length != 0) {
-          showNoCards.current = false;
-        } else {
-          showNoCards.current = true;
-        }
-      }
-    }, 100);
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchQuery]);
-
-  // ************ SEARCH RELATED VARS END *********
-
-  // ************ TAG RELATED VARS *************
   const [activeTags, setActiveTags] = useState([
     false,
     false,
@@ -80,99 +57,117 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
   ]);
 
-  const TAGS = [
-    'Recently Added', // TODO: [SIS-142] "Recently added" activity card search filter
+  const mainTags = [
+    'Recently Added', // Keep at index 0
     'Warm Up',
     'No Equipment',
     'Beginner',
     'Rhythm',
     'Note Reading',
-    'Quick',
     'Group Activity',
     'Scale',
   ];
 
-  useEffect(() => {
-    if (activityCards !== undefined) {
-      setMatchSearch(
-        activityCards?.filter(
-          card =>
-            card.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            (TAGS.filter(
-              (s, i) =>
-                activeTags[i] &&
-                card.description.toLowerCase().includes(s.toLowerCase()),
-            ).length > 0 ||
-              !activeTags.includes(true)),
-        ),
+  const [durationActiveTags, setDurActiveTags] = useState([
+    false,
+    false,
+    false,
+  ]);
+
+  const durationTags = [
+    '5-10 mins', 
+    '10-15 mins', 
+    '15+ mins'
+  ];
+
+  const recentActivityCards = useSelector(state =>
+    getCardNames(state.recentActivityCards),
+  );
+
+  /**
+   * Checks that an activity card matches all selected tags and the search query
+   * @param card
+   * @returns {boolean}
+   */
+  const matchesAllConditions = card => {
+    // See which conditions are active
+    const recentTagActive = activeTags[0];
+    const mainTagsActivity = activeTags.slice(1);
+    const mainTagsActive = mainTagsActivity.includes(true);
+    const durationTagsActive = durationActiveTags.includes(true);
+
+    // Helper functions
+    const isRecentAC = () => {
+      return (
+        recentActivityCards.filter(recentCardName =>
+          card.name.toLowerCase().includes(recentCardName.toLowerCase()),
+        ).length > 0
       );
+    };
+    const containsAllActiveTags = () => {
+      const tagNames = mainTags.slice(1);
+      const activeTags = tagNames.filter((_, i) => mainTagsActivity[i]);
+      const cardTags = activeTags.filter(
+        tag => card.description.toLowerCase().includes(tag.toLowerCase()), // card metadata includes tag
+      );
+      return activeTags.every((tag, i) => tag === cardTags[i]);
+    };
+    const isWithinDuration = () => {
+      let duration = durationTags[durationActiveTags.indexOf(true)];
+      duration = duration.toLowerCase().replace('mins', '').trim();
+      return card.description.toLowerCase().includes(duration); // card metadata includes tag
+    };
+
+    const nameIncludesQuery = card.name
+      .toLowerCase()
+      .includes(searchQuery.trim().toLowerCase());
+
+    let passesChecks = nameIncludesQuery;
+    if (passesChecks && recentTagActive) {
+      passesChecks = passesChecks && isRecentAC();
     }
-  }, [searchQuery, activityCards, activeTags]);
+    if (passesChecks && mainTagsActive) {
+      passesChecks = passesChecks && containsAllActiveTags();
+    }
+    if (passesChecks && durationTagsActive) {
+      passesChecks = passesChecks && isWithinDuration();
+    }
 
-  // ************* TAG RELATED VARS END ************
-
-  // ************* ANIMATION RELATED VARS/FUNCS *****************
-  const HEIGHT = 10;
-  const heightAnim = useRef(new Animated.Value(HEIGHT)).current;
-  const [focused, setFocused] = useState(false);
-  const animViewHeight = heightAnim.interpolate({
-    inputRange: [0, HEIGHT],
-    outputRange: ['0%', `${HEIGHT}%`],
-  });
-
-  const collapse = () => {
-    setFocused(true);
-    Animated.timing(heightAnim, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
+    return passesChecks;
   };
 
-  const uncollapse = () => {
-    setFocused(false);
-    Animated.timing(heightAnim, {
-      toValue: HEIGHT,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-    Keyboard.dismiss();
+  const searchActivityCards = () => {
+    // Clear previewed image on new search
+    setHighlightedID('');
+    setPreviewInfo(null);
+
+    // Set list of cards that match all search conditions
+    if (activityCards !== undefined) {
+      setMatchSearch(activityCards?.filter(card => matchesAllConditions(card)));
+    }
   };
 
-  // **************** ANIMATION RELATED STUFF END *********
+  useEffect(() => {
+    // Only search after user stops typing
+    const delayDebounceFn = setTimeout(() => {
+      searchActivityCards();
+    }, 100);
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    // Search if tags OR background activityCards data changes
+    searchActivityCards();
+  }, [activityCards, activeTags, durationActiveTags]);
+
+  // ************ SEARCH RELATED VARS END *********
 
   // **************** PREVIEW RELATED VARS ***************
+  const [previewInfo, setPreviewInfo] = useState(null); // previewInfo has id, name, and url
 
-  //Subscribe to keyboard events on component mount
   const dispatch = useDispatch();
-  const [keyboardVisible, setKeyBoardVisible] = useState(false);
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setKeyBoardVisible(true);
-        console.log('Keyboard is shown');
-      },
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setKeyBoardVisible(false);
-        console.log('Keyboard is hidden');
-      },
-    );
-
-    // return a cleanup function to remove the event listeners on component unmount
-    return () => {
-      console.log('Keyboard is unmounted.');
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
-
-  //onPress function for add Card button
+  // onPress function for add Card button
   const addCard = async () => {
     const rnfsPath = await ActivityCardService.downloadActivityCard(
       previewInfo.id,
@@ -205,226 +200,155 @@ const AddActivityCard = function ({ navigation, route }) {
   // *************** PREVIEW RELATED VARS END ***********
 
   return (
-    <TouchableWithoutFeedback onPress={uncollapse} flex={1} height={'100%'}>
-      <SafeAreaView style={styles.safeContainer}>
+    <SafeAreaView style={styles.safeContainer}>
+      <ScrollView style={styles.scrollContainer}>
         <View style={styles.paddingContainer}>
-          <Animated.View style={{ height: animViewHeight }}>
-            {focused ? (
-              <></>
-            ) : (
-              <>
-                <View
-                  style={[
-                    { alignItems: 'center' },
-                    styles.flexRow,
-                    styles.marginT5,
-                  ]}>
-                  <TouchableOpacity
-                    style={styles.backButton}
-                    onPress={() => navigation.goBack()}>
-                    <BackArrow height={25} width={25} />
-                  </TouchableOpacity>
-                  <Text style={styles.header}>
-                    {` ${sectionType} Activity Card `}
-                  </Text>
-                </View>
-              </>
-            )}
-          </Animated.View>
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}>
+              <BackArrow height={scale(25)} width={scale(25)} />
+            </TouchableOpacity>
+            <Text style={[styles.headerTitle, TextStyle.h1]}>
+              {`${sectionType} Activity Card`}
+            </Text>
+          </View>
 
-          <Text style={styles.tags}> Tags: </Text>
           <TagCarousel
-            tagsList={TAGS}
+            tagsList={mainTags}
             activeTags={activeTags}
             setActiveTags={setActiveTags}
+            selectOnlyOne={false}
+            showBottomScrollbar={true}
           />
-          <Searchbar
-            onChangeText={onChangeSearch}
-            onFocus={collapse}
-            value={searchQuery}
-            activityList={matchSearch}
-            focused={focused}
-            setPreviewInfo={setPreviewInfo}
-            showNoCards={showNoCards}
-            navigation={navigation}
-            section={sectionType}
+          <TagCarousel
+            tagsList={durationTags}
+            activeTags={durationActiveTags}
+            setActiveTags={setDurActiveTags}
+            selectOnlyOne={true}
+            showBottomScrollbar={false}
           />
-          {!keyboardVisible ? (
-            <>
-              {previewInfo ? (
-                <>
-                  <View
-                    style={[
-                      styles.previewContainer,
-                      {
-                        height: focused ? '30%' : '40%',
-                        marginTop: focused ? '5%' : '12%',
-                      },
-                    ]}>
-                    <View
-                      style={[
-                        { alignSelf: 'center', alignItems: 'flex-end' },
-                        styles.flex1,
-                      ]}>
-                      <LeftArrow height={30} width={20} />
-                    </View>
-                    <View
-                      style={[
-                        { marginBottom: '2%' },
-                        styles.flex4,
-                        styles.alignCenter,
-                      ]}>
-                      <Image
-                        style={styles.previewImage}
-                        source={{ uri: previewInfo?.url }}
-                      />
-                    </View>
-                    <View
-                      style={[
-                        { alignSelf: 'center', alignItems: 'flex-start' },
-                        styles.flex1,
-                      ]}>
-                      <RightArrow height={30} width={20} />
-                    </View>
-                  </View>
 
-                  <View style={[styles.flexColumn, styles.alignCenter]}>
-                    <Text
-                      style={[
-                        styles.mulishFont,
-                        styles.marginV2,
-                        styles.bodyFontSize,
-                      ]}>
-                      {` ${previewInfo?.name} `}
-                    </Text>
-                    <View
-                      style={[
-                        { marginVertical: '3%' },
-                        styles.alignCenter,
-                        styles.flexRow,
-                      ]}>
-                      <SistemaButton onPress={addCard}>
-                        <Text
-                          style={[
-                            styles.mulishFont,
-                            styles.marginH2,
-                            styles.bodyFontSize,
-                          ]}>
-                          Add Card
-                        </Text>
-                      </SistemaButton>
-                      <TouchableOpacity
-                        onPress={addAsText}
-                        style={{ marginLeft: '5%' }}>
-                        <Text
-                          numberOfLines={1}
-                          style={[
-                            styles.mulishFont,
-                            styles.marginH2,
-                            styles.azureRadiance,
-                          ]}>
-                          INSERT AS TEXT INSTEAD
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </>
-              ) : (
-                <></>
-              )}
-            </>
-          ) : (
-            <></>
+          <Searchbar 
+            navigation={navigation}
+            onChangeText={onChangeSearch} 
+            resultData={matchSearch}
+            setPreviewInfo={setPreviewInfo}
+            setHighlightedID={setHighlightedID}
+            highlightedID={highlightedID}
+            searchQuery={searchQuery}
+            sectionType={sectionType}
+          />
+
+          {previewInfo && (
+            <View
+              style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%',
+                marginTop: verticalScale(10),
+              }}>
+              {/* ADD ACTIVITY CARD BUTTONS */}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                  alignItems: 'center',
+                  width: '100%',
+                }}>
+                <SistemaButton onPress={addCard}>
+                  <Text
+                    style={[
+                      styles.mulishFont,
+                      styles.marginH2,
+                      styles.bodyFontSize,
+                    ]}>
+                    Add Card
+                  </Text>
+                </SistemaButton>
+                <TouchableOpacity onPress={addAsText}>
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.mulishFont,
+                      styles.marginH2,
+                      styles.azureRadiance,
+                    ]}>
+                    INSERT AS TEXT INSTEAD
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* ACTIVITY CARD PREVIEW */}
+              <Text
+                style={[
+                  TextStyle.label,
+                  {
+                    color: '#000000de',
+                    textAlign: 'center',
+                    marginVertical: verticalScale(15),
+                  },
+                ]}>
+                {previewInfo?.name}
+              </Text>
+              <Image
+                style={{
+                  height: 300,
+                  width: 300,
+                  resizeMode: 'contain',
+                  marginBottom: verticalScale(15),
+                }}
+                source={{ uri: previewInfo?.url }}
+              />
+            </View>
           )}
         </View>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   safeContainer: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#FFFAF5',
+  },
+  scrollContainer: {
     flexDirection: 'column',
     width: '100%',
     backgroundColor: '#FFFAF5',
-    height: '100%',
   },
   paddingContainer: {
     width: '100%',
     height: '100%',
-    paddingHorizontal: '5%',
-  },
-  tagContainer: {
-    height: '20%',
-  },
-  previewContainer: {
-    height: '30%',
-    width: '100%',
-    flexDirection: 'row',
-    marginTop: 20,
-  },
-  previewImage: {
-    width: '80%',
-    height: '100%',
-    resizeMode: 'contain',
+    paddingHorizontal: scale(15),
+    paddingVertical: verticalScale(15),
   },
   header: {
-    color: 'black',
-    fontSize: 24,
-    fontFamily: 'Poppins-Bold',
-    marginLeft: '2%',
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'flex-start',
+    marginTop: verticalScale(15),
+    marginBottom: verticalScale(10),
   },
-  tags: {
-    color: 'black',
-    fontSize: 18,
-    fontFamily: 'Mulish-Regular',
-    marginTop: '5%',
-    marginBottom: '2%',
-  },
-  backText: {
-    color: 'black',
-    fontSize: 18,
-    fontFamily: 'Mulish-Regular',
+  headerTitle: {
+    verticalAlign: 'top',
+    lineHeight: 30,
+    flex: 1,
   },
   backButton: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    paddingBottom: '1%',
-  },
-  alignCenter: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: scale(40),
+    width: scale(40),
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   mulishFont: {
     fontFamily: 'Mulish-Regular',
     color: 'black',
   },
-  flex1: {
-    flex: 1,
-  },
-  flex4: {
-    flex: 4,
-  },
-  flexRow: {
-    flexDirection: 'row',
-  },
-  flexColumn: {
-    flexDirection: 'column',
-  },
   marginH2: {
     marginHorizontal: '2%',
-  },
-  marginV2: {
-    marginVertical: '2%',
-  },
-  marginT5: {
-    marginTop: '5%',
-  },
-  marginB5: {
-    marginBottom: '5%',
   },
   bodyFontSize: {
     fontSize: 14,
