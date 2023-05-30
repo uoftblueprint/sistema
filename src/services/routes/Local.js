@@ -156,13 +156,13 @@ export async function copyDir(dirpath, destpath) {
         // Otherwise, simply copy the file and move onto the next item
         if (item.isDirectory()) {
           await RNFS.mkdir(dest);
-          await copyFileRecursive(item.path, dest);
+          await copyDir(item.path, dest);
         } else {
           await RNFS.copyFile(item.path, dest);
         }
       });
   } catch (e) {
-    console.error(`RNFS copyFileRecursive: ${e.message}`);
+    console.error(`RNFS copyDir: ${e.message}`);
   }
 }
 

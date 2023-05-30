@@ -131,6 +131,26 @@ const LessonPlanService = {
   },
 
   /**
+   * Find out whether or not a given LP is favourited
+   * @param {String} name Name of the lesson plan to check for
+   * @return {Boolean} True if the lesson plan is favourited
+   */
+  isLessonPlanFavourited: async function (name) {
+    try {
+      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+
+      // check if file exists in the favourites folder
+      if (await checkFileExists(favouritedPath)) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      console.error('deleteLessonPlan error: ', e);
+    }
+  },
+
+  /**
    * Given the name of a lesson plan, return the LessonPlan object by reaching
    * into its directory, checking for the .json file, and later down the line,
    * also its associated .png activity cards.

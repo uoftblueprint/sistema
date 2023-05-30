@@ -48,7 +48,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     dispatch(reset());
     navigation.setParams({ lessonPlanName: '' });
     toggleUnsavedChanges(false);
-    navigation.navigate(LIBRARY_STACK.LIBRARY); // Go to the library
+    navigation.navigate(LIBRARY_STACK.NAVIGATOR, {screen: LIBRARY_STACK.LIBRARY}); // Go to the library
   };
 
   // Fetch and set lesson plan data
