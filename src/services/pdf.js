@@ -10,7 +10,8 @@ export const createPDF = async lessonPlan => {
   var html = ['<body>'];
 
   // add title
-  html.push(header('Lesson Plan', 1));
+  const title = lessonPlan.lessonPlanName ?? 'Lesson Plan';
+  html.push(header(title, 1));
 
   html.push(moduleInformation(lessonPlan['Warm Up'], 'Warm Up'));
   html.push(moduleInformation(lessonPlan['Main Lesson'], 'Main Lesson'));
