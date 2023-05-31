@@ -13,7 +13,6 @@ import { createPDF } from '../services/pdf';
 import { deleteFile } from '../services/routes/Local';
 import Share from 'react-native-share';
 import LessonPlanService from '../services/LessonPlanService';
-import RNFS from 'react-native-fs';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
@@ -89,25 +88,16 @@ const OptionsMenu = ({
       : await LessonPlanService.getLessonPlan(lessonPlanName);
     let pdf = await createPDF(lpObj);
     try {
-      const localPath = 'file://' + pdf.filePath;
-      // const exportedFilename = lpObj.lessonPlanName
-      //   ? lpObj.lessonPlanName.replace(/ /g,"_") // replace spaces with underscores
-      //   : 'Sistema_Lesson_Plan'; 
-
-      // if (Platform.OS === 'ios') {
       await Share.open({
-        url: localPath,
+        url: 'file://' + pdf.filePath,
         type: 'application/pdf',
       });
       console.log('File shared');
-      // } else {
-      //   // await LessonPlanService.downloadLessonPlanAndroid(localPath, exportedFilename)
-      //   await RNFS.copyFile(localPath)
-      //     .then((doesExist) => console.log(`Does this file exist?2 ${doesExist}`))
-      //     .catch(() => console.log('existsAssets err'));
-      // }
     } catch (err) {
-      console.error('File not shared', err);
+      const exception = Platform.OS === 'android' && err.toString().includes('User did not share');
+      if (!exception) {
+        console.error('File not shared', err);
+      };
     }
     await deleteFile(pdf.filePath);
   };

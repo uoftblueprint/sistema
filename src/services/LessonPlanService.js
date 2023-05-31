@@ -9,8 +9,7 @@ import {
   readDDirectory,
   cpyFile,
 } from './routes/Local';
-import { Platform } from 'react-native';
-import { MAINDIRECTORY, ANDROIDDOWNLOADDIRECTORY, SectionName } from './constants';
+import { MAINDIRECTORY, SectionName } from './constants';
 import { Module } from './models';
 
 const LessonPlanService = {
@@ -368,26 +367,6 @@ const LessonPlanService = {
       await deleteFile(oldpath);
     } catch (e) {
       console.error('Error unfavourite: ', e);
-    }
-  },
-
-  /**
-   * Copy a locally created lesson plan pdf into the Download folder of external storage.
-   * NOTE: Android only
-   * @param {String} pdfPath app internal path of pdf
-   * @param {String} fileName name of file inside Downloads
-   */
-  downloadLessonPlanAndroid: async function (pdfPath, fileName) {
-    // If not an android device, throw error
-    if (Platform.OS != 'android') {
-      throw Error('Called downloadLessonPlanAndroid on a non-Android device');
-    };
-
-    // Otherwise 
-    try {
-      await cpyFile(pdfPath, `${ANDROIDDOWNLOADDIRECTORY}/${fileName}`)
-    } catch (e) {
-      console.error('Error downloadLessonPlanAndroid: ', e);
     }
   },
 };
