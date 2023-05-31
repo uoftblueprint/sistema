@@ -10,7 +10,7 @@ import {
   cpyFile,
 } from './routes/Local';
 import { Platform } from 'react-native';
-import { MAINDIRECTORY, SectionName } from './constants';
+import { MAINDIRECTORY, ANDROIDDOWNLOADDIRECTORY, SectionName } from './constants';
 import { Module } from './models';
 
 const LessonPlanService = {
@@ -385,7 +385,7 @@ const LessonPlanService = {
 
     // Otherwise 
     try {
-      await cpyFile(pdfPath, `RNFS.DownloadDirectoryPath/${fileName}`)
+      await cpyFile(pdfPath, `${ANDROIDDOWNLOADDIRECTORY}/${fileName}`)
     } catch (e) {
       console.error('Error downloadLessonPlanAndroid: ', e);
     }

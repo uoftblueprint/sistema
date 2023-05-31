@@ -14,3 +14,4 @@ export const ModuleType = {
 
 // LessonPlanService.js
 export const MAINDIRECTORY = RNFS.DocumentDirectoryPath;
+export const ANDROIDDOWNLOADDIRECTORY = RNFS.DownloadDirectoryPath;
