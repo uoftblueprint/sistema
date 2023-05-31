@@ -103,8 +103,8 @@ const OptionsMenu = ({
       } else {
         // await LessonPlanService.downloadLessonPlanAndroid(localPath, exportedFilename)
         await RNFS.existsAssets(localPath)
-          .then(() => console.log('File exists'))
-          .catch(() => console.log('file does not exist'));
+          .then((doesExist) => console.log(`Does this file exist? ${doesExist}`))
+          .catch(() => console.log('existsAssets err'));
       }
     } catch (err) {
       console.error('File not shared', err);
