@@ -1,6 +1,6 @@
 import FavoriteButton from '../editor/components/FavoriteButton.js';
 import OptionHeader from './OptionHeader';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import OptionsMenuBanner from './OptionsMenuBanner';
 import ExportIcon from '../../assets/exportIcon.svg';
 import TrashIcon from '../../assets/trashIcon.svg';
@@ -20,34 +20,21 @@ const OptionsMenu = ({
   lessonPlanName,
   navigation,
 }) => {
+  const [fetchingData, setFetching] = useState(true);
   const [isFavorited, setFavorited] = useState(false);
   const [isBannerVisible, setBannerVisible] = useState(false);
-  const lessonPlan = useSelector(state => state.lessonPlan);
+  const lessonPlan = useSelector(state => state.lessonPlan); 
+  // TODO can i move this into export helper func if 
+  // it's only being used once b/c lastEdited is passed in 
 
-  // FUNCTIONS FOR BUTTONS
-  const copyLessonPlan = () => {
-    LessonPlanService.copyLessonPlan(lessonPlanName);
-    navigation.goBack();
-  };
-
-  const deleteLessonPlan = async () => {
-    await LessonPlanService.deleteLessonPlan(lessonPlanName);
-    navigation.goBack();
-  };
-
-  const exportLessonPlan = async () => {
-    let pdf = await createPDF(lessonPlan);
-    try {
-      await Share.open({
-        url: 'file://' + pdf.filePath,
-        type: 'application/pdf',
-      });
-      console.log('File shared');
-    } catch {
-      console.log('File not shared');
+  useEffect(() => {
+    if (isLessonPlanEditor && fetchingData) {
+      // TODO grab if lesson is favorited from LessonPlanService
+      // set isFavorited
+      // console.log('Checking is if favorited');
+      // TODO grab lastEdited? here or pass it into OptionsMenu since that's how the overlay does it?
     }
-    await deleteFile(pdf.filePath);
-  };
+  }, [])
 
   // ALL OPTION BUTTONS
   const editorButtons = [
@@ -76,6 +63,42 @@ const OptionsMenu = ({
     },
   ];
 
+  // FUNCTIONS FOR BUTTONS
+  const copyLessonPlan = () => {
+    LessonPlanService.copyLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const deleteLessonPlan = async () => {
+    await LessonPlanService.deleteLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const handleFavoriteChange = () => {
+    // TODO
+    // (isFavorited
+    //   ? LessonPlanService.unfavouriteLessonPlan(NAME_HERE) //TODO
+    //   : LessonPlanService.favouriteLessonPlan()
+    // )
+  }
+
+  const exportLessonPlan = async () => {
+    const lpObj = isLessonPlanEditor 
+      ? lessonPlan // get lesson plan from redux since we're in the editor already
+      : await LessonPlanService.getLessonPlan(lessonPlanName);
+    let pdf = await createPDF(lpObj);
+    try {
+      await Share.open({
+        url: 'file://' + pdf.filePath,
+        type: 'application/pdf',
+      });
+      console.log('File shared');
+    } catch {
+      console.log('File not shared');
+    }
+    await deleteFile(pdf.filePath);
+  };
+
   const buttons = isLessonPlanEditor ? editorButtons : libraryButtons;
 
   return (
@@ -84,7 +107,6 @@ const OptionsMenu = ({
         <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
-          var onPress;
           if (button.name === 'Export Lesson Plan') {
             onPress = exportLessonPlan;
           }

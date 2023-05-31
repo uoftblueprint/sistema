@@ -39,6 +39,7 @@ const LessonPlanButton = ({
         <TouchableOpacity
           onPress={() =>
             navigation.navigate(LIBRARY_STACK.LESSON_PLAN_MENU_OVERLAY, {
+              isLessonPlanEditor: false,
               lastEdited: lastEditedDate,
               lessonPlanName: lessonPlan,
             })
