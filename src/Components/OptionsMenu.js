@@ -7,7 +7,7 @@ import TrashIcon from '../../assets/trashIcon.svg';
 import HeartIcon from '../../assets/heartIcon.svg';
 import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 import { createPDF } from '../services/pdf';
 import { deleteFile } from '../services/routes/Local';
@@ -88,11 +88,20 @@ const OptionsMenu = ({
       : await LessonPlanService.getLessonPlan(lessonPlanName);
     let pdf = await createPDF(lpObj);
     try {
-      await Share.open({
-        url: 'file://' + pdf.filePath,
-        type: 'application/pdf',
-      });
-      console.log('File shared');
+      const localPath = 'file://' + pdf.filePath;
+      const exportedFilename = lpObj.lessonPlanName
+        ? lpObj.lessonPlanName.replace(/ /g,"_") // replace spaces with underscores
+        : 'Sistema_Lesson_Plan'; 
+      if (Platform.OS === 'ios') {
+        await Share.open({
+          url: localPath,
+          type: 'application/pdf',
+          filename: exportedFilename,
+        });
+        console.log('File shared');
+      } else {
+        LessonPlanService.downloadLessonPlanAndroid(localPath, exportedFilename);
+      }
     } catch (err) {
       console.error('File not shared', err);
     }
