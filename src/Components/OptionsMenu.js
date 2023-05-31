@@ -102,8 +102,8 @@ const OptionsMenu = ({
         console.log('File shared on ios');
       } else {
         // await LessonPlanService.downloadLessonPlanAndroid(localPath, exportedFilename)
-        await RNFS.existsAssets(localPath)
-          .then((doesExist) => console.log(`Does this file exist? ${doesExist}`))
+        await RNFS.exists(localPath)
+          .then((doesExist) => console.log(`Does this file exist?2 ${doesExist}`))
           .catch(() => console.log('existsAssets err'));
       }
     } catch (err) {
