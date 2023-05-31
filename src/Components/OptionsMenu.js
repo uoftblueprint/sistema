@@ -93,8 +93,8 @@ const OptionsMenu = ({
         type: 'application/pdf',
       });
       console.log('File shared');
-    } catch {
-      console.log('File not shared');
+    } catch (err) {
+      console.error('File not shared', err);
     }
     await deleteFile(pdf.filePath);
   };
