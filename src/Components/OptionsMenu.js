@@ -90,22 +90,22 @@ const OptionsMenu = ({
     let pdf = await createPDF(lpObj);
     try {
       const localPath = 'file://' + pdf.filePath;
-      const exportedFilename = lpObj.lessonPlanName
-        ? lpObj.lessonPlanName.replace(/ /g,"_") // replace spaces with underscores
-        : 'Sistema_Lesson_Plan'; 
+      // const exportedFilename = lpObj.lessonPlanName
+      //   ? lpObj.lessonPlanName.replace(/ /g,"_") // replace spaces with underscores
+      //   : 'Sistema_Lesson_Plan'; 
 
-      if (Platform.OS === 'ios') {
-        await Share.open({
-          url: localPath,
-          type: 'application/pdf',
-        });
-        console.log('File shared on ios');
-      } else {
-        // await LessonPlanService.downloadLessonPlanAndroid(localPath, exportedFilename)
-        await RNFS.exists(localPath)
-          .then((doesExist) => console.log(`Does this file exist?2 ${doesExist}`))
-          .catch(() => console.log('existsAssets err'));
-      }
+      // if (Platform.OS === 'ios') {
+      await Share.open({
+        url: localPath,
+        type: 'application/pdf',
+      });
+      console.log('File shared');
+      // } else {
+      //   // await LessonPlanService.downloadLessonPlanAndroid(localPath, exportedFilename)
+      //   await RNFS.copyFile(localPath)
+      //     .then((doesExist) => console.log(`Does this file exist?2 ${doesExist}`))
+      //     .catch(() => console.log('existsAssets err'));
+      // }
     } catch (err) {
       console.error('File not shared', err);
     }
