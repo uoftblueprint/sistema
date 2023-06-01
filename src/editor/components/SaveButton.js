@@ -23,14 +23,26 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
         onPress={async () => {
           if (!isLessonPlanLoading) {
             // Prevents user from pressing save before lesson plan is loaded in
-            // Disable user changes
+            // As well as, disable user changes upon pressing save
             setLoading(true);
 
-            // Write changes from redux to RNFS
-            if (
-              lessonPlanInitialName &&
-              lessonPlanInitialName != lessonPlanObj.lessonPlanName
-            ) {
+            // Check for naming conditions
+            const isNewLP = !lessonPlanInitialName; // no previously saved name
+            const wasRenamed = lessonPlanInitialName &&
+              lessonPlanInitialName != lessonPlanObj.lessonPlanName;
+
+            if (isNewLP || wasRenamed) {
+              const isUnique = LessonPlanService.isLPNameUnique(lessonPlanObj.lessonPlanName);
+              if (!isUnique) {
+                setLoading(false);
+                console.log('Duplicate name detected, aborting save.');
+                // TODO: Open warning overlay
+                return;
+              }
+            }
+
+            // Once checks pass, write changes from redux to RNFS
+            if (wasRenamed) {
               // Lesson plan was renamed so need to handle old file
               await LessonPlanService.saveLessonPlan(
                 lessonPlanObj,
@@ -38,7 +50,10 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
                 lessonPlanInitialName,
               );
             } else {
-              await LessonPlanService.saveLessonPlan(lessonPlanObj, false);
+              await LessonPlanService.saveLessonPlan(
+                lessonPlanObj, 
+                false
+              );
             }
 
             // Clear redux and route params

@@ -49,8 +49,6 @@ const LessonPlanService = {
    * wiki, and save it in a new directory by the same name as the lesson plan
    * under RNFS.DocumentDirectoryPath/LESSON_NAME/LESSON_NAME.json
    *
-   * Be sure to think about how to save activity card .pngs later down the line
-   * as well!
    * @param {Object} lesson LessonPlan object to save to local storage
    * @param {Boolean} hasNewName if the LP has been renamed
    * @param {String} oldLPName to delete old files and directories
@@ -266,7 +264,7 @@ const LessonPlanService = {
 
   /**
    * Rename a lesson plan. Throw an error if the lesson DNE or if it's renamed
-   * to an existing name.
+   * to an existing name. TODO: delete if not being used
    * Use RNFS.moveFile() with the original filename and the new filename!
    * @param {String} old_name Old name of lesson plan
    * @param {String} new_name New name of lesson plan
@@ -367,6 +365,22 @@ const LessonPlanService = {
       await deleteFile(oldpath);
     } catch (e) {
       console.error('Error unfavourite: ', e);
+    }
+  },
+
+  /**
+   * Check if there is another existing lesson plan with the same name.
+   * @param {String} name 
+   * @returns {Boolean} true if lesson plan name is unique, false otherwise
+   */
+  isLPNameUnique: async function (name) {
+    try {
+      // Grab all lesson plan names from list of [mtime, name]
+      const allNames = await this.getAllLessonPlanNames(0).map(data => data[1]);
+      // Return true if existing allNames doesn't include new name
+      return !allNames.includes(name);
+    } catch (e) {
+      console.error('Error isLPNameUnique: ', e);
     }
   },
 };
