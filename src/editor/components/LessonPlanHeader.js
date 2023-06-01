@@ -64,6 +64,8 @@ const LessonPlanHeader = ({
           {isEditable ? (
             <TextInput
               style={[styles.input, TextStyle.h1]}
+              multiline={false}
+              maxLength={75}
               value={currLPName}
               onChangeText={newText => {
                 dispatch(setLessonPlanName({ name: newText, isDirty: true }));
