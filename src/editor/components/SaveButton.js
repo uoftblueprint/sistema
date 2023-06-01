@@ -19,7 +19,10 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
   return (
     <SafeAreaView>
       <TouchableOpacity
-        style={styles.buttonContainer}
+        style={[
+          styles.buttonContainer,
+          {opacity: isLessonPlanLoading ? 1 : 0.5}
+        ]}
         onPress={async () => {
           if (!isLessonPlanLoading) {
             // Prevents user from pressing save before lesson plan is loaded in
