@@ -7,7 +7,6 @@ import {
   deleteFile,
   makeDirectory,
   readDDirectory,
-  copyFile,
   copyDir,
 } from './routes/Local';
 import { MAINDIRECTORY, SectionName } from './constants';
@@ -131,26 +130,6 @@ const LessonPlanService = {
   },
 
   /**
-   * Find out whether or not a given LP is favourited
-   * @param {String} name Name of the lesson plan to check for
-   * @return {Boolean} True if the lesson plan is favourited
-   */
-  isLessonPlanFavourited: async function (name) {
-    try {
-      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-
-      // check if file exists in the favourites folder
-      if (await checkFileExists(favouritedPath)) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      console.error('deleteLessonPlan error: ', e);
-    }
-  },
-
-  /**
    * Given the name of a lesson plan, return the LessonPlan object by reaching
    * into its directory, checking for the .json file, and later down the line,
    * also its associated .png activity cards.
@@ -199,6 +178,29 @@ const LessonPlanService = {
       return lessonPlanObj;
     } catch (e) {
       console.error('Error getLessonPlan: ', e);
+    }
+  },
+
+  /**
+   * Find out whether or not a given LP is favourited
+   * @param {String} name Name of the lesson plan to check for
+   * @return {Boolean} True if the lesson plan is favourited
+   */
+  isLessonPlanFavourited: async function (name) {
+    try {
+      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      console.log("Inside isLessonPlanFavourited");
+
+      // check if file exists in the favourites folder
+      if (await checkFileExists(favouritedPath)) {
+        console.log(`Lesson Plan is in Favourited: ${name}`);
+        return true;
+      } else {
+        console.log(`Lesson Plan is in Default: ${name}`);
+        return false;
+      }
+    } catch (e) {
+      console.error('isLessonPlanFavourited error: ', e);
     }
   },
   

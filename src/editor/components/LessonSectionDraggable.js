@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   replaceSection,
   getLessonSection,
+  getInitialLessonPlanName,
 } from '../../services/editor/lessonPlanSlice';
 import {
   NestableDraggableFlatList,
@@ -27,6 +28,9 @@ const LessonSectionDraggable = ({
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
   );
+  const lessonPlanName = useSelector(state => 
+    getInitialLessonPlanName(state.lessonPlan),
+  );
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
     dispatch(
@@ -48,6 +52,7 @@ const LessonSectionDraggable = ({
   const addActivityCard = () => {
     navigation.navigate(STACK_SCREENS.ADD_ACTIVITY_CARD, {
       sectionType: sectionType,
+      lessonPlanName: lessonPlanName,
     });
   };
 
@@ -57,6 +62,7 @@ const LessonSectionDraggable = ({
     const newSectionData = sectionData.filter(
       module => module.key != keyToDelete,
     );
+    
     updateRedux(newSectionData);
 
     //if the module is an Activity Card, find the card id from redux
@@ -130,6 +136,7 @@ const LessonSectionDraggable = ({
           drag={drag}
           dragIsActive={isActive}
           data={item}
+          lessonPlanName={lessonPlanName}
           navigation={navigation}
           isMenuDisabled={disableInteractions}
         />

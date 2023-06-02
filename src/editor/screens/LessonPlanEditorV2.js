@@ -18,6 +18,7 @@ import {
   loadInitialLessonPlan,
   setLessonPlanName,
   getLessonPlanName,
+  setInitialLessonPlanName,
   reset,
 } from '../../services/editor/lessonPlanSlice.js';
 import UnsavedChangesOverlay from '../components/overlays/UnsavedChangesOverlay.js';
@@ -106,6 +107,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           day: 'numeric',
         });
         dispatch(setLessonPlanName({ name: todayDate, isDirty: false }));
+        dispatch(setInitialLessonPlanName({ name: todayDate }));
       }
       setFetching(false);
     };

@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   text1: {
-    fontColor: 'black',
+    color: '#621B16',
     fontFamily: 'Mulish-Bold',
     fontSize: 17,
   },
   text2: {
-    fontColor: 'black',
+    color: '#621B16',
     fontFamily: 'Mulish-Regular',
     fontSize: 15,
   },

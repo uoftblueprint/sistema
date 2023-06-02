@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import AddLessonContentButton from './AddLessonContentButton';
-import { Text, View, SafeAreaView, Platform, StyleSheet } from 'react-native';
-import store from '../../services/configureStore';
+import { Text, View, SafeAreaView, StyleSheet } from 'react-native';
 import { TextStyle } from '../../Styles.config';
 import ContentCard from './ContentCard';
 import StoredContent from './StoredContent';
@@ -10,7 +9,6 @@ import StoredContent from './StoredContent';
 const LessonSection = ({ sectionType, subtitle, navigation }) => {
   const lessonPlanState = useSelector(state => state.lessonPlan);
   const [sectionContent, setSectionContent] = useState([]);
-  const [sectionActivityCards, setSectionActivityCards] = useState([]);
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
 
   const handleClick = () => {

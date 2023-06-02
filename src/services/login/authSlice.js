@@ -9,7 +9,7 @@ export const authSlice = createSlice({
   reducers: {
     setNewToken: (state, action) => {
       return {
-        ...state, // Because redux uses immuitable logic, we have to "copy" the original state first
+        ...state, // Because redux uses immutable logic, we have to "copy" the original state first
         driveToken: action.payload, // Then replace with new AccessToken obj
       };
     },

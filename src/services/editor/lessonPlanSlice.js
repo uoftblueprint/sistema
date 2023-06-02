@@ -45,6 +45,12 @@ export const lessonPlanSlice = createSlice({
         isDirty: action.payload.isDirty,
       };
     },
+    setInitialLessonPlanName: (state, action) => {
+      return {
+        ...state,
+        initialLessonPlanName: action.payload.name,
+      };
+    },
     replaceSection: (state, action) => {
       // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
@@ -114,6 +120,7 @@ export const {
   replaceNote,
   replaceSection,
   setLessonPlanName,
+  setInitialLessonPlanName,
   loadInitialLessonPlan,
   reset,
 } = lessonPlanSlice.actions;

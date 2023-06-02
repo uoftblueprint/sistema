@@ -15,6 +15,7 @@ export async function readDirectory(dirpath) {
       console.error(`RNFS readDirectory: ${err.message}`);
     });
 }
+
 /**
  * Reads the ReadDirItem in the entirety of the given directory.
  * @param {String} dirpath Full directory path to read

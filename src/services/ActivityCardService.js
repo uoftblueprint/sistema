@@ -3,7 +3,6 @@ import {
   writeFile,
   makeDirectory,
   deleteFile,
-  readFile,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { Buffer } from 'buffer';
@@ -154,7 +153,7 @@ const ActivityCardService = {
       // Add the name of the activity card into the cardName.txt file
       await writeFile(false, dirPath + '/cardName.txt', name + '\n');
 
-      return filePath;
+      return `/${id}/cardImage.jpg`;
     } catch (e) {
       console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
     }
