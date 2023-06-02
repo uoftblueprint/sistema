@@ -41,7 +41,7 @@ export const lessonPlanSlice = createSlice({
     setLessonPlanName: (state, action) => {
       return {
         ...state,
-        lessonPlanName: action.payload.name.trim(),
+        lessonPlanName: action.payload.name,
         isDirty: action.payload.isDirty,
       };
     },
