@@ -21,7 +21,7 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
       <TouchableOpacity
         style={[
           styles.buttonContainer,
-          {opacity: isLessonPlanLoading ? 1 : 0.5}
+          {opacity: isLessonPlanLoading ? 0.5 : 1}
         ]}
         onPress={async () => {
           if (!isLessonPlanLoading) {
