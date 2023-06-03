@@ -1,20 +1,17 @@
 import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import SaveIcon from '../../../assets/save.svg';
 import LessonPlanService from '../../services/LessonPlanService';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   getLessonPlan,
   getInitialLessonPlanName,
-  reset,
 } from '../../services/editor/lessonPlanSlice';
-import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants';
 
-const SaveButton = ({ navigation, isLessonPlanLoading, setLoading, isNewLP, handleBackButton }) => {
+const SaveButton = ({ isLessonPlanLoading, setLoading, isNewLP, handleBackButton }) => {
   const lessonPlanObj = useSelector(state => getLessonPlan(state.lessonPlan));
   const lessonPlanInitialName = useSelector(state =>
     getInitialLessonPlanName(state.lessonPlan),
   );
-  const dispatch = useDispatch();
 
   return (
     <SafeAreaView>
@@ -57,7 +54,7 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading, isNewLP, hand
                 false
               );
             }
-            
+
             // Navigate back to Library
             setLoading(false);
             handleBackButton();
