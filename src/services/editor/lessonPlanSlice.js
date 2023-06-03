@@ -19,6 +19,8 @@ export const lessonPlanSlice = createSlice({
     [SectionName.coolDown]: [],
     [SectionName.notes]: '',
     isDirty: false,
+    isInitiallyFavorited: null,
+    isCurrentlyFavorited: null,
   },
   reducers: {
     /**
@@ -91,6 +93,20 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
+    loadInitialFavState: (state, action) => {
+      return {
+        ...state,
+        isInitiallyFavorited: action.payload,
+        isCurrentlyFavorited: action.payload,
+      }
+    },
+    setFavState: (state, action) => {
+      return {
+        ...state,
+        isCurrentlyFavorited: action.payload,
+        isDirty: true,
+      }
+    },
     reset: () => {
       console.log('Reseting redux...');
       return {
@@ -114,6 +130,8 @@ export const {
   replaceSection,
   setLessonPlanName,
   loadInitialLessonPlan,
+  loadInitialFavState,
+  setFavState,
   reset,
 } = lessonPlanSlice.actions;
 

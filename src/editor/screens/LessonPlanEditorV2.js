@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LessonPlanService from '../../services/LessonPlanService.js';
 import {
   loadInitialLessonPlan,
+  loadInitialFavState,
   setLessonPlanName,
   getLessonPlanName,
   reset,
@@ -106,6 +107,11 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         });
         dispatch(setLessonPlanName({ name: todayDate, isDirty: false }));
       }
+
+      // Set redux state if LP is initially favorited for pathing reasons
+      const isInitiallyFavorited = isNewLP ? false : ((route.params && route.params.isFavorited) ?? false);
+      dispatch(loadInitialFavState(isInitiallyFavorited));
+
       setFetching(false);
     };
 
