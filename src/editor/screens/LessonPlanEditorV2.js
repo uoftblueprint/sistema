@@ -161,6 +161,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           isLessonPlanLoading={isFetching || isSaving}
           setLoading={setSaving}
           isNewLP={isNewLP}
+          handleBackButton={leaveEditor}
         />
       </View>
 

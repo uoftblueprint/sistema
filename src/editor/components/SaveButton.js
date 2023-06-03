@@ -9,7 +9,7 @@ import {
 } from '../../services/editor/lessonPlanSlice';
 import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants';
 
-const SaveButton = ({ navigation, isLessonPlanLoading, setLoading, isNewLP }) => {
+const SaveButton = ({ navigation, isLessonPlanLoading, setLoading, isNewLP, handleBackButton }) => {
   const lessonPlanObj = useSelector(state => getLessonPlan(state.lessonPlan));
   const lessonPlanInitialName = useSelector(state =>
     getInitialLessonPlanName(state.lessonPlan),
@@ -57,14 +57,9 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading, isNewLP }) =>
                 false
               );
             }
-
-            // Clear redux and route params
-            dispatch(reset());
-            navigation.setParams({ lessonPlanName: '' });
-
+            
             // Navigate back to Library
-            setLoading(false);
-            navigation.navigate(LIBRARY_STACK.LIBRARY);
+            handleBackButton();
           }
         }}>
         <SaveIcon height={'20'} width={'20'} />
