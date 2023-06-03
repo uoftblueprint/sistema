@@ -381,7 +381,9 @@ const LessonPlanService = {
       allNames = allNames.map(data => data.name);
       console.log('isLPNameUnique 2: ', allNames);// TODO: del
       // Return true if existing allNames doesn't include new name
-      return !allNames.includes(name.trim());
+      const result = !(allNames.includes(name.trim()));
+      console.log(`is LP ${name.trim()} unique?`, result) // TODO: del
+      return result;
     } catch (e) {
       console.error('Error isLPNameUnique: ', e);
     }
