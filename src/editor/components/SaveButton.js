@@ -31,7 +31,6 @@ const SaveButton = ({ isLessonPlanLoading, setLoading, isNewLP, handleBackButton
               lessonPlanInitialName != lessonPlanObj.lessonPlanName;
 
             if (isNewLP || wasRenamed) {
-              console.log('isNewLP: ', isNewLP, 'wasRenamed: ', wasRenamed); // TODO: del
               const isUnique = await LessonPlanService.isLPNameUnique(lessonPlanObj.lessonPlanName);
               if (!isUnique) {
                 setLoading(false);

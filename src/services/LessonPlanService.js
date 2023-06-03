@@ -376,14 +376,9 @@ const LessonPlanService = {
   isLPNameUnique: async function (name) {
     try {
       // Grab all lesson plan names from list of [mtime, name]
-      let allNames = await this.getAllLessonPlanNames(0);
-      console.log('isLPNameUnique 1: ', allNames); // TODO: del
-      allNames = allNames.map(data => data.name);
-      console.log('isLPNameUnique 2: ', allNames);// TODO: del
+      const allNames = await this.getAllLessonPlanNames(0).map(data => data.name);
       // Return true if existing allNames doesn't include new name
-      const result = !(allNames.includes(name.trim()));
-      console.log(`is LP ${name.trim()} unique?`, result) // TODO: del
-      return result;
+      return !(allNames.includes(name.trim()));
     } catch (e) {
       console.error('Error isLPNameUnique: ', e);
     }
