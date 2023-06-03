@@ -31,7 +31,9 @@ const SaveButton = ({ isLessonPlanLoading, setLoading, isNewLP, handleBackButton
               lessonPlanInitialName != lessonPlanObj.lessonPlanName;
 
             if (isNewLP || wasRenamed) {
+              console.log('isNewLP: ', isNewLP, 'wasRenamed: ', wasRenamed); // TODO: del
               const isUnique = LessonPlanService.isLPNameUnique(lessonPlanObj.lessonPlanName);
+              console.log(`is LP ${lessonPlanObj.lessonPlanName.trim()} unique?`, isUnique) // TODO: del
               if (!isUnique) {
                 setLoading(false);
                 console.log('Duplicate name detected, aborting save.');
