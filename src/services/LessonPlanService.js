@@ -378,7 +378,7 @@ const LessonPlanService = {
       // Grab all lesson plan names from list of [mtime, name]
       let allNames = await this.getAllLessonPlanNames(0);
       console.log('1: ', allNames);
-      allNames = allNames.map(data => data[1]);
+      allNames = allNames.map(data => data.name);
       console.log('2: ', allNames);
       // Return true if existing allNames doesn't include new name
       return !allNames.includes(name.trim());
