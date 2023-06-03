@@ -119,7 +119,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
         navigation={navigation}
-        lastEditedDate={route.params.lastEdited ?? 'undefined'}
+        lastEditedDate={(route.params && route.params.lastEdited) ?? 'unknown'}
         showOptions={!isNewLP} // Don't show buttons to access LP options menu if LP is brand new (nothing to delete, favourite, etc.)
         toggleUnsavedChanges={toggleUnsavedChanges}
         handleBackButton={leaveEditor}
