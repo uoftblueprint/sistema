@@ -26,6 +26,7 @@ import ErrorLoadingLPOverlay from '../components/overlays/ErrorLoadingLPOverlay.
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName } from '../../services/constants.js';
 import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants.js';
+import handleCleanupActions from '../../services/editor/cleanupActions.js';
 
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
@@ -45,6 +46,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
   // Clear redux and route params
   const leaveEditor = () => {
+    handleCleanupActions();
     dispatch(reset());
     navigation.setParams({ lessonPlanName: '', isFavorited: false, lastEdited: '' });
     toggleUnsavedChanges(false);

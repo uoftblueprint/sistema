@@ -51,7 +51,7 @@ const SaveButton = ({ isLessonPlanLoading, setLoading, isNewLP, handleBackButton
             } else {
               await LessonPlanService.saveLessonPlan(
                 lessonPlanObj, 
-                false
+                false,
               );
             }
 

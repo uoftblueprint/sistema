@@ -1,6 +1,6 @@
 import FavoriteButton from '../editor/components/FavoriteButton.js';
 import OptionHeader from './OptionHeader';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import OptionsMenuBanner from './OptionsMenuBanner';
 import ExportIcon from '../../assets/exportIcon.svg';
 import TrashIcon from '../../assets/trashIcon.svg';
@@ -8,33 +8,25 @@ import HeartIcon from '../../assets/heartIcon.svg';
 import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { createPDF } from '../services/pdf';
 import { deleteFile } from '../services/routes/Local';
 import Share from 'react-native-share';
 import LessonPlanService from '../services/LessonPlanService';
+import { setFavState } from '../services/editor/lessonPlanSlice.js';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
   lastEdited,
   lessonPlanName,
   navigation,
+  isFavorited,
 }) => {
-  const [fetchingData, setFetching] = useState(true);
-  const [isFavorited, setFavorited] = useState(false);
+  const dispatch = useDispatch();
   const [isBannerVisible, setBannerVisible] = useState(false);
   const lessonPlan = useSelector(state => state.lessonPlan); 
   // TODO can i move this into export helper func if 
   // it's only being used once b/c lastEdited is passed in 
-
-  useEffect(() => {
-    if (isLessonPlanEditor && fetchingData) {
-      // TODO grab if lesson is favorited from LessonPlanService
-      // set isFavorited
-      // console.log('Checking is if favorited');
-      // TODO grab lastEdited? here or pass it into OptionsMenu since that's how the overlay does it?
-    }
-  }, [])
 
   // ALL OPTION BUTTONS
   const editorButtons = [
@@ -74,12 +66,8 @@ const OptionsMenu = ({
     navigation.goBack();
   };
 
-  const handleFavoriteChange = () => {
-    // TODO
-    // (isFavorited
-    //   ? LessonPlanService.unfavouriteLessonPlan(NAME_HERE) //TODO
-    //   : LessonPlanService.favouriteLessonPlan()
-    // )
+  const handleFavoriteChange = (newState) => {
+    dispatch(setFavState(newState));
   }
 
   const exportLessonPlan = async () => {
@@ -118,7 +106,7 @@ const OptionsMenu = ({
               <FavoriteButton
                 key={i}
                 setBanner={setBannerVisible}
-                setFavoritedPlan={setFavorited}
+                setFavoritedPlan={handleFavoriteChange}
                 isFavoritedPlan={isFavorited}
               />
             );

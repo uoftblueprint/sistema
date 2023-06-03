@@ -23,6 +23,7 @@ export const lessonPlanSlice = createSlice({
     isCurrentlyFavorited: null,
   },
   reducers: {
+
     /**
      * Load the redux store with a data from an existing lesson plan.
      * isDirty stays false.
@@ -40,6 +41,7 @@ export const lessonPlanSlice = createSlice({
         isDirty: false,
       };
     },
+
     setLessonPlanName: (state, action) => {
       return {
         ...state,
@@ -47,12 +49,11 @@ export const lessonPlanSlice = createSlice({
         isDirty: action.payload.isDirty,
       };
     },
-    replaceSection: (state, action) => {
-      // action.payload: {
-      //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
-      //     allData: { type, content, key }[]
-      // }
 
+    /**
+     * action.payload: { section: SectionName, allData: { type, content, key }[] }
+     */
+    replaceSection: (state, action) => {
       // TODO: Do some error handling. Confirm that every module is properly formed
       // Check that it has 3 properties [type, section, content]
       // If only missing key property, grab next unique key
@@ -64,12 +65,11 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
+
+    /**
+     * action.payload: { section: SectionName, type: ModuleType, content: String }
+     */
     addToSection: (state, action) => {
-      // action.payload: {
-      //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
-      //     type: ModuleType.text || ModuleType.activityCard
-      //     content: "",
-      // }
       const listOfKeys = state[action.payload.section].map(({ key }) => key); // Get a list of all keys in the section
       const nextKey = grabNextKey(listOfKeys);
       return {
@@ -86,6 +86,7 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
+
     replaceNote: (state, action) => {
       return {
         ...state,
@@ -93,20 +94,24 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
+
     loadInitialFavState: (state, action) => {
+      console.log('isInitiallyFavorited: ', action.payload); // TODO: Del
       return {
         ...state,
         isInitiallyFavorited: action.payload,
         isCurrentlyFavorited: action.payload,
       }
     },
+
     setFavState: (state, action) => {
+      console.log('Temp isCurrentlyFavorited: ', action.payload); // TODO: Del
       return {
         ...state,
         isCurrentlyFavorited: action.payload,
-        isDirty: true,
       }
     },
+
     reset: () => {
       console.log('Reseting redux...');
       return {
@@ -117,6 +122,8 @@ export const lessonPlanSlice = createSlice({
         [SectionName.coolDown]: [],
         [SectionName.notes]: '',
         isDirty: false,
+        isInitiallyFavorited: null,
+        isCurrentlyFavorited: null,
       };
     },
   },
@@ -188,5 +195,13 @@ export const getLessonPlan = state => {
     return {};
   }
 };
+
+export const getInitialFavState = state => {
+  return state.isInitiallyFavorited;
+}
+
+export const getCurrFavState = state => {
+  return state.isCurrentlyFavorited;
+}
 
 export default lessonPlanSlice.reducer;

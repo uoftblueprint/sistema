@@ -20,6 +20,7 @@ import {
   setLessonPlanName,
   getDirty,
   getInitialLessonPlanName,
+  getCurrFavState,
 } from '../../services/editor/lessonPlanSlice';
 
 const headerIconSize = moderateScale(25);
@@ -40,6 +41,7 @@ const LessonPlanHeader = ({
   );
   const isDirty = useSelector(state => getDirty(state.lessonPlan));
   const initialLPName = useSelector(state => getInitialLessonPlanName(state.lessonPlan));
+  const isCurrentlyFavorited = useSelector(state => getCurrFavState(state.lessonPlan));
 
   // REACT COMPONENT STATES
   const [isEditable, setIsEditable] = useState(false);
@@ -96,6 +98,7 @@ const LessonPlanHeader = ({
                   isLessonPlanEditor: true,
                   lastEdited: lastEditedDate,
                   lessonPlanName: initialLPName,
+                  isFavorited: isCurrentlyFavorited,
                 })
               }>
               <Menu
