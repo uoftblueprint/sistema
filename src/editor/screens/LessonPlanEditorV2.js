@@ -26,7 +26,6 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName } from '../../services/constants.js';
 import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants.js';
 
-const lastEditedDummy = 'Jan 1, 2023';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
   // NAVIGATION STATES
@@ -46,7 +45,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   // Clear redux and route params
   const leaveEditor = () => {
     dispatch(reset());
-    navigation.setParams({ lessonPlanName: '' });
+    navigation.setParams({ lessonPlanName: '', isFavorited: false, lastEdited: '' });
     toggleUnsavedChanges(false);
     navigation.navigate(LIBRARY_STACK.NAVIGATOR, {screen: LIBRARY_STACK.LIBRARY}); // Go to the library
   };
@@ -120,7 +119,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
         navigation={navigation}
-        lastEditedDate={lastEditedDummy} // TODO: [SIS-136] Set last edited date in LessonPlanHeader
+        lastEditedDate={lastEdited}
         showOptions={!isNewLP} // Don't show buttons to access LP options menu if LP is brand new (nothing to delete, favourite, etc.)
         toggleUnsavedChanges={toggleUnsavedChanges}
         handleBackButton={leaveEditor}
@@ -161,6 +160,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           navigation={navigation}
           isLessonPlanLoading={isFetching || isSaving}
           setLoading={setSaving}
+          isNewLP={isNewLP}
         />
       </View>
 

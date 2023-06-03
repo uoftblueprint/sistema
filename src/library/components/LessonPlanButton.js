@@ -23,7 +23,11 @@ const LessonPlanButton = ({
         onPress={() => {
           navigation.navigate(EDITOR_STACK.NAVIGATOR, {
             screen: EDITOR_STACK.LESSON_PLAN_EDITOR_V2,
-            params: { lessonPlanName: name },
+            params: { 
+              lessonPlanName: name, 
+              isFavorited: isFavorited,
+              lastEdited: lastEditedDate,
+            },
           });
         }}>
         <Text style={TextStyle.label}>{name}</Text>
@@ -42,6 +46,7 @@ const LessonPlanButton = ({
               isLessonPlanEditor: false,
               lastEdited: lastEditedDate,
               lessonPlanName: lessonPlan,
+              isFavorited: isFavorited,
             })
           }>
           <DotsGraphic width={23} height={23} />

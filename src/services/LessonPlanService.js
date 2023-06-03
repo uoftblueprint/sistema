@@ -57,7 +57,7 @@ const LessonPlanService = {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
-      const name = lesson.lessonPlanName;
+      const name = lesson.lessonPlanName.trim();
 
       const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
       const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
@@ -376,9 +376,9 @@ const LessonPlanService = {
   isLPNameUnique: async function (name) {
     try {
       // Grab all lesson plan names from list of [mtime, name]
-      const allNames = await this.getAllLessonPlanNames(0).map(data => data[1]);
+      const allNames = await this.getAllLessonPlanNames(0).bind(this).map(data => data[1]);
       // Return true if existing allNames doesn't include new name
-      return !allNames.includes(name);
+      return !allNames.includes(name.trim());
     } catch (e) {
       console.error('Error isLPNameUnique: ', e);
     }

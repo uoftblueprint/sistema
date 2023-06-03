@@ -9,7 +9,7 @@ import {
 } from '../../services/editor/lessonPlanSlice';
 import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants';
 
-const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
+const SaveButton = ({ navigation, isLessonPlanLoading, setLoading, isNewLP }) => {
   const lessonPlanObj = useSelector(state => getLessonPlan(state.lessonPlan));
   const lessonPlanInitialName = useSelector(state =>
     getInitialLessonPlanName(state.lessonPlan),
@@ -30,7 +30,6 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading }) => {
             setLoading(true);
 
             // Check for naming conditions
-            const isNewLP = !lessonPlanInitialName; // no previously saved name
             const wasRenamed = lessonPlanInitialName &&
               lessonPlanInitialName != lessonPlanObj.lessonPlanName;
 
