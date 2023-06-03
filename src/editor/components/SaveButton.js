@@ -59,6 +59,7 @@ const SaveButton = ({ navigation, isLessonPlanLoading, setLoading, isNewLP, hand
             }
             
             // Navigate back to Library
+            setLoading(false);
             handleBackButton();
           }
         }}>
