@@ -36,8 +36,9 @@ const handleFavChange = async (lp) => {
 
 const deleteUnusedActivityCards = () => {
     // TODO: 
-    // 1. arr1 = get a list of all activity cards in the directory
-    // 2. arr2 = get a list of all activity cards in the lp
+    // 1. arr1 = get a list of all activity cards in the directory (RNFS)
+    // 2. arr2 = get a list of all activity cards in the lp (check json file/initial state)
+    // difference between intial state of LP and redux
     // 3. remove any ACs in arr1 that aren't in arr2
 }
 
