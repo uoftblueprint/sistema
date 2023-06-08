@@ -13,7 +13,7 @@ import { createPDF } from '../services/pdf';
 import { deleteFile } from '../services/routes/Local';
 import Share from 'react-native-share';
 import LessonPlanService from '../services/LessonPlanService';
-import { setFavState } from '../services/editor/lessonPlanSlice.js';
+import { setFavState, getCurrFavState } from '../services/editor/lessonPlanSlice.js';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
@@ -25,6 +25,8 @@ const OptionsMenu = ({
   const dispatch = useDispatch();
   const [isBannerVisible, setBannerVisible] = useState(false);
   const lessonPlan = useSelector(state => state.lessonPlan); 
+  const isCurrentlyFavorited = isFavorited // from library
+    ?? useSelector(state => getCurrFavState(state.lessonPlan)); // from editor
   // TODO can i move this into export helper func if 
   // it's only being used once b/c lastEdited is passed in 
 
@@ -107,7 +109,7 @@ const OptionsMenu = ({
                 key={i}
                 setBanner={setBannerVisible}
                 setFavoritedPlan={handleFavoriteChange}
-                isFavoritedPlan={isFavorited}
+                isFavoritedPlan={isCurrentlyFavorited}
               />
             );
           } else {
@@ -133,7 +135,7 @@ const OptionsMenu = ({
           }
         })}
       </SafeAreaView>
-      {isBannerVisible && <OptionsMenuBanner isFavoritedPlan={isFavorited} />}
+      {isBannerVisible && <OptionsMenuBanner isFavoritedPlan={isCurrentlyFavorited} />}
     </SafeAreaView>
   );
 };
