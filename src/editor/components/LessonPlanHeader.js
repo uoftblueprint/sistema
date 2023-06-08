@@ -49,12 +49,12 @@ const LessonPlanHeader = ({
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
         style={{ marginLeft: scale(horizontalMargin) }}
-        onPress={() => {
+        onPress={async () => {
           if (isDirty) {
             // Warn the user that there are unsaved changes
             toggleUnsavedChanges(true);
           } else {
-            handleBackButton();
+            await handleBackButton();
           }
         }}>
         <BackArrow height={headerIconSize} width={headerIconSize} />

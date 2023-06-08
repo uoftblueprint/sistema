@@ -45,8 +45,8 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   const [errorOverlayVisible, toggleLoadingError] = useState(false);
 
   // Clear redux and route params
-  const leaveEditor = () => {
-    handleCleanupActions();
+  const leaveEditor = async () => {
+    await handleCleanupActions();
     dispatch(reset());
     navigation.setParams({ lessonPlanName: '', isFavorited: false, lastEdited: '' });
     toggleUnsavedChanges(false);

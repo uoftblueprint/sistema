@@ -21,7 +21,7 @@ const UnsavedChangesOverlay = ({ visible, handleStay, handleLeave }) => {
           <SistemaButton onPress={handleStay}>
             <Text style={TextStyle.body}> Stay on page </Text>
           </SistemaButton>
-          <SistemaButton onPress={handleLeave} color={'blue'}>
+          <SistemaButton onPress={async () => await handleLeave} color={'blue'}>
             <Text style={TextStyle.body}> Leave page </Text>
           </SistemaButton>
         </View>

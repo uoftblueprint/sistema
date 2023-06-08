@@ -57,7 +57,7 @@ const SaveButton = ({ isLessonPlanLoading, setLoading, isNewLP, handleBackButton
 
             // Navigate back to Library
             setLoading(false);
-            handleBackButton();
+            await handleBackButton();
           }
         }}>
         <SaveIcon height={'20'} width={'20'} />

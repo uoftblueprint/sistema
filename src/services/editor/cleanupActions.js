@@ -6,13 +6,13 @@ import store from '../configureStore';
  * Handle cleanup actions before closing the lesson plan.
  * Includes deleting unused activity cards and handling a change in favorited/default directory.
  */
-const handleCleanupActions = () => {
+const handleCleanupActions = async () => {
     console.log(`LP CLEANUP: Cleaning up items before closing lesson plan....`);
 
     try {
         const lpObj = store.getState().lessonPlan;
-        deleteUnusedActivityCards(lpObj);
-        handleFavChange(lpObj);
+        await deleteUnusedActivityCards(lpObj);
+        await handleFavChange(lpObj);
     } catch (e) {
         console.error(`handleCleanupActions: ${action}`);
     }
@@ -34,7 +34,7 @@ const handleFavChange = async (lp) => {
     }
 }
 
-const deleteUnusedActivityCards = () => {
+const deleteUnusedActivityCards = async () => {
     // TODO: 
     // 1. arr1 = get a list of all activity cards in the directory (RNFS)
     // 2. arr2 = get a list of all activity cards in the lp (check json file/initial state)
