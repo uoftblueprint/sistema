@@ -46,7 +46,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
   // Clear redux and route params
   const leaveEditor = () => {
-    // handleCleanupActions();
+    handleCleanupActions();sssssssssssssssssssssssssssssss
     dispatch(reset());
     navigation.setParams({ lessonPlanName: '', isFavorited: false, lastEdited: '' });
     toggleUnsavedChanges(false);
