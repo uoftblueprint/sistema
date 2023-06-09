@@ -22,11 +22,12 @@ import {
   reset,
 } from '../../services/editor/lessonPlanSlice.js';
 import UnsavedChangesOverlay from '../components/overlays/UnsavedChangesOverlay.js';
-import ErrorLoadingLPOverlay from '../components/overlays/ErrorLoadingLPOverlay.js';
+import ErrorOverlay from '../components/overlays/ErrorOverlay.js';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName } from '../../services/constants.js';
 import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants.js';
 import handleCleanupActions from '../../services/editor/cleanupActions.js';
+import { ERROR } from '../constants.js';
 
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
@@ -42,16 +43,28 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   const [isSaving, setSaving] = useState(false);
   const [isNewLP, setNew] = useState(true);
   const [unsavedOverlayVisible, toggleUnsavedChanges] = useState(false);
-  const [errorOverlayVisible, toggleLoadingError] = useState(false);
+  const [errorType, setErrorType] = useState(ERROR.NONE);
+  const [errorOverlayVisible, toggleErrorOverlay] = useState(false);
 
-  // Clear redux and route params
-  const leaveEditor = async () => {
-    await handleCleanupActions();
+  /**
+   * Called every time we exit the Editor.
+   * Handle cleanup actions, then clear redux and route params, and finally go to Library.
+   * @param {boolean} leaveBySave true if user pressed Save button to leave 
+   */
+  const leaveEditor = async (leaveBySave = false) => {
+    await handleCleanupActions(leaveBySave);
     dispatch(reset());
     navigation.setParams({ lessonPlanName: '', isFavorited: false, lastEdited: '' });
     toggleUnsavedChanges(false);
     navigation.navigate(LIBRARY_STACK.NAVIGATOR, {screen: LIBRARY_STACK.LIBRARY}); // Go to the library
   };
+
+  // Show the error overlay if an error occurred
+  useEffect(() => {
+    if (errorType !== ERROR.NONE) {
+      toggleErrorOverlay(true);
+    }
+  }, [errorType])
 
   // Fetch and set lesson plan data
   useEffect(() => {
@@ -92,7 +105,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           })
           .catch(() => {
             // Open error overlay if lesson plan could not be opened
-            toggleLoadingError(true);
+            setErrorType(ERROR.FETCHING);
             // Open a blank lesson plan
             fetchSuccess = false;
           });
@@ -165,9 +178,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
       <View style={styles.saveButton}>
         <SaveButton
-          navigation={navigation}
           isLessonPlanLoading={isFetching || isSaving}
           setLoading={setSaving}
+          setError={setErrorType}
           isNewLP={isNewLP}
           handleBackButton={leaveEditor}
         />
@@ -179,9 +192,10 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         handleStay={toggleUnsavedChanges}
         handleLeave={leaveEditor}
       />
-      <ErrorLoadingLPOverlay
+      <ErrorOverlay
+        errorType={errorType}
         visible={errorOverlayVisible}
-        handleClose={toggleLoadingError}
+        handleClose={toggleErrorOverlay}
       />
     </SafeAreaView>
   );

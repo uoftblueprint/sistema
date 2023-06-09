@@ -6,8 +6,15 @@ import {
   getLessonPlan,
   getInitialLessonPlanName,
 } from '../../services/editor/lessonPlanSlice';
+import { ERROR } from '../constants';
 
-const SaveButton = ({ isLessonPlanLoading, setLoading, isNewLP, handleBackButton }) => {
+const SaveButton = ({ 
+  isLessonPlanLoading, 
+  setLoading, 
+  setError,
+  isNewLP, 
+  handleBackButton 
+}) => {
   const lessonPlanObj = useSelector(state => getLessonPlan(state.lessonPlan));
   const lessonPlanInitialName = useSelector(state =>
     getInitialLessonPlanName(state.lessonPlan),
@@ -35,29 +42,35 @@ const SaveButton = ({ isLessonPlanLoading, setLoading, isNewLP, handleBackButton
               if (!isUnique) {
                 setLoading(false);
                 console.log('Duplicate name detected, aborting save.');
-                // TODO: Open warning overlay
+                setError(ERROR.DUPLICATE_NAME);
                 return;
               }
             }
 
             // Once checks pass, write changes from redux to RNFS
-            if (wasRenamed) {
-              // Lesson plan was renamed so need to handle old file
-              await LessonPlanService.saveLessonPlan(
-                lessonPlanObj,
-                true,
-                lessonPlanInitialName,
-              );
-            } else {
-              await LessonPlanService.saveLessonPlan(
-                lessonPlanObj, 
-                false,
-              );
+            try {
+              if (wasRenamed) {
+                // Lesson plan was renamed so need to handle old file
+                await LessonPlanService.saveLessonPlan(
+                  lessonPlanObj,
+                  true,
+                  lessonPlanInitialName,
+                );
+              } else {
+                await LessonPlanService.saveLessonPlan(
+                  lessonPlanObj, 
+                  false,
+                );
+              }  
+            } catch (e) {
+              console.error("Error saving lesson plan: ", e);
+              setError(ERROR.SAVING);
+              return;
             }
 
             // Navigate back to Library
             setLoading(false);
-            await handleBackButton();
+            await handleBackButton(true);
           }
         }}>
         <SaveIcon height={'20'} width={'20'} />

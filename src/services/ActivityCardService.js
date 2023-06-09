@@ -3,7 +3,6 @@ import {
   writeFile,
   makeDirectory,
   deleteFile,
-  readFile,
 } from './routes/Local';
 import { MAINDIRECTORY } from './constants';
 import { Buffer } from 'buffer';
@@ -169,6 +168,22 @@ const ActivityCardService = {
       })
     ).data.files;
   },
+
+  deleteActivityCard: async function (isLPFaved, lpName, cardId) {
+    // try {
+    //   const lpFolder = isLPFaved ? 'Favourited' : 'Default'
+    //   const path = `${MAINDIRECTORY}/${lpFolder}/${lpName}/${cardId}.jpg`
+
+    //   // check if AC exists before deletion
+    //   if (await checkFileExists(path)) {
+    //     await deleteFile(path);
+    //   } else {
+    //     throw new Error(`Cannot delete since ${cardName} at ${path} does not exist`);
+    //   }
+    // } catch (e) {
+    //   console.error(`ERROR IN DELETING ACTIVITY CARD "${cardName}": `, e);
+    // }
+  }
 };
 
 export default ActivityCardService;

@@ -96,7 +96,6 @@ export const lessonPlanSlice = createSlice({
     },
 
     loadInitialFavState: (state, action) => {
-      console.log('isInitiallyFavorited: ', action.payload); // TODO: Del
       return {
         ...state,
         isInitiallyFavorited: action.payload,
@@ -105,7 +104,6 @@ export const lessonPlanSlice = createSlice({
     },
 
     setFavState: (state, action) => {
-      console.log('Temp isCurrentlyFavorited: ', action.payload); // TODO: Del
       return {
         ...state,
         isCurrentlyFavorited: action.payload,

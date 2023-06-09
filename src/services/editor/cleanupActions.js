@@ -1,3 +1,4 @@
+import ActivityCardService from "../ActivityCardService";
 import LessonPlanService from "../LessonPlanService";
 import store from '../configureStore';
 
@@ -5,16 +6,38 @@ import store from '../configureStore';
 /**
  * Handle cleanup actions before closing the lesson plan.
  * Includes deleting unused activity cards and handling a change in favorited/default directory.
+ * @param {boolean} leaveBySave true if user pressed Save button to leave Editor
  */
-const handleCleanupActions = async () => {
+const handleCleanupActions = async (leaveBySave) => {
     console.log(`LP CLEANUP: Cleaning up items before closing lesson plan....`);
 
     try {
         const lpObj = store.getState().lessonPlan;
-        await deleteUnusedActivityCards(lpObj);
+        await deleteUnusedActivityCards(lpObj, leaveBySave);
         await handleFavChange(lpObj);
     } catch (e) {
         console.error(`handleCleanupActions: ${action}`);
+    }
+}
+
+const deleteUnusedActivityCards = async (lp, leaveBySave) => {
+    // TODO: add acInitial and acCurr inside redux
+    // see what ac obj I need to save? id? name? both?
+    
+    let toDelete = [];
+    if (leaveBySave) {
+        // Only delete ACs on backend once changes are saved
+        toDelete = acInitial.filter(card => !acCurr.includes(card));
+    } else if (lp.isDirty) {
+        // Discard changes like newly downloaded ACs that aren't being saved
+        toDelete = acCurr.filter(card => !acInitial.includes(card));
+    }
+
+    // Delete all unused cards
+    for (card of toDelete) {
+        // TODO
+        // await ActivityCardService.deleteActivityCard()
+        // make sure to pass in lp.isInitiallyFavorited to find directory
     }
 }
 
@@ -32,14 +55,6 @@ const handleFavChange = async (lp) => {
             await LessonPlanService.unfavouriteLessonPlan(lp.lessonPlanName);
         }
     }
-}
-
-const deleteUnusedActivityCards = async () => {
-    // TODO: 
-    // 1. arr1 = get a list of all activity cards in the directory (RNFS)
-    // 2. arr2 = get a list of all activity cards in the lp (check json file/initial state)
-    // difference between intial state of LP and redux
-    // 3. remove any ACs in arr1 that aren't in arr2
 }
 
 export default handleCleanupActions;
