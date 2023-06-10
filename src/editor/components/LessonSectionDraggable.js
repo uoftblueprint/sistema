@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   replaceSection,
   getLessonSection,
+  getInitialLessonPlanName,
 } from '../../services/editor/lessonPlanSlice';
 import {
   NestableDraggableFlatList,
@@ -12,8 +13,9 @@ import {
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
 import SkeletonModule from './SkeletonModule';
 import ContentCard from './ContentCard';
+import ActivityCardService from '../../services/ActivityCardService';
 import AddLessonContentButton from './AddLessonContentButton';
-import { STACK_SCREENS } from '../constants';
+import { STACK_SCREENS, ModuleType } from '../constants';
 import { TextStyle } from '../../Styles.config';
 
 const LessonSectionDraggable = ({
@@ -25,6 +27,9 @@ const LessonSectionDraggable = ({
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
+  );
+  const lessonPlanName = useSelector(state => 
+    getInitialLessonPlanName(state.lessonPlan),
   );
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
@@ -47,16 +52,41 @@ const LessonSectionDraggable = ({
   const addActivityCard = () => {
     navigation.navigate(STACK_SCREENS.ADD_ACTIVITY_CARD, {
       sectionType: sectionType,
+      lessonPlanName: lessonPlanName,
     });
   };
 
   // MODULE MENU FUNCTIONS
-  const deleteModule = keyToDelete => {
+  const deleteModule = (keyToDelete) => {
     // Remove the module with matching key
     const newSectionData = sectionData.filter(
       module => module.key != keyToDelete,
     );
+    
     updateRedux(newSectionData);
+
+    //if the module is an Activity Card, find the card id from redux
+    const moduleToDelete = sectionData.find(
+      module => module.key === keyToDelete && module.type === 'activity',
+    );
+    
+    if (moduleToDelete) {
+      const idToDelete = moduleToDelete.id;
+      console.log('Activity Card id to delete: ' + idToDelete);
+  
+      // Call helper function to deal with async
+      const deleteCardStatus = deleteCardHelper(idToDelete);
+    } else {
+      console.log('No activity module found with the provided key');
+    }
+  };
+
+  const deleteCardHelper = async id => {
+    try {
+      await ActivityCardService.deleteActivityCard(id);
+    } catch (error) {
+      console.error('Error while deleting the activity card: ' + error);
+    }
   };
 
   const editModule = (keyToEdit, newContent) => {
@@ -106,6 +136,7 @@ const LessonSectionDraggable = ({
           drag={drag}
           dragIsActive={isActive}
           data={item}
+          lessonPlanName={lessonPlanName}
           navigation={navigation}
           isMenuDisabled={disableInteractions}
         />

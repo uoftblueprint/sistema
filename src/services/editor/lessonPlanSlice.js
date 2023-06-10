@@ -45,6 +45,12 @@ export const lessonPlanSlice = createSlice({
         isDirty: action.payload.isDirty,
       };
     },
+    setInitialLessonPlanName: (state, action) => {
+      return {
+        ...state,
+        initialLessonPlanName: action.payload.name,
+      };
+    },
     replaceSection: (state, action) => {
       // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
@@ -78,6 +84,8 @@ export const lessonPlanSlice = createSlice({
             type: action.payload.type,
             content: action.payload.content,
             name: action.payload.name ?? '',
+            id: action.payload.id ?? '',
+            path: action.payload.path ?? '',
             key: nextKey,
           },
         ],
@@ -113,6 +121,7 @@ export const {
   replaceNote,
   replaceSection,
   setLessonPlanName,
+  setInitialLessonPlanName,
   loadInitialLessonPlan,
   reset,
 } = lessonPlanSlice.actions;
@@ -151,7 +160,7 @@ export const getInitialLessonPlanName = state => {
 export const getLessonPlan = state => {
   try {
     const removeModuleKey = module => {
-      const { key, ...rest } = module; // using rest parameter to store properties other than key
+      const { key, path, ...rest } = module; // using rest parameter to store properties other than key
       return rest;
     };
     const warmUp = state[SectionName.warmUp].map(removeModuleKey);

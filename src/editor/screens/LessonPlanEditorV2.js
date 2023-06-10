@@ -14,10 +14,12 @@ import LessonPlanNotes from '../components/LessonPlanNotes.js';
 import SaveButton from '../components/SaveButton.js';
 import { useDispatch, useSelector } from 'react-redux';
 import LessonPlanService from '../../services/LessonPlanService.js';
+import { MAINDIRECTORY, ModuleType } from '../../services/constants';
 import {
   loadInitialLessonPlan,
   setLessonPlanName,
   getLessonPlanName,
+  setInitialLessonPlanName,
   reset,
 } from '../../services/editor/lessonPlanSlice.js';
 import UnsavedChangesOverlay from '../components/overlays/UnsavedChangesOverlay.js';
@@ -65,17 +67,37 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         console.log(
           `LessonPlanEditorV2: Fetching data for ${lessonPlanName}...`,
         );
+        let favourited = await LessonPlanService.isLessonPlanFavourited(lessonPlanName);
         await LessonPlanService.getLessonPlan(lessonPlanName)
           .then(lpObj => {
             // Set a unique key for each module per section
+            // TODO: Add support for image module types later
             const setKeyForModule = (module, i) => {
-              return {
-                type: module.type,
-                content: module.content ?? '',
-                name: module.name ?? '',
-                key: `module-${i}`,
-              };
+              if (module.type === ModuleType.activityCard) {
+                let imagePath;
+                if (favourited) {
+                  imagePath = MAINDIRECTORY + '/Favourited/' + lessonPlanName + module.content;
+                } else {
+                  imagePath = MAINDIRECTORY + '/Default/' + lessonPlanName + module.content;
+                }
+                return {
+                  type: module.type,
+                  content: module.content ?? '',
+                  name: module.name ?? '',
+                  path: imagePath,
+                  key: `module-${i}`,
+                };
+              } else {
+                return {
+                  type: module.type,
+                  content: module.content ?? '',
+                  name: module.name ?? '',
+                  path: '',
+                  key: `module-${i}`,
+                };
+              }
             };
+
             lpObj[SectionName.warmUp] =
               lpObj[SectionName.warmUp].map(setKeyForModule);
             lpObj[SectionName.mainLesson] =
@@ -106,6 +128,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           day: 'numeric',
         });
         dispatch(setLessonPlanName({ name: todayDate, isDirty: false }));
+        dispatch(setInitialLessonPlanName({ name: todayDate }));
       }
       setFetching(false);
     };

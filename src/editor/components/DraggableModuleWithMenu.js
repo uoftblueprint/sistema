@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
+
 import { scale, verticalScale } from 'react-native-size-matters';
 
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
@@ -42,7 +43,7 @@ export default class DraggableModuleWithMenu extends React.Component {
         this.moveModuleDown,
         this.deleteModule,
       ]; // matches order of this.options
-    }
+    } 
 
     this.state = {
       isEditable: false,
@@ -141,7 +142,7 @@ export default class DraggableModuleWithMenu extends React.Component {
           ) : (
             <SafeAreaView style={styles.box}>
               <Image
-                source={{ uri: `file://${this.props.data.content}` }}
+                source={{ uri: `file://${this.props.data.path}` }}
                 style={styles.cardImage}
                 resizeMode="contain"
               />
