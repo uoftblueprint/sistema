@@ -189,8 +189,6 @@ const LessonPlanService = {
   isLessonPlanFavourited: async function (name) {
     try {
       const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-      console.log("Inside isLessonPlanFavourited");
-
       // check if file exists in the favourites folder
       if (await checkFileExists(favouritedPath)) {
         console.log(`Lesson Plan is in Favourited: ${name}`);

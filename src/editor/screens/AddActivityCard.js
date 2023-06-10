@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Platform,
 } from 'react-native';
 import {
   verticalScale,
@@ -27,6 +28,9 @@ import BackArrow from '../../../assets/backArrow.svg';
 // Backend
 import { useQuery } from '@tanstack/react-query';
 import ActivityCardService from '../../services/ActivityCardService';
+import LessonPlanService from '../../services/LessonPlanService';
+import { MAINDIRECTORY } from '../../services/constants';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
@@ -167,35 +171,44 @@ const AddActivityCard = function ({ navigation, route }) {
   // **************** PREVIEW RELATED VARS ***************
   const [previewInfo, setPreviewInfo] = useState(null); // previewInfo has id, name, and url
 
-  // const initialLessonPlanName = useSelector(state => {
-  //   console.log(state.lessonPlan);
-  //   getInitialLessonPlanName(state.lessonPlan);
-  // });
-  // const lessonPlanState = useSelector(state => {
-  //   getLessonPlan(state.lessonPlan);
-  // });
   const dispatch = useDispatch();
 
   //onPress function for add Card button
   const addCard = async () => {
     console.log(`Initial Lesson Plan Name: ${lessonPlanName}`);
-    const rnfsPath = await ActivityCardService.downloadActivityCard(
+    const favourited = await LessonPlanService.isLessonPlanFavourited(lessonPlanName);
+    let fullPath = '';
+    
+    await ActivityCardService.downloadActivityCard(
       previewInfo.id,
       'Downloaded',
       previewInfo.name,
       lessonPlanName,
-    );
-    
-    dispatch(
-      addToSection({
-        type: ModuleType.activityCard,
-        name: previewInfo?.name,
-        id: previewInfo?.id,
-        section: sectionType,
-        content: rnfsPath,
-      }),
-    );
-    navigation.goBack();
+    ).then((rnfsPath) => {
+      // Deep copying works differently on different platforms kekw
+      fullPath = Platform.OS === "ios" ? rnfsPath.slice(0) : `${rnfsPath}`;
+      if (favourited) {
+        rnfsPath = rnfsPath.replace(MAINDIRECTORY + '/Favourited/' + lessonPlanName, '');
+      } else {
+        rnfsPath = rnfsPath.replace(MAINDIRECTORY + '/Default/' + lessonPlanName, '')
+      }
+      return rnfsPath;
+    }).then((relPath) => {
+      dispatch(
+        addToSection({
+          type: ModuleType.activityCard,
+          name: previewInfo?.name,
+          id: previewInfo?.id,
+          section: sectionType,
+          content: relPath,
+          path: fullPath,
+        }),
+      );
+    }).then(() => {
+      navigation.goBack();
+    }).catch((err) => {
+      console.error("Error when adding activity card: " + err);
+    });
   };
 
   const addAsText = async () => {
