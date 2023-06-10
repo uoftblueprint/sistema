@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,15 +10,46 @@ import AddIcon from '../../../assets/add.svg';
 import { TextStyle } from '../../Styles.config';
 import { verticalScale } from 'react-native-size-matters';
 
-const AddLessonContentButton = ({ placeholder, handleClick, isDisabled }) => {
+const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
+  const [visible, setVisible] = useState(false);
+
+  const toggleCascade = () => {
+    setVisible(!visible);
+  }
+
+  const cascadeArray = [];
+
+  for (action in handleClickActions) {
+    cascadeArray.push(
+      <TouchableOpacity onPress={handleClickActions[action]} disabled={isDisabled}>
+        <SafeAreaView style={styles.sectionStyle}>
+          <AddIcon height={'30'} width={'30'} />
+          <View style={styles.input}>
+            <Text style={TextStyle.label}>{action}</Text>
+          </View>
+        </SafeAreaView>
+      </TouchableOpacity>
+    );
+  }
+
+  const renderCascade = () => {
+    console.log(cascadeArray);
+    if (visible) {
+      return (
+        {cascadeArray}
+      )
+    }
+  }
+
   return (
-    <TouchableOpacity onPress={handleClick} disabled={isDisabled}>
+    <TouchableOpacity onPress={toggleCascade} disabled={isDisabled}>
       <SafeAreaView style={styles.sectionStyle}>
         <AddIcon height={'30'} width={'30'} />
         <View style={styles.input}>
-          <Text style={TextStyle.label}>{placeholder}</Text>
+          <Text style={TextStyle.label}>Add Content</Text>
         </View>
       </SafeAreaView>
+      {renderCascade()}
     </TouchableOpacity>
   );
 };

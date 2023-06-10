@@ -56,6 +56,21 @@ const LessonSectionDraggable = ({
     });
   };
 
+  const addImageModule = () => {
+
+  };
+
+  const addLinkModule = () => {
+
+  };
+
+  const addContentActions = {
+    "Insert text": addTextModule,
+    "Add activity cards": addActivityCard,
+    "Upload an image": addImageModule,
+    "Insert link": addLinkModule,
+  };
+
   // MODULE MENU FUNCTIONS
   const deleteModule = (keyToDelete) => {
     // Remove the module with matching key
@@ -157,13 +172,7 @@ const LessonSectionDraggable = ({
         )}
 
         <AddLessonContentButton
-          placeholder={'Input text'}
-          handleClick={addTextModule}
-          isDisabled={disableInteractions}
-        />
-        <AddLessonContentButton
-          placeholder={'Add activity cards'}
-          handleClick={addActivityCard}
+          handleClickActions={addContentActions}
           isDisabled={disableInteractions}
         />
 

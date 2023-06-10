@@ -14,9 +14,6 @@ import {
 import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
 
-import { MAINDIRECTORY } from '../../services/constants';
-import LessonPlanService from '../../services/LessonPlanService';
-
 import { scale, verticalScale } from 'react-native-size-matters';
 
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
@@ -50,36 +47,7 @@ export default class DraggableModuleWithMenu extends React.Component {
 
     this.state = {
       isEditable: false,
-      imagePath: '',
     };
-  }
-
-  /** TODO: DELETE AND MOVE TO EDITOR INSTEAD */
-  componentDidMount() {
-    console.log("Path given from module: " + this.props.data.content);
-    if (this.props.data.type === ModuleType.activityCard) {
-      this.getImagePath();
-    } else {
-      console.log("I'm not updating bitch");
-    }
-  }
-
-  getImagePath = async () => {
-    try {
-      console.log("uwu");
-      let favourited = await LessonPlanService.isLessonPlanFavourited(this.props.lessonPlanName);
-      if (favourited) {
-        this.setState({
-          imagePath: MAINDIRECTORY + '/Favourited/' + this.props.lessonPlanName + this.props.data.content,
-        }, () => console.log("Here's the imagePath: " + this.state.imagePath));
-      } else {
-        this.setState({
-          imagePath: MAINDIRECTORY + '/Default/' + this.props.lessonPlanName + this.props.data.content,
-        }, () => console.log("Here's the imagePath: " + this.state.imagePath))
-      }
-    } catch (e) {
-      console.error('There was a problem in componentDidMount: ', e);
-    }
   }
 
   /** Edit the text module */

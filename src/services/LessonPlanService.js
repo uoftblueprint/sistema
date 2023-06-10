@@ -55,7 +55,7 @@ const LessonPlanService = {
    * @param {Boolean} hasNewName if the LP has been renamed
    * @param {String} oldLPName to delete old files and directories
    */
-  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '', newLesson) {
+  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '') {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
