@@ -85,9 +85,7 @@ const styles = StyleSheet.create({
   },
   cascadeStyle: {
     flexDirection: 'row',
-    // justifyContent: 'flex-end',
     alignItems: 'center',
-    direction: 'ltr',
     backgroundColor: '#FDFBF7',
     height: verticalScale(40),
     width: '90%',
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   cascadeSectionStyle: {
-    direction: 'rtl',
+    alignItems: 'flex-end',
   },
 });
 
