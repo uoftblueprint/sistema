@@ -5,6 +5,8 @@ import {
   Text,
   View,
   TouchableOpacity,
+  LayoutAnimation,
+  Platform,
 } from 'react-native';
 import AddIcon from '../../../assets/add.svg';
 import { TextStyle } from '../../Styles.config';
@@ -14,6 +16,11 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
   const [visible, setVisible] = useState(false);
 
   const toggleCascade = () => {
+    if (Platform.OS === 'android') {
+      LayoutAnimation.configureNext(LayoutAnimation.create(200, 'easeInEaseOut', 'opacity'));
+    } else {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }
     setVisible(!visible);
   }
   
@@ -21,8 +28,8 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
   const actionComponents = handleClickActions.map(({ placeholder, action, Icon }) => {
     index += 1;
     return (
-      <TouchableOpacity onPress={action} disabled={isDisabled} key={index.toString()}>
-        <SafeAreaView style={styles.cascadeStyle}>
+      <TouchableOpacity onPress={action} disabled={isDisabled} key={index.toString()} style={styles.sectionStyle}>
+        <SafeAreaView style={[styles.buttonStyle, styles.cascadeStyle]}>
           <Icon height={'20'} width={'20'} />
           <View style={styles.input}>
             <Text style={TextStyle.label}>{placeholder}</Text>
@@ -39,36 +46,28 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
   }
 
   return (
-    <TouchableOpacity onPress={toggleCascade} disabled={isDisabled}>
-      <SafeAreaView style={styles.sectionStyle}>
-        <AddIcon height={'30'} width={'30'} />
-        <View style={styles.input}>
-          <Text style={TextStyle.label}>Add Content</Text>
-        </View>
-      </SafeAreaView>
+    <>
+      <TouchableOpacity onPress={toggleCascade} disabled={isDisabled} style={styles.sectionStyle}>
+        <SafeAreaView style={styles.buttonStyle}>
+          <AddIcon height={'30'} width={'30'} />
+          <View style={styles.input}>
+            <Text style={TextStyle.label}>Add Content</Text>
+          </View>
+        </SafeAreaView>
+      </TouchableOpacity>
       <SafeAreaView style={styles.cascadeSectionStyle}>
         {renderCascade()}
       </SafeAreaView>
-    </TouchableOpacity>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   input: {
     flex: 1,
-    shadowColor: '#453E3D',
     paddingLeft: 12,
   },
   sectionStyle: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#FDFBF7',
-    height: verticalScale(40),
-    width: '100%',
-    borderWidth: 0.77,
-    borderColor: '#000',
-    borderRadius: 8,
     shadowColor: '#453E3D',
     shadowOffset: {
       width: 1,
@@ -76,35 +75,31 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
+    backgroundColor: '#FDFBF7',
     elevation: 5,
+    borderWidth: 0.77,
+    height: verticalScale(40),
+    borderColor: '#000',
+    borderRadius: 8,
     marginVertical: 6,
     paddingHorizontal: 10,
+  },
+  buttonStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // backgroundColor: '#FDFBF7',
+    width: '100%',
+    height: '100%',
   },
   imageStyle: {
     paddingLeft: '10%',
   },
   cascadeStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FDFBF7',
-    height: verticalScale(40),
     width: '90%',
-    borderWidth: 0.77,
-    borderColor: '#000',
-    borderRadius: 8,
-    shadowColor: '#453E3D',
-    shadowOffset: {
-      width: 1,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 5,
-    marginVertical: 6,
-    paddingHorizontal: 10,
   },
   cascadeSectionStyle: {
     alignItems: 'flex-end',
+    marginBottom: verticalScale(5),
   },
 });
 
