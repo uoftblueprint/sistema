@@ -75,11 +75,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             const setKeyForModule = (module, i) => {
               if (module.type === ModuleType.activityCard) {
                 let imagePath;
-                if (favourited) {
-                  imagePath = MAINDIRECTORY + '/Favourited/' + lessonPlanName + module.content;
-                } else {
-                  imagePath = MAINDIRECTORY + '/Default/' + lessonPlanName + module.content;
-                }
+                const folder = favourited ? '/Favourited/' : '/Default/';
+                imagePath = MAINDIRECTORY + folder + lessonPlanName + module.content;
+                
                 return {
                   type: module.type,
                   content: module.content ?? '',

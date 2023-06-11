@@ -194,11 +194,8 @@ const AddActivityCard = function ({ navigation, route }) {
     ).then((rnfsPath) => {
       // Deep copying works differently on different platforms kekw
       fullPath = Platform.OS === "ios" ? rnfsPath.slice(0) : `${rnfsPath}`;
-      if (favourited) {
-        rnfsPath = rnfsPath.replace(MAINDIRECTORY + '/Favourited/' + lessonPlanName, '');
-      } else {
-        rnfsPath = rnfsPath.replace(MAINDIRECTORY + '/Default/' + lessonPlanName, '')
-      }
+      const folder = favourited ? "/Favourited/" : "/Default/";
+      rnfsPath = rnfsPath.replace(MAINDIRECTORY + folder + lessonPlanName, '');
       return rnfsPath;
     }).then((relPath) => {
       dispatch(

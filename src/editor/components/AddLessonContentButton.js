@@ -17,7 +17,7 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
     setVisible(!visible);
   }
 
-  const cascadeArray = [];
+  const cascadeArray = new Array();
 
   for (action in handleClickActions) {
     cascadeArray.push(
