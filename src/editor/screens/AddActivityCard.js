@@ -177,6 +177,7 @@ const AddActivityCard = function ({ navigation, route }) {
   const addCard = async () => {
     console.log(`Initial Lesson Plan Name: ${lessonPlanName}`);
     const favourited = await LessonPlanService.isLessonPlanFavourited(lessonPlanName);
+    const folder = favourited ? '/Favourited/' : '/Default/';
     let fullPath = '';
     
     await ActivityCardService.downloadActivityCard(
@@ -185,13 +186,9 @@ const AddActivityCard = function ({ navigation, route }) {
       previewInfo.name,
       lessonPlanName,
     ).then((rnfsPath) => {
-      // Deep copying works differently on different platforms kekw
-      fullPath = Platform.OS === "ios" ? rnfsPath.slice(0) : `${rnfsPath}`;
-      if (favourited) {
-        rnfsPath = rnfsPath.replace(MAINDIRECTORY + '/Favourited/' + lessonPlanName, '');
-      } else {
-        rnfsPath = rnfsPath.replace(MAINDIRECTORY + '/Default/' + lessonPlanName, '')
-      }
+      rnfsPath = rnfsPath.replace(MAINDIRECTORY + folder + lessonPlanName, '');
+      fullPath = MAINDIRECTORY + folder + lessonPlanName + rnfsPath;
+
       return rnfsPath;
     }).then((relPath) => {
       dispatch(
