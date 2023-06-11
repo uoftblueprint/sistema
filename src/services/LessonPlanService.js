@@ -55,7 +55,7 @@ const LessonPlanService = {
    * @param {Boolean} hasNewName if the LP has been renamed
    * @param {String} oldLPName to delete old files and directories
    */
-  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '') {
+  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '', newLesson) {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
@@ -189,8 +189,6 @@ const LessonPlanService = {
   isLessonPlanFavourited: async function (name) {
     try {
       const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-      console.log("Inside isLessonPlanFavourited");
-
       // check if file exists in the favourites folder
       if (await checkFileExists(favouritedPath)) {
         console.log(`Lesson Plan is in Favourited: ${name}`);

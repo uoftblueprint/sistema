@@ -142,7 +142,7 @@ export default class DraggableModuleWithMenu extends React.Component {
           ) : (
             <SafeAreaView style={styles.box}>
               <Image
-                source={{ uri: `${this.state.imagePath}` }}
+                source={{ uri: `file://${this.props.data.path}` }}
                 style={styles.cardImage}
                 resizeMode="contain"
               />
