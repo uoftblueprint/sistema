@@ -8,7 +8,7 @@ import RNFS from 'react-native-fs';
 export async function readDirectory(dirpath) {
   return RNFS.readdir(dirpath)
     .then(result => {
-      console.log(`GOT RESULT: ${dirpath}`, result);
+      console.log(`GOT RESULT: ${dirpath}`);
       return result;
     })
     .catch(err => {
@@ -24,7 +24,7 @@ export async function readDirectory(dirpath) {
 export async function readDDirectory(dirpath) {
   return RNFS.readDir(dirpath)
     .then(result => {
-      console.log(`GOT RESULT: ${dirpath}`, result);
+      console.log(`GOT RESULT: ${dirpath}`);
       return result;
     })
     .catch(err => {
@@ -38,7 +38,7 @@ export async function readDDirectory(dirpath) {
  * @return {String} File you want to read
  */
 export async function readFile(filepath) {
-  return await RNFS.readFile(filepath)
+  return RNFS.readFile(filepath)
     .then(result => {
       console.log('GOT FILE: ', filepath);
       return result;
@@ -75,16 +75,14 @@ export async function writeFile(isImage, filepath, content) {
  * @param {String} filepath Full file path to delete
  */
 export async function deleteFile(filepath) {
-  return (
-    RNFS.unlink(filepath)
-      .then(() => {
-        console.log(`FILE DELETED!: ${filepath}}`);
-      })
-      // `unlink` will throw an error, if the item to unlink does not exist
-      .catch(err => {
-        console.error(`RNFS deleteFile: ${err.message}`);
-      })
-  );
+  return RNFS.unlink(filepath)
+    .then(() => {
+      console.log(`FILE DELETED!: ${filepath}`);
+    })
+    // `unlink` will throw an error, if the item to unlink does not exist
+    .catch(err => {
+      console.error(`RNFS deleteFile: ${err.message}`);
+    });
 }
 
 /**
@@ -144,24 +142,23 @@ export async function makeDirectory(dirPath) {
  * On iOS an error will be thrown if the file already exists.
  * @param {String} dirpath the original path to be copied from
  * @param {String} destpath where the file is going
+ * @return {String} The final destination path, if successful
  */
 export async function copyDir(dirpath, destpath) {
   try {
     const items = await RNFS.readDir(dirpath);
-      await RNFS.mkdir(destpath);
+    await RNFS.mkdir(destpath);
 
-      await items.forEach(async item => {
-        const dest = destpath[-1] === "/" ? `${destpath}${item.name}` : `${destpath}/${item.name}`;
-
-        // If item is a directory, recurse into it
-        // Otherwise, simply copy the file and move onto the next item
-        if (item.isDirectory()) {
-          await RNFS.mkdir(dest);
-          await copyDir(item.path, dest);
-        } else {
-          await RNFS.copyFile(item.path, dest);
-        }
-      });
+    for (const item of items) {
+      const dest = `${destpath}/${item.name}`;
+      // If item is a directory, recurse into it
+      // Otherwise, simply copy the file and move onto the next item
+      if (item.isDirectory()) {
+        await copyDir(item.path, dest);
+      } else {
+        await copyFile(item.path, dest);
+      }
+    }
   } catch (e) {
     console.error(`RNFS copyDir: ${e.message}`);
   }

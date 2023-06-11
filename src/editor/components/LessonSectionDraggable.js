@@ -18,6 +18,12 @@ import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS, ModuleType } from '../constants';
 import { TextStyle } from '../../Styles.config';
 
+// ICONS
+import TextIcon from '../../../assets/textIcon.svg';
+import SearchIcon from '../../../assets/Search.svg';
+import ImageIcon from '../../../assets/imageIcon.svg';
+import LinkIcon from '../../../assets/linkIcon.svg';
+
 const LessonSectionDraggable = ({
   sectionType,
   navigation,
@@ -64,12 +70,28 @@ const LessonSectionDraggable = ({
 
   };
 
-  const addContentActions = {
-    "Insert text": addTextModule,
-    "Add activity cards": addActivityCard,
-    "Upload an image": addImageModule,
-    "Insert link": addLinkModule,
-  };
+  const addContentActions = [
+    {
+      placeholder: "Insert text",
+      Icon: TextIcon,
+      action: addTextModule,
+    },
+    {
+      placeholder: "Add activity cards",
+      Icon: SearchIcon,
+      action: addActivityCard
+    },
+    {
+      placeholder: "Upload an image",
+      Icon: ImageIcon,
+      action: addImageModule
+    },
+    {
+      placeholder: "Insert link",
+      Icon: LinkIcon,
+      action: addLinkModule
+    },
+  ];
 
   // MODULE MENU FUNCTIONS
   const deleteModule = (keyToDelete) => {

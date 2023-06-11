@@ -16,28 +16,25 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
   const toggleCascade = () => {
     setVisible(!visible);
   }
-
-  const cascadeArray = new Array();
-
-  for (action in handleClickActions) {
-    cascadeArray.push(
-      <TouchableOpacity onPress={handleClickActions[action]} disabled={isDisabled}>
-        <SafeAreaView style={styles.sectionStyle}>
-          <AddIcon height={'30'} width={'30'} />
+  
+  let index = 0;
+  const actionComponents = handleClickActions.map(({ placeholder, action, Icon }) => {
+    index += 1;
+    return (
+      <TouchableOpacity onPress={action} disabled={isDisabled} key={index.toString()}>
+        <SafeAreaView style={styles.cascadeStyle}>
+          <Icon height={'20'} width={'20'} />
           <View style={styles.input}>
-            <Text style={TextStyle.label}>{action}</Text>
+            <Text style={TextStyle.label}>{placeholder}</Text>
           </View>
         </SafeAreaView>
       </TouchableOpacity>
-    );
-  }
+    )
+  })
 
   const renderCascade = () => {
-    console.log(cascadeArray);
     if (visible) {
-      return (
-        {cascadeArray}
-      )
+      return (actionComponents);
     }
   }
 
@@ -49,7 +46,9 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
           <Text style={TextStyle.label}>Add Content</Text>
         </View>
       </SafeAreaView>
-      {renderCascade()}
+      <SafeAreaView style={styles.cascadeSectionStyle}>
+        {renderCascade()}
+      </SafeAreaView>
     </TouchableOpacity>
   );
 };
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#FDFBF7',
-    height: verticalScale(50),
+    height: verticalScale(40),
     width: '100%',
     borderWidth: 0.77,
     borderColor: '#000',
@@ -83,6 +82,31 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     paddingLeft: '10%',
+  },
+  cascadeStyle: {
+    flexDirection: 'row',
+    // justifyContent: 'flex-end',
+    alignItems: 'center',
+    direction: 'ltr',
+    backgroundColor: '#FDFBF7',
+    height: verticalScale(40),
+    width: '90%',
+    borderWidth: 0.77,
+    borderColor: '#000',
+    borderRadius: 8,
+    shadowColor: '#453E3D',
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
+    marginVertical: 6,
+    paddingHorizontal: 10,
+  },
+  cascadeSectionStyle: {
+    direction: 'rtl',
   },
 });
 
