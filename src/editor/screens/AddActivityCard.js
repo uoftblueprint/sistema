@@ -195,7 +195,6 @@ const AddActivityCard = function ({ navigation, route }) {
     ).then((rnfsPath) => {
       rnfsPath = rnfsPath.replace(MAINDIRECTORY + folder + lessonPlanName, '');
       fullPath = MAINDIRECTORY + folder + lessonPlanName + rnfsPath;
-
       return rnfsPath;
     }).then((relPath) => {
       dispatch(

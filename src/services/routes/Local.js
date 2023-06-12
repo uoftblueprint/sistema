@@ -51,7 +51,7 @@ export async function readFile(filepath) {
 /**
  * Write to the local storage with some file in encoding.
  * @param {Boolean} isImage If file to write is an image, encoding type changes.
- * @param {String} filepath Full file path to delete
+ * @param {String} filepath Full file path to write to
  * @param {String} content Content to write to given file path
  */
 export async function writeFile(isImage, filepath, content) {
@@ -178,6 +178,6 @@ export async function copyFile(filepath, destpath) {
       console.log(`FILE COPIED! ${filepath} => ${destpath}`);
     })
     .catch(err => {
-      console.error(`RNFS cpyFile: ${err.message}`);
+      console.error(`RNFS copyFile: ${err.message}`);
     });
 }

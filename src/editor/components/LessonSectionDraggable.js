@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   replaceSection,
   getLessonSection,
   getInitialLessonPlanName,
+  addToSection,
 } from '../../services/editor/lessonPlanSlice';
 import {
   NestableDraggableFlatList,
@@ -15,8 +16,10 @@ import SkeletonModule from './SkeletonModule';
 import ContentCard from './ContentCard';
 import ActivityCardService from '../../services/ActivityCardService';
 import AddLessonContentButton from './AddLessonContentButton';
-import { STACK_SCREENS, ModuleType } from '../constants';
+import { STACK_SCREENS } from '../constants';
+import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 // ICONS
 import TextIcon from '../../../assets/textIcon.svg';
@@ -30,6 +33,9 @@ const LessonSectionDraggable = ({
   isFetching,
   disableInteractions,
 }) => {
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
@@ -62,8 +68,39 @@ const LessonSectionDraggable = ({
     });
   };
 
-  const addImageModule = () => {
+  const addImageModule = async () => {
+    // You can also use as a promise without 'callback':
+    // TODO: dispatch to redux as well as ModuleType.image
+    const options = {
+      mediaType : 'photo', 
+      maxWidth : windowWidth, 
+      maxHeight : windowHeight,
+      includeBase64 : true,
+    };
 
+    const result = await launchImageLibrary(options);
+    // Handle response object
+    if (result.didCancel) {
+      console.log("User cancelled the image picker.");
+    } else if (result.error) {
+      console.error(result.errorMessage);
+    } else {
+      const paths = await ActivityCardService.addImageToStorage(
+        result.assets[0].base64, 
+        result.assets[0].fileName, 
+        lessonPlanName
+      );
+
+      await dispatch(
+        addToSection({
+          type: ModuleType.image,
+          name: paths.relPath,
+          section: sectionType,
+          content: paths.relPath,
+          path: paths.fullPath,
+        }),
+      );
+    }
   };
 
   const addLinkModule = () => {

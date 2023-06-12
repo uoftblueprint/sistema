@@ -73,7 +73,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             // Set a unique key for each module per section
             // TODO: Add support for image module types later
             const setKeyForModule = (module, i) => {
-              if (module.type === ModuleType.activityCard) {
+              if (module.type === ModuleType.activityCard || module.type === ModuleType.image) {
                 let imagePath;
                 const folder = favourited ? '/Favourited/' : '/Default/';
                 imagePath = MAINDIRECTORY + folder + lessonPlanName + module.content;

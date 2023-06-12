@@ -44,10 +44,40 @@ export default class DraggableModuleWithMenu extends React.Component {
         this.deleteModule,
       ]; // matches order of this.options
     } 
-
+    
     this.state = {
       isEditable: false,
+      boxWidth: 1,
+      boxHeight: 1,
+      fullWidth: 1,
     };
+  }
+
+  /** Manage sizing of an image module */
+  componentDidMount() {
+    if (this.props.data.type == ModuleType.image) {
+      Image.getSize(`file://${this.props.data.path}`, (width, height) => {
+        this.setState({ boxWidth: width, boxHeight: height });
+      });
+    } else if (this.props.data.type == ModuleType.activityCard) {
+      this.setState({ boxWidth: '100%', boxHeight: scale(463) });
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.state.fullWidth != prevState.fullWidth) {
+      if (
+        this.state.fullWidth > 1 
+        && this.state.boxHeight > 1 
+        && typeof this.state.boxWidth === 'number'
+      ) {
+        curHeight = this.state.boxHeight + 0;
+        curWidth = this.state.boxWidth + 0;
+        curFullWidth = this.state.fullWidth + 0;
+        newHeight = Math.floor(curHeight * (curFullWidth / curWidth));
+        this.setState({ boxWidth: '100%', boxHeight: newHeight });
+      }
+    }
   }
 
   /** Edit the text module */
@@ -140,10 +170,19 @@ export default class DraggableModuleWithMenu extends React.Component {
               />
             </View>
           ) : (
-            <SafeAreaView style={styles.box}>
+            <SafeAreaView 
+              style={styles.box} 
+              onLayout={
+                ({ nativeEvent }) => {
+                  console.log("hello?");
+                  const { x, y, width, height } = nativeEvent.layout;
+                  this.setState({ fullWidth: width });
+                }
+              }
+            >
               <Image
                 source={{ uri: `file://${this.props.data.path}` }}
-                style={styles.cardImage}
+                style={[styles.cardImage, { width: this.state.boxWidth, height: this.state.boxHeight }]}
                 resizeMode="contain"
               />
             </SafeAreaView>
@@ -198,10 +237,9 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   cardImage: {
-    width: '100%',
-    height: scale(463),
     alignItems: 'center',
     justifyContent: 'center',
+    resizeMode: 'contain',
   },
   box: {
     backgroundColor: '#FDFBF7',
