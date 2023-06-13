@@ -20,12 +20,12 @@ const ActivityCardService = {
    */
   getFeaturedActivityCards: async function () {
     try {
-      //Retrieve the last week from browser, convert to ISO for use in query
+      // Retrieve the last week from browser, convert to ISO for use in query
       const weekAgo = new Date(
         Date.now() - 8 * 24 * 60 * 60 * 1000,
       ).toISOString();
 
-      //Set up GET url, query, and path to Featured Card directory
+      // Set up GET url, query, and path to Featured Card directory
       var downloadUrl =
         DRIVE_API_URLS.SEARCH_FILES + DRIVE_API_URLS.SEARCH_PARAMETERS;
       var path = MAINDIRECTORY + '/FeaturedActivityCards/';
@@ -40,22 +40,23 @@ const ActivityCardService = {
           'files(kind,driveId,mimeType,id,name,teamDriveId,thumbnailLink,webContentLink,modifiedTime)',
       };
 
-      //Retreive all Drive files meeting the params
+      // Retrieve all Drive files meeting the params
       const response = await axios.get(downloadUrl, { params }).catch(error => {
         console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
       });
 
-      //Access the Array of all files and set up path Array (to be returned)
+      // Access the Array of all files and set up path Array (to be returned)
       const driveFiles = response.data;
       const files_list = driveFiles.files;
       var pathArr = [];
 
-      //no new files found, return an empty array (old Activity Cards are mapped onto frontend)
+      // Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
+      // no new files found, return an empty array (old Activity Cards are mapped onto frontend)
       if (files_list.length == 0) {
         return [];
       }
 
-      //Delete anything that may currently be in the Featured Cards directory, make the new path with no content
+      // Delete anything that may currently be in the Featured Cards directory, make the new path with no content
       if (await checkFileExists(path)) {
         await deleteFile(path);
         await makeDirectory(path);
@@ -63,7 +64,7 @@ const ActivityCardService = {
         await makeDirectory(path);
       }
 
-      //if new cards were found, save them into the empty directory path
+      // if new cards were found, save them into the empty directory path
       for (var i = 0; i < files_list.length; i++) {
         await this.downloadActivityCard(
           files_list[i].id,
@@ -71,7 +72,7 @@ const ActivityCardService = {
           files_list[i].name,
         );
 
-        //once downloaded, check if the file exists. If it does, add the name to a .txt file, and add the path to pathArr
+        // once downloaded, check if the file exists. If it does, add the name to a .txt file, and add the path to pathArr
         if (await checkFileExists(path + files_list[i].id + '/')) {
           pathArr.push(path + files_list[i].id + '/');
         } else {
@@ -94,10 +95,11 @@ const ActivityCardService = {
    * directly into local storage.
    * @param {String} id ID of the activity card to retrieve
    * @param {String} type Whether the activity card is a "Featured" or "Downloaded" card
-   * * @param {String} name Name of the activity card
+   * @param {String} name Name of the activity card
+   * @param {String} lessonplan Name of the lesson plan it should be downloaded in (if it's a "Downloaded" card)
    * @return {String} The requested ActivityCard object
    */
-  downloadActivityCard: async function (id, type, name) {
+  downloadActivityCard: async function (id, type, name, lessonplan = '') {
     // Assert that the "type" parameter is valid
     if (!(type === 'Featured' || type === 'Downloaded')) {
       throw new Error('Invalid type for Activity Card');
@@ -108,11 +110,21 @@ const ActivityCardService = {
         alt: 'media',
         responseType: 'arraybuffer',
       };
+      
+      // set up local file path depending on whether the card is Featured or Downloaded
+      // if the card is featured, it goes into /FeaturedActivityCards/IMAGEID/...
+      // if the card is downloaded, it goes into /LESSONPLANNAME/IMAGEID/...
+      let dirPath;
+      if (type === 'Featured') {
+        dirPath = MAINDIRECTORY + '/FeaturedActivityCards/' + id;
+      } else {
+        if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonplan)) {
+          dirPath = MAINDIRECTORY + '/Favourited/' + lessonplan + '/' + id;
+        } else {
+          dirPath = MAINDIRECTORY + '/Default/' + lessonplan + '/' + id;
+        }
+      }
 
-      const dirPath =
-        type === 'Featured'
-          ? MAINDIRECTORY + '/FeaturedActivityCards/' + id
-          : MAINDIRECTORY + '/DownloadedActivityCards/' + id;
       const filePath = `${dirPath}/cardImage.jpg`;
 
       //check if file exists
@@ -141,7 +153,7 @@ const ActivityCardService = {
       // Add the name of the activity card into the cardName.txt file
       await writeFile(false, dirPath + '/cardName.txt', name + '\n');
 
-      return filePath;
+      return `/${id}/cardImage.jpg`;
     } catch (e) {
       console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
     }
@@ -169,21 +181,39 @@ const ActivityCardService = {
     ).data.files;
   },
 
-  deleteActivityCard: async function (isLPFaved, lpName, cardId) {
-    // try {
-    //   const lpFolder = isLPFaved ? 'Favourited' : 'Default'
-    //   const path = `${MAINDIRECTORY}/${lpFolder}/${lpName}/${cardId}.jpg`
+  /**
+   * delete activity card from local storage
+   *
+   * @async
+   * @param {String} id ID of the activity card to delete
+   * @param {String} lessonPlan name of the lesson plan to delete from
+   * @returns {Promise}
+   */
+  deleteActivityCard: async function (id, lessonPlan) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let filePath;
+        if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)) {
+          filePath = MAINDIRECTORY + '/Favourited/' + lessonPlan + '/' + id;
+        } else if (await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)) {
+          filePath = MAINDIRECTORY + '/Default/' + lessonPlan + '/' + id;
+        } else {
+          reject(`Error: Lesson plan does not exist.`);
+        }
+        console.log(filePath);
 
-    //   // check if AC exists before deletion
-    //   if (await checkFileExists(path)) {
-    //     await deleteFile(path);
-    //   } else {
-    //     throw new Error(`Cannot delete since ${cardName} at ${path} does not exist`);
-    //   }
-    // } catch (e) {
-    //   console.error(`ERROR IN DELETING ACTIVITY CARD "${cardName}": `, e);
-    // }
-  }
+        // check if file exists first. if yes, use RNFS.unlink, otherwise throw an error
+        if (await checkFileExists(filePath)) {
+          await deleteFile(filePath);
+          resolve(`Activity card deleted successfully.`);
+        } else {
+          reject(`Error: Activity card does not exist.`);
+        }
+      } catch (e) {
+        reject('Error in deleting activity card: ' + e);
+      }
+    });
+  },
 };
 
 export default ActivityCardService;
