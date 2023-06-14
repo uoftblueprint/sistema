@@ -86,31 +86,19 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         await LessonPlanService.getLessonPlan(lessonPlanName)
           .then(lpObj => {
             // Set a unique key for each module per section
-            // TODO: Add support for image module types later
             const setKeyForModule = (module, i) => {
+              let imagePath;
               if (module.type === ModuleType.activityCard) {
-                let imagePath;
-                if (favourited) {
-                  imagePath = MAINDIRECTORY + '/Favourited/' + lessonPlanName + module.content;
-                } else {
-                  imagePath = MAINDIRECTORY + '/Default/' + lessonPlanName + module.content;
-                }
-                return {
-                  type: module.type,
-                  content: module.content ?? '',
-                  name: module.name ?? '',
-                  path: imagePath,
-                  key: `module-${i}`,
-                };
-              } else {
-                return {
-                  type: module.type,
-                  content: module.content ?? '',
-                  name: module.name ?? '',
-                  path: '',
-                  key: `module-${i}`,
-                };
+                imagePath = MAINDIRECTORY + (favourited ? '/Favourited/' : '/Default/') + lessonPlanName + module.content;
               }
+
+              return {
+                type: module.type,
+                content: module.content ?? '',
+                name: module.name ?? '',
+                path: imagePath ?? '',
+                key: `module-${i}`,
+              };
             };
 
             lpObj[SectionName.warmUp] =
@@ -218,7 +206,10 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       <ErrorOverlay
         errorType={errorType}
         visible={errorOverlayVisible}
-        handleClose={toggleErrorOverlay}
+        handleClose={() => {
+          toggleErrorOverlay(false);
+          setErrorType(ERROR.NONE);
+        }}
       />
     </SafeAreaView>
   );
