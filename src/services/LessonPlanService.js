@@ -382,7 +382,8 @@ const LessonPlanService = {
   isLPNameUnique: async function (name) {
     try {
       // Grab all lesson plan names from list of [mtime, name]
-      const allNames = await this.getAllLessonPlanNames(0).map(data => data.name);
+      const lessonPlanArr = await this.getAllLessonPlanNames(0);
+      const allNames =  lessonPlanArr.map(data => data.name);
       // Return true if existing allNames doesn't include new name
       return !(allNames.includes(name.trim()));
     } catch (e) {
