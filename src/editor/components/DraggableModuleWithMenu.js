@@ -50,6 +50,7 @@ export default class DraggableModuleWithMenu extends React.Component {
       boxWidth: 1,
       boxHeight: 1,
       fullWidth: 1,
+      dimensionsFound: false,
     };
   }
 
@@ -57,6 +58,7 @@ export default class DraggableModuleWithMenu extends React.Component {
   componentDidMount() {
     if (this.props.data.type == ModuleType.image) {
       Image.getSize(`file://${this.props.data.path}`, (width, height) => {
+        // Get original widths and heights of the image for dynamic resizing
         this.setState({ boxWidth: width, boxHeight: height });
       });
     } else if (this.props.data.type == ModuleType.activityCard) {
@@ -65,17 +67,18 @@ export default class DraggableModuleWithMenu extends React.Component {
   }
 
   componentDidUpdate(prevState) {
+    // Get full width of image component once it's mounted and resize height accordingly
     if (this.state.fullWidth != prevState.fullWidth) {
       if (
         this.state.fullWidth > 1 
         && this.state.boxHeight > 1 
-        && typeof this.state.boxWidth === 'number'
+        && !this.state.dimensionsFound
       ) {
-        curHeight = this.state.boxHeight + 0;
-        curWidth = this.state.boxWidth + 0;
-        curFullWidth = this.state.fullWidth + 0;
+        curHeight = this.state.boxHeight;
+        curFullWidth = this.state.fullWidth;
+        curWidth = this.state.boxWidth;
         newHeight = Math.floor(curHeight * (curFullWidth / curWidth));
-        this.setState({ boxWidth: '100%', boxHeight: newHeight });
+        this.setState({ dimensionsFound: true, boxHeight: newHeight });
       }
     }
   }
@@ -174,7 +177,6 @@ export default class DraggableModuleWithMenu extends React.Component {
               style={styles.box} 
               onLayout={
                 ({ nativeEvent }) => {
-                  console.log("hello?");
                   const { x, y, width, height } = nativeEvent.layout;
                   this.setState({ fullWidth: width });
                 }
@@ -182,7 +184,7 @@ export default class DraggableModuleWithMenu extends React.Component {
             >
               <Image
                 source={{ uri: `file://${this.props.data.path}` }}
-                style={[styles.cardImage, { width: this.state.boxWidth, height: this.state.boxHeight }]}
+                style={[styles.cardImage, { width: '100%', height: this.state.boxHeight }]}
                 resizeMode="contain"
               />
             </SafeAreaView>
