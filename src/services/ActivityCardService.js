@@ -185,22 +185,15 @@ const ActivityCardService = {
    * delete activity card from local storage
    *
    * @async
-   * @param {String} id ID of the activity card to delete
+   * @param {String} id ID of the activity card to delete in the format `/${id}/cardImage.jpg`
    * @param {String} lessonPlan name of the lesson plan to delete from
+   * @param {Boolean} isLPFavorited if the lesson plan is located in the Favourited directory
    * @returns {Promise}
    */
-  deleteActivityCard: async function (id, lessonPlan) {
+  deleteActivityCard: async function (id, lessonPlan, isLPFavorited) {
     return new Promise(async (resolve, reject) => {
       try {
-        let filePath;
-        if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)) {
-          filePath = MAINDIRECTORY + '/Favourited/' + lessonPlan + '/' + id;
-        } else if (await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)) {
-          filePath = MAINDIRECTORY + '/Default/' + lessonPlan + '/' + id;
-        } else {
-          reject(`Error: Lesson plan does not exist.`);
-        }
-        console.log(filePath);
+        const filePath = MAINDIRECTORY + (isLPFavorited ? '/Favourited/' : '/Default/') + lessonPlan + id;
 
         // check if file exists first. if yes, use RNFS.unlink, otherwise throw an error
         if (await checkFileExists(filePath)) {

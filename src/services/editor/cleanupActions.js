@@ -21,10 +21,10 @@ const handleCleanupActions = async (leaveBySave) => {
 }
 
 const deleteUnusedActivityCards = async (lp, leaveBySave) => {
-    // TODO: add acInitial and acCurr inside redux
-    // see what ac obj I need to save? id? name? both?
-    
     let toDelete = [];
+    const acInitial = lp.initialActivityCards;
+    const acCurr = lp.currActivityCards;
+
     if (leaveBySave) {
         // Only delete ACs on backend once changes are saved
         toDelete = acInitial.filter(card => !acCurr.includes(card));
@@ -34,10 +34,12 @@ const deleteUnusedActivityCards = async (lp, leaveBySave) => {
     }
 
     // Delete all unused cards
-    for (card of toDelete) {
-        // TODO
-        // await ActivityCardService.deleteActivityCard()
-        // make sure to pass in lp.isInitiallyFavorited to find directory
+    for (const cardId of toDelete) {
+        try {
+            await ActivityCardService.deleteActivityCard(cardId, lp.initialLessonPlanName, lp.isInitiallyFavorited);
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 
