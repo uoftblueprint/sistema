@@ -75,14 +75,16 @@ export async function writeFile(isImage, filepath, content) {
  * @param {String} filepath Full file path to delete
  */
 export async function deleteFile(filepath) {
-  return RNFS.unlink(filepath)
-    .then(() => {
-      console.log(`FILE DELETED!: ${filepath}`);
-    })
-    // `unlink` will throw an error, if the item to unlink does not exist
-    .catch(err => {
-      console.error(`RNFS deleteFile: ${err.message}`);
-    });
+  return (
+    RNFS.unlink(filepath)
+      .then(() => {
+        console.log(`FILE DELETED!: ${filepath}`);
+      })
+      // `unlink` will throw an error, if the item to unlink does not exist
+      .catch(err => {
+        console.error(`RNFS deleteFile: ${err.message}`);
+      })
+  );
 }
 
 /**

@@ -40,7 +40,7 @@ const LessonSectionDraggable = ({
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
   );
-  const lessonPlanName = useSelector(state => 
+  const lessonPlanName = useSelector(state =>
     getInitialLessonPlanName(state.lessonPlan),
   );
   const dispatch = useDispatch();
@@ -72,23 +72,23 @@ const LessonSectionDraggable = ({
     // You can also use as a promise without 'callback':
     // TODO: dispatch to redux as well as ModuleType.image
     const options = {
-      mediaType : 'photo', 
-      maxWidth : windowWidth, 
-      maxHeight : windowHeight,
-      includeBase64 : true,
+      mediaType: 'photo',
+      maxWidth: windowWidth,
+      maxHeight: windowHeight,
+      includeBase64: true,
     };
 
     const result = await launchImageLibrary(options);
     // Handle response object
     if (result.didCancel) {
-      console.log("User cancelled the image picker.");
+      console.log('User cancelled the image picker.');
     } else if (result.error) {
       console.error(result.errorMessage);
     } else {
       const paths = await ActivityCardService.addImageToStorage(
-        result.assets[0].base64, 
-        result.assets[0].fileName, 
-        lessonPlanName
+        result.assets[0].base64,
+        result.assets[0].fileName,
+        lessonPlanName,
       );
 
       await dispatch(
@@ -103,51 +103,49 @@ const LessonSectionDraggable = ({
     }
   };
 
-  const addLinkModule = () => {
-
-  };
+  const addLinkModule = () => {};
 
   const addContentActions = [
     {
-      placeholder: "Insert text",
+      placeholder: 'Insert text',
       Icon: TextIcon,
       action: addTextModule,
     },
     {
-      placeholder: "Add activity cards",
+      placeholder: 'Add activity cards',
       Icon: SearchIcon,
-      action: addActivityCard
+      action: addActivityCard,
     },
     {
-      placeholder: "Upload an image",
+      placeholder: 'Upload an image',
       Icon: ImageIcon,
-      action: addImageModule
+      action: addImageModule,
     },
     {
-      placeholder: "Insert link",
+      placeholder: 'Insert link',
       Icon: LinkIcon,
-      action: addLinkModule
+      action: addLinkModule,
     },
   ];
 
   // MODULE MENU FUNCTIONS
-  const deleteModule = (keyToDelete) => {
+  const deleteModule = keyToDelete => {
     // Remove the module with matching key
     const newSectionData = sectionData.filter(
       module => module.key != keyToDelete,
     );
-    
+
     updateRedux(newSectionData);
 
     //if the module is an Activity Card, find the card id from redux
     const moduleToDelete = sectionData.find(
       module => module.key === keyToDelete && module.type === 'activity',
     );
-    
+
     if (moduleToDelete) {
       const idToDelete = moduleToDelete.id;
       console.log('Activity Card id to delete: ' + idToDelete);
-  
+
       // Call helper function to deal with async
       const deleteCardStatus = deleteCardHelper(idToDelete);
     } else {

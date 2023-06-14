@@ -17,37 +17,48 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
 
   const toggleCascade = () => {
     if (Platform.OS === 'android') {
-      LayoutAnimation.configureNext(LayoutAnimation.create(200, 'easeInEaseOut', 'opacity'));
+      LayoutAnimation.configureNext(
+        LayoutAnimation.create(200, 'easeInEaseOut', 'opacity'),
+      );
     } else {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
     setVisible(!visible);
-  }
-  
+  };
+
   let index = 0;
-  const actionComponents = handleClickActions.map(({ placeholder, action, Icon }) => {
-    index += 1;
-    return (
-      <TouchableOpacity onPress={action} disabled={isDisabled} key={index.toString()} style={styles.sectionStyle}>
-        <SafeAreaView style={[styles.buttonStyle, styles.cascadeStyle]}>
-          <Icon height={'20'} width={'20'} />
-          <View style={styles.input}>
-            <Text style={TextStyle.label}>{placeholder}</Text>
-          </View>
-        </SafeAreaView>
-      </TouchableOpacity>
-    )
-  })
+  const actionComponents = handleClickActions.map(
+    ({ placeholder, action, Icon }) => {
+      index += 1;
+      return (
+        <TouchableOpacity
+          onPress={action}
+          disabled={isDisabled}
+          key={index.toString()}
+          style={styles.sectionStyle}>
+          <SafeAreaView style={[styles.buttonStyle, styles.cascadeStyle]}>
+            <Icon height={'20'} width={'20'} />
+            <View style={styles.input}>
+              <Text style={TextStyle.label}>{placeholder}</Text>
+            </View>
+          </SafeAreaView>
+        </TouchableOpacity>
+      );
+    },
+  );
 
   const renderCascade = () => {
     if (visible) {
-      return (actionComponents);
+      return actionComponents;
     }
-  }
+  };
 
   return (
     <>
-      <TouchableOpacity onPress={toggleCascade} disabled={isDisabled} style={styles.sectionStyle}>
+      <TouchableOpacity
+        onPress={toggleCascade}
+        disabled={isDisabled}
+        style={styles.sectionStyle}>
         <SafeAreaView style={styles.buttonStyle}>
           <AddIcon height={'30'} width={'30'} />
           <View style={styles.input}>

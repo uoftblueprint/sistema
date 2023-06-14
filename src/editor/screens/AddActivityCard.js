@@ -10,10 +10,7 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import {
-  verticalScale,
-  scale,
-} from 'react-native-size-matters';
+import { verticalScale, scale } from 'react-native-size-matters';
 import { TextStyle } from '../../Styles.config';
 
 // Component dependencies
@@ -34,7 +31,6 @@ import { MAINDIRECTORY } from '../../services/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
-
 
 const AddActivityCard = function ({ navigation, route }) {
   const { sectionType, lessonPlanName } = route.params;
@@ -80,11 +76,7 @@ const AddActivityCard = function ({ navigation, route }) {
     false,
   ]);
 
-  const durationTags = [
-    '5-10 mins', 
-    '10-15 mins', 
-    '15+ mins'
-  ];
+  const durationTags = ['5-10 mins', '10-15 mins', '15+ mins'];
 
   const recentActivityCards = useSelector(state =>
     getCardNames(state.recentActivityCards),
@@ -183,35 +175,44 @@ const AddActivityCard = function ({ navigation, route }) {
   //onPress function for add Card button
   const addCard = async () => {
     console.log(`Initial Lesson Plan Name: ${lessonPlanName}`);
-    const favourited = await LessonPlanService.isLessonPlanFavourited(lessonPlanName);
+    const favourited = await LessonPlanService.isLessonPlanFavourited(
+      lessonPlanName,
+    );
     const folder = favourited ? '/Favourited/' : '/Default/';
     let fullPath = '';
-    
+
     await ActivityCardService.downloadActivityCard(
       previewInfo.id,
       'Downloaded',
       previewInfo.name,
       lessonPlanName,
-    ).then((rnfsPath) => {
-      rnfsPath = rnfsPath.replace(MAINDIRECTORY + folder + lessonPlanName, '');
-      fullPath = MAINDIRECTORY + folder + lessonPlanName + rnfsPath;
-      return rnfsPath;
-    }).then((relPath) => {
-      dispatch(
-        addToSection({
-          type: ModuleType.activityCard,
-          name: previewInfo?.name,
-          id: previewInfo?.id,
-          section: sectionType,
-          content: relPath,
-          path: fullPath,
-        }),
-      );
-    }).then(() => {
-      navigation.goBack();
-    }).catch((err) => {
-      console.error("Error when adding activity card: " + err);
-    });
+    )
+      .then(rnfsPath => {
+        rnfsPath = rnfsPath.replace(
+          MAINDIRECTORY + folder + lessonPlanName,
+          '',
+        );
+        fullPath = MAINDIRECTORY + folder + lessonPlanName + rnfsPath;
+        return rnfsPath;
+      })
+      .then(relPath => {
+        dispatch(
+          addToSection({
+            type: ModuleType.activityCard,
+            name: previewInfo?.name,
+            id: previewInfo?.id,
+            section: sectionType,
+            content: relPath,
+            path: fullPath,
+          }),
+        );
+      })
+      .then(() => {
+        navigation.goBack();
+      })
+      .catch(err => {
+        console.error('Error when adding activity card: ' + err);
+      });
   };
 
   const addAsText = async () => {
@@ -257,9 +258,9 @@ const AddActivityCard = function ({ navigation, route }) {
             showBottomScrollbar={false}
           />
 
-          <Searchbar 
+          <Searchbar
             navigation={navigation}
-            onChangeText={onChangeSearch} 
+            onChangeText={onChangeSearch}
             resultData={matchSearch}
             setPreviewInfo={setPreviewInfo}
             setHighlightedID={setHighlightedID}

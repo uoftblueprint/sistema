@@ -1,7 +1,6 @@
 import {
   checkFileExists,
   writeFile,
-  copyFile,
   makeDirectory,
   deleteFile,
 } from './routes/Local';
@@ -111,7 +110,7 @@ const ActivityCardService = {
         alt: 'media',
         responseType: 'arraybuffer',
       };
-      
+
       // set up local file path depending on whether the card is Featured or Downloaded
       // if the card is featured, it goes into /FeaturedActivityCards/IMAGEID/...
       // if the card is downloaded, it goes into /LESSONPLANNAME/IMAGEID/...
@@ -119,7 +118,9 @@ const ActivityCardService = {
       if (type === 'Featured') {
         dirPath = MAINDIRECTORY + '/FeaturedActivityCards/' + id;
       } else {
-        if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonplan)) {
+        if (
+          await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonplan)
+        ) {
           dirPath = MAINDIRECTORY + '/Favourited/' + lessonplan + '/' + id;
         } else {
           dirPath = MAINDIRECTORY + '/Default/' + lessonplan + '/' + id;
@@ -162,7 +163,7 @@ const ActivityCardService = {
 
   /**
    * Add image from React-Native-Image-Picker to lesson plan's folder in RNFS
-   * 
+   *
    * TODO: look for lesson plan in favourited/default, then store in there
    * @async
    * @param {String} base64 file of image
@@ -175,7 +176,9 @@ const ActivityCardService = {
       let dirPath;
       if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)) {
         dirPath = MAINDIRECTORY + '/Favourited/' + lessonPlan + '/' + fileName;
-      } else if (await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)) {
+      } else if (
+        await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)
+      ) {
         dirPath = MAINDIRECTORY + '/Default/' + lessonPlan + '/' + fileName;
       } else {
         await makeDirectory(MAINDIRECTORY + '/Default/' + lessonPlan + '/');
@@ -183,8 +186,8 @@ const ActivityCardService = {
       }
 
       await writeFile(true, dirPath, base64);
-      console.log("Went into: " + dirPath);
-      return { 
+      console.log('Went into: ' + dirPath);
+      return {
         relPath: '/' + fileName,
         fullPath: dirPath,
       };
@@ -227,9 +230,13 @@ const ActivityCardService = {
     return new Promise(async (resolve, reject) => {
       try {
         let filePath;
-        if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)) {
+        if (
+          await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)
+        ) {
           filePath = MAINDIRECTORY + '/Favourited/' + lessonPlan + '/' + id;
-        } else if (await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)) {
+        } else if (
+          await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)
+        ) {
           filePath = MAINDIRECTORY + '/Default/' + lessonPlan + '/' + id;
         } else {
           reject(`Error: Lesson plan does not exist.`);

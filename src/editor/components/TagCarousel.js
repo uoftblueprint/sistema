@@ -63,28 +63,27 @@ const TagCarousel = ({
           />
         ))}
       </ScrollView>
-        {showBottomScrollbar && 
-          <View
-            style={{
-              width: '100%',
-              maxWidth: '100%',
-              height: 1.5,
-              backgroundColor: '#C7BCBC87',
-              borderRadius: 2,
-              marginBottom: 10,
-              overflow: 'hidden',
-            }}
-          >
-            <Animated.View
-              style={[
-                styles.segment,
-                {
-                  left: scrollBarPositionPercentage,
-                },
-              ]}
-            />
-          </View>
-        }
+      {showBottomScrollbar && (
+        <View
+          style={{
+            width: '100%',
+            maxWidth: '100%',
+            height: 1.5,
+            backgroundColor: '#C7BCBC87',
+            borderRadius: 2,
+            marginBottom: 10,
+            overflow: 'hidden',
+          }}>
+          <Animated.View
+            style={[
+              styles.segment,
+              {
+                left: scrollBarPositionPercentage,
+              },
+            ]}
+          />
+        </View>
+      )}
     </View>
   );
 };

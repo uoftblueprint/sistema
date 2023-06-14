@@ -43,8 +43,8 @@ export default class DraggableModuleWithMenu extends React.Component {
         this.moveModuleDown,
         this.deleteModule,
       ]; // matches order of this.options
-    } 
-    
+    }
+
     this.state = {
       isEditable: false,
       boxWidth: 1,
@@ -70,14 +70,14 @@ export default class DraggableModuleWithMenu extends React.Component {
     // Get full width of image component once it's mounted and resize height accordingly
     if (this.state.fullWidth != prevState.fullWidth) {
       if (
-        this.state.fullWidth > 1 
-        && this.state.boxHeight > 1 
-        && !this.state.dimensionsFound
+        this.state.fullWidth > 1 &&
+        this.state.boxHeight > 1 &&
+        !this.state.dimensionsFound
       ) {
-        curHeight = this.state.boxHeight;
-        curFullWidth = this.state.fullWidth;
-        curWidth = this.state.boxWidth;
-        newHeight = Math.floor(curHeight * (curFullWidth / curWidth));
+        const curHeight = this.state.boxHeight;
+        const curFullWidth = this.state.fullWidth;
+        const curWidth = this.state.boxWidth;
+        const newHeight = Math.floor(curHeight * (curFullWidth / curWidth));
         this.setState({ dimensionsFound: true, boxHeight: newHeight });
       }
     }
@@ -173,18 +173,18 @@ export default class DraggableModuleWithMenu extends React.Component {
               />
             </View>
           ) : (
-            <SafeAreaView 
-              style={styles.box} 
-              onLayout={
-                ({ nativeEvent }) => {
-                  const { x, y, width, height } = nativeEvent.layout;
-                  this.setState({ fullWidth: width });
-                }
-              }
-            >
+            <SafeAreaView
+              style={styles.box}
+              onLayout={({ nativeEvent }) => {
+                const { x, y, width, height } = nativeEvent.layout;
+                this.setState({ fullWidth: width });
+              }}>
               <Image
                 source={{ uri: `file://${this.props.data.path}` }}
-                style={[styles.cardImage, { width: '100%', height: this.state.boxHeight }]}
+                style={[
+                  styles.cardImage,
+                  { width: '100%', height: this.state.boxHeight },
+                ]}
                 resizeMode="contain"
               />
             </SafeAreaView>

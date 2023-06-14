@@ -24,9 +24,11 @@ const LessonPlanService = {
   deleteLessonPlan: async function (name) {
     try {
       const favourited = await this.isLessonPlanFavourited(name);
-      const path = favourited ? `${MAINDIRECTORY}/Favourited/${name}/` : `${MAINDIRECTORY}/Default/${name}/`;
+      const path = favourited
+        ? `${MAINDIRECTORY}/Favourited/${name}/`
+        : `${MAINDIRECTORY}/Default/${name}/`;
 
-      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each 
+      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each
       // Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
       let result = await deleteFile(path);
       return result;
@@ -55,21 +57,21 @@ const LessonPlanService = {
       let path;
 
       if (hasNewName) {
-        console.log("The lesson plan was saved with a new name.");
+        console.log('The lesson plan was saved with a new name.');
         const favourited = await this.isLessonPlanFavourited(oldLPName);
-        const folder = favourited ? "/Favourited/" : "/Default/";
+        const folder = favourited ? '/Favourited/' : '/Default/';
 
         const oldPath = MAINDIRECTORY + folder + oldLPName;
         path = MAINDIRECTORY + folder + name;
 
         // If the LP has been renamed, we need to delete its old file and directory
         // As well as copy over all the innards of the old directory to the new one
-        await copyDir(oldPath, path)
+        await copyDir(oldPath, path);
         await writeFile(false, path + '/' + name + '.json', lessonJSON);
         await deleteFile(path + '/' + oldLPName + '.json');
         await this.deleteLessonPlan(oldLPName);
       } else {
-        console.log("The lesson plan was saved without a new name.");
+        console.log('The lesson plan was saved without a new name.');
 
         const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
         const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
@@ -84,7 +86,7 @@ const LessonPlanService = {
         }
 
         // Then, write to local storage with an RNFS call via Local.js
-        await makeDirectory(path)
+        await makeDirectory(path);
         await checkFileExists(path);
         await writeFile(false, path + name + '.json', lessonJSON);
         console.log('Successfully saved lesson plan: ' + name);
@@ -94,7 +96,6 @@ const LessonPlanService = {
       console.error('Error saving lesson plan: ', e);
     }
   },
-
 
   /**
    * Given the name of a lesson plan, return the LessonPlan object by reaching
@@ -106,8 +107,8 @@ const LessonPlanService = {
   getLessonPlan: async function (name) {
     try {
       const favourited = await this.isLessonPlanFavourited(name);
-      const path = favourited 
-        ? `${MAINDIRECTORY}/Favourited/${name}/${name}.json` 
+      const path = favourited
+        ? `${MAINDIRECTORY}/Favourited/${name}/${name}.json`
         : `${MAINDIRECTORY}/Default/${name}/${name}.json`;
 
       // read in the file from RNFS
@@ -163,7 +164,7 @@ const LessonPlanService = {
       console.error('isLessonPlanFavourited error: ', e);
     }
   },
-  
+
   /**
    * Given the name of the lesson plan, copy all files in its directory
    * into a new directory named lesson plan name (i) in the default
@@ -173,7 +174,9 @@ const LessonPlanService = {
   copyLessonPlan: async function (name) {
     try {
       const favourited = await this.isLessonPlanFavourited(name);
-      const originalPath = favourited ? `${MAINDIRECTORY}/Favourited/${name}` : `${MAINDIRECTORY}/Default/${name}`;
+      const originalPath = favourited
+        ? `${MAINDIRECTORY}/Favourited/${name}`
+        : `${MAINDIRECTORY}/Default/${name}`;
 
       var j = 1;
 
@@ -221,9 +224,7 @@ const LessonPlanService = {
       var favouritedLessonPlans = await readDDirectory(
         MAINDIRECTORY + '/Favourited',
       );
-      var defaultLessonPlans = await readDDirectory(
-        MAINDIRECTORY + '/Default',
-      );
+      var defaultLessonPlans = await readDDirectory(MAINDIRECTORY + '/Default');
       var combined = [];
 
       if (option === 0 || option === 1) {
