@@ -85,11 +85,17 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         let favourited = await LessonPlanService.isLessonPlanFavourited(lessonPlanName);
         await LessonPlanService.getLessonPlan(lessonPlanName)
           .then(lpObj => {
-            // Set a unique key for each module per section
-            const setKeyForModule = (module, i) => {
+            /**
+             * Set a unique key for each module per section.
+             * If it's an activity card module, set the path and add it to initial activity cards. 
+             */
+            const preprocessModule = (module, i, activityCardArr) => {
+              // Handle activity card
               let imagePath;
               if (module.type === ModuleType.activityCard) {
                 imagePath = MAINDIRECTORY + (favourited ? '/Favourited/' : '/Default/') + lessonPlanName + module.content;
+                // Add to initial activity cards
+                activityCardArr.push(module.content);
               }
 
               return {
@@ -101,15 +107,17 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
               };
             };
 
+            let initialACArr = [];
             lpObj[SectionName.warmUp] =
-              lpObj[SectionName.warmUp].map(setKeyForModule);
+              lpObj[SectionName.warmUp].map((module, i) => preprocessModule(module, i, initialACArr));
             lpObj[SectionName.mainLesson] =
-              lpObj[SectionName.mainLesson].map(setKeyForModule);
+              lpObj[SectionName.mainLesson].map((module, i) => preprocessModule(module, i, initialACArr));
             lpObj[SectionName.coolDown] =
-              lpObj[SectionName.coolDown].map(setKeyForModule);
-
+              lpObj[SectionName.coolDown].map((module, i) => preprocessModule(module, i, initialACArr));
+            
+            console.log('LIST OF ORIGINAL ACs: ', initialACArr); // TODO: Delete
             // Dispatch it to redux for the rest of the editor to render
-            dispatch(loadInitialLessonPlan({ ...lpObj }));
+            dispatch(loadInitialLessonPlan({ ...lpObj, initialActivityCards: initialACArr }));
             fetchSuccess = true;
             setNew(false);
           })

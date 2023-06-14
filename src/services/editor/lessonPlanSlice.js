@@ -21,6 +21,8 @@ export const lessonPlanSlice = createSlice({
     isDirty: false,
     isInitiallyFavorited: null,
     isCurrentlyFavorited: null,
+    initialActivityCards: [], 
+    currActivityCards: [],
   },
   reducers: {
 
@@ -39,6 +41,8 @@ export const lessonPlanSlice = createSlice({
         [SectionName.coolDown]: action.payload[SectionName.coolDown],
         [SectionName.notes]: action.payload[SectionName.notes] ?? '',
         isDirty: false,
+        initialActivityCards: action.payload.initialActivityCards,
+        currActivityCards: action.payload.initialActivityCards,
       };
     },
 
@@ -56,13 +60,13 @@ export const lessonPlanSlice = createSlice({
         initialLessonPlanName: action.payload.name,
       };
     },
-    
+
     /**
-     * action.payload: { section: SectionName, allData: { type, content, key }[] }
+     * action.payload: { section: SectionName, allData: { type, content, key,... }[] }
      */
     replaceSection: (state, action) => {
       // TODO: Do some error handling. Confirm that every module is properly formed
-      // Check that it has 3 properties [type, section, content]
+      // Check that it has at least 3 properties [type, section, content]
       // If only missing key property, grab next unique key
       // Else, remove module
       // Check that all keys are unique
@@ -119,6 +123,13 @@ export const lessonPlanSlice = createSlice({
       }
     },
 
+    setCurrActivityCards: (state, action) => {
+      return {
+        ...state,
+        currActivityCards: action.payload,
+      }
+    }, 
+
     reset: () => {
       console.log('Reseting redux...');
       return {
@@ -131,6 +142,8 @@ export const lessonPlanSlice = createSlice({
         isDirty: false,
         isInitiallyFavorited: null,
         isCurrentlyFavorited: null,
+        initialActivityCards: [], 
+        currActivityCards: [],
       };
     },
   },
@@ -147,6 +160,7 @@ export const {
   loadInitialLessonPlan,
   loadInitialFavState,
   setFavState,
+  setCurrActivityCards,
   reset,
 } = lessonPlanSlice.actions;
 
@@ -210,6 +224,10 @@ export const getInitialFavState = state => {
 
 export const getCurrFavState = state => {
   return state.isCurrentlyFavorited;
+}
+
+export const getCurrActivityCards = state => {
+  return state.currActivityCards;
 }
 
 export default lessonPlanSlice.reducer;

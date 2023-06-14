@@ -5,6 +5,8 @@ import {
   replaceSection,
   getLessonSection,
   getInitialLessonPlanName,
+  getCurrActivityCards,
+  setCurrActivityCards,
 } from '../../services/editor/lessonPlanSlice';
 import {
   NestableDraggableFlatList,
@@ -30,6 +32,9 @@ const LessonSectionDraggable = ({
   );
   const lessonPlanName = useSelector(state => 
     getInitialLessonPlanName(state.lessonPlan),
+  );
+  const currActivityCards = useSelector(state =>
+    getCurrActivityCards(state.lessonPlan),
   );
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
@@ -63,30 +68,22 @@ const LessonSectionDraggable = ({
       module => module.key != keyToDelete,
     );
     
+    // Remove module from LP frontend immediately
     updateRedux(newSectionData);
 
-    //if the module is an Activity Card, find the card id from redux
-    const moduleToDelete = sectionData.find(
+    // If the module is an activity card, update the current list of activity cards
+    const acToDelete = sectionData.find(
       module => module.key === keyToDelete && module.type === 'activity',
     );
-    
-    if (moduleToDelete) {
-      const idToDelete = moduleToDelete.id;
-      console.log('Activity Card id to delete: ' + idToDelete);
-  
-      // Call helper function to deal with async
-      const deleteCardStatus = deleteCardHelper(idToDelete);
-    } else {
-      console.log('No activity module found with the provided key');
-    }
-  };
-
-  const deleteCardHelper = async id => {
-    try {
-      await ActivityCardService.deleteActivityCard(id);
-    } catch (error) {
-      console.error('Error while deleting the activity card: ' + error);
-    }
+    if (acToDelete) {
+      // Get rid of activity card with first matching id
+      let acArray = [...currActivityCards];
+      const index = acArray.indexOf(acToDelete.id);
+      if (index > -1) {
+        acArray.splice(index, 1); 
+        dispatch(setCurrActivityCards(acArray));
+      }
+    } 
   };
 
   const editModule = (keyToEdit, newContent) => {
