@@ -27,10 +27,10 @@ const deleteUnusedActivityCards = async (lp, leaveBySave) => {
 
     if (leaveBySave) {
         // Only delete ACs on backend once changes are saved
-        toDelete = acInitial.filter(card => !acCurr.includes(card));
+        toDelete = acInitial.filter(card => !(acCurr.includes(card)));
     } else if (lp.isDirty) {
         // Discard changes like newly downloaded ACs that aren't being saved
-        toDelete = acCurr.filter(card => !acInitial.includes(card));
+        toDelete = acCurr.filter(card => !(acInitial.includes(card)));
     }
 
     console.log('initialActivityCards', acInitial); // TODO: del
