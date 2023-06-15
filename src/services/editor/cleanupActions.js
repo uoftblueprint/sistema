@@ -33,6 +33,8 @@ const deleteUnusedActivityCards = async (lp, leaveBySave) => {
         toDelete = acCurr.filter(card => !acInitial.includes(card));
     }
 
+    console.log('initialActivityCards', acInitial); // TODO: del
+    console.log('currActivityCards', acCurr);
     console.log('List of ACs to delete: ', toDelete);
 
     // Delete all unused cards
