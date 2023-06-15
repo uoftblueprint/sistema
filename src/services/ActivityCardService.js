@@ -41,7 +41,7 @@ const ActivityCardService = {
       };
 
       // Retrieve all Drive files meeting the params
-      const response = await axios.get(downloadUrl, { params }).catch(error => {
+      const response = await axios.list(downloadUrl, { params }).catch(error => {
         console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
       });
 
@@ -110,7 +110,7 @@ const ActivityCardService = {
         alt: 'media',
         responseType: 'arraybuffer',
       };
-      
+
       // set up local file path depending on whether the card is Featured or Downloaded
       // if the card is featured, it goes into /FeaturedActivityCards/IMAGEID/...
       // if the card is downloaded, it goes into /LESSONPLANNAME/IMAGEID/...
@@ -118,7 +118,9 @@ const ActivityCardService = {
       if (type === 'Featured') {
         dirPath = MAINDIRECTORY + '/FeaturedActivityCards/' + id;
       } else {
-        if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonplan)) {
+        if (
+          await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonplan)
+        ) {
           dirPath = MAINDIRECTORY + '/Favourited/' + lessonplan + '/' + id;
         } else {
           dirPath = MAINDIRECTORY + '/Default/' + lessonplan + '/' + id;
@@ -160,6 +162,41 @@ const ActivityCardService = {
   },
 
   /**
+   * Add image from React-Native-Image-Picker to lesson plan's folder in RNFS
+   *
+   * TODO: look for lesson plan in favourited/default, then store in there
+   * @async
+   * @param {String} base64 file of image
+   * @param {String} fileName file name of image
+   * @param {String} lessonPlan name of lesson plan we want to add it to
+   * @returns {String} relative path of the image
+   */
+  addImageToStorage: async function (base64, fileName, lessonPlan) {
+    try {
+      let dirPath;
+      if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)) {
+        dirPath = MAINDIRECTORY + '/Favourited/' + lessonPlan + '/' + fileName;
+      } else if (
+        await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)
+      ) {
+        dirPath = MAINDIRECTORY + '/Default/' + lessonPlan + '/' + fileName;
+      } else {
+        await makeDirectory(MAINDIRECTORY + '/Default/' + lessonPlan + '/');
+        dirPath = MAINDIRECTORY + '/Default/' + lessonPlan + '/' + fileName;
+      }
+
+      await writeFile(true, dirPath, base64);
+      console.log('Went into: ' + dirPath);
+      return {
+        relPath: '/' + fileName,
+        fullPath: dirPath,
+      };
+    } catch (error) {
+      console.error('Error adding image to local storage: ' + error);
+    }
+  },
+
+  /**
    * get metadata on all activity cards
    *
    * @async
@@ -193,9 +230,13 @@ const ActivityCardService = {
     return new Promise(async (resolve, reject) => {
       try {
         let filePath;
-        if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)) {
+        if (
+          await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)
+        ) {
           filePath = MAINDIRECTORY + '/Favourited/' + lessonPlan + '/' + id;
-        } else if (await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)) {
+        } else if (
+          await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)
+        ) {
           filePath = MAINDIRECTORY + '/Default/' + lessonPlan + '/' + id;
         } else {
           reject(`Error: Lesson plan does not exist.`);

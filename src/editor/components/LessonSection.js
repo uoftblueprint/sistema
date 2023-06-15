@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import AddLessonContentButton from './AddLessonContentButton';
 import { Text, View, SafeAreaView, StyleSheet } from 'react-native';
 import { TextStyle } from '../../Styles.config';
-import ContentCard from './ContentCard';
+import TextCard from './TextCard';
 import StoredContent from './StoredContent';
 
 const LessonSection = ({ sectionType, subtitle, navigation }) => {
@@ -28,7 +28,7 @@ const LessonSection = ({ sectionType, subtitle, navigation }) => {
       <View style={styles.sectionContainer}>
         {/* New textbox with prompted to insert text */}
         {isTextinputOpen && (
-          <ContentCard
+          <TextCard
             setisTextinputOpen={setisTextinputOpen}
             setSectionContent={setSectionContent}
             sectionContent={sectionContent}

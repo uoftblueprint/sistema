@@ -11,25 +11,38 @@ import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
 import NoCardsFound from './NoCardsFound';
 import { TextStyle } from '../../Styles.config';
-import { scale, verticalScale, moderateVerticalScale } from 'react-native-size-matters';
+import {
+  scale,
+  verticalScale,
+  moderateVerticalScale,
+} from 'react-native-size-matters';
 
-const Searchbar = ({ navigation, onChangeText, resultData, setPreviewInfo, setHighlightedID, highlightedID, searchQuery, sectionType }) => {
+const Searchbar = ({
+  navigation,
+  onChangeText,
+  resultData,
+  setPreviewInfo,
+  setHighlightedID,
+  highlightedID,
+  searchQuery,
+  sectionType,
+}) => {
   const refSearch = useRef();
 
   return (
     <View style={styles.shadow}>
       <View style={styles.column}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.searchbarContainer}
           onPress={() => refSearch.current.focus()}>
-            <SearchLogo style={styles.IconStyle} width={25} height={25} />
-            <TextInput
-              style={[TextStyle.h3, styles.InputStyle]}
-              placeholder="Search by title or keyword"
-              placeholderTextColor={'black'}
-              onChangeText={onChangeText}
-              ref={refSearch}
-            />
+          <SearchLogo style={styles.IconStyle} width={25} height={25} />
+          <TextInput
+            style={[TextStyle.h3, styles.InputStyle]}
+            placeholder="Search by title or keyword"
+            placeholderTextColor={'black'}
+            onChangeText={onChangeText}
+            ref={refSearch}
+          />
         </TouchableOpacity>
         <ScrollView
           nestedScrollEnabled={true}
@@ -70,7 +83,8 @@ const styles = StyleSheet.create({
     borderColor: '#453E3D',
     backgroundColor: '#FDFBF7',
     overflow: 'hidden',
-    ...Platform.select({ // shadow for android
+    ...Platform.select({
+      // shadow for android
       android: {
         shadowColor: '#453E3D',
         shadowOffset: {
@@ -83,7 +97,8 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  shadow: { // shadow for ios
+  shadow: {
+    // shadow for ios
     ...Platform.select({
       ios: {
         shadowColor: '#453E3D',
@@ -97,7 +112,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  searchbarContainer: { 
+  searchbarContainer: {
     width: '100%',
     flexDirection: 'row',
     backgroundColor: '#FDFBF7',

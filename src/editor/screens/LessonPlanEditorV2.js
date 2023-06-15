@@ -50,7 +50,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     dispatch(reset());
     navigation.setParams({ lessonPlanName: '' });
     toggleUnsavedChanges(false);
-    navigation.navigate(LIBRARY_STACK.NAVIGATOR, {screen: LIBRARY_STACK.LIBRARY}); // Go to the library
+    navigation.navigate(LIBRARY_STACK.NAVIGATOR, {
+      screen: LIBRARY_STACK.LIBRARY,
+    }); // Go to the library
   };
 
   // Fetch and set lesson plan data
@@ -67,19 +69,23 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         console.log(
           `LessonPlanEditorV2: Fetching data for ${lessonPlanName}...`,
         );
-        let favourited = await LessonPlanService.isLessonPlanFavourited(lessonPlanName);
+        let favourited = await LessonPlanService.isLessonPlanFavourited(
+          lessonPlanName,
+        );
         await LessonPlanService.getLessonPlan(lessonPlanName)
           .then(lpObj => {
             // Set a unique key for each module per section
             // TODO: Add support for image module types later
             const setKeyForModule = (module, i) => {
-              if (module.type === ModuleType.activityCard) {
+              if (
+                module.type === ModuleType.activityCard ||
+                module.type === ModuleType.image
+              ) {
                 let imagePath;
-                if (favourited) {
-                  imagePath = MAINDIRECTORY + '/Favourited/' + lessonPlanName + module.content;
-                } else {
-                  imagePath = MAINDIRECTORY + '/Default/' + lessonPlanName + module.content;
-                }
+                const folder = favourited ? '/Favourited/' : '/Default/';
+                imagePath =
+                  MAINDIRECTORY + folder + lessonPlanName + module.content;
+
                 return {
                   type: module.type,
                   content: module.content ?? '',
@@ -92,7 +98,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
                   type: module.type,
                   content: module.content ?? '',
                   name: module.name ?? '',
-                  path: '',
+                  title: module.title ?? '',
                   key: `module-${i}`,
                 };
               }

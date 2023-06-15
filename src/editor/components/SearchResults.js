@@ -28,7 +28,7 @@ const SearchResults = ({
       let type = parts[1].trim();
 
       title = parts[2].trim();
-      subtitle = theme + ' - ' + type; 
+      subtitle = theme + ' - ' + type;
     } else if (parts.length == 2) {
       let theme = parts[0].trim();
 
@@ -63,10 +63,12 @@ const SearchResults = ({
         style={[
           styles.container,
           isHighlighted && styles.containerHighlighted,
-          isFirst && {borderTopWidth: 0} // first element has no border
+          isFirst && { borderTopWidth: 0 }, // first element has no border
         ]}>
         <Text style={TextStyle.label}>{title ?? 'Name error'}</Text>
-        {subtitle && <Text style={[TextStyle.label, {fontSize: 13}]}>{subtitle}</Text>}
+        {subtitle && (
+          <Text style={[TextStyle.label, { fontSize: 13 }]}>{subtitle}</Text>
+        )}
       </TouchableOpacity>
       <View style={styles.separator} />
     </View>

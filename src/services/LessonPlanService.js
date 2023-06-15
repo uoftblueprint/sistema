@@ -23,20 +23,13 @@ const LessonPlanService = {
    */
   deleteLessonPlan: async function (name) {
     try {
-      const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-      const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
-      let path;
+      const favourited = await this.isLessonPlanFavourited(name);
+      const path = favourited
+        ? `${MAINDIRECTORY}/Favourited/${name}/`
+        : `${MAINDIRECTORY}/Default/${name}/`;
 
-      // check if file exists, assigning appropriate path if so
-      if (await checkFileExists(favouritedPath)) {
-        path = favouritedPath;
-      } else if (await checkFileExists(defaultPath)) {
-        path = defaultPath;
-      } else {
-        throw new Error(`${name} does not exist`);
-      }
-
-      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
+      // Note that RNFS is capable of recursively unlinking directories, so since we're treating each
+      // Lesson Plan as a new directory, we can just unlink it with the deleteFile() function
       let result = await deleteFile(path);
       return result;
     } catch (e) {
@@ -55,7 +48,7 @@ const LessonPlanService = {
    * @param {Boolean} hasNewName if the LP has been renamed
    * @param {String} oldLPName to delete old files and directories
    */
-  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '', newLesson) {
+  saveLessonPlan: async function (lesson, hasNewName = false, oldLPName = '') {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
@@ -64,40 +57,21 @@ const LessonPlanService = {
       let path;
 
       if (hasNewName) {
-        console.log("The lesson plan was saved with a new name.");
+        console.log('The lesson plan was saved with a new name.');
+        const favourited = await this.isLessonPlanFavourited(oldLPName);
+        const folder = favourited ? '/Favourited/' : '/Default/';
 
-        const favouritedPath = `${MAINDIRECTORY}/Favourited/${oldLPName}/`;
-        const defaultPath = `${MAINDIRECTORY}/Default/${oldLPName}/`;
-
-        let oldPath;
-
-        // Check if file exists, assigning appropriate path if so
-        if (await checkFileExists(favouritedPath)) {
-          console.log("The lesson plan exists in Favourites.");
-          path = `${MAINDIRECTORY}/Favourited/${name}/`;
-          oldPath = favouritedPath;
-        } else if (await checkFileExists(defaultPath)) {
-          console.log("The lesson plan exists in Default.");
-          path = `${MAINDIRECTORY}/Default/${name}/`;
-          oldPath = defaultPath;
-        } else {
-          throw new Error(`${oldLPName} does not exist`); // If the LP has a new name, it has to already exist
-        }
+        const oldPath = MAINDIRECTORY + folder + oldLPName;
+        path = MAINDIRECTORY + folder + name;
 
         // If the LP has been renamed, we need to delete its old file and directory
         // As well as copy over all the innards of the old directory to the new one
-        await copyDir(oldPath, path)
-          .then(() => {
-            writeFile(false, path + name + '.json', lessonJSON);
-          })
-          .then(() => {
-            deleteFile(path + oldLPName + '.json');
-          })
-          .then(() => {
-            this.deleteLessonPlan(oldLPName);
-          });
+        await copyDir(oldPath, path);
+        await writeFile(false, path + '/' + name + '.json', lessonJSON);
+        await deleteFile(path + '/' + oldLPName + '.json');
+        await this.deleteLessonPlan(oldLPName);
       } else {
-        console.log("The lesson plan was saved without a new name.");
+        console.log('The lesson plan was saved without a new name.');
 
         const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
         const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
@@ -112,16 +86,10 @@ const LessonPlanService = {
         }
 
         // Then, write to local storage with an RNFS call via Local.js
-        await makeDirectory(path)
-          .then(async () => {
-            await checkFileExists(path);
-          })
-          .then(async () => {
-            await writeFile(false, path + name + '.json', lessonJSON);
-          })
-          .then(() => {
-            console.log('Successfully saved lesson plan: ' + name);
-          });
+        await makeDirectory(path);
+        await checkFileExists(path);
+        await writeFile(false, path + name + '.json', lessonJSON);
+        console.log('Successfully saved lesson plan: ' + name);
       }
     } catch (e) {
       // There was an error, catch it and do something with it
@@ -138,18 +106,10 @@ const LessonPlanService = {
    */
   getLessonPlan: async function (name) {
     try {
-      let favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/${name}.json`;
-      let defaultPath = `${MAINDIRECTORY}/Default/${name}/${name}.json`;
-
-      let path;
-      // check if file exists, assigning appropriate path if so
-      if (await checkFileExists(favouritedPath)) {
-        path = favouritedPath;
-      } else if (await checkFileExists(defaultPath)) {
-        path = defaultPath;
-      } else {
-        throw new Error(`${name} does not exist`);
-      }
+      const favourited = await this.isLessonPlanFavourited(name);
+      const path = favourited
+        ? `${MAINDIRECTORY}/Favourited/${name}/${name}.json`
+        : `${MAINDIRECTORY}/Default/${name}/${name}.json`;
 
       // read in the file from RNFS
       let lpStr = await readFile(path);
@@ -158,7 +118,7 @@ const LessonPlanService = {
 
       // helper function to create Module objects for .map()
       function createModules(module) {
-        return new Module(module.type, module.content, module.name);
+        return new Module(module.type, module.content, module.name, module.title);
       }
 
       // create Module objects from JSON
@@ -189,19 +149,22 @@ const LessonPlanService = {
   isLessonPlanFavourited: async function (name) {
     try {
       const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
+      const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
       // check if file exists in the favourites folder
       if (await checkFileExists(favouritedPath)) {
         console.log(`Lesson Plan is in Favourited: ${name}`);
         return true;
-      } else {
+      } else if (await checkFileExists(defaultPath)) {
         console.log(`Lesson Plan is in Default: ${name}`);
         return false;
+      } else {
+        throw new Error(`Lesson Plan ${name} does not exist`);
       }
     } catch (e) {
       console.error('isLessonPlanFavourited error: ', e);
     }
   },
-  
+
   /**
    * Given the name of the lesson plan, copy all files in its directory
    * into a new directory named lesson plan name (i) in the default
@@ -210,6 +173,11 @@ const LessonPlanService = {
    */
   copyLessonPlan: async function (name) {
     try {
+      const favourited = await this.isLessonPlanFavourited(name);
+      const originalPath = favourited
+        ? `${MAINDIRECTORY}/Favourited/${name}`
+        : `${MAINDIRECTORY}/Default/${name}`;
+
       var j = 1;
 
       // find which repetition of copy are we on
@@ -224,20 +192,21 @@ const LessonPlanService = {
         j++;
       }
 
-      const destPath = MAINDIRECTORY + '/Default/' + name + ' (' + j + ')/';
-
-      // find the original filepath
-      let filepath;
-      if (await checkFileExists(MAINDIRECTORY + '/Favourited/' + name)) {
-        filepath = MAINDIRECTORY + '/Favourited/' + name + '/';
-      } else {
-        filepath = MAINDIRECTORY + '/Default/' + name + '/';
-      }
+      const destPath = MAINDIRECTORY + '/Default/' + name + ' (' + j + ')';
 
       // copy lesson plan directory recursively
-      await copyDir(filepath, destPath);
-      // rename the lesson plan .json inside the copied lesson plan directory
-      await moveFile(`${destPath}${name}.json`, `${destPath}${name} (${j}).json`);
+      await copyDir(originalPath, destPath);
+      // retrieve object from .json file in destination path
+      let lpStr = await readFile(`${destPath}/${name}.json`);
+      // convert string to JSON object and edit lesson plan name
+      let lpObj = JSON.parse(lpStr);
+      lpObj.lessonPlanName = `${name} (${j})`;
+      // convert back to .json string
+      lpStr = JSON.stringify(lpObj);
+      // write to RNFS
+      await writeFile(false, `${destPath}/${name} (${j}).json`, lpStr);
+      // rename the lesson plan .json file inside the copied lesson plan directory
+      await deleteFile(`${destPath}/${name}.json`);
     } catch (e) {
       console.error('Error copyLessonPlan: ', e);
     }
@@ -255,9 +224,7 @@ const LessonPlanService = {
       var favouritedLessonPlans = await readDDirectory(
         MAINDIRECTORY + '/Favourited',
       );
-      var defaultLessonPlans = await readDDirectory(
-        MAINDIRECTORY + '/Default',
-      );
+      var defaultLessonPlans = await readDDirectory(MAINDIRECTORY + '/Default');
       var combined = [];
 
       if (option === 0 || option === 1) {
@@ -321,24 +288,14 @@ const LessonPlanService = {
    */
   favouriteLessonPlan: async function (name) {
     try {
-      var oldpath = MAINDIRECTORY + '/Default/' + name + '/';
-      var newpath = MAINDIRECTORY + '/Favourited/' + name + '/';
+      var oldpath = MAINDIRECTORY + '/Default/' + name;
+      var newpath = MAINDIRECTORY + '/Favourited/' + name;
 
       if (!(await checkFileExists(oldpath))) {
         throw new Error('File is not in Defaults');
       }
 
-      if (await checkFileExists(newpath)) {
-        await deleteFile(newpath);
-      }
-
-      await makeDirectory(newpath);
-
-      var files = await readDirectory(oldpath);
-
-      for (var i = 0; i < files.length; i++) {
-        await moveFile(oldpath + files[i], newpath + files[i]);
-      }
+      await copyDir(oldpath, newpath);
 
       await deleteFile(oldpath);
     } catch (e) {
@@ -352,24 +309,14 @@ const LessonPlanService = {
    */
   unfavouriteLessonPlan: async function (name) {
     try {
-      var newpath = MAINDIRECTORY + '/Default/' + name + '/';
-      var oldpath = MAINDIRECTORY + '/Favourited/' + name + '/';
+      var newpath = MAINDIRECTORY + '/Default/' + name;
+      var oldpath = MAINDIRECTORY + '/Favourited/' + name;
 
       if (!(await checkFileExists(oldpath))) {
         throw new Error('File is not in Favourited');
       }
 
-      if (await checkFileExists(newpath)) {
-        await deleteFile(newpath);
-      }
-      await makeDirectory(newpath);
-
-      var files = await readDirectory(oldpath);
-
-      for (var i = 0; i < files.length; i++) {
-        await moveFile(oldpath + files[i], newpath + files[i]);
-      }
-
+      await copyDir(oldpath, newpath);
       await deleteFile(oldpath);
     } catch (e) {
       console.error('Error unfavourite: ', e);
