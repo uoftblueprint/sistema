@@ -33,10 +33,12 @@ const deleteUnusedActivityCards = async (lp, leaveBySave) => {
         toDelete = acCurr.filter(card => !acInitial.includes(card));
     }
 
+    console.log('List of ACs to delete: ', toDelete);
+
     // Delete all unused cards
-    for (const cardId of toDelete) {
+    for (const jpgPath of toDelete) {
         try {
-            await ActivityCardService.deleteActivityCard(cardId, lp.initialLessonPlanName, lp.isInitiallyFavorited);
+            await ActivityCardService.deleteActivityCard(jpgPath, lp.initialLessonPlanName, lp.isInitiallyFavorited);
         } catch (e) {
             console.warn(e);
         }
