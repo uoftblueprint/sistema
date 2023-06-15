@@ -98,7 +98,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
                   type: module.type,
                   content: module.content ?? '',
                   name: module.name ?? '',
-                  path: '',
+                  title: module.title ?? '',
                   key: `module-${i}`,
                 };
               }

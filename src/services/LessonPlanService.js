@@ -118,7 +118,7 @@ const LessonPlanService = {
 
       // helper function to create Module objects for .map()
       function createModules(module) {
-        return new Module(module.type, module.content, module.name);
+        return new Module(module.type, module.content, module.name, module.title);
       }
 
       // create Module objects from JSON

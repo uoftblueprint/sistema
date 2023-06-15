@@ -13,7 +13,8 @@ import {
 } from 'react-native-draggable-flatlist';
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
 import SkeletonModule from './SkeletonModule';
-import ContentCard from './ContentCard';
+import TextCard from './TextCard';
+import LinkCard from './LinkCard';
 import ActivityCardService from '../../services/ActivityCardService';
 import AddLessonContentButton from './AddLessonContentButton';
 import { STACK_SCREENS } from '../constants';
@@ -55,6 +56,7 @@ const LessonSectionDraggable = ({
 
   // COMPONENT STATES
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
+  const [isLinkInputOpen, setisLinkInputOpen] = useState(false);
 
   // ADD LESSON CONTENT FUNCTIONS
   const addTextModule = () => {
@@ -103,7 +105,9 @@ const LessonSectionDraggable = ({
     }
   };
 
-  const addLinkModule = () => {};
+  const addLinkModule = () => {
+    setisLinkInputOpen(!isLinkInputOpen);
+  };
 
   const addContentActions = [
     {
@@ -161,11 +165,11 @@ const LessonSectionDraggable = ({
     }
   };
 
-  const editModule = (keyToEdit, newContent) => {
+  const editModule = (keyToEdit, newContent, newTitle = '') => {
     // Replace the content of the module with a matching key
     const newSectionData = sectionData.map(module => {
       return module.key == keyToEdit
-        ? { ...module, content: newContent }
+        ? { ...module, content: newContent, title: newTitle ?? '' }
         : module;
     });
     updateRedux(newSectionData);
@@ -222,8 +226,15 @@ const LessonSectionDraggable = ({
       <View style={styles.sectionContainer}>
         {/* New textbox with prompted to insert text */}
         {isTextinputOpen && (
-          <ContentCard
+          <TextCard
             setisTextinputOpen={setisTextinputOpen}
+            sectionType={sectionType}
+          />
+        )}
+
+        {isLinkInputOpen && (
+          <LinkCard
+            setisLinkInputOpen={setisLinkInputOpen}
             sectionType={sectionType}
           />
         )}

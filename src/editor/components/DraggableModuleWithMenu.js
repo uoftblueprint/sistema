@@ -10,11 +10,15 @@ import {
   TextInput,
   SafeAreaView,
   Image,
+  Text,
 } from 'react-native';
 import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
 
+import LinkIcon from '../../../assets/linkIcon.svg';
+
 import { scale, verticalScale } from 'react-native-size-matters';
+import { Link } from '@react-navigation/native';
 
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
 
@@ -27,9 +31,10 @@ export default class DraggableModuleWithMenu extends React.Component {
     super(props);
     this.menuRef; // Assigned upon render
     this.textInputRef; // Assigned upon render
+    this.linkInputRef; // Assigned upon render
 
     // If the module is a text module, add the edit option to the menu
-    if (this.props.data.type == ModuleType.text) {
+    if (this.props.data.type == ModuleType.text || this.props.data.type == ModuleType.link) {
       this.options =
         Platform.OS === 'ios' ? [...this.textMenu, 'Cancel'] : this.textMenu;
       this.actions = [this.toggleEdit, this.deleteModule]; // matches order of this.options
@@ -47,10 +52,16 @@ export default class DraggableModuleWithMenu extends React.Component {
 
     this.state = {
       isEditable: false,
+
+      // Image dynamic resizing-related variables
       boxWidth: 1,
       boxHeight: 1,
       fullWidth: 1,
       dimensionsFound: false,
+
+      // Link editing-related variables
+      linkContent: this.props.data.content,
+      linkTitle: this.props.data.title,
     };
   }
 
@@ -104,7 +115,8 @@ export default class DraggableModuleWithMenu extends React.Component {
     this.props.handleMove(this.props.data.key, false); // swapUp=false
   };
 
-  /** Based on what menu option the user clicks, execute the function corresponding with the same index in this.actions. */
+  /** Based on what menu option the user clicks, execute the function corresponding 
+   * with the same index in this.actions. */
   handleClick = index => {
     for (var i = 0; i < this.options.length; i++) {
       if (index === i) {
@@ -145,6 +157,98 @@ export default class DraggableModuleWithMenu extends React.Component {
     }
   };
 
+  renderModule = (moduleType) => {
+    if (moduleType == ModuleType.text) {
+      return (
+        <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
+          <TextInput
+            ref={input => {
+              this.textInputRef = input;
+            }}
+            editable={this.state.isEditable}
+            style={[TextStyle.body, { marginBottom: Platform.OS === "ios" ? 5 : 0 }]}
+            multiline
+            defaultValue={this.props.data.content}
+            onEndEditing={e => {
+              const currText = e.nativeEvent.text;
+              this.props.handleEdit(this.props.data.key, currText);
+              this.setState({ isEditable: false });
+            }}
+          />
+        </View>
+      )
+    } else if (moduleType == ModuleType.link) {
+      if (this.state.isEditable) {
+        return (
+          <View 
+            pointerEvents={!this.state.isEditable ? 'none' : undefined}
+            style={styles.LinkBodyStyle}>
+            <TextInput
+              ref={input => {
+                this.textInputRef = input;
+              }}
+              editable={this.state.isEditable}
+              style={[TextStyle.body, { paddingVertical: 10 }]}
+              multiline
+              defaultValue={this.state.linkTitle ?? ''}
+              onEndEditing={e => {
+                const currText = e.nativeEvent.text;
+                console.log("i'm done!");
+                this.setState({ linkTitle: currText });
+                // Move focus to the link area
+                this.linkInputRef.focus();
+              }}
+            />
+            <View style={styles.LinkViewStyle}>
+              <LinkIcon height={'20'} width={'20'} marginRight={scale(5)} />
+              <TextInput 
+                style={[TextStyle.body, { color:'#0078E8' }]} 
+                ref={input => {
+                  this.linkInputRef = input;
+                }}
+                defaultValue={this.state.linkContent}
+                onEndEditing={e => {
+                  // No whitespaces in links!
+                  currText = e.nativeEvent.text;
+                  this.setState({ linkContent: currText });
+                  if (this.state.linkContent !== '') {
+                    this.props.handleEdit(this.props.data.key, currText, this.state.linkTitle);
+                    this.setState({ isEditable: false });
+                  }
+                }}
+              />
+            </View>
+          </View>
+        )
+      } else {
+        return (
+          <View style={styles.LinkPreviewStyle}>
+            <LinkIcon height={'20'} width={'20'} marginRight={scale(5)} />
+            <Text style={{color: '#0078E8'}}>{this.state.linkTitle ?? this.state.linkContent}</Text>
+          </View>
+        )
+      }
+    } else {
+      return (
+        <SafeAreaView
+          style={styles.box}
+          onLayout={({ nativeEvent }) => {
+            const { x, y, width, height } = nativeEvent.layout;
+            this.setState({ fullWidth: width });
+          }}>
+          <Image
+            source={{ uri: `file://${this.props.data.path}` }}
+            style={[
+              styles.cardImage,
+              { width: '100%', height: this.state.boxHeight },
+            ]}
+            resizeMode="contain"
+          />
+        </SafeAreaView>
+      )
+    }
+  }
+
   render() {
     return (
       <View>
@@ -155,40 +259,7 @@ export default class DraggableModuleWithMenu extends React.Component {
           onLongPress={this.props.drag}
           disabled={this.props.dragIsActive || this.props.isMenuDisabled} // disable interactions while being dragged or when saving
           style={styles.module}>
-          {this.props.data.type == ModuleType.text ? (
-            <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
-              <TextInput
-                ref={input => {
-                  this.textInputRef = input;
-                }}
-                editable={this.state.isEditable}
-                style={TextStyle.body}
-                multiline
-                defaultValue={this.props.data.content}
-                onEndEditing={e => {
-                  const currText = e.nativeEvent.text;
-                  this.props.handleEdit(this.props.data.key, currText);
-                  this.setState({ isEditable: false });
-                }}
-              />
-            </View>
-          ) : (
-            <SafeAreaView
-              style={styles.box}
-              onLayout={({ nativeEvent }) => {
-                const { x, y, width, height } = nativeEvent.layout;
-                this.setState({ fullWidth: width });
-              }}>
-              <Image
-                source={{ uri: `file://${this.props.data.path}` }}
-                style={[
-                  styles.cardImage,
-                  { width: '100%', height: this.state.boxHeight },
-                ]}
-                resizeMode="contain"
-              />
-            </SafeAreaView>
-          )}
+          {this.renderModule(this.props.data.type)}
         </TouchableOpacity>
       </View>
     );
@@ -215,8 +286,8 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         paddingTop: 10,
-        paddingBottom: 15,
-        paddingHorizontal: 15,
+        paddingBottom: 10,
+        paddingHorizontal: 10,
       },
       android: {
         paddingVertical: 0,
@@ -242,6 +313,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     resizeMode: 'contain',
+  },
+  LinkBodyStyle: {
+    marginBottom: Platform.OS === 'ios' ? 0 : 10,
+  },
+  LinkViewStyle: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: scale(10),
+    paddingVertical: Platform.OS === 'android' ? 0 : 15,
+    borderWidth: 0.77,
+    borderColor: '#000',
+    borderRadius: 8,
+    shadowColor: '#453E3D',
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  LinkPreviewStyle: {
+    flexDirection: 'row',
+    marginVertical: Platform.OS === 'ios' ? 0 : 15,
+    paddingHorizontal: Platform.OS === 'ios' ? 0 : 5,
+    alignItems: 'center',
+    height: 'auto',
   },
   box: {
     backgroundColor: '#FDFBF7',

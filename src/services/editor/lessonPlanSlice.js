@@ -10,6 +10,9 @@ export const lessonPlanSlice = createSlice({
    * @property {ModuleType} type
    * @property {string} content
    * @property {string} key Unique in that section. For example, 'module-0'.
+   * 
+   * Only the "link" type module has an extra param:
+   * @property {string} title
    */
   initialState: {
     lessonPlanName: '',
@@ -71,7 +74,7 @@ export const lessonPlanSlice = createSlice({
     addToSection: (state, action) => {
       // action.payload: {
       //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
-      //     type: ModuleType.text || ModuleType.activityCard
+      //     type: ModuleType.text || ModuleType.activityCard || ModuleType.link || ModuleType.image
       //     content: "",
       // }
       const listOfKeys = state[action.payload.section].map(({ key }) => key); // Get a list of all keys in the section
@@ -86,6 +89,7 @@ export const lessonPlanSlice = createSlice({
             name: action.payload.name ?? '',
             id: action.payload.id ?? '',
             path: action.payload.path ?? '',
+            title: action.payload.title ?? '',
             key: nextKey,
           },
         ],
