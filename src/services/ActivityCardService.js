@@ -200,7 +200,7 @@ const ActivityCardService = {
         await deleteFile(filePath);
         console.log(`deleteActivityCard: Deleted ${dirID} successfully.`);
       } else {
-        console.error(`deleteActivityCard error: AC directory ${dirID} does not exist.`);
+        console.error(`deleteActivityCard error: ${filePath} does not exist.`);
       }
     } catch (e) {
       reject('Error in deleting activity card: ' + e);
