@@ -54,6 +54,8 @@ const LessonSectionDraggable = ({
     );
   };
 
+  console.log(sectionData);
+
   // COMPONENT STATES
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
   const [isLinkInputOpen, setisLinkInputOpen] = useState(false);

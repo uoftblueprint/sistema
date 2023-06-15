@@ -71,6 +71,7 @@ const LinkCard = ({ setisLinkInputOpen, sectionType }) => {
                     placeholder={'Paste Link Here'}
                     onEndEditing={e => {
                         inputtedLink = e.nativeEvent.text.trim();
+                        
                         if (inputtedLink) {
                             // No whitespaces in links!
                             setlinkContent(inputtedLink);
@@ -80,7 +81,7 @@ const LinkCard = ({ setisLinkInputOpen, sectionType }) => {
                                 addToSection({
                                 type: ModuleType.link,
                                 section: sectionType,
-                                content: linkContent,
+                                content: inputtedLink,
                                 title: linkTitle ?? '',
                                 }),
                             );

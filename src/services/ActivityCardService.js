@@ -41,7 +41,7 @@ const ActivityCardService = {
       };
 
       // Retrieve all Drive files meeting the params
-      const response = await axios.get(downloadUrl, { params }).catch(error => {
+      const response = await axios.list(downloadUrl, { params }).catch(error => {
         console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
       });
 

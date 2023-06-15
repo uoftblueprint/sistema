@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   Image,
   Text,
+  Linking,
 } from 'react-native';
 import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
@@ -25,6 +26,7 @@ import { Link } from '@react-navigation/native';
 export default class DraggableModuleWithMenu extends React.Component {
   // Menu that appears when you tap the module
   textMenu = ['Edit', 'Delete'];
+  linkMenu = ['Open link', 'Edit', 'Delete'];
   activityCardMenu = ['Move up', 'Move down', 'Delete'];
 
   constructor(props) {
@@ -34,10 +36,14 @@ export default class DraggableModuleWithMenu extends React.Component {
     this.linkInputRef; // Assigned upon render
 
     // If the module is a text module, add the edit option to the menu
-    if (this.props.data.type == ModuleType.text || this.props.data.type == ModuleType.link) {
+    if (this.props.data.type == ModuleType.text) {
       this.options =
         Platform.OS === 'ios' ? [...this.textMenu, 'Cancel'] : this.textMenu;
       this.actions = [this.toggleEdit, this.deleteModule]; // matches order of this.options
+    } else if (this.props.data.type == ModuleType.link) {
+      this.options =
+        Platform.OS === 'ios' ? [...this.linkMenu, 'Cancel'] : this.linkMenu;
+      this.actions = [this.openLink, this.toggleEdit, this.deleteModule]; // matches order of this.options
     } else {
       this.options =
         Platform.OS === 'ios'
@@ -79,7 +85,7 @@ export default class DraggableModuleWithMenu extends React.Component {
 
   componentDidUpdate(prevState) {
     // Get full width of image component once it's mounted and resize height accordingly
-    if (this.state.fullWidth != prevState.fullWidth) {
+    if (this.state.fullWidth != prevState.fullWidth && this.props.data.type == ModuleType.image) {
       if (
         this.state.fullWidth > 1 &&
         this.state.boxHeight > 1 &&
@@ -148,7 +154,8 @@ export default class DraggableModuleWithMenu extends React.Component {
         this.options,
         () =>
           console.warn(
-            `Something went wrong with the Android popup menu inside DraggableModuleWithMenu ${this.props.data.key}.`,
+            `Something went wrong with the Android popup menu inside 
+              DraggableModuleWithMenu ${this.props.data.key}.`,
           ),
         (_, i) => {
           this.handleClick(i);
@@ -157,6 +164,19 @@ export default class DraggableModuleWithMenu extends React.Component {
     }
   };
 
+  /** Handles link navigation */
+  openLink = () => {
+    cleanLink = this.state.linkContent;
+    if (cleanLink.search(/^http[s]?\:\/\//) == -1) {
+      cleanLink = 'http://' + cleanLink;
+    }
+    Linking.openURL(cleanLink)
+      .catch((err) => {
+        console.error("Couldn't load page", err);
+      })
+  }
+
+  /** Renders module depending on type */
   renderModule = (moduleType) => {
     if (moduleType == ModuleType.text) {
       return (
@@ -179,6 +199,7 @@ export default class DraggableModuleWithMenu extends React.Component {
       )
     } else if (moduleType == ModuleType.link) {
       if (this.state.isEditable) {
+        // Toggle editing version of the link module type
         return (
           <View 
             pointerEvents={!this.state.isEditable ? 'none' : undefined}
@@ -190,10 +211,9 @@ export default class DraggableModuleWithMenu extends React.Component {
               editable={this.state.isEditable}
               style={[TextStyle.body, { paddingVertical: 10 }]}
               multiline
-              defaultValue={this.state.linkTitle ?? ''}
+              defaultValue={this.state.linkTitle ?? ""}
               onEndEditing={e => {
                 const currText = e.nativeEvent.text;
-                console.log("i'm done!");
                 this.setState({ linkTitle: currText });
                 // Move focus to the link area
                 this.linkInputRef.focus();
@@ -202,7 +222,7 @@ export default class DraggableModuleWithMenu extends React.Component {
             <View style={styles.LinkViewStyle}>
               <LinkIcon height={'20'} width={'20'} marginRight={scale(5)} />
               <TextInput 
-                style={[TextStyle.body, { color:'#0078E8' }]} 
+                style={[TextStyle.body, styles.LinkInputStyle]} 
                 ref={input => {
                   this.linkInputRef = input;
                 }}
@@ -221,14 +241,21 @@ export default class DraggableModuleWithMenu extends React.Component {
           </View>
         )
       } else {
+        // Toggle preview version of the link module type
         return (
           <View style={styles.LinkPreviewStyle}>
             <LinkIcon height={'20'} width={'20'} marginRight={scale(5)} />
-            <Text style={{color: '#0078E8'}}>{this.state.linkTitle ?? this.state.linkContent}</Text>
+            <Text style={styles.LinkTextStyle}>
+              {this.state.linkTitle !== "" 
+                ? this.state.linkTitle 
+                : this.state.linkContent
+              }
+            </Text>
           </View>
         )
       }
     } else {
+      // Images and activity cards are displayed like this
       return (
         <SafeAreaView
           style={styles.box}
@@ -257,7 +284,8 @@ export default class DraggableModuleWithMenu extends React.Component {
           onPress={this.handlePress}
           delayLongPress={this.props.longPressTriggerMs} // ms to trigger a LongPress
           onLongPress={this.props.drag}
-          disabled={this.props.dragIsActive || this.props.isMenuDisabled} // disable interactions while being dragged or when saving
+          // disable interactions while being dragged or when saving
+          disabled={this.props.dragIsActive || this.props.isMenuDisabled}
           style={styles.module}>
           {this.renderModule(this.props.data.type)}
         </TouchableOpacity>
@@ -335,12 +363,21 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
+  LinkInputStyle: {
+    color:'#0078E8',
+    flex: 1,
+  },
   LinkPreviewStyle: {
     flexDirection: 'row',
     marginVertical: Platform.OS === 'ios' ? 0 : 15,
-    paddingHorizontal: Platform.OS === 'ios' ? 0 : 5,
     alignItems: 'center',
     height: 'auto',
+    justifyContent: 'flex-start',
+  },
+  LinkTextStyle: {
+    color: '#0078E8', 
+    flex: 1,
+    flexWrap: 'wrap',
   },
   box: {
     backgroundColor: '#FDFBF7',
