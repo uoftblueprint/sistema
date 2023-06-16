@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   replaceSection,
@@ -7,6 +7,7 @@ import {
   getInitialLessonPlanName,
   getCurrActivityCards,
   setCurrActivityCards,
+  addToSection,
 } from '../../services/editor/lessonPlanSlice';
 import {
   NestableDraggableFlatList,
@@ -14,11 +15,20 @@ import {
 } from 'react-native-draggable-flatlist';
 import DraggableModuleWithMenu from '../components/DraggableModuleWithMenu';
 import SkeletonModule from './SkeletonModule';
-import ContentCard from './ContentCard';
+import TextCard from './TextCard';
+import LinkCard from './LinkCard';
 import ActivityCardService from '../../services/ActivityCardService';
 import AddLessonContentButton from './AddLessonContentButton';
-import { STACK_SCREENS, ModuleType } from '../constants';
+import { STACK_SCREENS } from '../constants';
+import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
+import { launchImageLibrary } from 'react-native-image-picker';
+
+// ICONS
+import TextIcon from '../../../assets/textIcon.svg';
+import SearchIcon from '../../../assets/Search.svg';
+import ImageIcon from '../../../assets/imageIcon.svg';
+import LinkIcon from '../../../assets/linkIcon.svg';
 
 const LessonSectionDraggable = ({
   sectionType,
@@ -26,11 +36,14 @@ const LessonSectionDraggable = ({
   isFetching,
   disableInteractions,
 }) => {
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
   // REDUX STATES
   const sectionData = useSelector(state =>
     getLessonSection(state.lessonPlan, sectionType),
   );
-  const lessonPlanName = useSelector(state => 
+  const lessonPlanName = useSelector(state =>
     getInitialLessonPlanName(state.lessonPlan),
   );
   const currActivityCards = useSelector(state =>
@@ -46,8 +59,11 @@ const LessonSectionDraggable = ({
     );
   };
 
+  console.log(sectionData);
+
   // COMPONENT STATES
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
+  const [isLinkInputOpen, setisLinkInputOpen] = useState(false);
 
   // ADD LESSON CONTENT FUNCTIONS
   const addTextModule = () => {
@@ -61,8 +77,70 @@ const LessonSectionDraggable = ({
     });
   };
 
+  const addImageModule = async () => {
+    // You can also use as a promise without 'callback':
+    // TODO: dispatch to redux as well as ModuleType.image
+    const options = {
+      mediaType: 'photo',
+      maxWidth: windowWidth,
+      maxHeight: windowHeight,
+      includeBase64: true,
+    };
+
+    const result = await launchImageLibrary(options);
+    // Handle response object
+    if (result.didCancel) {
+      console.log('User cancelled the image picker.');
+    } else if (result.error) {
+      console.error(result.errorMessage);
+    } else {
+      const paths = await ActivityCardService.addImageToStorage(
+        result.assets[0].base64,
+        result.assets[0].fileName,
+        lessonPlanName,
+      );
+
+      await dispatch(
+        addToSection({
+          type: ModuleType.image,
+          name: paths.relPath,
+          section: sectionType,
+          content: paths.relPath,
+          path: paths.fullPath,
+        }),
+      );
+    }
+  };
+
+  const addLinkModule = () => {
+    setisLinkInputOpen(!isLinkInputOpen);
+  };
+
+  const addContentActions = [
+    {
+      placeholder: 'Insert text',
+      Icon: TextIcon,
+      action: addTextModule,
+    },
+    {
+      placeholder: 'Add activity cards',
+      Icon: SearchIcon,
+      action: addActivityCard,
+    },
+    {
+      placeholder: 'Upload an image',
+      Icon: ImageIcon,
+      action: addImageModule,
+    },
+    {
+      placeholder: 'Insert link',
+      Icon: LinkIcon,
+      action: addLinkModule,
+    },
+  ];
+
   // MODULE MENU FUNCTIONS
-  const deleteModule = (keyToDelete) => {
+  const deleteModule = keyToDelete => {
     // Remove the module with matching key
     const newSectionData = sectionData.filter(
       module => module.key != keyToDelete,
@@ -75,6 +153,7 @@ const LessonSectionDraggable = ({
     const acToDelete = sectionData.find(
       module => module.key === keyToDelete && module.type === 'activity',
     );
+    
     if (acToDelete) {
       // Get rid of activity card with first matching id
       let acArray = [...currActivityCards];
@@ -86,11 +165,11 @@ const LessonSectionDraggable = ({
     } 
   };
 
-  const editModule = (keyToEdit, newContent) => {
+  const editModule = (keyToEdit, newContent, newTitle = '') => {
     // Replace the content of the module with a matching key
     const newSectionData = sectionData.map(module => {
       return module.key == keyToEdit
-        ? { ...module, content: newContent }
+        ? { ...module, content: newContent, title: newTitle ?? '' }
         : module;
     });
     updateRedux(newSectionData);
@@ -147,20 +226,21 @@ const LessonSectionDraggable = ({
       <View style={styles.sectionContainer}>
         {/* New textbox with prompted to insert text */}
         {isTextinputOpen && (
-          <ContentCard
+          <TextCard
             setisTextinputOpen={setisTextinputOpen}
             sectionType={sectionType}
           />
         )}
 
+        {isLinkInputOpen && (
+          <LinkCard
+            setisLinkInputOpen={setisLinkInputOpen}
+            sectionType={sectionType}
+          />
+        )}
+
         <AddLessonContentButton
-          placeholder={'Input text'}
-          handleClick={addTextModule}
-          isDisabled={disableInteractions}
-        />
-        <AddLessonContentButton
-          placeholder={'Add activity cards'}
-          handleClick={addActivityCard}
+          handleClickActions={addContentActions}
           isDisabled={disableInteractions}
         />
 

@@ -12,12 +12,12 @@ import { addToSection } from '../../services/editor/lessonPlanSlice';
 import { TextStyle } from '../../Styles.config';
 import { ModuleType } from '../../services/constants';
 
-const ContentCard = ({ setisTextinputOpen, sectionType }) => {
+const TextCard = ({ setisTextinputOpen, sectionType }) => {
   const refInput = useRef();
   const dispatch = useDispatch();
 
   return (
-    <SafeAreaView style={styles.ContentCardStyle}>
+    <SafeAreaView style={styles.TextCardStyle}>
       {/* Touching the touchable opacity should focus the text input */}
       <TouchableOpacity
         onPress={() => refInput.current.focus()}
@@ -49,7 +49,7 @@ const ContentCard = ({ setisTextinputOpen, sectionType }) => {
 };
 
 const styles = StyleSheet.create({
-  ContentCardStyle: {
+  TextCardStyle: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContentCard;
+export default TextCard;

@@ -10,6 +10,8 @@ export const SectionName = {
 export const ModuleType = {
   text: 'text',
   activityCard: 'activityCard',
+  link: 'link',
+  image: 'image',
 };
 
 // LessonPlanService.js

@@ -58,7 +58,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     dispatch(reset());
     navigation.setParams({ lessonPlanName: '', isFavorited: false, lastEdited: '' });
     toggleUnsavedChanges(false);
-    navigation.navigate(LIBRARY_STACK.NAVIGATOR, {screen: LIBRARY_STACK.LIBRARY}); // Go to the library
+    navigation.navigate(LIBRARY_STACK.NAVIGATOR, {
+      screen: LIBRARY_STACK.LIBRARY,
+    }); // Go to the library
   };
 
   // Show the error overlay if an error occurred
@@ -82,7 +84,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         console.log(
           `LessonPlanEditorV2: Fetching data for ${lessonPlanName}...`,
         );
-        let favourited = await LessonPlanService.isLessonPlanFavourited(lessonPlanName);
+        let favourited = await LessonPlanService.isLessonPlanFavourited(
+          lessonPlanName,
+        );
         await LessonPlanService.getLessonPlan(lessonPlanName)
           .then(lpObj => {
             /**
@@ -92,7 +96,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             const preprocessModule = (module, i, activityCardArr) => {
               // Handle activity card
               let imagePath;
-              if (module.type === ModuleType.activityCard) {
+              if (module.type === ModuleType.activityCard || module.type === ModuleType.image) {
                 imagePath = MAINDIRECTORY + (favourited ? '/Favourited/' : '/Default/') + lessonPlanName + module.content;
                 // Add to initial activity cards
                 activityCardArr.push(module.content);
@@ -103,6 +107,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
                 content: module.content ?? '',
                 name: module.name ?? '',
                 path: imagePath ?? '',
+                title: module.title ?? '',
                 key: `module-${i}`,
               };
             };

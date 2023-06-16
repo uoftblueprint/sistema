@@ -5,8 +5,8 @@ const TagFilter = function (props) {
     <TouchableOpacity
       style={[
         styles.tagContainer,
-        { 
-          backgroundColor: props.active ? '#68577766' : 'transparent', 
+        {
+          backgroundColor: props.active ? '#68577766' : 'transparent',
           marginLeft: props.isFirst ? 0 : 5,
           marginRight: props.isLast ? 0 : 5,
         },
