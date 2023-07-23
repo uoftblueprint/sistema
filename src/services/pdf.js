@@ -1,4 +1,5 @@
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import { ModuleType } from './constants';
 
 /**
  * creates a pdf for a given lesson plan
@@ -44,8 +45,18 @@ const moduleInformation = (module, moduleName) => {
     ret.push(header(moduleName, 2));
   }
   module.forEach(element => {
-    if (element.type === 'text') {
+    if (element.type === ModuleType.text) {
       ret.push(paragraph(element.content));
+    } else if (element.type === ModuleType.link) {
+      // Clean the link first
+      cleanLink = element.content;
+      if (cleanLink.search(/^http[s]?\:\/\//) == -1) {
+        cleanLink = 'http://' + cleanLink;
+      }
+      
+      ret.push(
+        `<p>Link: ${element.title} <a href="${cleanLink}">${cleanLink}</a></p>`,
+      );
     } else {
       ret.push(
         `<img src="file://${element.content}" style="height:600;float:center;border:0px"/><br>`,
