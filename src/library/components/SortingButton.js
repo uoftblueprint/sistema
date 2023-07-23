@@ -13,7 +13,7 @@ const SortingButton = ({ text, onPress }) => {
       <TouchableOpacity
         style={[TextStyle.label, styles.buttonContainer]}
         onPress={onPress}>
-        <Text style={styles.textContainer}>{text}</Text>
+        <Text style={[TextStyle.body, styles.textContainer]}>{text}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
