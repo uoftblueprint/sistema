@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     margin: 14,
   },
   titleContainer: {
-    width: '60%',
+    flex: 1, 
     padding: 14,
   },
   heart: {
