@@ -2,7 +2,6 @@ import {
   StyleSheet,
   SafeAreaView,
   Text,
-  View,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
@@ -28,10 +27,10 @@ import { scale, verticalScale } from 'react-native-size-matters';
 const Home = ({ navigation }) => {
   const [date, setDate] = useState('');
   const [pathArr, setPathArr] = useState([]);
-  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleRefreshPress = async () => {
-    setVisible(true);
+    setLoading(true);
     const datePath = MAINDIRECTORY + '/RefreshedDate';
     const filePath = `${datePath}/date.txt`;
     const cards = await ActivityCardService.getFeaturedActivityCards();
@@ -45,7 +44,7 @@ const Home = ({ navigation }) => {
       await makeDirectory(datePath);
       await writeFile(false, filePath, today);
     }
-    setVisible(false);
+    setLoading(false);
   };
 
   //load the save data when Home.js mounts
@@ -89,17 +88,26 @@ const Home = ({ navigation }) => {
       <SafeAreaView style={styles.headContainer}>
         <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
         <SafeAreaView style={styles.subContainer}>
-          <Text style={[styles.subtitle, TextStyle.h3]}>
-            Last updated on {date}
-          </Text>
+          {pathArr.length == 0 ? (
+            <Text style={[styles.subtitle, TextStyle.h3]}>
+              Check for cards from the past week
+            </Text>
+          ) : (
+            <Text style={[styles.subtitle, TextStyle.h3]}>
+              Last updated on {date}
+            </Text>
+          )}
           <TouchableOpacity onPress={() => handleRefreshPress()}>
             <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
           </TouchableOpacity>
         </SafeAreaView>
       </SafeAreaView>
 
-      {!visible ? (
+      {!loading ? (
         <SafeAreaView style={styles.flatListContainer}>
+          {pathArr.length == 0 && (
+            <Text style={[TextStyle.h3, { marginTop: 15 }]}>Nothing here!</Text>
+          )}
           <FlatList
             data={pathArr}
             renderItem={({ item }) => (
@@ -113,7 +121,6 @@ const Home = ({ navigation }) => {
               </TouchableOpacity>
             )}
             keyExtractor={(_, index) => index.toString()}
-            style={styles.flatListStyle}
           />
         </SafeAreaView>
       ) : (
@@ -143,8 +150,7 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     flex: 1,
-  },
-  flatListStyle: {
+    flexDirection: 'column',
     paddingHorizontal: scale(30),
   },
   container: {

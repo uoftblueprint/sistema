@@ -111,9 +111,9 @@ export async function checkFileExists(path) {
   return RNFS.exists(path)
     .then(result => {
       if (result) {
-        console.log('FILE EXISTS');
+        console.log(`FILE EXISTS ${path}`);
       } else {
-        console.log('FILE DOES NOT EXIST');
+        console.log(`FILE DOES NOT EXIST ${path}`);
       }
       return result;
     })

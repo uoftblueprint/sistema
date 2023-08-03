@@ -21,8 +21,8 @@ const LinkCard = ({ setisLinkInputOpen, sectionType }) => {
   const linkInput = useRef();
   const dispatch = useDispatch();
 
-  [linkTitle, setlinkTitle] = useState('');
-  [linkContent, setlinkContent] = useState('');
+  const [linkTitle, setlinkTitle] = useState('');
+  const [linkContent, setlinkContent] = useState('');
 
   return (
     <SafeAreaView style={styles.LinkCardStyle}>
@@ -60,36 +60,39 @@ const LinkCard = ({ setisLinkInputOpen, sectionType }) => {
       </TouchableOpacity>
       <View style={styles.LinkBodyStyle}>
         <TouchableOpacity
-            onPress={() => linkInput.current.focus()}
-            style={[styles.TouchableStyle, { paddingHorizontal: 0 }]}
-            >
-            <View style={styles.LinkViewStyle}>
-                <LinkIcon height={'20'} width={'20'} marginRight={scale(5)} />
-                <TextInput 
-                    style={[TextStyle.body, styles.LinkInputStyle, { color:'#0078E8' }]} 
-                    ref={linkInput}
-                    placeholder={'Paste Link Here'}
-                    onEndEditing={e => {
-                        inputtedLink = e.nativeEvent.text.trim();
-                        
-                        if (inputtedLink) {
-                            // No whitespaces in links!
-                            setlinkContent(inputtedLink);
+          onPress={() => linkInput.current.focus()}
+          style={[styles.TouchableStyle, { paddingHorizontal: 0 }]}>
+          <View style={styles.LinkViewStyle}>
+            <LinkIcon height={'20'} width={'20'} marginRight={scale(5)} />
+            <TextInput
+              style={[
+                TextStyle.body,
+                styles.LinkInputStyle,
+                { color: '#0078E8' },
+              ]}
+              ref={linkInput}
+              placeholder={'Paste Link Here'}
+              onEndEditing={e => {
+                let inputtedLink = e.nativeEvent.text.trim();
 
-                            // If text is not empty
-                            dispatch(
-                                addToSection({
-                                type: ModuleType.link,
-                                section: sectionType,
-                                content: inputtedLink,
-                                title: linkTitle ?? '',
-                                }),
-                            );
-                        }
-                        setisLinkInputOpen(false);
-                    }}
-                />
-            </View>
+                if (inputtedLink) {
+                  // No whitespaces in links!
+                  setlinkContent(inputtedLink);
+
+                  // If text is not empty
+                  dispatch(
+                    addToSection({
+                      type: ModuleType.link,
+                      section: sectionType,
+                      content: inputtedLink,
+                      title: linkTitle ?? '',
+                    }),
+                  );
+                }
+                setisLinkInputOpen(false);
+              }}
+            />
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -119,7 +122,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
     paddingHorizontal: scale(10),
     marginBottom: Platform.OS === 'ios' ? 0 : 10,
   },
