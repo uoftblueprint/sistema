@@ -62,7 +62,7 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
         <SafeAreaView style={styles.buttonStyle}>
           <AddIcon height={'30'} width={'30'} />
           <View style={styles.input}>
-            <Text style={TextStyle.label}>Add Content</Text>
+            <Text style={TextStyle.label}>Add content</Text>
           </View>
         </SafeAreaView>
       </TouchableOpacity>

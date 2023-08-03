@@ -8,8 +8,8 @@ const Loading = () => {
       <SafeAreaView style={styles.imageContainer}>
         <SistemaLogo />
       </SafeAreaView>
-      <Text style={styles.appname}>App Name</Text>
-      <Text style={styles.visionStatement}>Vision Statement</Text>
+      <Text style={styles.appname}>Sistema Toronto LEARN</Text>
+      <Text style={styles.visionStatement}>Easily and quickly make lesson plans on the go.</Text>
     </SafeAreaView>
   );
 };
@@ -44,4 +44,5 @@ const styles = StyleSheet.create({
     lineHeight: 34,
   },
 });
+
 export default Loading;

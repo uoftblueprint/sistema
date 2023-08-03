@@ -1,5 +1,5 @@
 import './src/services/ignoreWarnings'; // Keep at top
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import {
@@ -7,10 +7,12 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   useSafeAreaInsets,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
+
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import LibraryNavigator from './src/library/LibraryNavigator';
@@ -18,6 +20,8 @@ import SettingsNavigator from './src/settings/SettingsNavigator';
 import { STACK_SCREENS as SETTINGS_STACK } from './src/settings/constants';
 import { STACK_SCREENS as LIBRARY_STACK } from './src/library/constants';
 import { STACK_SCREENS as EDITOR_STACK } from './src/editor/constants';
+import Loading from './src/home/Loading';
+import Tutorial from './src/home/Tutorial';
 
 import { Provider } from 'react-redux';
 import configureStore from './src/services/configureStore';
@@ -28,6 +32,7 @@ import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ActivityCardService from './src/services/ActivityCardService';
+import LessonPlanService from './src/services/LessonPlanService';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,7 +45,9 @@ const queryClient = new QueryClient({
 });
 
 const STACK_SCREENS = {
+  TABS: 'TabsNavigator',
   HOME: 'HomeNavigator',
+  TUTORIAL: 'Tutorial',
   EDITOR: EDITOR_STACK.NAVIGATOR,
   LIBRARY: LIBRARY_STACK.NAVIGATOR,
   SETTINGS: SETTINGS_STACK.NAVIGATOR
@@ -72,13 +79,11 @@ const tabIcon = (iconSVG, isFocused) => {
 
 const Tab = createBottomTabNavigator();
 
-const MainNavigator = () => {
-  const navigationRef = useNavigationContainerRef();
+const TabsNavigator = () => {
   const insets = useSafeAreaInsets();
 
-  return (
-    <NavigationContainer ref={navigationRef} independent={true}>
-      <Tab.Navigator
+  return  (
+    <Tab.Navigator
         initialRouteName={STACK_SCREENS.HOME}
         screenOptions={{
           tabBarActiveBackgroundColor: '#B8CFE4',
@@ -125,6 +130,37 @@ const MainNavigator = () => {
           }}
         />
       </Tab.Navigator>
+  )
+}
+
+const Stack = createStackNavigator();
+
+const MainNavigator = (shouldDisplayTutorial) => {
+  const navigationRef = useNavigationContainerRef();
+
+  console.log("shoulddisplaytutorial?", shouldDisplayTutorial);
+
+  return (
+    <NavigationContainer ref={navigationRef} independent={true}>
+      <Stack.Navigator>
+        {/* {
+          shouldDisplayTutorial && <Stack.Screen
+            name={STACK_SCREENS.TUTORIAL}
+            component={Tutorial}
+            options={{ headerShown: false }}
+          />
+        } */}
+        {/* <Stack.Screen
+            name={STACK_SCREENS.TUTORIAL}
+            component={Tutorial}
+            options={{ headerShown: false }}
+          /> */}
+        <Stack.Screen 
+          name={STACK_SCREENS.TABS} 
+          component={TabsNavigator} 
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
@@ -146,11 +182,32 @@ const App = () => {
     queryKey: ['activityCards'],
     queryFn: ActivityCardService.getAllActivityCards,
   });
+
+  // State variables for displaying onboarding screens
+  const [shouldDisplayTutorial, setShouldDisplayTutorial] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  const displayTutorial = async () => {
+    LessonPlanService.isUserOnboarded().then((res) => {
+      console.log("Has the user been onboarded?", res);
+      setShouldDisplayTutorial(!res);
+    }).finally(() => {
+      setLoading(false);
+    });
+  }
+
+  useEffect(() => {
+    displayTutorial();
+  }, []);
+
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
         <Provider store={configureStore}>
-          <MainNavigator />
+          {loading 
+            ? <Loading /> 
+            : <MainNavigator shouldDisplayTutorial={shouldDisplayTutorial} />
+          }
         </Provider>
       </QueryClientProvider>
     </SafeAreaProvider>

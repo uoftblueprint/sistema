@@ -11,11 +11,31 @@ import {
 } from './routes/Local';
 import { MAINDIRECTORY, SectionName } from './constants';
 import { Module } from './models';
+import { write } from 'react-native-fs';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
   // Don't call RNFS directly here!
   // Instead, call a function from Local.js :~]
+  /**
+   * Create a file userOnboarded.txt for which the existence indicates
+   * that the user has already been onboarded onto the app.
+   * @param {String} name Name of the lesson plan to delete
+   */
+  isUserOnboarded: async function () {
+    try {
+      const userOnboarded = await checkFileExists(`${MAINDIRECTORY}/userOnboarded.txt`);
+      
+      if (userOnboarded) {
+        return true;
+      } else {
+        await writeFile(false, `${MAINDIRECTORY}/userOnboarded.txt`, 'User has been onboarded!');
+        return false;
+      }
+    } catch (e) {
+      console.error('deleteLessonPlan error: ', e);
+    }
+  },
 
   /**
    * Delete a Lesson Plan (a.k.a a directory in MAINDIRECTORY and its contents).
