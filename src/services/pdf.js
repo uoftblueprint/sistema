@@ -11,15 +11,15 @@ export const createPDF = async lessonPlan => {
   var html = ['<body style="font-family:Arial">'];
 
   // add title
-  html.push(header(`Lesson Plan: ${lessonPlan['lessonPlanName']}`, 1));
+  html.push(header(`Lesson Plan: ${lessonPlan.lessonPlanName}`, 1));
 
   html.push(moduleInformation(lessonPlan['Warm Up'], 'Warm Up'));
   html.push(moduleInformation(lessonPlan['Main Lesson'], 'Main Lesson'));
   html.push(moduleInformation(lessonPlan['Cool Down'], 'Cool Down'));
   // eslint-disable-next-line no-extra-boolean-cast
-  if (!!lessonPlan['Notes']) {
+  if (!!lessonPlan.Notes) {
     html.push(header('Notes', 2));
-    html.push(paragraph(lessonPlan['Notes']));
+    html.push(paragraph(lessonPlan.Notes));
   }
   html.push('</body>');
 
@@ -49,11 +49,11 @@ const moduleInformation = (module, moduleName) => {
       ret.push(paragraph(element.content));
     } else if (element.type === ModuleType.link) {
       // Clean the link first
-      cleanLink = element.content;
+      let cleanLink = element.content;
       if (cleanLink.search(/^http[s]?\:\/\//) == -1) {
         cleanLink = 'http://' + cleanLink;
       }
-      
+
       ret.push(
         `<p>Link: ${element.title} <a href="${cleanLink}">${cleanLink}</a></p>`,
       );

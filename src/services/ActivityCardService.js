@@ -16,7 +16,7 @@ const ActivityCardService = {
 
   /**
    * Returns array of file paths for this month's featured activity cards.
-   * @return {String[]}
+   * @return {Promise<String[]>}
    */
   getFeaturedActivityCards: async function () {
     try {
@@ -41,7 +41,7 @@ const ActivityCardService = {
       };
 
       // Retrieve all Drive files meeting the params
-      const response = await axios.list(downloadUrl, { params }).catch(error => {
+      const response = await axios.get(downloadUrl, { params }).catch(error => {
         console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
       });
 
@@ -50,7 +50,6 @@ const ActivityCardService = {
       const files_list = driveFiles.files;
       var pathArr = [];
 
-      // Delete anything that may currently be in the Featured Cards directory, make the new path with no contents
       // no new files found, return an empty array (old Activity Cards are mapped onto frontend)
       if (files_list.length == 0) {
         return [];
@@ -97,7 +96,7 @@ const ActivityCardService = {
    * @param {String} type Whether the activity card is a "Featured" or "Downloaded" card
    * @param {String} name Name of the activity card
    * @param {String} lessonplan Name of the lesson plan it should be downloaded in (if it's a "Downloaded" card)
-   * @return {String} The requested ActivityCard object
+   * @return {Promise<String>} The requested ActivityCard object
    */
   downloadActivityCard: async function (id, type, name, lessonplan = '') {
     // Assert that the "type" parameter is valid
@@ -169,7 +168,7 @@ const ActivityCardService = {
    * @param {String} base64 file of image
    * @param {String} fileName file name of image
    * @param {String} lessonPlan name of lesson plan we want to add it to
-   * @returns {String} relative path of the image
+   * @returns {Promise<String>} relative path of the image
    */
   addImageToStorage: async function (base64, fileName, lessonPlan) {
     try {

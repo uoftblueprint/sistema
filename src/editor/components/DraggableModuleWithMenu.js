@@ -84,7 +84,10 @@ export default class DraggableModuleWithMenu extends React.Component {
 
   componentDidUpdate(prevState) {
     // Get full width of image component once it's mounted and resize height accordingly
-    if (this.state.fullWidth != prevState.fullWidth && this.props.data.type == ModuleType.image) {
+    if (
+      this.state.fullWidth != prevState.fullWidth &&
+      this.props.data.type == ModuleType.image
+    ) {
       if (
         this.state.fullWidth > 1 &&
         this.state.boxHeight > 1 &&
@@ -120,7 +123,7 @@ export default class DraggableModuleWithMenu extends React.Component {
     this.props.handleMove(this.props.data.key, false); // swapUp=false
   };
 
-  /** Based on what menu option the user clicks, execute the function corresponding 
+  /** Based on what menu option the user clicks, execute the function corresponding
    * with the same index in this.actions. */
   handleClick = index => {
     for (var i = 0; i < this.options.length; i++) {
@@ -165,18 +168,17 @@ export default class DraggableModuleWithMenu extends React.Component {
 
   /** Handles link navigation */
   openLink = () => {
-    cleanLink = this.state.linkContent;
+    let cleanLink = this.state.linkContent;
     if (cleanLink.search(/^http[s]?\:\/\//) == -1) {
       cleanLink = 'http://' + cleanLink;
     }
-    Linking.openURL(cleanLink)
-      .catch((err) => {
-        console.error("Couldn't load page", err);
-      })
-  }
+    Linking.openURL(cleanLink).catch(err => {
+      console.error("Couldn't load page", err);
+    });
+  };
 
   /** Renders module depending on type */
-  renderModule = (moduleType) => {
+  renderModule = moduleType => {
     if (moduleType == ModuleType.text) {
       return (
         <View pointerEvents={!this.state.isEditable ? 'none' : undefined}>
@@ -185,7 +187,10 @@ export default class DraggableModuleWithMenu extends React.Component {
               this.textInputRef = input;
             }}
             editable={this.state.isEditable}
-            style={[TextStyle.body, { marginBottom: Platform.OS === "ios" ? 5 : 0 }]}
+            style={[
+              TextStyle.body,
+              { marginBottom: Platform.OS === 'ios' ? 5 : 0 },
+            ]}
             multiline
             defaultValue={this.props.data.content}
             onEndEditing={e => {
@@ -195,12 +200,12 @@ export default class DraggableModuleWithMenu extends React.Component {
             }}
           />
         </View>
-      )
+      );
     } else if (moduleType == ModuleType.link) {
       if (this.state.isEditable) {
         // Toggle editing version of the link module type
         return (
-          <View 
+          <View
             pointerEvents={!this.state.isEditable ? 'none' : undefined}
             style={styles.LinkBodyStyle}>
             <TextInput
@@ -210,7 +215,7 @@ export default class DraggableModuleWithMenu extends React.Component {
               editable={this.state.isEditable}
               style={[TextStyle.body, { paddingVertical: 10 }]}
               multiline
-              defaultValue={this.state.linkTitle ?? ""}
+              defaultValue={this.state.linkTitle ?? ''}
               onEndEditing={e => {
                 const currText = e.nativeEvent.text;
                 this.setState({ linkTitle: currText });
@@ -220,38 +225,41 @@ export default class DraggableModuleWithMenu extends React.Component {
             />
             <View style={styles.LinkViewStyle}>
               <LinkIcon height={'20'} width={'20'} marginRight={scale(5)} />
-              <TextInput 
-                style={[TextStyle.body, styles.LinkInputStyle]} 
+              <TextInput
+                style={[TextStyle.body, styles.LinkInputStyle]}
                 ref={input => {
                   this.linkInputRef = input;
                 }}
                 defaultValue={this.state.linkContent}
                 onEndEditing={e => {
                   // No whitespaces in links!
-                  currText = e.nativeEvent.text;
+                  let currText = e.nativeEvent.text;
                   this.setState({ linkContent: currText });
                   if (this.state.linkContent !== '') {
-                    this.props.handleEdit(this.props.data.key, currText, this.state.linkTitle);
+                    this.props.handleEdit(
+                      this.props.data.key,
+                      currText,
+                      this.state.linkTitle,
+                    );
                     this.setState({ isEditable: false });
                   }
                 }}
               />
             </View>
           </View>
-        )
+        );
       } else {
         // Toggle preview version of the link module type
         return (
           <View style={styles.LinkPreviewStyle}>
             <LinkIcon height={'20'} width={'20'} marginRight={scale(5)} />
             <Text style={styles.LinkTextStyle}>
-              {this.state.linkTitle !== "" 
-                ? this.state.linkTitle 
-                : this.state.linkContent
-              }
+              {this.state.linkTitle !== ''
+                ? this.state.linkTitle
+                : this.state.linkContent}
             </Text>
           </View>
-        )
+        );
       }
     } else {
       // Images and activity cards are displayed like this
@@ -271,9 +279,9 @@ export default class DraggableModuleWithMenu extends React.Component {
             resizeMode="contain"
           />
         </SafeAreaView>
-      )
+      );
     }
-  }
+  };
 
   render() {
     return (
@@ -363,7 +371,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   LinkInputStyle: {
-    color:'#0078E8',
+    color: '#0078E8',
     flex: 1,
   },
   LinkPreviewStyle: {
@@ -374,7 +382,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   LinkTextStyle: {
-    color: '#0078E8', 
+    color: '#0078E8',
     flex: 1,
     flexWrap: 'wrap',
   },
