@@ -73,7 +73,7 @@ const LinkCard = ({ setisLinkInputOpen, sectionType }) => {
               ref={linkInput}
               placeholder={'Paste Link Here'}
               onEndEditing={e => {
-                inputtedLink = e.nativeEvent.text.trim();
+                let inputtedLink = e.nativeEvent.text.trim();
 
                 if (inputtedLink) {
                   // No whitespaces in links!

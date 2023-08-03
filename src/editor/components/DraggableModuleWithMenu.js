@@ -233,7 +233,7 @@ export default class DraggableModuleWithMenu extends React.Component {
                 defaultValue={this.state.linkContent}
                 onEndEditing={e => {
                   // No whitespaces in links!
-                  currText = e.nativeEvent.text;
+                  let currText = e.nativeEvent.text;
                   this.setState({ linkContent: currText });
                   if (this.state.linkContent !== '') {
                     this.props.handleEdit(
