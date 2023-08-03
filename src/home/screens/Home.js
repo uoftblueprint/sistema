@@ -88,10 +88,15 @@ const Home = ({ navigation }) => {
       <SafeAreaView style={styles.headContainer}>
         <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
         <SafeAreaView style={styles.subContainer}>
-          {(pathArr.length == 0) 
-            ? <Text style={[styles.subtitle, TextStyle.h3]}>Check for cards from the past week</Text>
-            : <Text style={[styles.subtitle, TextStyle.h3]}>Last updated on {date}</Text> 
-          }
+          {pathArr.length == 0 ? (
+            <Text style={[styles.subtitle, TextStyle.h3]}>
+              Check for cards from the past week
+            </Text>
+          ) : (
+            <Text style={[styles.subtitle, TextStyle.h3]}>
+              Last updated on {date}
+            </Text>
+          )}
           <TouchableOpacity onPress={() => handleRefreshPress()}>
             <RefreshIcon height={23} width={23} style={styles.refreshIcon} />
           </TouchableOpacity>
@@ -100,7 +105,9 @@ const Home = ({ navigation }) => {
 
       {!loading ? (
         <SafeAreaView style={styles.flatListContainer}>
-          {(pathArr.length == 0) && <Text style={[TextStyle.h3, {marginTop: 15}]}>Nothing here!</Text>}
+          {pathArr.length == 0 && (
+            <Text style={[TextStyle.h3, { marginTop: 15 }]}>Nothing here!</Text>
+          )}
           <FlatList
             data={pathArr}
             renderItem={({ item }) => (
