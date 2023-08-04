@@ -110,6 +110,7 @@ const Home = ({ navigation }) => {
           )}
           <FlatList
             data={pathArr}
+            showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() =>
