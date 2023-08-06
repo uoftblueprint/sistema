@@ -28,9 +28,9 @@ const OptionsMenu = ({
   const dispatch = useDispatch();
   const [isBannerVisible, setBannerVisible] = useState(false);
   const lessonPlan = useSelector(state => state.lessonPlan);
-  // eslint-disable-next-line
   const isCurrentlyFavorited =
     isFavorited ?? // from library
+    // eslint-disable-next-line
     useSelector(state => getCurrFavState(state.lessonPlan)); // from editor
   // TODO can i move this into export helper func if
   // it's only being used once b/c lastEdited is passed in
