@@ -5,8 +5,8 @@ import {
   replaceSection,
   getLessonSection,
   getInitialLessonPlanName,
-  getCurrActivityCards,
-  setCurrActivityCards,
+  getCurrImageFiles,
+  setCurrImageFiles,
   addToSection,
 } from '../../services/editor/lessonPlanSlice';
 import {
@@ -46,8 +46,8 @@ const LessonSectionDraggable = ({
   const lessonPlanName = useSelector(state =>
     getInitialLessonPlanName(state.lessonPlan),
   );
-  const currActivityCards = useSelector(state =>
-    getCurrActivityCards(state.lessonPlan),
+  const currImageFiles = useSelector(state =>
+    getCurrImageFiles(state.lessonPlan),
   );
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
@@ -156,11 +156,11 @@ const LessonSectionDraggable = ({
     
     if (acToDelete) {
       // Get rid of activity card with first matching id
-      let acArray = [...currActivityCards];
+      let acArray = [...currImageFiles];
       const index = acArray.indexOf(`/${acToDelete.id}/cardImage.jpg`);
       if (index > -1) {
         acArray.splice(index, 1); 
-        dispatch(setCurrActivityCards(acArray));
+        dispatch(setCurrImageFiles(acArray));
       }
     } 
   };

@@ -24,8 +24,8 @@ export const lessonPlanSlice = createSlice({
     isDirty: false,
     isInitiallyFavorited: null,
     isCurrentlyFavorited: null,
-    initialActivityCards: [], 
-    currActivityCards: [],
+    initialImageFiles: [], 
+    currImageFiles: [],
   },
   reducers: {
 
@@ -44,8 +44,8 @@ export const lessonPlanSlice = createSlice({
         [SectionName.coolDown]: action.payload[SectionName.coolDown],
         [SectionName.notes]: action.payload[SectionName.notes] ?? '',
         isDirty: false,
-        initialActivityCards: action.payload.initialActivityCards,
-        currActivityCards: action.payload.initialActivityCards,
+        initialImageFiles: action.payload.initialImageFiles,
+        currImageFiles: action.payload.initialImageFiles,
       };
     },
 
@@ -122,10 +122,10 @@ export const lessonPlanSlice = createSlice({
       }
     },
 
-    setCurrActivityCards: (state, action) => {
+    setCurrImageFiles: (state, action) => {
       return {
         ...state,
-        currActivityCards: action.payload,
+        currImageFiles: action.payload,
       }
     }, 
 
@@ -141,8 +141,8 @@ export const lessonPlanSlice = createSlice({
         isDirty: false,
         isInitiallyFavorited: null,
         isCurrentlyFavorited: null,
-        initialActivityCards: [], 
-        currActivityCards: [],
+        initialImageFiles: [], 
+        currImageFiles: [],
       };
     },
   },
@@ -159,7 +159,7 @@ export const {
   loadInitialLessonPlan,
   loadInitialFavState,
   setFavState,
-  setCurrActivityCards,
+  setCurrImageFiles,
   reset,
 } = lessonPlanSlice.actions;
 
@@ -225,8 +225,8 @@ export const getCurrFavState = state => {
   return state.isCurrentlyFavorited;
 }
 
-export const getCurrActivityCards = state => {
-  return state.currActivityCards;
+export const getCurrImageFiles = state => {
+  return state.currImageFiles;
 }
 
 export default lessonPlanSlice.reducer;

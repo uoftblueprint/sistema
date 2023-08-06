@@ -13,7 +13,7 @@ const handleCleanupActions = async (leaveBySave) => {
 
     try {
         const lpObj = store.getState().lessonPlan;
-        await deleteUnusedActivityCards(lpObj, leaveBySave);
+        await deleteUnusedImageFiles(lpObj, leaveBySave);
         await handleFavChange(lpObj);
         await removeEmptyLessonPlanDirectory(lpObj, leaveBySave);
     } catch (e) {
@@ -22,22 +22,22 @@ const handleCleanupActions = async (leaveBySave) => {
 }
 
 /**
- * Delete any activity cards taking up space in storage that aren't being used anymore. 
+ * Delete any activity cards or self-uploaded images taking up space in storage that aren't being used anymore. 
  * Cases to cover:
- * Case #1: Download AC but discard changes without saving. --> newly downloaded AC should be removed.
- * Case #2: User "deletes" an AC. --> AC is only actually removed once they save.
- * @param {{lessonPlanName: string, initialLessonPlanName: string, initialActivityCards: string[], currActivityCards: string[], isInitiallyFavorited: boolean}} lp Lesson plan redux state
+ * Case #1: Download image but discard changes without saving. --> newly downloaded image should be removed.
+ * Case #2: User "deletes" an image. --> Image is only actually removed once they save.
+ * @param {{lessonPlanName: string, initialLessonPlanName: string, initialImageFiles: string[], currImageFiles: string[], isInitiallyFavorited: boolean}} lp Lesson plan redux state
  * @param {boolean} leaveBySave true if user pressed Save button to leave Editor
  */
-const deleteUnusedActivityCards = async (lp, leaveBySave) => {
+const deleteUnusedImageFiles = async (lp, leaveBySave) => {
     let acKeep;
     
     if (leaveBySave) {
         // Compare ACs in RNFS with current AC state (source of truth since we're saving)
-        acKeep = lp.currActivityCards;
+        acKeep = lp.currImageFiles;
     } else if (lp.isDirty) {
         // Else, AC state when the LP was initially opened is our source of truth
-        acKeep = lp.initialActivityCards;
+        acKeep = lp.initialImageFiles;
     }
 
     // Flag ACs to delete
@@ -51,7 +51,7 @@ const deleteUnusedActivityCards = async (lp, leaveBySave) => {
         try {
             await ActivityCardService.deleteActivityCard(jpgPath, lp.initialLessonPlanName, lp.isInitiallyFavorited);
         } catch (e) {
-            console.warn(`deleteUnusedActivityCards: Tried to delete ${jpgPath} but failed. `, e);
+            console.warn(`deleteUnusedImageFiles: Tried to delete ${jpgPath} but failed. `, e);
         }
     }
 }
@@ -85,7 +85,6 @@ const removeEmptyLessonPlanDirectory = async (lp, leaveBySave) => {
         console.log(`removeEmptyLessonPlanDirectory: ${lp.lessonPlanName}`);
         LessonPlanService.deleteLessonPlan(lp.lessonPlanName);
     }
-
 }
 
 export default handleCleanupActions;

@@ -29,7 +29,7 @@ import LessonPlanService from '../../services/LessonPlanService';
 import { MAINDIRECTORY } from '../../services/constants';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addToSection, getCurrActivityCards, setCurrActivityCards } from '../../services/editor/lessonPlanSlice';
+import { addToSection, getCurrImageFiles, setCurrImageFiles } from '../../services/editor/lessonPlanSlice';
 import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
 
 const AddActivityCard = function ({ navigation, route }) {
@@ -163,7 +163,7 @@ const AddActivityCard = function ({ navigation, route }) {
   // **************** PREVIEW RELATED VARS ***************
   const [previewInfo, setPreviewInfo] = useState(null); // previewInfo has id, name, and url
 
-  const currActivityCards = useSelector(state => getCurrActivityCards(state.lessonPlan));
+  const currActivityCards = useSelector(state => getCurrImageFiles(state.lessonPlan));
   const dispatch = useDispatch();
 
   //onPress function for add Card button
@@ -201,7 +201,7 @@ const AddActivityCard = function ({ navigation, route }) {
       );
 
       dispatch(
-        setCurrActivityCards([...currActivityCards, relPath]),
+        setCurrImageFiles([...currActivityCards, relPath]),
       );
     })
     .then(() => {
