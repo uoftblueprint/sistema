@@ -221,38 +221,31 @@ const ActivityCardService = {
    * delete activity card from local storage
    *
    * @async
-   * @param {String} id ID of the activity card to delete
+   * @param {String} jpgPath path of the activity card jpg to delete in the format `/${id}/cardImage.jpg` or `/${id.jpg}`
    * @param {String} lessonPlan name of the lesson plan to delete from
+   * @param {Boolean} isLPFavorited if the lesson plan is located in the Favourited directory
    * @returns {Promise}
    */
-  deleteActivityCard: async function (id, lessonPlan) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let filePath;
-        if (
-          await checkFileExists(MAINDIRECTORY + '/Favourited/' + lessonPlan)
-        ) {
-          filePath = MAINDIRECTORY + '/Favourited/' + lessonPlan + '/' + id;
-        } else if (
-          await checkFileExists(MAINDIRECTORY + '/Default/' + lessonPlan)
-        ) {
-          filePath = MAINDIRECTORY + '/Default/' + lessonPlan + '/' + id;
-        } else {
-          reject(`Error: Lesson plan does not exist.`);
-        }
-        console.log(filePath);
+  deleteActivityCard: async function (jpgPath, lessonPlan, isLPFavorited) {
+    try {
+      const dirID = jpgPath.split('/')[1];
+      const filePath =
+        MAINDIRECTORY +
+        (isLPFavorited ? '/Favourited/' : '/Default/') +
+        lessonPlan +
+        '/' +
+        dirID;
 
-        // check if file exists first. if yes, use RNFS.unlink, otherwise throw an error
-        if (await checkFileExists(filePath)) {
-          await deleteFile(filePath);
-          resolve(`Activity card deleted successfully.`);
-        } else {
-          reject(`Error: Activity card does not exist.`);
-        }
-      } catch (e) {
-        reject('Error in deleting activity card: ' + e);
+      // check if file exists first. if yes, use RNFS.unlink, otherwise throw an error
+      if (await checkFileExists(filePath)) {
+        await deleteFile(filePath);
+        console.log(`deleteActivityCard: Deleted ${dirID} successfully.`);
+      } else {
+        console.error(`deleteActivityCard error: ${filePath} does not exist.`);
       }
-    });
+    } catch (e) {
+      console.error('Error in deleting activity card: ' + e);
+    }
   },
 };
 

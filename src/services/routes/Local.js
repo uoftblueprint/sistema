@@ -12,7 +12,7 @@ export async function readDirectory(dirpath) {
       return result;
     })
     .catch(err => {
-      console.error(`RNFS readDirectory: ${err.message}`);
+      console.error(`RNFS readDirectory ${dirpath}: ${err.message}`);
     });
 }
 
@@ -28,7 +28,7 @@ export async function readDDirectory(dirpath) {
       return result;
     })
     .catch(err => {
-      console.error(`RNFS readDDirectory: ${err.message}`);
+      console.error(`RNFS readDDirectory ${dirpath}: ${err.message}`);
     });
 }
 
@@ -69,7 +69,7 @@ export async function writeFile(isImage, filepath, content) {
 }
 
 /**
- * Delete a Lesson Plan (a.k.a a directory in RNFS.DocumentDirectoryPath and
+ * Delete a file (a.k.a a file/directory in RNFS.DocumentDirectoryPath and
  * its contents). This can also recursively delete directories, so don't worry
  * if the path isn't a file, but a directory.
  * @param {String} filepath Full file path to delete

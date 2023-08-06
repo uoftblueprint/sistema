@@ -22,6 +22,10 @@ export const lessonPlanSlice = createSlice({
     [SectionName.coolDown]: [],
     [SectionName.notes]: '',
     isDirty: false,
+    isInitiallyFavorited: null,
+    isCurrentlyFavorited: null,
+    initialImageFiles: [],
+    currImageFiles: [],
   },
   reducers: {
     /**
@@ -39,8 +43,11 @@ export const lessonPlanSlice = createSlice({
         [SectionName.coolDown]: action.payload[SectionName.coolDown],
         [SectionName.notes]: action.payload[SectionName.notes] ?? '',
         isDirty: false,
+        initialImageFiles: action.payload.initialImageFiles,
+        currImageFiles: action.payload.initialImageFiles,
       };
     },
+
     setLessonPlanName: (state, action) => {
       return {
         ...state,
@@ -48,35 +55,29 @@ export const lessonPlanSlice = createSlice({
         isDirty: action.payload.isDirty,
       };
     },
+
     setInitialLessonPlanName: (state, action) => {
       return {
         ...state,
         initialLessonPlanName: action.payload.name,
       };
     },
-    replaceSection: (state, action) => {
-      // action.payload: {
-      //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
-      //     allData: { type, content, key }[]
-      // }
 
-      // TODO: Do some error handling. Confirm that every module is properly formed
-      // Check that it has 3 properties [type, section, content]
-      // If only missing key property, grab next unique key
-      // Else, remove module
-      // Check that all keys are unique
+    /**
+     * action.payload: { section: SectionName, allData: { type, content, key,... }[] }
+     */
+    replaceSection: (state, action) => {
       return {
         ...state,
         [action.payload.section]: action.payload.allData,
         isDirty: true,
       };
     },
+
+    /**
+     * action.payload: { section: SectionName, type: ModuleType, content: String }
+     */
     addToSection: (state, action) => {
-      // action.payload: {
-      //     section: SectionName.warmUp || SectionName.mainLesson || SectionName.coolDown
-      //     type: ModuleType.text || ModuleType.activityCard || ModuleType.link || ModuleType.image
-      //     content: "",
-      // }
       const listOfKeys = state[action.payload.section].map(({ key }) => key); // Get a list of all keys in the section
       const nextKey = grabNextKey(listOfKeys);
       return {
@@ -96,6 +97,7 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
+
     replaceNote: (state, action) => {
       return {
         ...state,
@@ -103,6 +105,29 @@ export const lessonPlanSlice = createSlice({
         isDirty: true,
       };
     },
+
+    loadInitialFavState: (state, action) => {
+      return {
+        ...state,
+        isInitiallyFavorited: action.payload,
+        isCurrentlyFavorited: action.payload,
+      };
+    },
+
+    setFavState: (state, action) => {
+      return {
+        ...state,
+        isCurrentlyFavorited: action.payload,
+      };
+    },
+
+    setCurrImageFiles: (state, action) => {
+      return {
+        ...state,
+        currImageFiles: action.payload,
+      };
+    },
+
     reset: () => {
       console.log('Reseting redux...');
       return {
@@ -113,6 +138,10 @@ export const lessonPlanSlice = createSlice({
         [SectionName.coolDown]: [],
         [SectionName.notes]: '',
         isDirty: false,
+        isInitiallyFavorited: null,
+        isCurrentlyFavorited: null,
+        initialImageFiles: [],
+        currImageFiles: [],
       };
     },
   },
@@ -127,6 +156,9 @@ export const {
   setLessonPlanName,
   setInitialLessonPlanName,
   loadInitialLessonPlan,
+  loadInitialFavState,
+  setFavState,
+  setCurrImageFiles,
   reset,
 } = lessonPlanSlice.actions;
 
@@ -182,6 +214,18 @@ export const getLessonPlan = state => {
     console.error('getLessonPlan: Could not grab lesson plan from redux.');
     return {};
   }
+};
+
+export const getInitialFavState = state => {
+  return state.isInitiallyFavorited;
+};
+
+export const getCurrFavState = state => {
+  return state.isCurrentlyFavorited;
+};
+
+export const getCurrImageFiles = state => {
+  return state.currImageFiles;
 };
 
 export default lessonPlanSlice.reducer;

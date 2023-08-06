@@ -3,13 +3,12 @@ import {
   readFile,
   readDirectory,
   writeFile,
-  moveFile,
   deleteFile,
   makeDirectory,
   readDDirectory,
   copyDir,
 } from './routes/Local';
-import { MAINDIRECTORY, SectionName } from './constants';
+import { MAINDIRECTORY, SectionName, ImageFileExtensions } from './constants';
 import { Module } from './models';
 
 const LessonPlanService = {
@@ -42,8 +41,6 @@ const LessonPlanService = {
    * wiki, and save it in a new directory by the same name as the lesson plan
    * under RNFS.DocumentDirectoryPath/LESSON_NAME/LESSON_NAME.json
    *
-   * Be sure to think about how to save activity card .pngs later down the line
-   * as well!
    * @param {Object} lesson LessonPlan object to save to local storage
    * @param {Boolean} hasNewName if the LP has been renamed
    * @param {String} oldLPName to delete old files and directories
@@ -52,7 +49,7 @@ const LessonPlanService = {
     try {
       // Create lesson plan JSON object from LessonPlan object, as documented in the Wiki
       const lessonJSON = JSON.stringify(lesson);
-      const name = lesson.lessonPlanName;
+      const name = lesson.lessonPlanName.trim();
 
       let path;
 
@@ -163,7 +160,10 @@ const LessonPlanService = {
         console.log(`Lesson Plan is in Default: ${name}`);
         return false;
       } else {
-        throw new Error(`Lesson Plan ${name} does not exist`);
+        console.warn(
+          `Lesson Plan ${name} has not been saved into a Favourited or Default folder yet`,
+        );
+        return false;
       }
     } catch (e) {
       console.error('isLessonPlanFavourited error: ', e);
@@ -325,6 +325,96 @@ const LessonPlanService = {
       await deleteFile(oldpath);
     } catch (e) {
       console.error('Error unfavourite: ', e);
+    }
+  },
+
+  /**
+   * Check if there is another existing lesson plan with the same name.
+   * @param {String} name
+   * @param {Boolean} isFavourited Known before so just passed in
+   * @returns {Boolean} true if lesson plan name is unique, false otherwise
+   */
+  isLPNameUnique: async function (name, isFavourited) {
+    try {
+      // Grab all lesson plan names from list of [mtime, name]
+      const lessonPlanArr = await this.getAllLessonPlanNames(0);
+      const allNames = lessonPlanArr.map(data => data.name);
+      // True if existing allNames doesn't include new name
+      const isUnique = !allNames.includes(name.trim());
+
+      // Handle edge case
+      if (!isUnique) {
+        // If the LP doesn't have a .json (never been saved before), return true
+        // Handles case where LP had directory created (usually if an image was downloaded) but is otherwise empty
+        const path = isFavourited
+          ? `${MAINDIRECTORY}/Favourited/${name}/`
+          : `${MAINDIRECTORY}/Default/${name}/`;
+
+        return !(await checkFileExists(path + name + '.json'));
+      } else {
+        return true;
+      }
+    } catch (e) {
+      console.error('Error isLPNameUnique: ', e);
+    }
+  },
+
+  /**
+   * Get paths of all image (jpg, png) files in the lesson plan directory.
+   * @param {String} name Name of the lesson plan
+   * @returns {String[]} List of all image paths in the format `/${id}/cardImage.jpg` or `/${id}`
+   */
+  getLessonPlanImages: async function (name) {
+    try {
+      const favourited = await this.isLessonPlanFavourited(name);
+      const dir = favourited
+        ? `${MAINDIRECTORY}/Favourited/${name}/`
+        : `${MAINDIRECTORY}/Default/${name}/`;
+
+      const lpFiles = await readDDirectory(dir).catch(() => []);
+
+      let images = [];
+      for (let file of lpFiles) {
+        if (file.isDirectory()) {
+          // Image is an activity card downloaded into a directory
+          images.push(`/${file.name}/cardImage.jpg`);
+        } else if (ImageFileExtensions.some(ext => file.name.includes(ext))) {
+          // Image is self-uploaded and the file ext is considered part of the file name itself
+          images.push(`/${file.name}`);
+        }
+      }
+
+      return images;
+    } catch (e) {
+      console.error('Error getLessonPlanImages: ', e);
+      return [];
+    }
+  },
+
+  /**
+   * Checks if the lesson plan directory is empty.
+   * If the directory doesn't exist (lesson plan hasn't been saved yet), will return false.
+   * @param {String} name Name of lesson plan
+   * @param {Boolean} isFavourited Known before in cleanupActions.js so just passed in
+   * @returns {Promise<Boolean>} True if lesson plan doesn't have a .json file and any images, False otherwise
+   */
+  isLessonPlanDirectoryEmpty: async function (name, isFavourited) {
+    try {
+      const path = isFavourited
+        ? `${MAINDIRECTORY}/Favourited/${name}/`
+        : `${MAINDIRECTORY}/Default/${name}/`;
+
+      if (await checkFileExists(path)) {
+        const files = await readDirectory(path);
+        return files.length == 0;
+      } else {
+        console.log(
+          `isLessonPlanDirectoryEmpty: ${name} directory does not exist`,
+        );
+        return false;
+      }
+    } catch (e) {
+      console.error('Error isLessonPlanDirectoryEmpty: ', e);
     }
   },
 };

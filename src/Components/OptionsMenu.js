@@ -7,47 +7,33 @@ import TrashIcon from '../../assets/trashIcon.svg';
 import HeartIcon from '../../assets/heartIcon.svg';
 import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import { useSelector } from 'react-redux';
+import { StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { createPDF } from '../services/pdf';
 import { deleteFile } from '../services/routes/Local';
 import Share from 'react-native-share';
 import LessonPlanService from '../services/LessonPlanService';
+import {
+  setFavState,
+  getCurrFavState,
+} from '../services/editor/lessonPlanSlice.js';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
   lastEdited,
   lessonPlanName,
   navigation,
+  isFavorited,
 }) => {
-  const [isFavorited, setFavorited] = useState(false);
+  const dispatch = useDispatch();
   const [isBannerVisible, setBannerVisible] = useState(false);
   const lessonPlan = useSelector(state => state.lessonPlan);
-
-  // FUNCTIONS FOR BUTTONS
-  const copyLessonPlan = () => {
-    LessonPlanService.copyLessonPlan(lessonPlanName);
-    navigation.goBack();
-  };
-
-  const deleteLessonPlan = async () => {
-    await LessonPlanService.deleteLessonPlan(lessonPlanName);
-    navigation.goBack();
-  };
-
-  const exportLessonPlan = async () => {
-    let pdf = await createPDF(lessonPlan);
-    try {
-      await Share.open({
-        url: 'file://' + pdf.filePath,
-        type: 'application/pdf',
-      });
-      console.log('File shared');
-    } catch {
-      console.log('File not shared');
-    }
-    await deleteFile(pdf.filePath);
-  };
+  const isCurrentlyFavorited =
+    isFavorited ?? // from library
+    // eslint-disable-next-line
+    useSelector(state => getCurrFavState(state.lessonPlan)); // from editor
+  // TODO can i move this into export helper func if
+  // it's only being used once b/c lastEdited is passed in
 
   // ALL OPTION BUTTONS
   const editorButtons = [
@@ -76,6 +62,43 @@ const OptionsMenu = ({
     },
   ];
 
+  // FUNCTIONS FOR BUTTONS
+  const copyLessonPlan = () => {
+    LessonPlanService.copyLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const deleteLessonPlan = async () => {
+    await LessonPlanService.deleteLessonPlan(lessonPlanName);
+    navigation.goBack();
+  };
+
+  const handleFavoriteChange = newState => {
+    dispatch(setFavState(newState));
+  };
+
+  const exportLessonPlan = async () => {
+    const lpObj = isLessonPlanEditor
+      ? lessonPlan // get lesson plan from redux since we're in the editor already
+      : await LessonPlanService.getLessonPlan(lessonPlanName);
+    let pdf = await createPDF(lpObj);
+    try {
+      await Share.open({
+        url: 'file://' + pdf.filePath,
+        type: 'application/pdf',
+      });
+      console.log('File shared');
+    } catch (err) {
+      const exception =
+        Platform.OS === 'android' &&
+        err.toString().includes('User did not share');
+      if (!exception) {
+        console.error('File not shared', err);
+      }
+    }
+    await deleteFile(pdf.filePath);
+  };
+
   const buttons = isLessonPlanEditor ? editorButtons : libraryButtons;
 
   return (
@@ -84,17 +107,13 @@ const OptionsMenu = ({
         <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
-          var onPress;
-          if (button.name === 'Export Lesson Plan') {
-            onPress = exportLessonPlan;
-          }
           if (button.name === 'Favorites') {
             return (
               <FavoriteButton
                 key={i}
                 setBanner={setBannerVisible}
-                setFavoritedPlan={setFavorited}
-                isFavoritedPlan={isFavorited}
+                setFavoritedPlan={handleFavoriteChange}
+                isFavoritedPlan={isCurrentlyFavorited}
               />
             );
           } else {
@@ -120,7 +139,9 @@ const OptionsMenu = ({
           }
         })}
       </SafeAreaView>
-      {isBannerVisible && <OptionsMenuBanner isFavoritedPlan={isFavorited} />}
+      {isBannerVisible && (
+        <OptionsMenuBanner isFavoritedPlan={isCurrentlyFavorited} />
+      )}
     </SafeAreaView>
   );
 };

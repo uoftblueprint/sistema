@@ -14,6 +14,7 @@ import { MAINDIRECTORY } from '../../services/constants';
 import { STACK_SCREENS } from '../constants';
 import { AppColors } from '../../Styles.config';
 import ActivityCardService from '../../services/ActivityCardService';
+import LessonPlanService from '../../services/LessonPlanService';
 import {
   makeDirectory,
   readDirectory,
@@ -74,6 +75,7 @@ const Home = ({ navigation }) => {
         } else {
           //very first time loading the app, no cards in RNFS
           handleRefreshPress();
+          await LessonPlanService.initializeEmptyDirectories();
         }
       } catch (error) {
         console.error(error);
@@ -94,7 +96,7 @@ const Home = ({ navigation }) => {
             </Text>
           ) : (
             <Text style={[styles.subtitle, TextStyle.h3]}>
-              Last updated on {date}
+              Latest activity from {date}
             </Text>
           )}
           <TouchableOpacity onPress={() => handleRefreshPress()}>

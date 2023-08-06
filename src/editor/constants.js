@@ -6,3 +6,10 @@ export const STACK_SCREENS = {
   EXPANDED_CARD: 'Expanded Card',
   NAVIGATOR: 'LessonPlanEditorNavigator',
 };
+
+export const ERROR = {
+  NONE: 0,
+  FETCHING: 1,
+  DUPLICATE_NAME: 2,
+  SAVING: 3,
+};
