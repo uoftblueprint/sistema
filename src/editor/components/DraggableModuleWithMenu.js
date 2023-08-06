@@ -19,7 +19,6 @@ import { TextStyle } from '../../Styles.config';
 import LinkIcon from '../../../assets/linkIcon.svg';
 
 import { scale, verticalScale } from 'react-native-size-matters';
-import { Link } from '@react-navigation/native';
 
 // Modified from https://github.com/izzisolomon/react-native-options-menu to handle onLongPress and to suit our needs
 
