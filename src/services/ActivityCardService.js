@@ -221,7 +221,7 @@ const ActivityCardService = {
    * delete activity card from local storage
    *
    * @async
-   * @param {String} jpgPath path of the activity card jpg to delete in the format `/${id}/cardImage.jpg`
+   * @param {String} jpgPath path of the activity card jpg to delete in the format `/${id}/cardImage.jpg` or `/${id.jpg}`
    * @param {String} lessonPlan name of the lesson plan to delete from
    * @param {Boolean} isLPFavorited if the lesson plan is located in the Favourited directory
    * @returns {Promise}

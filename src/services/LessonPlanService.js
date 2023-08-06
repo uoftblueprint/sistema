@@ -9,7 +9,7 @@ import {
   readDDirectory,
   copyDir,
 } from './routes/Local';
-import { MAINDIRECTORY, SectionName } from './constants';
+import { MAINDIRECTORY, SectionName, ImageFileExtensions } from './constants';
 import { Module } from './models';
 
 const LessonPlanService = {
@@ -347,6 +347,7 @@ const LessonPlanService = {
   /**
    * Get paths of all image (jpg, png) files in the lesson plan directory. 
    * @param {String} name Name of the lesson plan 
+   * @returns {String[]} List of all image paths in the format `/${id}/cardImage.jpg` or `/${id}`
    */
   getLessonPlanImages: async function (name) {
     try {
@@ -355,9 +356,20 @@ const LessonPlanService = {
         ? `${MAINDIRECTORY}/Favourited/${name}/`
         : `${MAINDIRECTORY}/Default/${name}/`;
 
-      // AC: `${MAINDIRECTORY}/Default/${name}/{id}/cardImage.jpg`
-      // own media: `${MAINDIRECTORY}/Default/${name}/{file name of image}`
-      // TODO: does the own media have it's own jpg or png ending? what's an acceptable file format basically
+      const lpFiles = await readDDirectory(dir);
+
+      let images = []
+      for (let file of lpFiles) {
+        if (file.isDirectory()) {
+          // Image is an activity card downloaded into a directory
+          images.push(`/${file.name}/cardImage.jpg`);
+        } else if (ImageFileExtensions.some(ext => file.name.includes(ext))) {
+          // Image is self-uploaded and the file ext is considered part of the file name itself
+          images.push(`/${file.name}`);
+        }
+      }
+
+      return images;
     } catch (e) {
       console.error('Error getLessonPlanImages: ', e);
     }
