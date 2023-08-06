@@ -156,7 +156,8 @@ const LessonPlanService = {
         console.log(`Lesson Plan is in Default: ${name}`);
         return false;
       } else {
-        throw new Error(`Lesson Plan ${name} does not exist`);
+        console.warn(`Lesson Plan ${name} does not exist`);
+        return false;
       }
     } catch (e) {
       console.error('isLessonPlanFavourited error: ', e);
@@ -337,6 +338,25 @@ const LessonPlanService = {
       console.error('Error isLPNameUnique: ', e);
     }
   },
+
+  /**
+   * Get paths of all image (jpg, png) files in the lesson plan directory. 
+   * @param {String} name Name of the lesson plan 
+   */
+  getLessonPlanImages: async function (name) {
+    try {
+      const favourited = await this.isLessonPlanFavourited(name);
+      const dir = favourited
+        ? `${MAINDIRECTORY}/Favourited/${name}/`
+        : `${MAINDIRECTORY}/Default/${name}/`;
+
+      // AC: `${MAINDIRECTORY}/Default/${name}/{id}/cardImage.jpg`
+      // own media: `${MAINDIRECTORY}/Default/${name}/{file name of image}`
+      // TODO: does the own media have it's own jpg or png ending? what's an acceptable file format basically
+    } catch (e) {
+      console.error('Error getLessonPlanImages: ', e);
+    }
+  }
 };
 
 export default LessonPlanService;

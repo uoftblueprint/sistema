@@ -23,18 +23,20 @@ const handleCleanupActions = async (leaveBySave) => {
 const deleteUnusedActivityCards = async (lp, leaveBySave) => {
     let toDelete = [];
     const acInitial = lp.initialActivityCards;
-    const acCurr = lp.currActivityCards;
 
     if (leaveBySave) {
-        // Only delete ACs on backend once changes are saved
+        // Flag ACs that the current state of the LP no longer needs
+        const acCurr = lp.currActivityCards;
+        console.log('currActivityCards', acCurr);
         toDelete = acInitial.filter(card => !(acCurr.includes(card)));
     } else if (lp.isDirty) {
-        // Discard changes like newly downloaded ACs that aren't being saved
-        toDelete = acCurr.filter(card => !(acInitial.includes(card)));
+        // Flag ACs on the backend that are unused (added briefly but not saved)
+        const acRNFS = null; // LessonPlanService.getLessonPlanImages TODO
+        console.log('acRNFS', acRNFS);
+        toDelete = acRNFS.filter(card => !(acInitial.includes(card)));
     }
 
     console.log('initialActivityCards', acInitial); // TODO: del
-    console.log('currActivityCards', acCurr);
     console.log('List of ACs to delete: ', toDelete);
 
     // Delete all unused cards
