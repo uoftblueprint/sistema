@@ -120,7 +120,6 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             lpObj[SectionName.coolDown] =
               lpObj[SectionName.coolDown].map((module, i) => preprocessModule(module, i, initialACArr));
             
-            console.log('LIST OF ORIGINAL ACs: ', initialACArr); // TODO: Delete
             // Dispatch it to redux for the rest of the editor to render
             dispatch(loadInitialLessonPlan({ ...lpObj, initialActivityCards: initialACArr }));
             fetchSuccess = true;

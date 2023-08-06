@@ -68,11 +68,6 @@ export const lessonPlanSlice = createSlice({
      * action.payload: { section: SectionName, allData: { type, content, key,... }[] }
      */
     replaceSection: (state, action) => {
-      // TODO: Do some error handling. Confirm that every module is properly formed
-      // Check that it has at least 3 properties [type, section, content]
-      // If only missing key property, grab next unique key
-      // Else, remove module
-      // Check that all keys are unique
       return {
         ...state,
         [action.payload.section]: action.payload.allData,
