@@ -94,7 +94,7 @@ const Home = ({ navigation }) => {
             </Text>
           ) : (
             <Text style={[styles.subtitle, TextStyle.h3]}>
-              Last updated on {date}
+              Latest activity from {date}
             </Text>
           )}
           <TouchableOpacity onPress={() => handleRefreshPress()}>
