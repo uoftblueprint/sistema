@@ -42,6 +42,8 @@ const deleteUnusedActivityCards = async (lp, leaveBySave) => {
         toDelete = acRNFS.filter(card => !(acInitial.includes(card)));
     }
 
+    if (toDelete.length != 0) console.log('deleteUnusedActivityCards: Found the following unused ACs ', toDelete);
+
     // Delete all unused cards
     for (const jpgPath of toDelete) {
         try {

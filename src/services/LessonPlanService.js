@@ -3,7 +3,6 @@ import {
   readFile,
   readDirectory,
   writeFile,
-  moveFile,
   deleteFile,
   makeDirectory,
   readDDirectory,
@@ -330,15 +329,29 @@ const LessonPlanService = {
   /**
    * Check if there is another existing lesson plan with the same name.
    * @param {String} name 
+   * @param {Boolean} isFavourited Known before so just passed in 
    * @returns {Boolean} true if lesson plan name is unique, false otherwise
    */
-  isLPNameUnique: async function (name) {
+  isLPNameUnique: async function (name, isFavourited) {
     try {
       // Grab all lesson plan names from list of [mtime, name]
       const lessonPlanArr = await this.getAllLessonPlanNames(0);
       const allNames =  lessonPlanArr.map(data => data.name);
-      // Return true if existing allNames doesn't include new name
-      return !(allNames.includes(name.trim()));
+      // True if existing allNames doesn't include new name
+      const isUnique = !(allNames.includes(name.trim()));
+
+      // Handle edge case
+      if (!isUnique) {
+        // If the LP doesn't have a .json (never been saved before), return true
+        // Handles case where LP had directory created (usually if an image was downloaded) but is otherwise empty
+        const path = isFavourited
+          ? `${MAINDIRECTORY}/Favourited/${name}/`
+          : `${MAINDIRECTORY}/Default/${name}/`;
+
+        return !(await checkFileExists(path + name + '.json'));
+      } else {
+        return true;
+      }
     } catch (e) {
       console.error('Error isLPNameUnique: ', e);
     }

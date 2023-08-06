@@ -38,7 +38,7 @@ const SaveButton = ({
               lessonPlanInitialName != lessonPlanObj.lessonPlanName;
 
             if (isNewLP || wasRenamed) {
-              const isUnique = await LessonPlanService.isLPNameUnique(lessonPlanObj.lessonPlanName);
+              const isUnique = await LessonPlanService.isLPNameUnique(lessonPlanObj.lessonPlanName, lessonPlanObj.isInitiallyFavorited);
               if (!isUnique) {
                 setLoading(false);
                 console.log('Duplicate name detected, aborting save.');
