@@ -161,7 +161,7 @@ const LessonPlanService = {
         console.log(`Lesson Plan is in Default: ${name}`);
         return false;
       } else {
-        console.warn(`Lesson Plan ${name} does not exist`);
+        console.warn(`Lesson Plan ${name} has not been saved into a Favourited or Default folder yet`);
         return false;
       }
     } catch (e) {
@@ -356,7 +356,7 @@ const LessonPlanService = {
         ? `${MAINDIRECTORY}/Favourited/${name}/`
         : `${MAINDIRECTORY}/Default/${name}/`;
 
-      const lpFiles = await readDDirectory(dir);
+      const lpFiles = await readDDirectory(dir).catch(() => []);
 
       let images = []
       for (let file of lpFiles) {
@@ -372,6 +372,33 @@ const LessonPlanService = {
       return images;
     } catch (e) {
       console.error('Error getLessonPlanImages: ', e);
+      return [];
+    }
+  },
+
+  
+  /**
+   * Checks if the lesson plan directory is empty. 
+   * If the directory doesn't exist (lesson plan hasn't been saved yet), will return false.
+   * @param {String} name Name of lesson plan
+   * @param {Boolean} isFavourited Known before in cleanupActions.js so just passed in 
+   * @returns {Promise<Boolean>} True if lesson plan doesn't have a .json file and any images, False otherwise
+   */
+  isLessonPlanDirectoryEmpty: async function (name, isFavourited) {
+    try {
+      const path = isFavourited
+        ? `${MAINDIRECTORY}/Favourited/${name}/`
+        : `${MAINDIRECTORY}/Default/${name}/`;
+
+      if (await checkFileExists(path)) {
+        const files = await readDirectory(path);
+        return files.length == 0;
+      } else {
+        console.log(`isLessonPlanDirectoryEmpty: ${name} directory does not exist`);
+        return false;
+      }
+    } catch (e) {
+      console.error('Error isLessonPlanDirectoryEmpty: ', e);
     }
   }
 };

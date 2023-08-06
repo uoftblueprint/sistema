@@ -15,11 +15,19 @@ const handleCleanupActions = async (leaveBySave) => {
         const lpObj = store.getState().lessonPlan;
         await deleteUnusedActivityCards(lpObj, leaveBySave);
         await handleFavChange(lpObj);
+        await removeEmptyLessonPlanDirectory(lpObj, leaveBySave);
     } catch (e) {
         console.error(`handleCleanupActions: ${action}`);
     }
 }
 
+/**
+ * Delete any activity cards taking up space in storage that aren't being used anymore. 
+ * Case #1: Download AC but discard changes without saving --> newly downloaded AC should be removed.
+ * Case #2: User "deletes" an AC. AC is only actually removed once they save.
+ * @param {{lessonPlanName: string, initialLessonPlanName: string, initialActivityCards: string[], currActivityCards: string[], isInitiallyFavorited: boolean}} lp 
+ * @param {*} leaveBySave 
+ */
 const deleteUnusedActivityCards = async (lp, leaveBySave) => {
     let toDelete = [];
     const acInitial = lp.initialActivityCards;
@@ -31,7 +39,6 @@ const deleteUnusedActivityCards = async (lp, leaveBySave) => {
     } else if (lp.isDirty) {
         // Flag ACs on the backend that are unused (added briefly but not saved)
         const acRNFS = await LessonPlanService.getLessonPlanImages(lp.lessonPlanName);
-        console.log('acRNFS', acRNFS);
         toDelete = acRNFS.filter(card => !(acInitial.includes(card)));
     }
 
@@ -40,7 +47,7 @@ const deleteUnusedActivityCards = async (lp, leaveBySave) => {
         try {
             await ActivityCardService.deleteActivityCard(jpgPath, lp.initialLessonPlanName, lp.isInitiallyFavorited);
         } catch (e) {
-            console.warn(e);
+            console.warn(`deleteUnusedActivityCards: Tried to delete ${jpgPath} but failed. `, e);
         }
     }
 }
@@ -59,6 +66,22 @@ const handleFavChange = async (lp) => {
             await LessonPlanService.unfavouriteLessonPlan(lp.lessonPlanName);
         }
     }
+}
+
+/**
+ * Removes a lesson plan that had its directory created (usually if an image was downloaded) but is otherwise empty. 
+ * You can still save and open a "blank" lesson plan, because pressing save will create a .json file that populates the directory.
+ * @param {{lessonPlanName: string, isCurrentlyFavorited: boolean}} lp 
+ * @param {boolean} leaveBySave 
+ */
+const removeEmptyLessonPlanDirectory = async (lp, leaveBySave) => {
+    // Check that the directory exists and is empty
+    if (!leaveBySave && await LessonPlanService.isLessonPlanDirectoryEmpty(lp.lessonPlanName, lp.isCurrentlyFavorited)) {
+        // Remove entire lp directory if so
+        console.log(`removeEmptyLessonPlanDirectory: ${lp.lessonPlanName}`);
+        LessonPlanService.deleteLessonPlan(lp.lessonPlanName);
+    }
+
 }
 
 export default handleCleanupActions;

@@ -12,7 +12,7 @@ export async function readDirectory(dirpath) {
       return result;
     })
     .catch(err => {
-      console.error(`RNFS readDirectory: ${err.message}`);
+      console.error(`RNFS readDirectory ${dirpath}: ${err.message}`);
     });
 }
 
@@ -28,7 +28,7 @@ export async function readDDirectory(dirpath) {
       return result;
     })
     .catch(err => {
-      console.error(`RNFS readDDirectory: ${err.message}`);
+      console.error(`RNFS readDDirectory ${dirpath}: ${err.message}`);
     });
 }
 
