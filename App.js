@@ -150,11 +150,6 @@ const MainNavigator = (shouldDisplayTutorial) => {
             options={{ headerShown: false }}
           />
         } */}
-        {/* <Stack.Screen
-            name={STACK_SCREENS.TUTORIAL}
-            component={Tutorial}
-            options={{ headerShown: false }}
-          /> */}
         <Stack.Screen 
           name={STACK_SCREENS.TABS} 
           component={TabsNavigator} 
