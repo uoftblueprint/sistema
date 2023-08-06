@@ -28,6 +28,7 @@ const OptionsMenu = ({
   const dispatch = useDispatch();
   const [isBannerVisible, setBannerVisible] = useState(false);
   const lessonPlan = useSelector(state => state.lessonPlan);
+  // eslint-disable-next-line
   const isCurrentlyFavorited =
     isFavorited ?? // from library
     useSelector(state => getCurrFavState(state.lessonPlan)); // from editor
