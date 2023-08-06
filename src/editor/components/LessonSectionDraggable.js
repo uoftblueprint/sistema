@@ -151,13 +151,13 @@ const LessonSectionDraggable = ({
 
     // If the module is an activity card, update the current list of activity cards
     const acToDelete = sectionData.find(
-      module => module.key === keyToDelete && module.type === 'activity',
+      module => module.key === keyToDelete && module.type === ModuleType.activityCard, // TODO: support images too
     );
     
     if (acToDelete) {
       // Get rid of activity card with first matching id
       let acArray = [...currActivityCards];
-      const index = acArray.indexOf(acToDelete.id);
+      const index = acArray.indexOf(`/${acToDelete.id}/cardImage.jpg`);
       if (index > -1) {
         acArray.splice(index, 1); 
         dispatch(setCurrActivityCards(acArray));
