@@ -5,7 +5,7 @@ import store from '../configureStore';
 
 /**
  * Handle cleanup actions before closing the lesson plan.
- * Includes deleting unused activity cards and handling a change in favorited/default directory.
+ * Includes deleting unused image files and handling a change in favorited/default directory.
  * @param {boolean} leaveBySave true if user pressed Save button to leave Editor
  */
 const handleCleanupActions = async (leaveBySave) => {
@@ -30,21 +30,21 @@ const handleCleanupActions = async (leaveBySave) => {
  * @param {boolean} leaveBySave true if user pressed Save button to leave Editor
  */
 const deleteUnusedImageFiles = async (lp, leaveBySave) => {
-    let acKeep;
+    let imgKeep;
     
     if (leaveBySave) {
         // Compare ACs in RNFS with current AC state (source of truth since we're saving)
-        acKeep = lp.currImageFiles;
+        imgKeep = lp.currImageFiles;
     } else if (lp.isDirty) {
         // Else, AC state when the LP was initially opened is our source of truth
-        acKeep = lp.initialImageFiles;
+        imgKeep = lp.initialImageFiles;
     }
 
     // Flag ACs to delete
-    const acRNFS = await LessonPlanService.getLessonPlanImages(lp.lessonPlanName);
-    const toDelete = acRNFS.filter(card => !(acKeep.includes(card)));
+    const imgRNFS = await LessonPlanService.getLessonPlanImages(lp.lessonPlanName);
+    const toDelete = imgRNFS.filter(card => !(imgKeep.includes(card)));
 
-    if (toDelete.length != 0) console.log('deleteUnusedActivityCards: Found the following unused ACs ', toDelete);
+    if (toDelete.length != 0) console.log('deleteUnusedImageFiles: Found the following unused images ', toDelete);
 
     // Delete all unused cards
     for (const jpgPath of toDelete) {

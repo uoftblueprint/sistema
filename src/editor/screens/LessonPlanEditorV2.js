@@ -93,13 +93,13 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
              * Set a unique key for each module per section.
              * If it's an activity card module, set the path and add it to initial activity cards. 
              */
-            const preprocessModule = (module, i, activityCardArr) => {
+            const preprocessModule = (module, i, imageArr) => {
               // Handle activity card
               let imagePath;
               if (module.type === ModuleType.activityCard || module.type === ModuleType.image) {
                 imagePath = MAINDIRECTORY + (favourited ? '/Favourited/' : '/Default/') + lessonPlanName + module.content;
                 // Add to initial activity cards
-                activityCardArr.push(module.content);
+                imageArr.push(module.content);
               }
 
               return {

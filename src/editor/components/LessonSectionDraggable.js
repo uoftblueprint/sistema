@@ -100,7 +100,7 @@ const LessonSectionDraggable = ({
         lessonPlanName,
       );
 
-      await dispatch(
+      dispatch(
         addToSection({
           type: ModuleType.image,
           name: paths.relPath,
@@ -108,6 +108,9 @@ const LessonSectionDraggable = ({
           content: paths.relPath,
           path: paths.fullPath,
         }),
+      );
+      dispatch(
+        setCurrImageFiles([...currImageFiles, paths.relPath]),
       );
     }
   };
@@ -149,20 +152,16 @@ const LessonSectionDraggable = ({
     // Remove module from LP frontend immediately
     updateRedux(newSectionData);
 
-    // If the module is an activity card, update the current list of activity cards
-    const acToDelete = sectionData.find(
-      module => module.key === keyToDelete && module.type === ModuleType.activityCard, // TODO: support images too
+    // If the module is an image type, update the current list of image files
+    const modToDelete = sectionData.find(
+      module => module.key === keyToDelete,
     );
-    
-    if (acToDelete) {
-      // Get rid of activity card with first matching id
-      let acArray = [...currImageFiles];
-      const index = acArray.indexOf(`/${acToDelete.id}/cardImage.jpg`);
-      if (index > -1) {
-        acArray.splice(index, 1); 
-        dispatch(setCurrImageFiles(acArray));
-      }
-    } 
+    if (modToDelete.type === ModuleType.activityCard || modToDelete.type === ModuleType.image) {
+      // Get rid of img with first matching id
+      let imgArray = [...currImageFiles];
+      imgArray.splice(imgArray.findIndex(img => img === modToDelete.content), 1);
+      dispatch(setCurrImageFiles(imgArray));
+    }
   };
 
   const editModule = (keyToEdit, newContent, newTitle = '') => {
