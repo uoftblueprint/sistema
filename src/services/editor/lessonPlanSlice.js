@@ -24,11 +24,10 @@ export const lessonPlanSlice = createSlice({
     isDirty: false,
     isInitiallyFavorited: null,
     isCurrentlyFavorited: null,
-    initialImageFiles: [], 
+    initialImageFiles: [],
     currImageFiles: [],
   },
   reducers: {
-
     /**
      * Load the redux store with a data from an existing lesson plan.
      * isDirty stays false.
@@ -112,22 +111,22 @@ export const lessonPlanSlice = createSlice({
         ...state,
         isInitiallyFavorited: action.payload,
         isCurrentlyFavorited: action.payload,
-      }
+      };
     },
 
     setFavState: (state, action) => {
       return {
         ...state,
         isCurrentlyFavorited: action.payload,
-      }
+      };
     },
 
     setCurrImageFiles: (state, action) => {
       return {
         ...state,
         currImageFiles: action.payload,
-      }
-    }, 
+      };
+    },
 
     reset: () => {
       console.log('Reseting redux...');
@@ -141,7 +140,7 @@ export const lessonPlanSlice = createSlice({
         isDirty: false,
         isInitiallyFavorited: null,
         isCurrentlyFavorited: null,
-        initialImageFiles: [], 
+        initialImageFiles: [],
         currImageFiles: [],
       };
     },
@@ -219,14 +218,14 @@ export const getLessonPlan = state => {
 
 export const getInitialFavState = state => {
   return state.isInitiallyFavorited;
-}
+};
 
 export const getCurrFavState = state => {
   return state.isCurrentlyFavorited;
-}
+};
 
 export const getCurrImageFiles = state => {
   return state.currImageFiles;
-}
+};
 
 export default lessonPlanSlice.reducer;

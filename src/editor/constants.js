@@ -12,4 +12,4 @@ export const ERROR = {
   FETCHING: 1,
   DUPLICATE_NAME: 2,
   SAVING: 3,
-}
+};

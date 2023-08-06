@@ -23,8 +23,8 @@ const LessonPlanButton = ({
         onPress={() => {
           navigation.navigate(EDITOR_STACK.NAVIGATOR, {
             screen: EDITOR_STACK.LESSON_PLAN_EDITOR_V2,
-            params: { 
-              lessonPlanName: name, 
+            params: {
+              lessonPlanName: name,
               isFavorited: isFavorited,
               lastEdited: lastEditedDate,
             },

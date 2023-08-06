@@ -109,9 +109,7 @@ const LessonSectionDraggable = ({
           path: paths.fullPath,
         }),
       );
-      dispatch(
-        setCurrImageFiles([...currImageFiles, paths.relPath]),
-      );
+      dispatch(setCurrImageFiles([...currImageFiles, paths.relPath]));
     }
   };
 
@@ -148,18 +146,22 @@ const LessonSectionDraggable = ({
     const newSectionData = sectionData.filter(
       module => module.key != keyToDelete,
     );
-    
+
     // Remove module from LP frontend immediately
     updateRedux(newSectionData);
 
     // If the module is an image type, update the current list of image files
-    const modToDelete = sectionData.find(
-      module => module.key === keyToDelete,
-    );
-    if (modToDelete.type === ModuleType.activityCard || modToDelete.type === ModuleType.image) {
+    const modToDelete = sectionData.find(module => module.key === keyToDelete);
+    if (
+      modToDelete.type === ModuleType.activityCard ||
+      modToDelete.type === ModuleType.image
+    ) {
       // Get rid of img with first matching id
       let imgArray = [...currImageFiles];
-      imgArray.splice(imgArray.findIndex(img => img === modToDelete.content), 1);
+      imgArray.splice(
+        imgArray.findIndex(img => img === modToDelete.content),
+        1,
+      );
       dispatch(setCurrImageFiles(imgArray));
     }
   };

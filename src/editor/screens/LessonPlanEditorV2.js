@@ -31,7 +31,6 @@ import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants.js';
 import handleCleanupActions from '../../services/editor/cleanupActions.js';
 import { ERROR } from '../constants.js';
 
-
 const LessonPlanEditorV2 = ({ navigation, route }) => {
   // NAVIGATION STATES
   const isFocused = useIsFocused();
@@ -51,12 +50,16 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   /**
    * Called every time we exit the Editor.
    * Handle cleanup actions, then clear redux and route params, and finally go to Library.
-   * @param {boolean} leaveBySave true if user pressed Save button to leave 
+   * @param {boolean} leaveBySave true if user pressed Save button to leave
    */
   const leaveEditor = async (leaveBySave = false) => {
     await handleCleanupActions(leaveBySave);
     dispatch(reset());
-    navigation.setParams({ lessonPlanName: '', isFavorited: false, lastEdited: '' });
+    navigation.setParams({
+      lessonPlanName: '',
+      isFavorited: false,
+      lastEdited: '',
+    });
     toggleUnsavedChanges(false);
     navigation.navigate(LIBRARY_STACK.NAVIGATOR, {
       screen: LIBRARY_STACK.LIBRARY,
@@ -68,7 +71,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     if (errorType !== ERROR.NONE) {
       toggleErrorOverlay(true);
     }
-  }, [errorType])
+  }, [errorType]);
 
   // Fetch and set lesson plan data
   useEffect(() => {
@@ -91,13 +94,20 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
           .then(lpObj => {
             /**
              * Set a unique key for each module per section.
-             * If it's an activity card module, set the path and add it to initial activity cards. 
+             * If it's an activity card module, set the path and add it to initial activity cards.
              */
             const preprocessModule = (module, i, imageArr) => {
               // Handle activity card
               let imagePath;
-              if (module.type === ModuleType.activityCard || module.type === ModuleType.image) {
-                imagePath = MAINDIRECTORY + (favourited ? '/Favourited/' : '/Default/') + lessonPlanName + module.content;
+              if (
+                module.type === ModuleType.activityCard ||
+                module.type === ModuleType.image
+              ) {
+                imagePath =
+                  MAINDIRECTORY +
+                  (favourited ? '/Favourited/' : '/Default/') +
+                  lessonPlanName +
+                  module.content;
                 // Add to initial activity cards
                 imageArr.push(module.content);
               }
@@ -113,15 +123,23 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
             };
 
             let initialImageArr = [];
-            lpObj[SectionName.warmUp] =
-              lpObj[SectionName.warmUp].map((module, i) => preprocessModule(module, i, initialImageArr));
-            lpObj[SectionName.mainLesson] =
-              lpObj[SectionName.mainLesson].map((module, i) => preprocessModule(module, i, initialImageArr));
-            lpObj[SectionName.coolDown] =
-              lpObj[SectionName.coolDown].map((module, i) => preprocessModule(module, i, initialImageArr));
-            
+            lpObj[SectionName.warmUp] = lpObj[SectionName.warmUp].map(
+              (module, i) => preprocessModule(module, i, initialImageArr),
+            );
+            lpObj[SectionName.mainLesson] = lpObj[SectionName.mainLesson].map(
+              (module, i) => preprocessModule(module, i, initialImageArr),
+            );
+            lpObj[SectionName.coolDown] = lpObj[SectionName.coolDown].map(
+              (module, i) => preprocessModule(module, i, initialImageArr),
+            );
+
             // Dispatch it to redux for the rest of the editor to render
-            dispatch(loadInitialLessonPlan({ ...lpObj, initialImageFiles: initialImageArr }));
+            dispatch(
+              loadInitialLessonPlan({
+                ...lpObj,
+                initialImageFiles: initialImageArr,
+              }),
+            );
             fetchSuccess = true;
             setNew(false);
           })
@@ -147,7 +165,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       }
 
       // Set redux state if LP is initially favorited for pathing reasons
-      const isInitiallyFavorited = isNewLP ? false : ((route.params && route.params.isFavorited) ?? false);
+      const isInitiallyFavorited = isNewLP
+        ? false
+        : (route.params && route.params.isFavorited) ?? false;
       dispatch(loadInitialFavState(isInitiallyFavorited));
 
       setFetching(false);

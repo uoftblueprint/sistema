@@ -229,7 +229,12 @@ const ActivityCardService = {
   deleteActivityCard: async function (jpgPath, lessonPlan, isLPFavorited) {
     try {
       const dirID = jpgPath.split('/')[1];
-      const filePath = MAINDIRECTORY + (isLPFavorited ? '/Favourited/' : '/Default/') + lessonPlan + '/' + dirID;
+      const filePath =
+        MAINDIRECTORY +
+        (isLPFavorited ? '/Favourited/' : '/Default/') +
+        lessonPlan +
+        '/' +
+        dirID;
 
       // check if file exists first. if yes, use RNFS.unlink, otherwise throw an error
       if (await checkFileExists(filePath)) {
@@ -239,7 +244,7 @@ const ActivityCardService = {
         console.error(`deleteActivityCard error: ${filePath} does not exist.`);
       }
     } catch (e) {
-      reject('Error in deleting activity card: ' + e);
+      console.error('Error in deleting activity card: ' + e);
     }
   },
 };

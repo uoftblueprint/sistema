@@ -36,11 +36,11 @@ const LessonPlanHeader = ({
 }) => {
   // REDUX STATES
   const dispatch = useDispatch();
-  const currLPName = useSelector(state =>
-    getLessonPlanName(state.lessonPlan),
-  );
+  const currLPName = useSelector(state => getLessonPlanName(state.lessonPlan));
   const isDirty = useSelector(state => getDirty(state.lessonPlan));
-  const initialLPName = useSelector(state => getInitialLessonPlanName(state.lessonPlan));
+  const initialLPName = useSelector(state =>
+    getInitialLessonPlanName(state.lessonPlan),
+  );
 
   // REACT COMPONENT STATES
   const [isEditable, setIsEditable] = useState(false);

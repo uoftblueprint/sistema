@@ -8,12 +8,12 @@ import {
 } from '../../services/editor/lessonPlanSlice';
 import { ERROR } from '../constants';
 
-const SaveButton = ({ 
-  isLessonPlanLoading, 
-  setLoading, 
+const SaveButton = ({
+  isLessonPlanLoading,
+  setLoading,
   setError,
-  isNewLP, 
-  handleBackButton 
+  isNewLP,
+  handleBackButton,
 }) => {
   const lessonPlanObj = useSelector(state => getLessonPlan(state.lessonPlan));
   const lessonPlanInitialName = useSelector(state =>
@@ -25,7 +25,7 @@ const SaveButton = ({
       <TouchableOpacity
         style={[
           styles.buttonContainer,
-          {opacity: isLessonPlanLoading ? 0.5 : 1}
+          { opacity: isLessonPlanLoading ? 0.5 : 1 },
         ]}
         onPress={async () => {
           if (!isLessonPlanLoading) {
@@ -34,11 +34,15 @@ const SaveButton = ({
             setLoading(true);
 
             // Check for naming conditions
-            const wasRenamed = lessonPlanInitialName &&
+            const wasRenamed =
+              lessonPlanInitialName &&
               lessonPlanInitialName != lessonPlanObj.lessonPlanName;
 
             if (isNewLP || wasRenamed) {
-              const isUnique = await LessonPlanService.isLPNameUnique(lessonPlanObj.lessonPlanName, lessonPlanObj.isInitiallyFavorited);
+              const isUnique = await LessonPlanService.isLPNameUnique(
+                lessonPlanObj.lessonPlanName,
+                lessonPlanObj.isInitiallyFavorited,
+              );
               if (!isUnique) {
                 setLoading(false);
                 console.log('Duplicate name detected, aborting save.');
@@ -57,13 +61,10 @@ const SaveButton = ({
                   lessonPlanInitialName,
                 );
               } else {
-                await LessonPlanService.saveLessonPlan(
-                  lessonPlanObj, 
-                  false,
-                );
-              }  
+                await LessonPlanService.saveLessonPlan(lessonPlanObj, false);
+              }
             } catch (e) {
-              console.error("Error saving lesson plan: ", e);
+              console.error('Error saving lesson plan: ', e);
               setError(ERROR.SAVING);
               return;
             }

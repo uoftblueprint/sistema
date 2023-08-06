@@ -29,7 +29,11 @@ import LessonPlanService from '../../services/LessonPlanService';
 import { MAINDIRECTORY } from '../../services/constants';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addToSection, getCurrImageFiles, setCurrImageFiles } from '../../services/editor/lessonPlanSlice';
+import {
+  addToSection,
+  getCurrImageFiles,
+  setCurrImageFiles,
+} from '../../services/editor/lessonPlanSlice';
 import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
 
 const AddActivityCard = function ({ navigation, route }) {
@@ -163,7 +167,9 @@ const AddActivityCard = function ({ navigation, route }) {
   // **************** PREVIEW RELATED VARS ***************
   const [previewInfo, setPreviewInfo] = useState(null); // previewInfo has id, name, and url
 
-  const currActivityCards = useSelector(state => getCurrImageFiles(state.lessonPlan));
+  const currActivityCards = useSelector(state =>
+    getCurrImageFiles(state.lessonPlan),
+  );
   const dispatch = useDispatch();
 
   //onPress function for add Card button
@@ -180,36 +186,35 @@ const AddActivityCard = function ({ navigation, route }) {
       'Downloaded',
       previewInfo.name,
       lessonPlanName,
-    ).then(rnfsPath => {
+    )
+      .then(rnfsPath => {
         rnfsPath = rnfsPath.replace(
           MAINDIRECTORY + folder + lessonPlanName,
           '',
         );
         fullPath = MAINDIRECTORY + folder + lessonPlanName + rnfsPath;
         return rnfsPath;
-    })
-    .then(relPath => {
-      dispatch(
-        addToSection({
-          type: ModuleType.activityCard,
-          name: previewInfo?.name,
-          id: previewInfo?.id,
-          section: sectionType,
-          content: relPath,
-          path: fullPath,
-        }),
-      );
+      })
+      .then(relPath => {
+        dispatch(
+          addToSection({
+            type: ModuleType.activityCard,
+            name: previewInfo?.name,
+            id: previewInfo?.id,
+            section: sectionType,
+            content: relPath,
+            path: fullPath,
+          }),
+        );
 
-      dispatch(
-        setCurrImageFiles([...currActivityCards, relPath]),
-      );
-    })
-    .then(() => {
-      navigation.goBack();
-    })
-    .catch(err => {
-      console.error('Error when adding activity card: ' + err);
-    });
+        dispatch(setCurrImageFiles([...currActivityCards, relPath]));
+      })
+      .then(() => {
+        navigation.goBack();
+      })
+      .catch(err => {
+        console.error('Error when adding activity card: ' + err);
+      });
   };
 
   const addAsText = async () => {

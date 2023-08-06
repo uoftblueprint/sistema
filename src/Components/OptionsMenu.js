@@ -13,7 +13,10 @@ import { createPDF } from '../services/pdf';
 import { deleteFile } from '../services/routes/Local';
 import Share from 'react-native-share';
 import LessonPlanService from '../services/LessonPlanService';
-import { setFavState, getCurrFavState } from '../services/editor/lessonPlanSlice.js';
+import {
+  setFavState,
+  getCurrFavState,
+} from '../services/editor/lessonPlanSlice.js';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
@@ -24,11 +27,12 @@ const OptionsMenu = ({
 }) => {
   const dispatch = useDispatch();
   const [isBannerVisible, setBannerVisible] = useState(false);
-  const lessonPlan = useSelector(state => state.lessonPlan); 
-  const isCurrentlyFavorited = isFavorited // from library
-    ?? useSelector(state => getCurrFavState(state.lessonPlan)); // from editor
-  // TODO can i move this into export helper func if 
-  // it's only being used once b/c lastEdited is passed in 
+  const lessonPlan = useSelector(state => state.lessonPlan);
+  const isCurrentlyFavorited =
+    isFavorited ?? // from library
+    useSelector(state => getCurrFavState(state.lessonPlan)); // from editor
+  // TODO can i move this into export helper func if
+  // it's only being used once b/c lastEdited is passed in
 
   // ALL OPTION BUTTONS
   const editorButtons = [
@@ -68,12 +72,12 @@ const OptionsMenu = ({
     navigation.goBack();
   };
 
-  const handleFavoriteChange = (newState) => {
+  const handleFavoriteChange = newState => {
     dispatch(setFavState(newState));
-  }
+  };
 
   const exportLessonPlan = async () => {
-    const lpObj = isLessonPlanEditor 
+    const lpObj = isLessonPlanEditor
       ? lessonPlan // get lesson plan from redux since we're in the editor already
       : await LessonPlanService.getLessonPlan(lessonPlanName);
     let pdf = await createPDF(lpObj);
@@ -84,10 +88,12 @@ const OptionsMenu = ({
       });
       console.log('File shared');
     } catch (err) {
-      const exception = Platform.OS === 'android' && err.toString().includes('User did not share');
+      const exception =
+        Platform.OS === 'android' &&
+        err.toString().includes('User did not share');
       if (!exception) {
         console.error('File not shared', err);
-      };
+      }
     }
     await deleteFile(pdf.filePath);
   };
@@ -100,9 +106,6 @@ const OptionsMenu = ({
         <OptionHeader lastEdited={lastEdited} navigation={navigation} />
 
         {buttons.map((button, i) => {
-          if (button.name === 'Export Lesson Plan') {
-            onPress = exportLessonPlan;
-          }
           if (button.name === 'Favorites') {
             return (
               <FavoriteButton
@@ -135,7 +138,9 @@ const OptionsMenu = ({
           }
         })}
       </SafeAreaView>
-      {isBannerVisible && <OptionsMenuBanner isFavoritedPlan={isCurrentlyFavorited} />}
+      {isBannerVisible && (
+        <OptionsMenuBanner isFavoritedPlan={isCurrentlyFavorited} />
+      )}
     </SafeAreaView>
   );
 };

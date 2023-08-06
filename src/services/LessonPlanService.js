@@ -160,7 +160,9 @@ const LessonPlanService = {
         console.log(`Lesson Plan is in Default: ${name}`);
         return false;
       } else {
-        console.warn(`Lesson Plan ${name} has not been saved into a Favourited or Default folder yet`);
+        console.warn(
+          `Lesson Plan ${name} has not been saved into a Favourited or Default folder yet`,
+        );
         return false;
       }
     } catch (e) {
@@ -328,17 +330,17 @@ const LessonPlanService = {
 
   /**
    * Check if there is another existing lesson plan with the same name.
-   * @param {String} name 
-   * @param {Boolean} isFavourited Known before so just passed in 
+   * @param {String} name
+   * @param {Boolean} isFavourited Known before so just passed in
    * @returns {Boolean} true if lesson plan name is unique, false otherwise
    */
   isLPNameUnique: async function (name, isFavourited) {
     try {
       // Grab all lesson plan names from list of [mtime, name]
       const lessonPlanArr = await this.getAllLessonPlanNames(0);
-      const allNames =  lessonPlanArr.map(data => data.name);
+      const allNames = lessonPlanArr.map(data => data.name);
       // True if existing allNames doesn't include new name
-      const isUnique = !(allNames.includes(name.trim()));
+      const isUnique = !allNames.includes(name.trim());
 
       // Handle edge case
       if (!isUnique) {
@@ -358,8 +360,8 @@ const LessonPlanService = {
   },
 
   /**
-   * Get paths of all image (jpg, png) files in the lesson plan directory. 
-   * @param {String} name Name of the lesson plan 
+   * Get paths of all image (jpg, png) files in the lesson plan directory.
+   * @param {String} name Name of the lesson plan
    * @returns {String[]} List of all image paths in the format `/${id}/cardImage.jpg` or `/${id}`
    */
   getLessonPlanImages: async function (name) {
@@ -371,7 +373,7 @@ const LessonPlanService = {
 
       const lpFiles = await readDDirectory(dir).catch(() => []);
 
-      let images = []
+      let images = [];
       for (let file of lpFiles) {
         if (file.isDirectory()) {
           // Image is an activity card downloaded into a directory
@@ -389,12 +391,11 @@ const LessonPlanService = {
     }
   },
 
-  
   /**
-   * Checks if the lesson plan directory is empty. 
+   * Checks if the lesson plan directory is empty.
    * If the directory doesn't exist (lesson plan hasn't been saved yet), will return false.
    * @param {String} name Name of lesson plan
-   * @param {Boolean} isFavourited Known before in cleanupActions.js so just passed in 
+   * @param {Boolean} isFavourited Known before in cleanupActions.js so just passed in
    * @returns {Promise<Boolean>} True if lesson plan doesn't have a .json file and any images, False otherwise
    */
   isLessonPlanDirectoryEmpty: async function (name, isFavourited) {
@@ -407,13 +408,15 @@ const LessonPlanService = {
         const files = await readDirectory(path);
         return files.length == 0;
       } else {
-        console.log(`isLessonPlanDirectoryEmpty: ${name} directory does not exist`);
+        console.log(
+          `isLessonPlanDirectoryEmpty: ${name} directory does not exist`,
+        );
         return false;
       }
     } catch (e) {
       console.error('Error isLessonPlanDirectoryEmpty: ', e);
     }
-  }
+  },
 };
 
 export default LessonPlanService;
