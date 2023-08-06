@@ -10,7 +10,7 @@ export const lessonPlanSlice = createSlice({
    * @property {ModuleType} type
    * @property {string} content
    * @property {string} key Unique in that section. For example, 'module-0'.
-   * 
+   *
    * Only the "link" type module has an extra param:
    * @property {string} title
    */
