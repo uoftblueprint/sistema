@@ -6,7 +6,7 @@ import NoWifiIcon from '../../assets/cloudOfflineOutline';
 import { verticalScale, scale } from 'react-native-size-matters';
 import { TextStyle } from '../Styles.config';
 
-const WifiWarningOverlay = ({ visible, handleClose}) => {
+const WifiWarningOverlay = ({ visible, handleClose }) => {
   const iconSize = scale(27);
 
   return (
@@ -16,18 +16,15 @@ const WifiWarningOverlay = ({ visible, handleClose}) => {
       style={styles.overlayContainer}>
       <View style={styles.textColumn}>
         <View style={styles.row}>
-          <NoWifiIcon
-            height={iconSize}
-            width={iconSize}
-            style={styles.icon}
-          />
+          <NoWifiIcon height={iconSize} width={iconSize} style={styles.icon} />
           <Text style={[TextStyle.label, styles.overlayTitle]}>
             You are not connected to wifi.
           </Text>
         </View>
 
         <Text style={TextStyle.body}>
-          Activity cards cannot be retrieved and other services may be unavailable. Please check your connection and try again.
+          Activity cards cannot be retrieved and other services may be
+          unavailable. Please check your connection and try again.
         </Text>
 
         <View style={styles.buttonContainer}>

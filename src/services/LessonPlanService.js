@@ -371,7 +371,7 @@ const LessonPlanService = {
         ? `${MAINDIRECTORY}/Favourited/${name}/`
         : `${MAINDIRECTORY}/Default/${name}/`;
 
-      const lpFiles = await readDDirectory(dir) ?? [];
+      const lpFiles = (await readDDirectory(dir)) ?? [];
 
       let images = [];
       for (let file of lpFiles) {

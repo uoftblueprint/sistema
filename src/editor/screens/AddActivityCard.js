@@ -23,7 +23,7 @@ import BackArrow from '../../../assets/backArrow.svg';
 
 // Backend
 import { useQuery } from '@tanstack/react-query';
-import { useNetInfo } from "@react-native-community/netinfo";
+import { useNetInfo } from '@react-native-community/netinfo';
 import ActivityCardService from '../../services/ActivityCardService';
 import LessonPlanService from '../../services/LessonPlanService';
 import { MAINDIRECTORY } from '../../services/constants';
@@ -48,13 +48,13 @@ const AddActivityCard = function ({ navigation, route }) {
 
   useEffect(() => {
     // Check for false because netInfo.isConnected may be null if unknown network
-    if (netInfo.isConnected === false) { 
+    if (netInfo.isConnected === false) {
       setWifiConnected(false);
       setWifiWarningOverlay(true);
     } else {
       setWifiConnected(true);
     }
-  }, [netInfo])
+  }, [netInfo]);
 
   // ************ WIFI RELATED VARS END *********
 
@@ -198,7 +198,7 @@ const AddActivityCard = function ({ navigation, route }) {
       setWifiWarningOverlay(true);
       return;
     }
-    
+
     const favourited = await LessonPlanService.isLessonPlanFavourited(
       lessonPlanName,
     );
@@ -256,7 +256,7 @@ const AddActivityCard = function ({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeContainer}>
-      <WifiWarningOverlay 
+      <WifiWarningOverlay
         visible={wifiWarningOverlayVisible}
         handleClose={() => {
           setWifiWarningOverlay(false);

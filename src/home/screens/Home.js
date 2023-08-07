@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useState, useEffect } from 'react';
-import { useNetInfo } from "@react-native-community/netinfo";
+import { useNetInfo } from '@react-native-community/netinfo';
 import RecentCard from '../components/RecentCard';
 import Header from '../../Components/Header';
 import RefreshIcon from '../../../assets/refreshIcon.svg';
@@ -37,13 +37,13 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     // Check for false because netInfo.isConnected may be null if unknown network
-    if (netInfo.isConnected === false) { 
+    if (netInfo.isConnected === false) {
       setWifiConnected(false);
       setWifiWarningOverlay(true);
     } else {
       setWifiConnected(true);
     }
-  }, [netInfo])
+  }, [netInfo]);
 
   const handleRefreshPress = async () => {
     // Can't download AC if there's no internet connection
@@ -107,7 +107,7 @@ const Home = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.background}>
-      <WifiWarningOverlay 
+      <WifiWarningOverlay
         visible={wifiWarningOverlayVisible}
         handleClose={() => {
           setWifiWarningOverlay(false);
