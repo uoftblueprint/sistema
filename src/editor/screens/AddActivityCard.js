@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Platform,
 } from 'react-native';
 import { verticalScale, scale } from 'react-native-size-matters';
 import { TextStyle } from '../../Styles.config';
@@ -24,6 +23,7 @@ import BackArrow from '../../../assets/backArrow.svg';
 
 // Backend
 import { useQuery } from '@tanstack/react-query';
+import { useNetInfo } from "@react-native-community/netinfo";
 import ActivityCardService from '../../services/ActivityCardService';
 import LessonPlanService from '../../services/LessonPlanService';
 import { MAINDIRECTORY } from '../../services/constants';
@@ -35,9 +35,28 @@ import {
   setCurrImageFiles,
 } from '../../services/editor/lessonPlanSlice';
 import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
+import WifiWarningOverlay from '../../Components/WifiWarningOverlay';
 
 const AddActivityCard = function ({ navigation, route }) {
   const { sectionType, lessonPlanName } = route.params;
+
+  // ************ WIFI RELATED VARS *********
+
+  const [isWifiConnected, setWifiConnected] = useState(true);
+  const [wifiWarningOverlayVisible, setWifiWarningOverlay] = useState(false);
+  const netInfo = useNetInfo();
+
+  useEffect(() => {
+    // Check for false because netInfo.isConnected may be null if unknown network
+    if (netInfo.isConnected === false) { 
+      setWifiConnected(false);
+      setWifiWarningOverlay(true);
+    } else {
+      setWifiConnected(true);
+    }
+  }, [netInfo])
+
+  // ************ WIFI RELATED VARS END *********
 
   // *************** SEARCH RELATED VARS *******************
 
@@ -174,7 +193,12 @@ const AddActivityCard = function ({ navigation, route }) {
 
   //onPress function for add Card button
   const addCard = async () => {
-    console.log(`Initial Lesson Plan Name: ${lessonPlanName}`);
+    // Can't download AC if there's no internet connection
+    if (!isWifiConnected) {
+      setWifiWarningOverlay(true);
+      return;
+    }
+    
     const favourited = await LessonPlanService.isLessonPlanFavourited(
       lessonPlanName,
     );
@@ -232,6 +256,12 @@ const AddActivityCard = function ({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeContainer}>
+      <WifiWarningOverlay 
+        visible={wifiWarningOverlayVisible}
+        handleClose={() => {
+          setWifiWarningOverlay(false);
+        }}
+      />
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.paddingContainer}>
           <View style={styles.header}>

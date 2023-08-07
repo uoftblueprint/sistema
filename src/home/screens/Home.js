@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useState, useEffect } from 'react';
+import { useNetInfo } from "@react-native-community/netinfo";
 import RecentCard from '../components/RecentCard';
 import Header from '../../Components/Header';
 import RefreshIcon from '../../../assets/refreshIcon.svg';
@@ -24,13 +25,33 @@ import {
 } from '../../services/routes/Local.js';
 import { TextStyle } from '../../Styles.config';
 import { scale, verticalScale } from 'react-native-size-matters';
+import WifiWarningOverlay from '../../Components/WifiWarningOverlay';
 
 const Home = ({ navigation }) => {
   const [date, setDate] = useState('');
   const [pathArr, setPathArr] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isWifiConnected, setWifiConnected] = useState(true);
+  const [wifiWarningOverlayVisible, setWifiWarningOverlay] = useState(false);
+  const netInfo = useNetInfo();
+
+  useEffect(() => {
+    // Check for false because netInfo.isConnected may be null if unknown network
+    if (netInfo.isConnected === false) { 
+      setWifiConnected(false);
+      setWifiWarningOverlay(true);
+    } else {
+      setWifiConnected(true);
+    }
+  }, [netInfo])
 
   const handleRefreshPress = async () => {
+    // Can't download AC if there's no internet connection
+    if (!isWifiConnected) {
+      setWifiWarningOverlay(true);
+      return;
+    }
+
     setLoading(true);
     const datePath = MAINDIRECTORY + '/RefreshedDate';
     const filePath = `${datePath}/date.txt`;
@@ -86,6 +107,13 @@ const Home = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.background}>
+      <WifiWarningOverlay 
+        visible={wifiWarningOverlayVisible}
+        handleClose={() => {
+          setWifiWarningOverlay(false);
+        }}
+      />
+
       <Header isHome={true} navigation={navigation} showBackButton={false} />
       <SafeAreaView style={styles.headContainer}>
         <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
