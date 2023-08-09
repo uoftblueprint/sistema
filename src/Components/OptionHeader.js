@@ -6,7 +6,7 @@ import {
   Dimensions,
   View,
 } from 'react-native';
-import XButton from '../../assets/xButton.svg';
+import XButton from '../../assets/icons/xButton.svg';
 import { TextStyle } from '../Styles.config';
 import { OptionsMenuPadding } from '../Styles.config';
 

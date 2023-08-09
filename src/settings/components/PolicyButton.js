@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { STACK_SCREENS } from '../constants';
-import NextButton from '../../../assets/backArrowEast.svg';
+import NextButton from '../../../assets/icons/backArrowEast.svg';
 import { TextStyle } from '../../Styles.config';
 
 const PolicyButton = ({ title, content, navigation }) => {

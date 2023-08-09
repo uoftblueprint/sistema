@@ -8,7 +8,7 @@ import {
   LayoutAnimation,
   Platform,
 } from 'react-native';
-import AddIcon from '../../../assets/add.svg';
+import AddIcon from '../../../assets/icons/add.svg';
 import { TextStyle } from '../../Styles.config';
 import { verticalScale } from 'react-native-size-matters';
 
@@ -62,7 +62,7 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
         <SafeAreaView style={styles.buttonStyle}>
           <AddIcon height={'30'} width={'30'} />
           <View style={styles.input}>
-            <Text style={TextStyle.label}>Add Content</Text>
+            <Text style={TextStyle.label}>Add content</Text>
           </View>
         </SafeAreaView>
       </TouchableOpacity>

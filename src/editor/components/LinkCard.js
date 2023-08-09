@@ -14,7 +14,7 @@ import { TextStyle } from '../../Styles.config';
 import { ModuleType } from '../../services/constants';
 import { scale } from 'react-native-size-matters';
 
-import LinkIcon from '../../../assets/linkIcon.svg';
+import LinkIcon from '../../../assets/icons/linkIcon.svg';
 
 const LinkCard = ({ setisLinkInputOpen, sectionType }) => {
   const titleInput = useRef();

@@ -2,8 +2,8 @@ import { Text, SafeAreaView, StyleSheet, Dimensions } from 'react-native';
 import { OptionsMenuPadding } from '../Styles.config';
 import { verticalScale, scale } from 'react-native-size-matters';
 
-import CheckMarkIcon from '../../assets/checkMark.svg';
-import AlertErrorIcon from '../../assets/errorAlert.svg';
+import CheckMarkIcon from '../../assets/icons/checkMark.svg';
+import AlertErrorIcon from '../../assets/icons/errorAlert.svg';
 
 const windowWidth = Dimensions.get('window').width;
 

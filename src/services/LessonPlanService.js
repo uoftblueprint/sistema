@@ -10,11 +10,31 @@ import {
 } from './routes/Local';
 import { MAINDIRECTORY, SectionName, ImageFileExtensions } from './constants';
 import { Module } from './models';
+import { write } from 'react-native-fs';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
   // Don't call RNFS directly here!
   // Instead, call a function from Local.js :~]
+  /**
+   * Create a file userOnboarded.txt for which the existence indicates
+   * that the user has already been onboarded onto the app.
+   * @param {String} name Name of the lesson plan to delete
+   */
+  isUserOnboarded: async function () {
+    try {
+      const userOnboarded = await checkFileExists(`${MAINDIRECTORY}/userOnboarded.txt`);
+      
+      if (userOnboarded) {
+        return true;
+      } else {
+        await writeFile(false, `${MAINDIRECTORY}/userOnboarded.txt`, 'User has been onboarded!');
+        return false;
+      }
+    } catch (e) {
+      console.error('deleteLessonPlan error: ', e);
+    }
+  },
 
   /**
    * Delete a Lesson Plan (a.k.a a directory in MAINDIRECTORY and its contents).
@@ -51,11 +71,23 @@ const LessonPlanService = {
       const lessonJSON = JSON.stringify(lesson);
       const name = lesson.lessonPlanName.trim();
 
-      let path;
+      let favourited;
+      let defaulted;
 
       if (hasNewName) {
+        favourited = await checkFileExists(MAINDIRECTORY + '/Favourited/' + oldLPName + '/');
+        defaulted = await checkFileExists(MAINDIRECTORY + '/Default/' + oldLPName + '/');
+      } else {
+        favourited = await checkFileExists(MAINDIRECTORY + '/Favourited/' + name + '/');
+        defaulted = await checkFileExists(MAINDIRECTORY + '/Default/' + name + '/');
+      }
+      
+      let path;
+
+      if ((favourited || defaulted) && hasNewName) {
+        // Case where the lesson plan already exists and was renamed
+
         console.log('The lesson plan was saved with a new name.');
-        const favourited = await this.isLessonPlanFavourited(oldLPName);
         const folder = favourited ? '/Favourited/' : '/Default/';
 
         const oldPath = MAINDIRECTORY + folder + oldLPName;
@@ -68,19 +100,10 @@ const LessonPlanService = {
         await deleteFile(path + '/' + oldLPName + '.json');
         await this.deleteLessonPlan(oldLPName);
       } else {
-        console.log('The lesson plan was saved without a new name.');
+        console.log('The lesson plan was saved without a new name, or is a new lesson plan.');
 
-        const favouritedPath = `${MAINDIRECTORY}/Favourited/${name}/`;
-        const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
-
-        // Check if file exists, assigning appropriate path if so
-        if (await checkFileExists(favouritedPath)) {
-          path = favouritedPath;
-        } else if (await checkFileExists(defaultPath)) {
-          path = defaultPath;
-        } else {
-          path = defaultPath; // By default, new lesson plans should not be favourited
-        }
+        // If not favourited, then the lesson plan must be in default
+        path = favourited ? `${MAINDIRECTORY}/Favourited/${name}/` : `${MAINDIRECTORY}/Default/${name}/`;
 
         // Then, write to local storage with an RNFS call via Local.js
         await makeDirectory(path);

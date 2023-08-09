@@ -1,6 +1,7 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View } from 'react-native';
 import SistemaLogo from '../../assets/SistemaLogoLoading.svg';
+import { TextStyle } from '../Styles.config';
 
 const Loading = () => {
   return (
@@ -8,8 +9,12 @@ const Loading = () => {
       <SafeAreaView style={styles.imageContainer}>
         <SistemaLogo />
       </SafeAreaView>
-      <Text style={styles.appname}>App Name</Text>
-      <Text style={styles.visionStatement}>Vision Statement</Text>
+      <View style={styles.appname}>
+        <Text style={[TextStyle.h1, {textAlign: 'center'}]}>Welcome to Sistema Toronto LEARN!</Text>
+      </View>
+      <View style={styles.visionStatement}>
+        <Text style={[TextStyle.label, { textAlign: 'center' }]}>Easily and quickly make lesson plans on the go.</Text>
+      </View>
     </SafeAreaView>
   );
 };
@@ -28,20 +33,11 @@ const styles = StyleSheet.create({
   },
   //add 'Poppins' font
   appname: {
-    fontFamily: 'Poppins-Regular',
-    paddingTop: '4%', // add space above the text
-    color: '#000000',
-    fontSize: 42,
-    letterSpacing: 0.05,
-    lineHeight: 63,
+    margin: '10%', // add space above the text
   },
   visionStatement: {
-    fontFamily: 'Poppins-Regular',
-    paddingTop: '4%', // add space above the text
-    color: '#000000',
-    fontSize: 23,
-    letterSpacing: 0.05,
-    lineHeight: 34,
+    marginHorizontal: '10%',
   },
 });
+
 export default Loading;
