@@ -3,7 +3,7 @@ import Overlay from '../../../Components/Overlay';
 import SistemaButton from '../../../Components/SistemaButton';
 import { TextStyle } from '../../../Styles.config';
 import { verticalScale, scale } from 'react-native-size-matters';
-import AlertErrorIcon from '../../../../assets/errorAlertThin.svg';
+import AlertErrorIcon from '../../../../assets/icons/errorAlertThin.svg';
 
 const ErrorLoadingLPOverlay = ({ visible, handleClose }) => {
   const iconSize = scale(27);

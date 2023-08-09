@@ -22,13 +22,14 @@ import { STACK_SCREENS as LIBRARY_STACK } from './src/library/constants';
 import { STACK_SCREENS as EDITOR_STACK } from './src/editor/constants';
 import Loading from './src/home/Loading';
 import Tutorial from './src/home/Tutorial';
+import Welcome from './src/home/Welcome';
 
 import { Provider } from 'react-redux';
 import configureStore from './src/services/configureStore';
 
-import LibraryNavIcon from './assets/libraryNavIcon.svg';
-import HomeNavIcon from './assets/homeNavIcon.svg';
-import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
+import LibraryNavIcon from './assets/icons/libraryNavIcon.svg';
+import HomeNavIcon from './assets/icons/homeNavIcon.svg';
+import LessonPlanEditorNavIcon from './assets/icons/lessonPlanEditorNavIcon.svg';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ActivityCardService from './src/services/ActivityCardService';
@@ -48,6 +49,7 @@ const STACK_SCREENS = {
   TABS: 'TabsNavigator',
   HOME: 'HomeNavigator',
   TUTORIAL: 'Tutorial',
+  WELCOME: 'Welcome',
   EDITOR: EDITOR_STACK.NAVIGATOR,
   LIBRARY: LIBRARY_STACK.NAVIGATOR,
   SETTINGS: SETTINGS_STACK.NAVIGATOR
@@ -135,25 +137,26 @@ const TabsNavigator = () => {
 
 const Stack = createStackNavigator();
 
-const MainNavigator = (shouldDisplayTutorial) => {
+const MainNavigator = ({displayTutorial}) => {
   const navigationRef = useNavigationContainerRef();
-
-  console.log("shoulddisplaytutorial?", shouldDisplayTutorial);
 
   return (
     <NavigationContainer ref={navigationRef} independent={true}>
-      <Stack.Navigator>
-        {/* {
-          shouldDisplayTutorial && <Stack.Screen
+      <Stack.Navigator
+        initialRouteName={displayTutorial ? STACK_SCREENS.WELCOME : STACK_SCREENS.TABS}
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen
+            name={STACK_SCREENS.WELCOME}
+            component={Welcome}
+          />
+        <Stack.Screen
             name={STACK_SCREENS.TUTORIAL}
             component={Tutorial}
-            options={{ headerShown: false }}
           />
-        } */}
         <Stack.Screen 
           name={STACK_SCREENS.TABS} 
           component={TabsNavigator} 
-          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -173,35 +176,34 @@ const styles = StyleSheet.create({
 });
 
 const App = () => {
-  queryClient.prefetchQuery({
-    queryKey: ['activityCards'],
-    queryFn: ActivityCardService.getAllActivityCards,
-  });
-
   // State variables for displaying onboarding screens
-  const [shouldDisplayTutorial, setShouldDisplayTutorial] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [shouldDisplayTutorial, setShouldDisplayTutorial] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const displayTutorial = async () => {
+  const welcomeSetup = async () => {
     LessonPlanService.isUserOnboarded().then((res) => {
-      console.log("Has the user been onboarded?", res);
       setShouldDisplayTutorial(!res);
+    }).then(() => {
+      queryClient.prefetchQuery({
+        queryKey: ['activityCards'],
+        queryFn: ActivityCardService.getAllActivityCards,
+      });
     }).finally(() => {
-      setLoading(false);
+      setIsLoading(false);
     });
   }
 
   useEffect(() => {
-    displayTutorial();
+    welcomeSetup();
   }, []);
 
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
         <Provider store={configureStore}>
-          {loading 
+          {isLoading 
             ? <Loading /> 
-            : <MainNavigator shouldDisplayTutorial={shouldDisplayTutorial} />
+            : <MainNavigator displayTutorial={shouldDisplayTutorial} />
           }
         </Provider>
       </QueryClientProvider>

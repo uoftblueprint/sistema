@@ -23,10 +23,10 @@ import { TextStyle } from '../../Styles.config';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 // ICONS
-import TextIcon from '../../../assets/textIcon.svg';
-import SearchIcon from '../../../assets/Search.svg';
-import ImageIcon from '../../../assets/imageIcon.svg';
-import LinkIcon from '../../../assets/linkIcon.svg';
+import TextIcon from '../../../assets/icons/textIcon.svg';
+import SearchIcon from '../../../assets/icons/Search.svg';
+import ImageIcon from '../../../assets/icons/imageIcon.svg';
+import LinkIcon from '../../../assets/icons/linkIcon.svg';
 
 const LessonSectionDraggable = ({
   sectionType,

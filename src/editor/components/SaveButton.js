@@ -1,5 +1,5 @@
 import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
-import SaveIcon from '../../../assets/save.svg';
+import SaveIcon from '../../../assets/icons/save.svg';
 import LessonPlanService from '../../services/LessonPlanService';
 import { useSelector, useDispatch } from 'react-redux';
 import {

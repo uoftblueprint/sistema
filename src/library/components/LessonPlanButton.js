@@ -1,8 +1,8 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import DotsGraphic from '../../../assets/dots.svg';
-import EmptyHeart from '../../../assets/heartOutline.svg';
-import FilledHeart from '../../../assets/favoriteIcon.svg';
+import DotsGraphic from '../../../assets/icons/dots.svg';
+import EmptyHeart from '../../../assets/icons/heartOutline.svg';
+import FilledHeart from '../../../assets/icons/favoriteIcon.svg';
 import { STACK_SCREENS as LIBRARY_STACK } from '../constants';
 import { STACK_SCREENS as EDITOR_STACK } from '../../editor/constants';
 import { TextStyle } from '../../Styles.config';

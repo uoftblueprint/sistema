@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import AddIcon from '../../../assets/add';
+import AddIcon from '../../../assets/icons/add';
 
 const LessonPlanAddItem = ({ placeholder }) => {
   return (

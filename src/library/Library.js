@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import Header from '../Components/Header';
-import FilterGraphic from '../../assets/filterOutline.svg';
+import FilterGraphic from '../../assets/icons/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 import LessonPlanService from '../services/LessonPlanService';
 import { TextStyle } from '../Styles.config';

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import SearchLogo from '../../../assets/Search.svg';
+import SearchLogo from '../../../assets/icons/Search.svg';
 import SearchResults from './SearchResults';
 import NoCardsFound from './NoCardsFound';
 import { TextStyle } from '../../Styles.config';

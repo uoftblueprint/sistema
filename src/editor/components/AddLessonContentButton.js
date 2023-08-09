@@ -8,7 +8,7 @@ import {
   LayoutAnimation,
   Platform,
 } from 'react-native';
-import AddIcon from '../../../assets/add.svg';
+import AddIcon from '../../../assets/icons/add.svg';
 import { TextStyle } from '../../Styles.config';
 import { verticalScale } from 'react-native-size-matters';
 

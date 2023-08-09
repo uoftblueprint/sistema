@@ -9,7 +9,7 @@ import {
 import { useState, useEffect } from 'react';
 import RecentCard from '../components/RecentCard';
 import Header from '../../Components/Header';
-import RefreshIcon from '../../../assets/refreshIcon.svg';
+import RefreshIcon from '../../../assets/icons/refreshIcon.svg';
 import { MAINDIRECTORY } from '../../services/constants';
 import { STACK_SCREENS } from '../constants';
 import { AppColors } from '../../Styles.config';

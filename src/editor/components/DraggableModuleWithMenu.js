@@ -16,7 +16,7 @@ import {
 import { ModuleType } from '../../services/constants';
 import { TextStyle } from '../../Styles.config';
 
-import LinkIcon from '../../../assets/linkIcon.svg';
+import LinkIcon from '../../../assets/icons/linkIcon.svg';
 
 import { scale, verticalScale } from 'react-native-size-matters';
 

@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import EditIcon from '../../../assets/edit.svg';
-import Menu from '../../../assets/menu.svg';
-import BackArrow from '../../../assets/backArrow.svg';
+import EditIcon from '../../../assets/icons/edit.svg';
+import Menu from '../../../assets/icons/menu.svg';
+import BackArrow from '../../../assets/icons/backArrow.svg';
 import { TextStyle } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';

@@ -20,7 +20,7 @@ import TagCarousel from '../components/TagCarousel';
 import { ModuleType } from '../../services/constants';
 
 // SVGs
-import BackArrow from '../../../assets/backArrow.svg';
+import BackArrow from '../../../assets/icons/backArrow.svg';
 
 // Backend
 import { useQuery } from '@tanstack/react-query';

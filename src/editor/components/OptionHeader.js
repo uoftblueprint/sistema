@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import XButton from '../../../assets/xButton.svg';
+import XButton from '../../../assets/icons/xButton.svg';
 
 const windowWidth = Dimensions.get('window').width;
 const OptionHeader = ({ isLessonEditor, lessonName, navigation }) => {
