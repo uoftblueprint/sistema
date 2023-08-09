@@ -29,7 +29,11 @@ import LessonPlanService from '../../services/LessonPlanService';
 import { MAINDIRECTORY } from '../../services/constants';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addToSection } from '../../services/editor/lessonPlanSlice';
+import {
+  addToSection,
+  getCurrImageFiles,
+  setCurrImageFiles,
+} from '../../services/editor/lessonPlanSlice';
 import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
 
 const AddActivityCard = function ({ navigation, route }) {
@@ -163,13 +167,9 @@ const AddActivityCard = function ({ navigation, route }) {
   // **************** PREVIEW RELATED VARS ***************
   const [previewInfo, setPreviewInfo] = useState(null); // previewInfo has id, name, and url
 
-  // const initialLessonPlanName = useSelector(state => {
-  //   console.log(state.lessonPlan);
-  //   getInitialLessonPlanName(state.lessonPlan);
-  // });
-  // const lessonPlanState = useSelector(state => {
-  //   getLessonPlan(state.lessonPlan);
-  // });
+  const currActivityCards = useSelector(state =>
+    getCurrImageFiles(state.lessonPlan),
+  );
   const dispatch = useDispatch();
 
   //onPress function for add Card button
@@ -206,6 +206,8 @@ const AddActivityCard = function ({ navigation, route }) {
             path: fullPath,
           }),
         );
+
+        dispatch(setCurrImageFiles([...currActivityCards, relPath]));
       })
       .then(() => {
         navigation.goBack();

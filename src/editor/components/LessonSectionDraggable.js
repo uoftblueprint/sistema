@@ -5,6 +5,8 @@ import {
   replaceSection,
   getLessonSection,
   getInitialLessonPlanName,
+  getCurrImageFiles,
+  setCurrImageFiles,
   addToSection,
 } from '../../services/editor/lessonPlanSlice';
 import {
@@ -43,6 +45,9 @@ const LessonSectionDraggable = ({
   );
   const lessonPlanName = useSelector(state =>
     getInitialLessonPlanName(state.lessonPlan),
+  );
+  const currImageFiles = useSelector(state =>
+    getCurrImageFiles(state.lessonPlan),
   );
   const dispatch = useDispatch();
   const updateRedux = newSectionData => {
@@ -95,7 +100,7 @@ const LessonSectionDraggable = ({
         lessonPlanName,
       );
 
-      await dispatch(
+      dispatch(
         addToSection({
           type: ModuleType.image,
           name: paths.relPath,
@@ -104,6 +109,7 @@ const LessonSectionDraggable = ({
           path: paths.fullPath,
         }),
       );
+      dispatch(setCurrImageFiles([...currImageFiles, paths.relPath]));
     }
   };
 
@@ -141,29 +147,22 @@ const LessonSectionDraggable = ({
       module => module.key != keyToDelete,
     );
 
+    // Remove module from LP frontend immediately
     updateRedux(newSectionData);
 
-    //if the module is an Activity Card, find the card id from redux
-    const moduleToDelete = sectionData.find(
-      module => module.key === keyToDelete && module.type === 'activity',
-    );
-
-    if (moduleToDelete) {
-      const idToDelete = moduleToDelete.id;
-      console.log('Activity Card id to delete: ' + idToDelete);
-
-      // Call helper function to deal with async
-      const deleteCardStatus = deleteCardHelper(idToDelete);
-    } else {
-      console.log('No activity module found with the provided key');
-    }
-  };
-
-  const deleteCardHelper = async id => {
-    try {
-      await ActivityCardService.deleteActivityCard(id);
-    } catch (error) {
-      console.error('Error while deleting the activity card: ' + error);
+    // If the module is an image type, update the current list of image files
+    const modToDelete = sectionData.find(module => module.key === keyToDelete);
+    if (
+      modToDelete.type === ModuleType.activityCard ||
+      modToDelete.type === ModuleType.image
+    ) {
+      // Get rid of img with first matching id
+      let imgArray = [...currImageFiles];
+      imgArray.splice(
+        imgArray.findIndex(img => img === modToDelete.content),
+        1,
+      );
+      dispatch(setCurrImageFiles(imgArray));
     }
   };
 

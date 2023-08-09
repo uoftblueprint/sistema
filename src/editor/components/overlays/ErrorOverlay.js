@@ -3,10 +3,36 @@ import Overlay from '../../../Components/Overlay';
 import SistemaButton from '../../../Components/SistemaButton';
 import { TextStyle } from '../../../Styles.config';
 import { verticalScale, scale } from 'react-native-size-matters';
-import AlertErrorIcon from '../../../../assets/icons/errorAlertThin.svg';
+import AlertErrorIcon from '../../../../assets/errorAlertThin.svg';
+import { ERROR } from '../../constants';
 
-const ErrorLoadingLPOverlay = ({ visible, handleClose }) => {
+const ErrorOverlay = ({ errorType, visible, handleClose }) => {
   const iconSize = scale(27);
+
+  let title;
+  let text;
+  switch (errorType) {
+    case ERROR.FETCHING:
+      title = 'This lesson plan could not be loaded.';
+      text =
+        'Please try again. If this keeps on happening, the file may be' +
+        ' corrupted and irretrievable.';
+      break;
+    case ERROR.DUPLICATE_NAME:
+      title = 'Another lesson plan already has this name!';
+      text = 'Please rename this one and try saving again.';
+      break;
+    case ERROR.SAVING:
+      title = 'This lesson plan could not be saved.';
+      text =
+        'Please try again. If this keeps on happening, the file may be' +
+        ' corrupted.';
+      break;
+    default:
+      title = `Editor error code: ${errorType}`;
+      text = '';
+      break;
+  }
 
   return (
     <Overlay
@@ -20,15 +46,10 @@ const ErrorLoadingLPOverlay = ({ visible, handleClose }) => {
             width={iconSize}
             style={styles.icon}
           />
-          <Text style={[TextStyle.label, styles.overlayTitle]}>
-            This lesson plan could not be loaded.
-          </Text>
+          <Text style={[TextStyle.label, styles.overlayTitle]}>{title}</Text>
         </View>
 
-        <Text style={TextStyle.body}>
-          Please try again. If this keeps on happening, the file may be
-          corrupted and irretrievable.
-        </Text>
+        <Text style={TextStyle.body}>{text}</Text>
 
         <View style={styles.buttonContainer}>
           <SistemaButton onPress={handleClose}>
@@ -68,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ErrorLoadingLPOverlay;
+export default ErrorOverlay;

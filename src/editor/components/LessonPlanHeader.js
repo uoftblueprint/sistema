@@ -19,6 +19,8 @@ import {
   getLessonPlanName,
   setLessonPlanName,
   getDirty,
+  getInitialLessonPlanName,
+  getCurrFavState,
 } from '../../services/editor/lessonPlanSlice';
 
 const headerIconSize = moderateScale(25);
@@ -32,24 +34,27 @@ const LessonPlanHeader = ({
   toggleUnsavedChanges,
   disableEditName,
 }) => {
+  // REDUX STATES
   const dispatch = useDispatch();
-  const lessonPlanName = useSelector(state =>
-    getLessonPlanName(state.lessonPlan),
-  );
+  const currLPName = useSelector(state => getLessonPlanName(state.lessonPlan));
   const isDirty = useSelector(state => getDirty(state.lessonPlan));
+  const initialLPName = useSelector(state =>
+    getInitialLessonPlanName(state.lessonPlan),
+  );
 
+  // REACT COMPONENT STATES
   const [isEditable, setIsEditable] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
         style={{ marginLeft: scale(horizontalMargin) }}
-        onPress={() => {
+        onPress={async () => {
           if (isDirty) {
             // Warn the user that there are unsaved changes
             toggleUnsavedChanges(true);
           } else {
-            handleBackButton();
+            await handleBackButton();
           }
         }}>
         <BackArrow height={headerIconSize} width={headerIconSize} />
@@ -60,7 +65,9 @@ const LessonPlanHeader = ({
           {isEditable ? (
             <TextInput
               style={[styles.input, TextStyle.h1]}
-              value={lessonPlanName}
+              multiline={false}
+              maxLength={50}
+              value={currLPName}
               onChangeText={newText => {
                 dispatch(setLessonPlanName({ name: newText, isDirty: true }));
               }}
@@ -71,7 +78,7 @@ const LessonPlanHeader = ({
             />
           ) : (
             <Text style={[styles.text, TextStyle.h1]} numberOfLines={1}>
-              {lessonPlanName}
+              {currLPName}
             </Text>
           )}
         </View>
@@ -89,6 +96,8 @@ const LessonPlanHeader = ({
                 navigation.navigate(STACK_SCREENS.LESSON_PLAN_MENU_OVERLAY, {
                   isLessonPlanEditor: true,
                   lastEdited: lastEditedDate,
+                  lessonPlanName: initialLPName,
+                  isFavorited: null,
                 })
               }>
               <Menu

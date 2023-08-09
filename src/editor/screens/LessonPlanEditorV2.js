@@ -17,18 +17,19 @@ import LessonPlanService from '../../services/LessonPlanService.js';
 import { MAINDIRECTORY, ModuleType } from '../../services/constants';
 import {
   loadInitialLessonPlan,
+  loadInitialFavState,
   setLessonPlanName,
   getLessonPlanName,
   setInitialLessonPlanName,
   reset,
 } from '../../services/editor/lessonPlanSlice.js';
 import UnsavedChangesOverlay from '../components/overlays/UnsavedChangesOverlay.js';
-import ErrorLoadingLPOverlay from '../components/overlays/ErrorLoadingLPOverlay.js';
+import ErrorOverlay from '../components/overlays/ErrorOverlay.js';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { SectionName } from '../../services/constants.js';
 import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants.js';
-
-const lastEditedDummy = 'Jan 1, 2023';
+import handleCleanupActions from '../../services/editor/cleanupActions.js';
+import { ERROR } from '../constants.js';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
   // NAVIGATION STATES
@@ -43,17 +44,34 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
   const [isSaving, setSaving] = useState(false);
   const [isNewLP, setNew] = useState(true);
   const [unsavedOverlayVisible, toggleUnsavedChanges] = useState(false);
-  const [errorOverlayVisible, toggleLoadingError] = useState(false);
+  const [errorType, setErrorType] = useState(ERROR.NONE);
+  const [errorOverlayVisible, toggleErrorOverlay] = useState(false);
 
-  // Clear redux and route params
-  const leaveEditor = () => {
+  /**
+   * Called every time we exit the Editor.
+   * Handle cleanup actions, then clear redux and route params, and finally go to Library.
+   * @param {boolean} leaveBySave true if user pressed Save button to leave
+   */
+  const leaveEditor = async (leaveBySave = false) => {
+    await handleCleanupActions(leaveBySave);
     dispatch(reset());
-    navigation.setParams({ lessonPlanName: '' });
+    navigation.setParams({
+      lessonPlanName: '',
+      isFavorited: false,
+      lastEdited: '',
+    });
     toggleUnsavedChanges(false);
     navigation.navigate(LIBRARY_STACK.NAVIGATOR, {
       screen: LIBRARY_STACK.LIBRARY,
     }); // Go to the library
   };
+
+  // Show the error overlay if an error occurred
+  useEffect(() => {
+    if (errorType !== ERROR.NONE) {
+      toggleErrorOverlay(true);
+    }
+  }, [errorType]);
 
   // Fetch and set lesson plan data
   useEffect(() => {
@@ -74,51 +92,60 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         );
         await LessonPlanService.getLessonPlan(lessonPlanName)
           .then(lpObj => {
-            // Set a unique key for each module per section
-            // TODO: Add support for image module types later
-            const setKeyForModule = (module, i) => {
+            /**
+             * Set a unique key for each module per section.
+             * If it's an activity card module, set the path and add it to initial activity cards.
+             */
+            const preprocessModule = (module, i, imageArr) => {
+              // Handle activity card
+              let imagePath;
               if (
                 module.type === ModuleType.activityCard ||
                 module.type === ModuleType.image
               ) {
-                let imagePath;
-                const folder = favourited ? '/Favourited/' : '/Default/';
                 imagePath =
-                  MAINDIRECTORY + folder + lessonPlanName + module.content;
-
-                return {
-                  type: module.type,
-                  content: module.content ?? '',
-                  name: module.name ?? '',
-                  path: imagePath,
-                  key: `module-${i}`,
-                };
-              } else {
-                return {
-                  type: module.type,
-                  content: module.content ?? '',
-                  name: module.name ?? '',
-                  title: module.title ?? '',
-                  key: `module-${i}`,
-                };
+                  MAINDIRECTORY +
+                  (favourited ? '/Favourited/' : '/Default/') +
+                  lessonPlanName +
+                  module.content;
+                // Add to initial activity cards
+                imageArr.push(module.content);
               }
+
+              return {
+                type: module.type,
+                content: module.content ?? '',
+                name: module.name ?? '',
+                path: imagePath ?? '',
+                title: module.title ?? '',
+                key: `module-${i}`,
+              };
             };
 
-            lpObj[SectionName.warmUp] =
-              lpObj[SectionName.warmUp].map(setKeyForModule);
-            lpObj[SectionName.mainLesson] =
-              lpObj[SectionName.mainLesson].map(setKeyForModule);
-            lpObj[SectionName.coolDown] =
-              lpObj[SectionName.coolDown].map(setKeyForModule);
+            let initialImageArr = [];
+            lpObj[SectionName.warmUp] = lpObj[SectionName.warmUp].map(
+              (module, i) => preprocessModule(module, i, initialImageArr),
+            );
+            lpObj[SectionName.mainLesson] = lpObj[SectionName.mainLesson].map(
+              (module, i) => preprocessModule(module, i, initialImageArr),
+            );
+            lpObj[SectionName.coolDown] = lpObj[SectionName.coolDown].map(
+              (module, i) => preprocessModule(module, i, initialImageArr),
+            );
 
             // Dispatch it to redux for the rest of the editor to render
-            dispatch(loadInitialLessonPlan({ ...lpObj }));
+            dispatch(
+              loadInitialLessonPlan({
+                ...lpObj,
+                initialImageFiles: initialImageArr,
+              }),
+            );
             fetchSuccess = true;
             setNew(false);
           })
           .catch(() => {
             // Open error overlay if lesson plan could not be opened
-            toggleLoadingError(true);
+            setErrorType(ERROR.FETCHING);
             // Open a blank lesson plan
             fetchSuccess = false;
           });
@@ -136,6 +163,13 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         dispatch(setLessonPlanName({ name: todayDate, isDirty: false }));
         dispatch(setInitialLessonPlanName({ name: todayDate }));
       }
+
+      // Set redux state if LP is initially favorited for pathing reasons
+      const isInitiallyFavorited = isNewLP
+        ? false
+        : (route.params && route.params.isFavorited) ?? false;
+      dispatch(loadInitialFavState(isInitiallyFavorited));
+
       setFetching(false);
     };
 
@@ -149,7 +183,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
     <SafeAreaView style={styles.mainContainer}>
       <LessonPlanHeader
         navigation={navigation}
-        lastEditedDate={lastEditedDummy} // TODO: [SIS-136] Set last edited date in LessonPlanHeader
+        lastEditedDate={(route.params && route.params.lastEdited) ?? 'unknown'}
         showOptions={!isNewLP} // Don't show buttons to access LP options menu if LP is brand new (nothing to delete, favourite, etc.)
         toggleUnsavedChanges={toggleUnsavedChanges}
         handleBackButton={leaveEditor}
@@ -187,9 +221,11 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
       <View style={styles.saveButton}>
         <SaveButton
-          navigation={navigation}
           isLessonPlanLoading={isFetching || isSaving}
           setLoading={setSaving}
+          setError={setErrorType}
+          isNewLP={isNewLP}
+          handleBackButton={leaveEditor}
         />
       </View>
 
@@ -199,9 +235,13 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
         handleStay={toggleUnsavedChanges}
         handleLeave={leaveEditor}
       />
-      <ErrorLoadingLPOverlay
+      <ErrorOverlay
+        errorType={errorType}
         visible={errorOverlayVisible}
-        handleClose={toggleLoadingError}
+        handleClose={() => {
+          toggleErrorOverlay(false);
+          setErrorType(ERROR.NONE);
+        }}
       />
     </SafeAreaView>
   );
