@@ -1,21 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Text, StyleSheet, ScrollView, View, Dimensions, Platform, Button } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, Text, StyleSheet, ScrollView, View, Dimensions, Platform } from 'react-native';
 
 import { TextStyle } from '../Styles.config';
-
-// import iOSVid1 from '../../assets/tutorial/ios/Tutorial1.mp4';
-// import iOSVid2 from '../../assets/tutorial/ios/Tutorial2.mp4';
-// import iOSVid3 from '../../assets/tutorial/ios/Tutorial3.mp4';
-// import iOSVid4 from '../../assets/tutorial/ios/Tutorial4.mp4';
-// import iOSVid5 from '../../assets/tutorial/ios/Tutorial5.mp4';
-// import iOSVid6 from '../../assets/tutorial/ios/Tutorial6.mp4';
-
-// import AndroidVid1 from '../../assets/tutorial/android/Tutorial1.mp4';
-// import AndroidVid2 from '../../assets/tutorial/android/Tutorial2.mp4';
-// import AndroidVid3 from '../../assets/tutorial/android/Tutorial3.mp4';
-// import AndroidVid4 from '../../assets/tutorial/android/Tutorial4.mp4';
-// import AndroidVid5 from '../../assets/tutorial/android/Tutorial5.mp4';
-// import AndroidVid6 from '../../assets/tutorial/android/Tutorial6.mp4';
 
 import Video from 'react-native-video';
 
