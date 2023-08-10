@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Platform,
 } from 'react-native';
 import { verticalScale, scale } from 'react-native-size-matters';
 import { TextStyle } from '../../Styles.config';
@@ -24,6 +23,7 @@ import BackArrow from '../../../assets/icons/backArrow.svg';
 
 // Backend
 import { useQuery } from '@tanstack/react-query';
+import { useNetInfo } from '@react-native-community/netinfo';
 import ActivityCardService from '../../services/ActivityCardService';
 import LessonPlanService from '../../services/LessonPlanService';
 import { MAINDIRECTORY } from '../../services/constants';
@@ -35,9 +35,28 @@ import {
   setCurrImageFiles,
 } from '../../services/editor/lessonPlanSlice';
 import { getCardNames } from '../../services/editor/recentActivityCardsSlice';
+import WifiWarningOverlay from '../../Components/WifiWarningOverlay';
 
 const AddActivityCard = function ({ navigation, route }) {
   const { sectionType, lessonPlanName } = route.params;
+
+  // ************ WIFI RELATED VARS *********
+
+  const [isWifiConnected, setWifiConnected] = useState(true);
+  const [wifiWarningOverlayVisible, setWifiWarningOverlay] = useState(false);
+  const netInfo = useNetInfo();
+
+  useEffect(() => {
+    // Check for false because netInfo.isConnected may be null if unknown network
+    if (netInfo.isConnected === false) {
+      setWifiConnected(false);
+      setWifiWarningOverlay(true);
+    } else {
+      setWifiConnected(true);
+    }
+  }, [netInfo]);
+
+  // ************ WIFI RELATED VARS END *********
 
   // *************** SEARCH RELATED VARS *******************
 
@@ -48,6 +67,13 @@ const AddActivityCard = function ({ navigation, route }) {
   const { data: activityCards } = useQuery({
     queryKey: ['activityCards'],
     queryFn: ActivityCardService.getAllActivityCards,
+    onError: error => {
+      console.error('Error getting all activity cards: ' + error);
+      if (error.code === 'ERR_NETWORK' && isWifiConnected) {
+        // If netInfo warning was bypassed, but axios insists there's no connection
+        setWifiWarningOverlay(true);
+      }
+    },
   });
   const [matchSearch, setMatchSearch] = useState([]);
   const [highlightedID, setHighlightedID] = useState('');
@@ -174,12 +200,16 @@ const AddActivityCard = function ({ navigation, route }) {
 
   //onPress function for add Card button
   const addCard = async () => {
-    console.log(`Initial Lesson Plan Name: ${lessonPlanName}`);
+    // Can't download AC if there's no internet connection
+    if (!isWifiConnected) {
+      setWifiWarningOverlay(true);
+      return;
+    }
+
     const favourited = await LessonPlanService.isLessonPlanFavourited(
       lessonPlanName,
     );
     const folder = favourited ? '/Favourited/' : '/Default/';
-    let fullPath = '';
 
     await ActivityCardService.downloadActivityCard(
       previewInfo.id,
@@ -187,30 +217,23 @@ const AddActivityCard = function ({ navigation, route }) {
       previewInfo.name,
       lessonPlanName,
     )
-      .then(rnfsPath => {
-        rnfsPath = rnfsPath.replace(
-          MAINDIRECTORY + folder + lessonPlanName,
-          '',
-        );
-        fullPath = MAINDIRECTORY + folder + lessonPlanName + rnfsPath;
-        return rnfsPath;
-      })
       .then(relPath => {
-        dispatch(
-          addToSection({
-            type: ModuleType.activityCard,
-            name: previewInfo?.name,
-            id: previewInfo?.id,
-            section: sectionType,
-            content: relPath,
-            path: fullPath,
-          }),
-        );
-
-        dispatch(setCurrImageFiles([...currActivityCards, relPath]));
-      })
-      .then(() => {
-        navigation.goBack();
+        if (relPath === 'no wifi') {
+          setWifiWarningOverlay(true);
+        } else {
+          dispatch(
+            addToSection({
+              type: ModuleType.activityCard,
+              name: previewInfo?.name,
+              id: previewInfo?.id,
+              section: sectionType,
+              content: relPath,
+              path: MAINDIRECTORY + folder + lessonPlanName + relPath,
+            }),
+          );
+          dispatch(setCurrImageFiles([...currActivityCards, relPath]));
+          navigation.goBack();
+        }
       })
       .catch(err => {
         console.error('Error when adding activity card: ' + err);
@@ -232,6 +255,12 @@ const AddActivityCard = function ({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeContainer}>
+      <WifiWarningOverlay
+        visible={wifiWarningOverlayVisible}
+        handleClose={() => {
+          setWifiWarningOverlay(false);
+        }}
+      />
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.paddingContainer}>
           <View style={styles.header}>
