@@ -67,6 +67,13 @@ const AddActivityCard = function ({ navigation, route }) {
   const { data: activityCards } = useQuery({
     queryKey: ['activityCards'],
     queryFn: ActivityCardService.getAllActivityCards,
+    onError: (error) => {
+      console.error('Error getting all activity cards: ' + error);
+      if (error.code === 'ERR_NETWORK' && isWifiConnected) {
+        // If netInfo warning was bypassed, but axios insists there's no connection
+        setWifiWarningOverlay(true);
+      }
+    }
   });
   const [matchSearch, setMatchSearch] = useState([]);
   const [highlightedID, setHighlightedID] = useState('');
@@ -203,7 +210,6 @@ const AddActivityCard = function ({ navigation, route }) {
       lessonPlanName,
     );
     const folder = favourited ? '/Favourited/' : '/Default/';
-    let fullPath = '';
 
     await ActivityCardService.downloadActivityCard(
       previewInfo.id,
@@ -211,30 +217,23 @@ const AddActivityCard = function ({ navigation, route }) {
       previewInfo.name,
       lessonPlanName,
     )
-      .then(rnfsPath => {
-        rnfsPath = rnfsPath.replace(
-          MAINDIRECTORY + folder + lessonPlanName,
-          '',
-        );
-        fullPath = MAINDIRECTORY + folder + lessonPlanName + rnfsPath;
-        return rnfsPath;
-      })
       .then(relPath => {
-        dispatch(
-          addToSection({
-            type: ModuleType.activityCard,
-            name: previewInfo?.name,
-            id: previewInfo?.id,
-            section: sectionType,
-            content: relPath,
-            path: fullPath,
-          }),
-        );
-
-        dispatch(setCurrImageFiles([...currActivityCards, relPath]));
-      })
-      .then(() => {
-        navigation.goBack();
+        if (relPath === 'no wifi') {
+          setWifiWarningOverlay(true);
+        } else {
+          dispatch(
+            addToSection({
+              type: ModuleType.activityCard,
+              name: previewInfo?.name,
+              id: previewInfo?.id,
+              section: sectionType,
+              content: relPath,
+              path: MAINDIRECTORY + folder + lessonPlanName + relPath,
+            }),
+          );
+          dispatch(setCurrImageFiles([...currActivityCards, relPath]));
+          navigation.goBack();
+        }
       })
       .catch(err => {
         console.error('Error when adding activity card: ' + err);

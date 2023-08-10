@@ -55,7 +55,13 @@ const Home = ({ navigation }) => {
     setLoading(true);
     const datePath = MAINDIRECTORY + '/RefreshedDate';
     const filePath = `${datePath}/date.txt`;
-    const cards = await ActivityCardService.getFeaturedActivityCards();
+    let cards = await ActivityCardService.getFeaturedActivityCards();
+
+    // Show wifi error if not detected above
+    if (cards === 'no wifi') { 
+      setWifiWarningOverlay(true);
+      cards = [];
+    }
 
     //update the last refreshed date and card array if new cards were found
     if (cards.length != 0) {

@@ -16,7 +16,7 @@ const ActivityCardService = {
 
   /**
    * Returns array of file paths for this month's featured activity cards.
-   * @return {Promise<String[]>}
+   * @return {Promise<String[] | String>}
    */
   getFeaturedActivityCards: async function () {
     try {
@@ -43,6 +43,9 @@ const ActivityCardService = {
       // Retrieve all Drive files meeting the params
       const response = await axios.get(downloadUrl, { params }).catch(error => {
         console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
+        if (error.code === 'ERR_NETWORK') {
+          throw new Error('no wifi');
+        }
       });
 
       // Access the Array of all files and set up path Array (to be returned)
@@ -85,7 +88,11 @@ const ActivityCardService = {
     } catch (e) {
       // There was an error, catch it and do something with it
       console.error('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
-      return [];
+      if (e.toString() === 'Error: no wifi') {
+        return 'no wifi';
+      } else {
+        return [];
+      }
     }
   },
 
@@ -144,7 +151,11 @@ const ActivityCardService = {
       const response = await axios
         .get(downloadUrl, { params: params, responseType: 'arraybuffer' })
         .catch(error => {
-          console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + error);
+          if (error.code === 'ERR_NETWORK') {
+            throw new Error('no wifi');
+          } else {
+            throw new Error(error);
+          }
         });
 
       //make directory for the newly downloaded card, write the card into this path and return
@@ -157,6 +168,9 @@ const ActivityCardService = {
       return `/${id}/cardImage.jpg`;
     } catch (e) {
       console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
+      if (e.toString() === 'Error: no wifi') {
+        return 'no wifi';
+      }
     }
   },
 
