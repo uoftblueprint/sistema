@@ -17,9 +17,9 @@ export const AppColors = {
   quinary_30: 'rgba(236, 106, 107, 0.4)',
   senary_30: 'rgba(246, 169, 87, 0.4)',
 
-  background: AppColors.background, // Floral White, background color
+  background: '#FFFAF5', // Floral White, background color
   overlay_background: 'rgba(217,217,217, 0.8)',
-  light_background: AppColors.light_background,
+  light_background: '#FDFBF7',
 
   dark: '453E3D',
 
