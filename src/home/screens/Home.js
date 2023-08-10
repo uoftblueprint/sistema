@@ -138,7 +138,7 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     height: '100%',
   },
   loadingView: {
@@ -173,10 +173,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   refreshIcon: {
-    fill: '#453E3D',
+    fill: AppColors.dark,
   },
   loadingIcon: {
-    color: '#453E3D',
+    color: AppColors.dark,
   },
 });
 

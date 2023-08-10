@@ -6,6 +6,7 @@ import {
   Dimensions,
 } from 'react-native';
 import XButton from '../../../assets/icons/xButton.svg';
+import { AppColors } from '../../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
 const OptionHeader = ({ isLessonEditor, lessonName, navigation }) => {
@@ -31,14 +32,14 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     flexDirection: 'row',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     alignItems: 'center',
   },
   textContainer: {
     postion: 'absolute',
     width: '70%',
     paddingLeft: '5%',
-    color: 'rgba(0,0,0, 0.87)',
+    color: AppColors.dark,
     fontWeight: '700',
     fontSize: 20,
     lineHeight: 60,

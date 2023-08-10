@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet, View } from 'react-native';
 import SistemaLogo from '../../assets/SistemaLogoLoading.svg';
-import { TextStyle } from '../Styles.config';
+import { TextStyle, AppColors } from '../Styles.config';
 
 const Loading = () => {
   return (
@@ -21,7 +21,7 @@ const Loading = () => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     height: '100%', // full screen is filled with color
     flexDirection: 'column', // organize items vertically
     alignItems: 'center', // center items

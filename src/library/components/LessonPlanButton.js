@@ -5,7 +5,7 @@ import EmptyHeart from '../../../assets/icons/heartOutline.svg';
 import FilledHeart from '../../../assets/icons/favoriteIcon.svg';
 import { STACK_SCREENS as LIBRARY_STACK } from '../constants';
 import { STACK_SCREENS as EDITOR_STACK } from '../../editor/constants';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 
 const LessonPlanButton = ({
   index,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 'auto',
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     borderRadius: 8,
     borderWidth: 0.77,
     borderStyle: 'solid',

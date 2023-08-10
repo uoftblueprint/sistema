@@ -11,7 +11,7 @@ import {
 import EditIcon from '../../../assets/icons/edit.svg';
 import Menu from '../../../assets/icons/menu.svg';
 import BackArrow from '../../../assets/icons/backArrow.svg';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 import { scale, moderateScale } from 'react-native-size-matters';
 import { STACK_SCREENS } from '../constants';
 import { useSelector, useDispatch } from 'react-redux';
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     height: 49,
     width: '100%',
     color: '#000',

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet, ScrollView, View } from 'react-native';
-import { policyPages, STACK_SCREENS } from '../constants';
+import { policyPages } from '../constants';
 import Header from '../../Components/Header';
 import IconButton from '../components/IconButton';
 import PolicyButton from '../components/PolicyButton';
 import CloudUpload from '../../../assets/icons/cloudUploadOutline.svg';
 import Trash from '../../../assets/icons/trashIcon.svg';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 import { deleteFile } from '../../services/routes/Local';
 import Overlay from '../../Components/Overlay';
 import WarningIcon from '../../../assets/icons/errorAlert.svg';
@@ -85,7 +85,7 @@ const Settings = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
   },
   title: {
     marginHorizontal: scale(30),

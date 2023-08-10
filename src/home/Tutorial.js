@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet, ScrollView, View, Dimensions, Platform } from 'react-native';
 
-import { TextStyle } from '../Styles.config';
+import { TextStyle, AppColors } from '../Styles.config';
 
 import Video from 'react-native-video';
 
@@ -134,7 +134,7 @@ const Tutorial = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     height: '100%', // full screen is filled with color
     flexDirection: 'column', // organize items vertically
     alignItems: 'center', // center items

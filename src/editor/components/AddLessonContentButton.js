@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import AddIcon from '../../../assets/icons/add.svg';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 import { verticalScale } from 'react-native-size-matters';
 
 const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
@@ -79,14 +79,14 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
   },
   sectionStyle: {
-    shadowColor: '#453E3D',
+    shadowColor: AppColors.dark,
     shadowOffset: {
       width: 1,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     elevation: 5,
     borderWidth: 0.77,
     height: verticalScale(40),
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
   buttonStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    // backgroundColor: '#FDFBF7',
     width: '100%',
     height: '100%',
   },

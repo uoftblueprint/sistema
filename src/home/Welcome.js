@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, Text, StyleSheet, View } from 'react-native';
 import SistemaLogo from '../../assets/SistemaLogoLoading.svg';
 import SistemaButton from '../Components/SistemaButton';
-import { TextStyle } from '../Styles.config';
+import { AppColors, TextStyle } from '../Styles.config';
 
 const Welcome = ({ navigation }) => {
   // TODO: navigation to tutorial.js and call to RNFS
@@ -25,7 +25,7 @@ const Welcome = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     height: '100%', // full screen is filled with color
     flexDirection: 'column', // organize items vertically
     alignItems: 'center', // center items
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   visionStatement: {
     fontFamily: 'Poppins-Regular',
     paddingTop: '4%', // add space above the text
-    color: '#000000',
+    color: AppColors.dark,
     fontSize: 23,
     letterSpacing: 0.05,
     lineHeight: 34,

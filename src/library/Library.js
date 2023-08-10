@@ -12,7 +12,7 @@ import Header from '../Components/Header';
 import FilterGraphic from '../../assets/icons/filterOutline.svg';
 import LessonPlanButton from './components/LessonPlanButton';
 import LessonPlanService from '../services/LessonPlanService';
-import { TextStyle } from '../Styles.config';
+import { TextStyle, AppColors } from '../Styles.config';
 import { STACK_SCREENS } from './constants';
 
 const Library = ({ navigation, route }) => {
@@ -199,7 +199,7 @@ const Library = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
   },
   inlineTitle: {
     display: 'flex',
