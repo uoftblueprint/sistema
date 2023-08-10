@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, StyleSheet, ScrollView, View, Dimensions, Platform } from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  ScrollView,
+  View,
+  Dimensions,
+  Platform,
+} from 'react-native';
 
 import { TextStyle } from '../Styles.config';
 
@@ -10,13 +18,30 @@ import SquareFilled from '../../assets/icons/squareFilled.svg';
 
 import SistemaButton from '../Components/SistemaButton';
 
-const Vid1 = Platform.OS === "ios" ? require('../../assets/tutorial/ios/Tutorial1.mp4') : require('../../assets/tutorial/android/Tutorial1.mp4');
-const Vid2 = Platform.OS === "ios" ? require('../../assets/tutorial/ios/Tutorial2.mp4') : require('../../assets/tutorial/android/Tutorial2.mp4');
-const Vid3 = Platform.OS === "ios" ? require('../../assets/tutorial/ios/Tutorial3.mp4') : require('../../assets/tutorial/android/Tutorial3.mp4');
-const Vid4 = Platform.OS === "ios" ? require('../../assets/tutorial/ios/Tutorial4.mp4') : require('../../assets/tutorial/android/Tutorial4.mp4');
-const Vid5 = Platform.OS === "ios" ? require('../../assets/tutorial/ios/Tutorial5.mp4') : require('../../assets/tutorial/android/Tutorial5.mp4');
-const Vid6 = Platform.OS === "ios" ? require('../../assets/tutorial/ios/Tutorial6.mp4') : require('../../assets/tutorial/android/Tutorial6.mp4');
-
+const Vid1 =
+  Platform.OS === 'ios'
+    ? require('../../assets/tutorial/ios/Tutorial1.mp4')
+    : require('../../assets/tutorial/android/Tutorial1.mp4');
+const Vid2 =
+  Platform.OS === 'ios'
+    ? require('../../assets/tutorial/ios/Tutorial2.mp4')
+    : require('../../assets/tutorial/android/Tutorial2.mp4');
+const Vid3 =
+  Platform.OS === 'ios'
+    ? require('../../assets/tutorial/ios/Tutorial3.mp4')
+    : require('../../assets/tutorial/android/Tutorial3.mp4');
+const Vid4 =
+  Platform.OS === 'ios'
+    ? require('../../assets/tutorial/ios/Tutorial4.mp4')
+    : require('../../assets/tutorial/android/Tutorial4.mp4');
+const Vid5 =
+  Platform.OS === 'ios'
+    ? require('../../assets/tutorial/ios/Tutorial5.mp4')
+    : require('../../assets/tutorial/android/Tutorial5.mp4');
+const Vid6 =
+  Platform.OS === 'ios'
+    ? require('../../assets/tutorial/ios/Tutorial6.mp4')
+    : require('../../assets/tutorial/android/Tutorial6.mp4');
 
 const Tutorial = ({ navigation }) => {
   const { width, height } = Dimensions.get('window');
@@ -25,8 +50,8 @@ const Tutorial = ({ navigation }) => {
   const tutorialSlides = [
     {
       header: 'Streamline your classes with LEARN!',
-      body: "LEARN (Lessons, Exemplars, Activities, Resources, and Notes) is an all-in-one lesson planner tool that simplifies your teaching process with our very own curriculum materials.",
-      videoSource: Vid1, 
+      body: 'LEARN (Lessons, Exemplars, Activities, Resources, and Notes) is an all-in-one lesson planner tool that simplifies your teaching process with our very own curriculum materials.',
+      videoSource: Vid1,
     },
     {
       header: 'View the latest activities',
@@ -52,16 +77,16 @@ const Tutorial = ({ navigation }) => {
       header: 'Save and share your custom plans',
       body: 'In the library tab, access all your past lesson plans, and favourite your most important ones. You can also export your lesson plans as PDFs to share with other teachers!',
       videoSource: Vid6,
-    }
-  ]
+    },
+  ];
 
   const endTutorial = () => {
     navigation.navigate('TabsNavigator', {
       screen: 'HomeNavigator',
     });
-  }
+  };
 
-  const setSliderPage = (e) => {
+  const setSliderPage = e => {
     const currentPage = pageIndex;
     const { x } = e.nativeEvent.contentOffset;
     const nextIndex = Math.round(x / width);
@@ -69,28 +94,25 @@ const Tutorial = ({ navigation }) => {
     if (nextIndex != currentPage) {
       setPageIndex(nextIndex);
     }
-  }
+  };
 
   const videoComponents = tutorialSlides.map(
     ({ header, body, videoSource }, index) => {
       return (
-        <View 
-          style={{ width, height }}
-          key={index}
-          >
-            <Video 
-              source={videoSource}
-              paused={false}
-              style={styles.videoStyle}
-              repeat={true}
-              resizeMode={'stretch'}
-              playInBackground={true}
-              disableFocus={true}
-            />
-            <View style={styles.textContainer}>
-              <Text style={[TextStyle.h1, { marginBottom: 10 }]}>{header}</Text>
-              <Text style={TextStyle.body}>{body}</Text>
-            </View>
+        <View style={{ width, height }} key={index}>
+          <Video
+            source={videoSource}
+            paused={false}
+            style={styles.videoStyle}
+            repeat={true}
+            resizeMode={'stretch'}
+            playInBackground={true}
+            disableFocus={true}
+          />
+          <View style={styles.textContainer}>
+            <Text style={[TextStyle.h1, { marginBottom: 10 }]}>{header}</Text>
+            <Text style={TextStyle.body}>{body}</Text>
+          </View>
         </View>
       );
     },
@@ -104,30 +126,29 @@ const Tutorial = ({ navigation }) => {
         scrollEventThrottle={16}
         pagingEnabled={true}
         showsHorizontalScrollIndicator={false}
-        onScroll={(event) => {
+        onScroll={event => {
           setSliderPage(event);
-        }}
-      >
+        }}>
         {videoComponents}
       </ScrollView>
-      {pageIndex === 5
-        ? (<SistemaButton 
-            onPress={endTutorial} 
-            style={{marginBottom: Platform.OS === 'ios' ? '10%' : '20%'}}
-            color={'blue'}>
-              <Text style={TextStyle.label}>Let's go!</Text>
-            </SistemaButton>)
-        : (<View style={styles.paginationContainer}>
-            {Array(0, 1, 2, 3, 4, 5).map(num => {
-                if (num === pageIndex) {
-                  return (<SquareFilled style={styles.dotStyle} key={num} />);
-                } else {
-                  return (<SquareEmpty style={styles.dotStyle} key={num} />);
-                }
-              })
+      {pageIndex === 5 ? (
+        <SistemaButton
+          onPress={endTutorial}
+          style={{ marginBottom: Platform.OS === 'ios' ? '10%' : '20%' }}
+          color={'blue'}>
+          <Text style={TextStyle.label}>Let's go!</Text>
+        </SistemaButton>
+      ) : (
+        <View style={styles.paginationContainer}>
+          {Array(0, 1, 2, 3, 4, 5).map(num => {
+            if (num === pageIndex) {
+              return <SquareFilled style={styles.dotStyle} key={num} />;
+            } else {
+              return <SquareEmpty style={styles.dotStyle} key={num} />;
             }
-          </View>)
-      }
+          })}
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -163,7 +184,7 @@ const styles = StyleSheet.create({
   },
   slide: {
     flex: 1,
-  }
+  },
 });
 
 export default Tutorial;
