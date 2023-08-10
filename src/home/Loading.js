@@ -10,10 +10,14 @@ const Loading = () => {
         <SistemaLogo />
       </SafeAreaView>
       <View style={styles.appname}>
-        <Text style={[TextStyle.h1, {textAlign: 'center'}]}>Welcome to Sistema Toronto LEARN!</Text>
+        <Text style={[TextStyle.h1, { textAlign: 'center' }]}>
+          Welcome to Sistema Toronto LEARN!
+        </Text>
       </View>
       <View style={styles.visionStatement}>
-        <Text style={[TextStyle.label, { textAlign: 'center' }]}>Easily and quickly make lesson plans on the go.</Text>
+        <Text style={[TextStyle.label, { textAlign: 'center' }]}>
+          Easily and quickly make lesson plans on the go.
+        </Text>
       </View>
     </SafeAreaView>
   );

@@ -83,16 +83,18 @@ const OptionsMenu = ({
       ? lessonPlan // get lesson plan from redux since we're in the editor already
       : await LessonPlanService.getLessonPlan(lessonPlanName);
 
-    const pathPrefix = isCurrentlyFavorited 
+    const pathPrefix = isCurrentlyFavorited
       ? MAINDIRECTORY + '/Favourited/' + lessonPlanName
       : MAINDIRECTORY + '/Default/' + lessonPlanName;
 
     // Add in full path (not just relative path) for the images and ACs
     for (const [key, value] of Object.entries(lpObj)) {
-      for (i = 0; i < value.length; i++) {
-        if (value[i].type === ModuleType.activityCard
-          || value[i].type === ModuleType.image) {
-            lpObj[key][i].path = pathPrefix + lpObj[key][i].content;
+      for (let i = 0; i < value.length; i++) {
+        if (
+          value[i].type === ModuleType.activityCard ||
+          value[i].type === ModuleType.image
+        ) {
+          lpObj[key][i].path = pathPrefix + lpObj[key][i].content;
         }
       }
     }
