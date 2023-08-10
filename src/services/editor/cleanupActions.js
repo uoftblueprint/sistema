@@ -51,21 +51,21 @@ const deleteUnusedImageFiles = async (lp, leaveBySave) => {
     //   toDelete,
     // );
 
-  // Delete all unused cards
-  for (const jpgPath of toDelete) {
-    try {
-      await ActivityCardService.deleteActivityCard(
-        jpgPath,
-        lp.initialLessonPlanName,
-        lp.isInitiallyFavorited,
-      );
-    } catch (e) {
-      // console.warn(
-      //   `deleteUnusedImageFiles: Tried to delete ${jpgPath} but failed. `,
-      //   e,
-      // );
+    // Delete all unused cards
+    for (const jpgPath of toDelete) {
+      try {
+        await ActivityCardService.deleteActivityCard(
+          jpgPath,
+          lp.initialLessonPlanName,
+          lp.isInitiallyFavorited,
+        );
+      } catch (e) {
+        // console.warn(
+        //   `deleteUnusedImageFiles: Tried to delete ${jpgPath} but failed. `,
+        //   e,
+        // );
+      }
     }
-  }
 };
 
 /**

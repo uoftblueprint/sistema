@@ -156,7 +156,7 @@ export default class DraggableModuleWithMenu extends React.Component {
         this.options,
         () => {
           // console.warn(
-          //   `Something went wrong with the Android popup menu inside 
+          //   `Something went wrong with the Android popup menu inside
           //     DraggableModuleWithMenu ${this.props.data.key}.`,
           // )
         },
