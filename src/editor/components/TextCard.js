@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 import { ModuleType } from '../../services/constants';
 
 const TextCard = ({ setisTextinputOpen, sectionType }) => {
@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     height: 'auto',
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,
-    shadowColor: '#453E3D',
+    shadowColor: AppColors.dark,
     shadowOffset: {
       width: 1,
       height: 2,

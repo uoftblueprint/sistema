@@ -64,7 +64,7 @@ const Home = ({ navigation }) => {
     }
 
     //update the last refreshed date and card array if new cards were found
-    if (cards.length != 0) {
+    if (cards.length !== 0) {
       setPathArr(cards);
 
       const today = new Date().toDateString();
@@ -96,7 +96,7 @@ const Home = ({ navigation }) => {
           const tempArr = subDirectories.map(name => `${arrPath}/${name}/`); // create an array of the full path of all subdirectories
 
           //map this pathArr when app is first opened
-          if (tempArr.length != 0) {
+          if (tempArr.length !== 0) {
             setPathArr(tempArr);
           }
         } else {
@@ -124,7 +124,7 @@ const Home = ({ navigation }) => {
       <SafeAreaView style={styles.headContainer}>
         <Text style={[styles.title, TextStyle.h2]}>New activity cards</Text>
         <SafeAreaView style={styles.subContainer}>
-          {pathArr.length == 0 ? (
+          {pathArr.length === 0 ? (
             <Text style={[styles.subtitle, TextStyle.h3]}>
               Check for cards from the past week
             </Text>
@@ -141,7 +141,7 @@ const Home = ({ navigation }) => {
 
       {!loading ? (
         <SafeAreaView style={styles.flatListContainer}>
-          {pathArr.length == 0 && (
+          {pathArr.length === 0 && (
             <Text style={[TextStyle.h3, { marginTop: 15 }]}>Nothing here!</Text>
           )}
           <FlatList
@@ -172,7 +172,7 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     height: '100%',
   },
   loadingView: {
@@ -207,10 +207,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   refreshIcon: {
-    fill: '#453E3D',
+    fill: AppColors.dark,
   },
   loadingIcon: {
-    color: '#453E3D',
+    color: AppColors.dark,
   },
 });
 

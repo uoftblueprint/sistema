@@ -1,15 +1,16 @@
 import { TouchableOpacity, StyleSheet } from 'react-native';
+import { AppColors } from '../Styles.config';
 
 const SistemaButton = props => {
   switch (props.color) {
     case 'blue':
-      styles.buttonContainer.backgroundColor = '#B8CFE4';
+      styles.buttonContainer.backgroundColor = AppColors.primary_30;
       break;
     case 'purple':
-      styles.buttonContainer.backgroundColor = '#68577760';
+      styles.buttonContainer.backgroundColor = AppColors.tertiary_30;
       break;
     default:
-      styles.buttonContainer.backgroundColor = '#68577760';
+      styles.buttonContainer.backgroundColor = AppColors.tertiary_30;
       break;
   }
   return (
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: '',
     borderWidth: 0.77,
     borderRadius: 6,
-    borderColor: '#453e3d66',
+    borderColor: AppColors.dark,
     paddingHorizontal: 12,
     paddingVertical: 6,
     alignSelf: 'center',

@@ -30,6 +30,7 @@ import { SectionName } from '../../services/constants.js';
 import { STACK_SCREENS as LIBRARY_STACK } from '../../library/constants.js';
 import handleCleanupActions from '../../services/editor/cleanupActions.js';
 import { ERROR } from '../constants.js';
+import { AppColors } from '../../Styles.config.js';
 
 const LessonPlanEditorV2 = ({ navigation, route }) => {
   // NAVIGATION STATES
@@ -250,7 +251,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     justifyContent: 'center',
   },
   viewStyle: {

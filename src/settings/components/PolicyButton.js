@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { STACK_SCREENS } from '../constants';
 import NextButton from '../../../assets/icons/backArrowEast.svg';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 
 const PolicyButton = ({ title, content, navigation }) => {
   return (
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 'auto',
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     borderRadius: 8,
     borderWidth: 0.77,
     borderStyle: 'solid',

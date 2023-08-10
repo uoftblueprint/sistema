@@ -2,7 +2,7 @@ import { SafeAreaView, Text, StyleSheet, ScrollView, View } from 'react-native';
 import Header from '../../Components/Header';
 import LinkButton from '../components/LinkButton';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 
 const TemplatePolicy = ({ navigation, route }) => {
   const { pageTitle, pageContent } = route.params;
@@ -18,7 +18,7 @@ const TemplatePolicy = ({ navigation, route }) => {
       <Text style={[TextStyle.h1, styles.title]}>{pageTitle}</Text>
       <ScrollView>
         <Text style={[TextStyle.label, styles.text]}>{pageContent}</Text>
-        {pageTitle == 'About Sistema' && (
+        {pageTitle === 'About Sistema' && (
           <View style={styles.linkContainers}>
             <LinkButton
               title={'www.sistema-toronto.ca'}
@@ -38,7 +38,7 @@ const TemplatePolicy = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     display: 'flex',
     flexDirection: 'column',
   },

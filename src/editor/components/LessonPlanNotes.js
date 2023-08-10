@@ -11,7 +11,7 @@ import {
   replaceNote,
   getLessonSection,
 } from '../../services/editor/lessonPlanSlice';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 
 const LessonPlanNotes = ({ sectionType, isDisabled }) => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const LessonPlanNotes = ({ sectionType, isDisabled }) => {
           editable={!isDisabled}
           style={TextStyle.body}
           placeholder={'Add lesson notes here...'}
-          placeholderTextColor={'#453E3D'}
+          placeholderTextColor={AppColors.dark}
           value={currNotes}
           multiline
           returnKeyType="next"
@@ -56,11 +56,11 @@ const styles = StyleSheet.create({
       },
     }),
     flexDirection: 'column',
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,
-    shadowColor: '#453E3D',
+    shadowColor: AppColors.dark,
     shadowOffset: {
       width: 1,
       height: 2,

@@ -18,6 +18,7 @@ import {
   getCurrFavState,
 } from '../services/editor/lessonPlanSlice.js';
 import { MAINDIRECTORY, ModuleType } from '../services/constants.js';
+import { AppColors } from '../Styles.config.js';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     alignItems: 'center',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     width: '100%',
   },
 });

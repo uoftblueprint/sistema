@@ -10,7 +10,6 @@ import {
 } from './routes/Local';
 import { MAINDIRECTORY, SectionName, ImageFileExtensions } from './constants';
 import { Module } from './models';
-import { write } from 'react-native-fs';
 
 const LessonPlanService = {
   // All APIs for LessonPlan should be here
@@ -447,7 +446,7 @@ const LessonPlanService = {
 
       if (await checkFileExists(path)) {
         const files = await readDirectory(path);
-        return files.length == 0;
+        return files.length === 0;
       } else {
         console.log(
           `isLessonPlanDirectoryEmpty: ${name} directory does not exist`,

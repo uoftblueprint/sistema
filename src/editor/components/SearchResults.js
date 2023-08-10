@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import ActivityCardService from '../../services/ActivityCardService';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 import { scale, verticalScale } from 'react-native-size-matters';
 
 const SearchResults = ({
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '100%',
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     paddingVertical: verticalScale(12),
     paddingHorizontal: scale(14),
     borderTopColor: '#D9D9D9',

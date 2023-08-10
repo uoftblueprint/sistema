@@ -1,4 +1,5 @@
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { AppColors } from '../../Styles.config';
 
 const TagFilter = function (props) {
   return (
@@ -6,7 +7,7 @@ const TagFilter = function (props) {
       style={[
         styles.tagContainer,
         {
-          backgroundColor: props.active ? '#68577766' : 'transparent',
+          backgroundColor: props.active ? AppColors.tertiary_30 : 'transparent',
           marginLeft: props.isFirst ? 0 : 5,
           marginRight: props.isLast ? 0 : 5,
         },
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: '#afafaf',
+    borderColor: AppColors.overlay_background,
     marginVertical: 4,
   },
   text: {

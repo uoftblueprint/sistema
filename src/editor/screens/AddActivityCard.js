@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { verticalScale, scale } from 'react-native-size-matters';
-import { TextStyle } from '../../Styles.config';
+import { AppColors, TextStyle } from '../../Styles.config';
 
 // Component dependencies
 import SistemaButton from '../../Components/SistemaButton';
@@ -240,17 +240,6 @@ const AddActivityCard = function ({ navigation, route }) {
       });
   };
 
-  const addAsText = async () => {
-    dispatch(
-      addToSection({
-        type: 'text',
-        section: sectionType,
-        content: searchQuery,
-      }),
-    );
-    navigation.goBack();
-  };
-
   // *************** PREVIEW RELATED VARS END ***********
 
   return (
@@ -361,12 +350,12 @@ const styles = StyleSheet.create({
   safeContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
   },
   scrollContainer: {
     flexDirection: 'column',
     width: '100%',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
   },
   paddingContainer: {
     width: '100%',

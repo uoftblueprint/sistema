@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 
-import { TextStyle } from '../Styles.config';
+import { TextStyle, AppColors } from '../Styles.config';
 
 import Video from 'react-native-video';
 
@@ -91,7 +91,7 @@ const Tutorial = ({ navigation }) => {
     const { x } = e.nativeEvent.contentOffset;
     const nextIndex = Math.round(x / width);
 
-    if (nextIndex != currentPage) {
+    if (nextIndex !== currentPage) {
       setPageIndex(nextIndex);
     }
   };
@@ -140,11 +140,17 @@ const Tutorial = ({ navigation }) => {
         </SistemaButton>
       ) : (
         <View style={styles.paginationContainer}>
-          {Array(0, 1, 2, 3, 4, 5).map(num => {
+          {[0, 1, 2, 3, 4, 5].map(num => {
             if (num === pageIndex) {
               return <SquareFilled style={styles.dotStyle} key={num} />;
             } else {
-              return <SquareEmpty style={styles.dotStyle} key={num} />;
+              return (
+                <SquareEmpty
+                  style={styles.dotStyle}
+                  key={num}
+                  fill={AppColors.background}
+                />
+              );
             }
           })}
         </View>
@@ -155,7 +161,7 @@ const Tutorial = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     height: '100%', // full screen is filled with color
     flexDirection: 'column', // organize items vertically
     alignItems: 'center', // center items

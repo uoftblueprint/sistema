@@ -7,8 +7,7 @@ import {
   View,
 } from 'react-native';
 import XButton from '../../assets/icons/xButton.svg';
-import { TextStyle } from '../Styles.config';
-import { OptionsMenuPadding } from '../Styles.config';
+import { TextStyle, OptionsMenuPadding, AppColors } from '../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
 const OptionHeader = ({ lastEdited, navigation }) => {
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
   headerRow: {
     width: windowWidth,
     flexDirection: 'row',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     alignItems: 'center',
     paddingLeft: OptionsMenuPadding,
   },

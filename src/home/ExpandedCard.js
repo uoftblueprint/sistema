@@ -4,12 +4,11 @@ import {
   Text,
   ScrollView,
   Image,
-  Platform,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { readFile } from '../services/routes/Local.js';
 import Header from '../Components/Header';
-import { TextStyle } from '../Styles.config';
+import { TextStyle, AppColors } from '../Styles.config';
 import { scale, verticalScale } from 'react-native-size-matters';
 
 const ExpandedCard = ({ route, navigation }) => {
@@ -76,7 +75,7 @@ const ExpandedCard = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     height: '100%',
   },
   box: {
