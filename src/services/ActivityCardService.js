@@ -163,7 +163,6 @@ const ActivityCardService = {
   /**
    * Add image from React-Native-Image-Picker to lesson plan's folder in RNFS
    *
-   * TODO: look for lesson plan in favourited/default, then store in there
    * @async
    * @param {String} base64 file of image
    * @param {String} fileName file name of image

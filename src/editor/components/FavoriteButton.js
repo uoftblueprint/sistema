@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import HeartIcon from '../../../assets/heartIcon.svg';
 import FavoriteIcon from '../../../assets/favoriteIcon.svg';
-import { OptionsMenuPadding } from '../../Styles.config';
+import { OptionsMenuPadding, AppColors } from '../../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;
 let timer;
@@ -50,13 +50,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     width: '100%',
     height: 45,
   },
   textContainer: {
     paddingLeft: OptionsMenuPadding,
-    color: 'rgba(0,0,0, 0.87)',
+    color: AppColors.dark,
     fontFamily: 'Mulish-Bold',
     fontSize: 16,
   },

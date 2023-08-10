@@ -10,7 +10,7 @@ import {
 import SearchLogo from '../../../assets/Search.svg';
 import SearchResults from './SearchResults';
 import NoCardsFound from './NoCardsFound';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 import {
   scale,
   verticalScale,
@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 10,
     borderWidth: 0.77,
-    borderColor: '#453E3D',
-    backgroundColor: '#FDFBF7',
+    borderColor: AppColors.dark,
+    backgroundColor: AppColors.light_background,
     overflow: 'hidden',
     ...Platform.select({
       // shadow for android
       android: {
-        shadowColor: '#453E3D',
+        shadowColor: AppColors.dark,
         shadowOffset: {
           width: 1,
           height: 2,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     // shadow for ios
     ...Platform.select({
       ios: {
-        shadowColor: '#453E3D',
+        shadowColor: AppColors.dark,
         shadowOffset: {
           width: 1,
           height: 2,
@@ -115,10 +115,10 @@ const styles = StyleSheet.create({
   searchbarContainer: {
     width: '100%',
     flexDirection: 'row',
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    borderBottomColor: '#D9D9D9',
+    borderBottomColor: AppColors.overlay_background,
     borderBottomWidth: 0.77,
     paddingHorizontal: scale(14),
     ...Platform.select({
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   searchResultContainer: {
     maxHeight: moderateVerticalScale(200, 2.5),
     width: '100%',
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
   },
   IconStyle: {
     marginRight: Platform.OS === 'ios' ? '2.5%' : '2%',

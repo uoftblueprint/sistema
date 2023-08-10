@@ -4,6 +4,7 @@ import ErrorAlert from '../../../assets/errorAlert.svg';
 import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
 import { scale } from 'react-native-size-matters';
+import { AppColors } from '../../Styles.config';
 
 const NoCardsFound = ({ text, navigation, section }) => {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   text3: {
-    color: '#0078E8',
+    color: AppColors.link,
     fontSize: 15,
     fontFamily: 'Mulish-Regular',
   },

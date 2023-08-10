@@ -1,4 +1,5 @@
 import { Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import { AppColors } from '../../Styles.config';
 
 const AddToLessonButton = () => {
   return (
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#68577766',
+    backgroundColor: AppColors.tertiary_30,
     height: 32.68,
     width: 134,
     borderWidth: 0.77,

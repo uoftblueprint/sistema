@@ -14,7 +14,7 @@ import {
   Linking,
 } from 'react-native';
 import { ModuleType } from '../../services/constants';
-import { TextStyle } from '../../Styles.config';
+import { AppColors, TextStyle } from '../../Styles.config';
 
 import LinkIcon from '../../../assets/linkIcon.svg';
 
@@ -303,13 +303,13 @@ export default class DraggableModuleWithMenu extends React.Component {
 
 const styles = StyleSheet.create({
   module: {
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     height: 'auto',
     width: '100%',
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,
-    shadowColor: '#453E3D',
+    shadowColor: AppColors.dark,
     shadowOffset: {
       width: 1,
       height: 2,
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,
-    shadowColor: '#453E3D',
+    shadowColor: AppColors.dark,
     shadowOffset: {
       width: 1,
       height: 2,
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   LinkInputStyle: {
-    color: '#0078E8',
+    color: AppColors.link,
     flex: 1,
   },
   LinkPreviewStyle: {
@@ -382,14 +382,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   LinkTextStyle: {
-    color: '#0078E8',
+    color: AppColors.link,
     flex: 1,
     flexWrap: 'wrap',
   },
   box: {
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     borderWidth: 1,
-    borderColor: '#FDFBF7',
+    borderColor: AppColors.light_background,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',

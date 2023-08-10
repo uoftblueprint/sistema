@@ -139,7 +139,7 @@ export async function makeDirectory(dirPath) {
 
 /**
  * Copies the folder located at filepath to destpath recursively.
-
+ * 
  * Note: On Android copyFile will overwrite destpath if it already exists. 
  * On iOS an error will be thrown if the file already exists.
  * @param {String} dirpath the original path to be copied from
@@ -168,7 +168,7 @@ export async function copyDir(dirpath, destpath) {
 
 /**
  * Copies the file located at filepath to destpath.
-
+ * 
  * Note: On Android copyFile will overwrite destpath if it already exists. 
  * On iOS an error will be thrown if the file already exists.
  * @param {String} filepath the original path to be copied from

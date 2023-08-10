@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';
-import { TextStyle } from '../../Styles.config';
+import { TextStyle, AppColors } from '../../Styles.config';
 import { ModuleType } from '../../services/constants';
 import { scale } from 'react-native-size-matters';
 
@@ -68,7 +68,7 @@ const LinkCard = ({ setisLinkInputOpen, sectionType }) => {
               style={[
                 TextStyle.body,
                 styles.LinkInputStyle,
-                { color: '#0078E8' },
+                { color: AppColors.link },
               ]}
               ref={linkInput}
               placeholder={'Paste Link Here'}
@@ -103,12 +103,12 @@ const styles = StyleSheet.create({
   LinkCardStyle: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    backgroundColor: '#FDFBF7',
+    backgroundColor: AppColors.light_background,
     height: 'auto',
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,
-    shadowColor: '#453E3D',
+    shadowColor: AppColors.dark,
     shadowOffset: {
       width: 1,
       height: 2,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.77,
     borderColor: '#000',
     borderRadius: 8,
-    shadowColor: '#453E3D',
+    shadowColor: AppColors.dark,
     shadowOffset: {
       width: 1,
       height: 2,

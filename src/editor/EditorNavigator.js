@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LessonPlanEditor from './screens/LessonPlanEditor'; // TODO: Remove once you're done
 import LessonPlanEditorV2 from './screens/LessonPlanEditorV2';
 import AddActivityCard from './screens/AddActivityCard';
 import ExpandedCard from '../home/ExpandedCard';
@@ -21,10 +20,6 @@ const EditorNavigator = () => {
       <Stack.Screen
         name={STACK_SCREENS.LESSON_PLAN_EDITOR_V2}
         component={LessonPlanEditorV2}
-      />
-      <Stack.Screen // TODO: Remove once you're done and all unused components once this screen is gone
-        name={STACK_SCREENS.LESSON_PLAN_EDITOR}
-        component={LessonPlanEditor}
       />
       <Stack.Screen
         name={STACK_SCREENS.ADD_ACTIVITY_CARD}

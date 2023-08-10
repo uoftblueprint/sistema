@@ -7,6 +7,7 @@ import TrashIcon from '../../assets/trashIcon.svg';
 import HeartIcon from '../../assets/heartIcon.svg';
 import CopyIcon from '../../assets/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
+import { AppColors } from '../Styles.config.js';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPDF } from '../services/pdf';
@@ -32,8 +33,6 @@ const OptionsMenu = ({
     isFavorited ?? // from library
     // eslint-disable-next-line
     useSelector(state => getCurrFavState(state.lessonPlan)); // from editor
-  // TODO can i move this into export helper func if
-  // it's only being used once b/c lastEdited is passed in
 
   // ALL OPTION BUTTONS
   const editorButtons = [
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     alignItems: 'center',
-    backgroundColor: '#FFFAF5',
+    backgroundColor: AppColors.background,
     width: '100%',
   },
 });

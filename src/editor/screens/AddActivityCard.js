@@ -241,17 +241,6 @@ const AddActivityCard = function ({ navigation, route }) {
       });
   };
 
-  const addAsText = async () => {
-    dispatch(
-      addToSection({
-        type: 'text',
-        section: sectionType,
-        content: searchQuery,
-      }),
-    );
-    navigation.goBack();
-  };
-
   // *************** PREVIEW RELATED VARS END ***********
 
   return (
@@ -327,17 +316,6 @@ const AddActivityCard = function ({ navigation, route }) {
                     Add Card
                   </Text>
                 </SistemaButton>
-                <TouchableOpacity onPress={addAsText}>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.mulishFont,
-                      styles.marginH2,
-                      styles.azureRadiance,
-                    ]}>
-                    INSERT AS TEXT INSTEAD
-                  </Text>
-                </TouchableOpacity>
               </View>
 
               {/* ACTIVITY CARD PREVIEW */}

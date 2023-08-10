@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import OptionsMenu from './OptionsMenu.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppColors } from '../Styles.config.js';
 
 const LessonPlanMenuOverlay = ({ navigation, route }) => {
   const { isLessonPlanEditor, lastEdited, lessonPlanName, isFavorited } =
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   overlay: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(217,217,217, 0.8)',
+    backgroundColor: AppColors.overlay_background,
     justifyContent: 'flex-end',
     flex: 1,
   },
