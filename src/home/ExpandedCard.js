@@ -31,7 +31,7 @@ const ExpandedCard = ({ route, navigation }) => {
         setActivityType(titleSegment[1]);
         setTitle(titleSegment[2]);
       } catch (err) {
-        console.warn(err);
+        // console.warn(err);
         setTitle('Could not load card preview. Please try again.');
       }
     };

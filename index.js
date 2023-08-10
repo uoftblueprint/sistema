@@ -19,7 +19,6 @@ import { AccessToken } from './src/services/models';
 axios.interceptors.request.use(
   async config => {
     if (!isTokenValid()) {
-      console.log('Refreshing access token...');
       const accessToken = await refreshAccessToken();
       store.dispatch(setNewToken(accessToken)); // Set newly obtained access token in redux
     }
@@ -46,7 +45,6 @@ axios.interceptors.response.use(
   error => {
     // If 4xx client error, purposefully set an invalid token to trigger token refresh on next request
     if (error?.response?.status >= 400 && error?.response?.status < 500) {
-      console.warn("Reseting token to refresh on next HTTP request due to 4xx client error.");
       invalidToken = new AccessToken(); // default has automatically invalid expiry time
       store.dispatch(setNewToken(invalidToken)); // set invalid token to redux (isTokenValid checks redux)
     }

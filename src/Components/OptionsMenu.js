@@ -34,8 +34,6 @@ const OptionsMenu = ({
     isFavorited ?? // from library
     // eslint-disable-next-line
     useSelector(state => getCurrFavState(state.lessonPlan)); // from editor
-  // TODO can i move this into export helper func if
-  // it's only being used once b/c lastEdited is passed in
 
   // ALL OPTION BUTTONS
   const editorButtons = [
@@ -107,13 +105,13 @@ const OptionsMenu = ({
         url: 'file://' + pdf.filePath,
         type: 'application/pdf',
       });
-      console.log('File shared');
+      // console.log('File shared');
     } catch (err) {
       const exception =
         Platform.OS === 'android' &&
         err.toString().includes('User did not share');
       if (!exception) {
-        console.error('File not shared', err);
+        // console.error('File not shared', err);
       }
     }
     await deleteFile(pdf.filePath);

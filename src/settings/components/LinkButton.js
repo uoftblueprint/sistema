@@ -12,7 +12,7 @@ const LinkButton = ({ title, url }) => {
       // by some browser in the mobile
       await Linking.openURL(url);
     } else {
-      console.error(`Don't know how to open this URL: ${url}`);
+      // console.error(`Don't know how to open this URL: ${url}`);
     }
   }, [url]);
 

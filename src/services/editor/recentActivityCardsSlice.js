@@ -25,9 +25,9 @@ export const getCardNames = state => {
   try {
     return state.cardNames;
   } catch {
-    console.error(
-      'getCardNames: Could not grab names of recently added/featured activity cards from redux.',
-    );
+    // console.error(
+    //   'getCardNames: Could not grab names of recently added/featured activity cards from redux.',
+    // );
     return [];
   }
 };

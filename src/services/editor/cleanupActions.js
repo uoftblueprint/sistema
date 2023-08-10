@@ -8,7 +8,7 @@ import store from '../configureStore';
  * @param {boolean} leaveBySave true if user pressed Save button to leave Editor
  */
 const handleCleanupActions = async leaveBySave => {
-  console.log(`LP CLEANUP: Cleaning up items before closing lesson plan....`);
+  // console.log(`LP CLEANUP: Cleaning up items before closing lesson plan....`);
 
   try {
     const lpObj = store.getState().lessonPlan;
@@ -16,7 +16,7 @@ const handleCleanupActions = async leaveBySave => {
     await handleFavChange(lpObj);
     await removeEmptyLessonPlanDirectory(lpObj, leaveBySave);
   } catch (e) {
-    console.error(`handleCleanupActions: ${e}`);
+    // console.error(`handleCleanupActions: ${e}`);
   }
 };
 
@@ -46,10 +46,10 @@ const deleteUnusedImageFiles = async (lp, leaveBySave) => {
   const toDelete = imgRNFS.filter(card => !imgKeep.includes(card));
 
   if (toDelete.length !== 0)
-    console.log(
-      'deleteUnusedImageFiles: Found the following unused images ',
-      toDelete,
-    );
+    // console.log(
+    //   'deleteUnusedImageFiles: Found the following unused images ',
+    //   toDelete,
+    // );
 
   // Delete all unused cards
   for (const jpgPath of toDelete) {
@@ -60,10 +60,10 @@ const deleteUnusedImageFiles = async (lp, leaveBySave) => {
         lp.isInitiallyFavorited,
       );
     } catch (e) {
-      console.warn(
-        `deleteUnusedImageFiles: Tried to delete ${jpgPath} but failed. `,
-        e,
-      );
+      // console.warn(
+      //   `deleteUnusedImageFiles: Tried to delete ${jpgPath} but failed. `,
+      //   e,
+      // );
     }
   }
 };
@@ -75,7 +75,7 @@ const deleteUnusedImageFiles = async (lp, leaveBySave) => {
  */
 const handleFavChange = async lp => {
   if (lp.isInitiallyFavorited !== lp.isCurrentlyFavorited) {
-    console.log(`LP CLEANUP: Favorite directory change detected`);
+    // console.log(`LP CLEANUP: Favorite directory change detected`);
     if (lp.isCurrentlyFavorited) {
       await LessonPlanService.favouriteLessonPlan(lp.lessonPlanName);
     } else {
@@ -100,7 +100,7 @@ const removeEmptyLessonPlanDirectory = async (lp, leaveBySave) => {
     ))
   ) {
     // Remove entire lp directory if so
-    console.log(`removeEmptyLessonPlanDirectory: ${lp.lessonPlanName}`);
+    // console.log(`removeEmptyLessonPlanDirectory: ${lp.lessonPlanName}`);
     LessonPlanService.deleteLessonPlan(lp.lessonPlanName);
   }
 };

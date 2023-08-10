@@ -4,7 +4,6 @@ import { policyPages } from '../constants';
 import Header from '../../Components/Header';
 import IconButton from '../components/IconButton';
 import PolicyButton from '../components/PolicyButton';
-import CloudUpload from '../../../assets/icons/cloudUploadOutline.svg';
 import Trash from '../../../assets/icons/trashIcon.svg';
 import { TextStyle, AppColors } from '../../Styles.config';
 import { deleteFile } from '../../services/routes/Local';
@@ -29,11 +28,6 @@ const Settings = ({ navigation }) => {
       <ScrollView>
         <Text style={[TextStyle.h2, styles.title]}>Settings</Text>
         <View style={styles.buttonContainer}>
-          <IconButton
-            title={'Back Up Data'}
-            handlePress={() => console.log('hi')}>
-            <CloudUpload width={25} height={25} />
-          </IconButton>
           <IconButton
             title={'Clear App Data'}
             handlePress={() => toggleDeleteOverlay(true)}>

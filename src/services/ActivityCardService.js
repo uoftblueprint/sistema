@@ -42,7 +42,7 @@ const ActivityCardService = {
 
       // Retrieve all Drive files meeting the params
       const response = await axios.get(downloadUrl, { params }).catch(error => {
-        console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
+        // console.error('ERROR IN GETTING FEATURED ACTIVITY CARDS: ' + error);
         if (error.code === 'ERR_NETWORK') {
           throw new Error('no wifi');
         }
@@ -87,7 +87,7 @@ const ActivityCardService = {
       return pathArr;
     } catch (e) {
       // There was an error, catch it and do something with it
-      console.error('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
+      // console.error('ERROR IN LISTING FEATURED ACTIVITY CARDS: ' + e);
       if (e.toString() === 'Error: no wifi') {
         return 'no wifi';
       } else {
@@ -167,7 +167,7 @@ const ActivityCardService = {
 
       return `/${id}/cardImage.jpg`;
     } catch (e) {
-      console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
+      // console.error('ERROR IN DOWNLOADING ACTIVITY CARD: ' + e);
       if (e.toString() === 'Error: no wifi') {
         return 'no wifi';
       }
@@ -177,7 +177,6 @@ const ActivityCardService = {
   /**
    * Add image from React-Native-Image-Picker to lesson plan's folder in RNFS
    *
-   * TODO: look for lesson plan in favourited/default, then store in there
    * @async
    * @param {String} base64 file of image
    * @param {String} fileName file name of image
@@ -199,13 +198,13 @@ const ActivityCardService = {
       }
 
       await writeFile(true, dirPath, base64);
-      console.log('Went into: ' + dirPath);
+      // console.log('Went into: ' + dirPath);
       return {
         relPath: '/' + fileName,
         fullPath: dirPath,
       };
     } catch (error) {
-      console.error('Error adding image to local storage: ' + error);
+      // console.error('Error adding image to local storage: ' + error);
     }
   },
 
@@ -253,12 +252,12 @@ const ActivityCardService = {
       // check if file exists first. if yes, use RNFS.unlink, otherwise throw an error
       if (await checkFileExists(filePath)) {
         await deleteFile(filePath);
-        console.log(`deleteActivityCard: Deleted ${dirID} successfully.`);
+        // console.log(`deleteActivityCard: Deleted ${dirID} successfully.`);
       } else {
-        console.error(`deleteActivityCard error: ${filePath} does not exist.`);
+        // console.error(`deleteActivityCard error: ${filePath} does not exist.`);
       }
     } catch (e) {
-      console.error('Error in deleting activity card: ' + e);
+      // console.error('Error in deleting activity card: ' + e);
     }
   },
 };

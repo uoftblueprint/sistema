@@ -59,7 +59,7 @@ const LessonSectionDraggable = ({
     );
   };
 
-  console.log(sectionData);
+  // console.log(sectionData);
 
   // COMPONENT STATES
   const [isTextinputOpen, setisTextinputOpen] = useState(false);
@@ -78,8 +78,6 @@ const LessonSectionDraggable = ({
   };
 
   const addImageModule = async () => {
-    // You can also use as a promise without 'callback':
-    // TODO: dispatch to redux as well as ModuleType.image
     const options = {
       mediaType: 'photo',
       maxWidth: windowWidth,
@@ -90,9 +88,9 @@ const LessonSectionDraggable = ({
     const result = await launchImageLibrary(options);
     // Handle response object
     if (result.didCancel) {
-      console.log('User cancelled the image picker.');
+      // console.log('User cancelled the image picker.');
     } else if (result.error) {
-      console.error(result.errorMessage);
+      // console.error(result.errorMessage);
     } else {
       const paths = await ActivityCardService.addImageToStorage(
         result.assets[0].base64,

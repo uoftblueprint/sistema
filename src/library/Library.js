@@ -90,7 +90,7 @@ const Library = ({ navigation, route }) => {
           });
         })
         .catch(err => {
-          console.error(`Library favourite lesson plan: ${err}`);
+          // console.error(`Library favourite lesson plan: ${err}`);
         });
     };
 

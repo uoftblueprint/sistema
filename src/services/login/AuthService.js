@@ -13,23 +13,6 @@ import jwt_info from './jwt.keys.json';
 import getOAuthToken from '../routes/OAuth';
 import store from '../configureStore';
 
-// TODO: delete later once final service account is generated and this function is manually used
-const encryptSecret = testKey => {
-  var encrypted2 = AES.encrypt(jwt_info[testKey], testKey, {
-    iv: Hex.parse('00000000000000000000000000000000'),
-    mode: CFB,
-    padding: Pkcs7
-  }).toString();
-  console.log('Salt, ciphertext (OpenSSL format, Base64): ', encrypted2);
-
-  var decrypted = AES.decrypt(encrypted2, testKey, {
-    iv: Hex.parse('00000000000000000000000000000000'),
-    mode: CFB,
-    padding: Pkcs7
-  }).toString(Utf8);
-  console.log('Decrypted: ', decrypted);
-};
-
 /**
  * Decrypt secret using string representation of key itself to the value being obtained.
  * @param {string} key key in jwt.keys.json

@@ -54,7 +54,7 @@ const RecentCard = ({ cardPath }) => {
             setBackgroundColor('#9D649F');
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
     readCardTitle();

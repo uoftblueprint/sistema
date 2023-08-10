@@ -68,7 +68,7 @@ const AddActivityCard = function ({ navigation, route }) {
     queryKey: ['activityCards'],
     queryFn: ActivityCardService.getAllActivityCards,
     onError: error => {
-      console.error('Error getting all activity cards: ' + error);
+      // console.error('Error getting all activity cards: ' + error);
       if (error.code === 'ERR_NETWORK' && isWifiConnected) {
         // If netInfo warning was bypassed, but axios insists there's no connection
         setWifiWarningOverlay(true);
@@ -236,7 +236,7 @@ const AddActivityCard = function ({ navigation, route }) {
         }
       })
       .catch(err => {
-        console.error('Error when adding activity card: ' + err);
+        // console.error('Error when adding activity card: ' + err);
       });
   };
 

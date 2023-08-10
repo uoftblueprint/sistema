@@ -154,11 +154,12 @@ export default class DraggableModuleWithMenu extends React.Component {
       UIManager.showPopupMenu(
         findNodeHandle(this.menuRef),
         this.options,
-        () =>
-          console.warn(
-            `Something went wrong with the Android popup menu inside 
-              DraggableModuleWithMenu ${this.props.data.key}.`,
-          ),
+        () => {
+          // console.warn(
+          //   `Something went wrong with the Android popup menu inside 
+          //     DraggableModuleWithMenu ${this.props.data.key}.`,
+          // )
+        },
         (_, i) => {
           this.handleClick(i);
         },
@@ -173,7 +174,7 @@ export default class DraggableModuleWithMenu extends React.Component {
       cleanLink = 'http://' + cleanLink;
     }
     Linking.openURL(cleanLink).catch(err => {
-      console.error("Couldn't load page", err);
+      // console.error("Couldn't load page", err);
     });
   };
 

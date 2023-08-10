@@ -85,9 +85,9 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
       if (route.params && route.params.lessonPlanName) {
         const lessonPlanName = route.params.lessonPlanName;
         // Get the lesson plan from RNFS backend
-        console.log(
-          `LessonPlanEditorV2: Fetching data for ${lessonPlanName}...`,
-        );
+        // console.log(
+        //   `LessonPlanEditorV2: Fetching data for ${lessonPlanName}...`,
+        // );
         let favourited = await LessonPlanService.isLessonPlanFavourited(
           lessonPlanName,
         );
@@ -154,7 +154,7 @@ const LessonPlanEditorV2 = ({ navigation, route }) => {
 
       // Opening new lesson plan or if fetching failed
       if (!fetchSuccess) {
-        console.log('LessonPlanEditorV2: Opening blank lesson plan!');
+        // console.log('LessonPlanEditorV2: Opening blank lesson plan!');
         // Default lesson plan name is today's date
         const todayDate = new Date().toLocaleDateString('en-us', {
           year: 'numeric',

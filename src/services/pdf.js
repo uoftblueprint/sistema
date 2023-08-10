@@ -7,7 +7,7 @@ import { ModuleType } from './constants';
  * @async
  */
 export const createPDF = async lessonPlan => {
-  console.log(lessonPlan);
+  // console.log(lessonPlan);
   var html = ['<body style="font-family:Arial">'];
 
   // add title
@@ -23,7 +23,7 @@ export const createPDF = async lessonPlan => {
   }
   html.push('</body>');
 
-  console.log(html);
+  // console.log(html);
   let options = {
     html: html.join(''),
     fileName: 'LessonPlan',
@@ -40,7 +40,7 @@ export const createPDF = async lessonPlan => {
  */
 const moduleInformation = (module, moduleName) => {
   var ret = [];
-  console.log(moduleName);
+  // console.log(moduleName);
   if (module.length > 0) {
     ret.push(header(moduleName, 2));
   }

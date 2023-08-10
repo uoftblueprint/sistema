@@ -105,7 +105,7 @@ const Home = ({ navigation }) => {
           await LessonPlanService.initializeEmptyDirectories();
         }
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
     fetchSavedData();

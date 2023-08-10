@@ -5,7 +5,6 @@ import SistemaButton from '../Components/SistemaButton';
 import { AppColors, TextStyle } from '../Styles.config';
 
 const Welcome = ({ navigation }) => {
-  // TODO: navigation to tutorial.js and call to RNFS
   const beginTutorial = () => {
     navigation.navigate('Tutorial');
   };

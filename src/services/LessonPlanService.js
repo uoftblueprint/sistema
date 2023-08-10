@@ -37,7 +37,7 @@ const LessonPlanService = {
         return false;
       }
     } catch (e) {
-      console.error('deleteLessonPlan error: ', e);
+      // console.error('deleteLessonPlan error: ', e);
     }
   },
 
@@ -57,7 +57,7 @@ const LessonPlanService = {
       let result = await deleteFile(path);
       return result;
     } catch (e) {
-      console.error('deleteLessonPlan error: ', e);
+      // console.error('deleteLessonPlan error: ', e);
     }
   },
 
@@ -100,7 +100,7 @@ const LessonPlanService = {
       if ((favourited || defaulted) && hasNewName) {
         // Case where the lesson plan already exists and was renamed
 
-        console.log('The lesson plan was saved with a new name.');
+        // console.log('The lesson plan was saved with a new name.');
         const folder = favourited ? '/Favourited/' : '/Default/';
 
         const oldPath = MAINDIRECTORY + folder + oldLPName;
@@ -113,9 +113,9 @@ const LessonPlanService = {
         await deleteFile(path + '/' + oldLPName + '.json');
         await this.deleteLessonPlan(oldLPName);
       } else {
-        console.log(
-          'The lesson plan was saved without a new name, or is a new lesson plan.',
-        );
+        // console.log(
+        //   'The lesson plan was saved without a new name, or is a new lesson plan.',
+        // );
 
         // If not favourited, then the lesson plan must be in default
         path = favourited
@@ -126,11 +126,11 @@ const LessonPlanService = {
         await makeDirectory(path);
         await checkFileExists(path);
         await writeFile(false, path + name + '.json', lessonJSON);
-        console.log('Successfully saved lesson plan: ' + name);
+        // console.log('Successfully saved lesson plan: ' + name);
       }
     } catch (e) {
       // There was an error, catch it and do something with it
-      console.error('Error saving lesson plan: ', e);
+      // console.error('Error saving lesson plan: ', e);
     }
   },
 
@@ -179,7 +179,7 @@ const LessonPlanService = {
 
       return lessonPlanObj;
     } catch (e) {
-      console.error('Error getLessonPlan: ', e);
+      // console.error('Error getLessonPlan: ', e);
     }
   },
 
@@ -194,19 +194,19 @@ const LessonPlanService = {
       const defaultPath = `${MAINDIRECTORY}/Default/${name}/`;
       // check if file exists in the favourites folder
       if (await checkFileExists(favouritedPath)) {
-        console.log(`Lesson Plan is in Favourited: ${name}`);
+        // console.log(`Lesson Plan is in Favourited: ${name}`);
         return true;
       } else if (await checkFileExists(defaultPath)) {
-        console.log(`Lesson Plan is in Default: ${name}`);
+        // console.log(`Lesson Plan is in Default: ${name}`);
         return false;
       } else {
-        console.warn(
-          `Lesson Plan ${name} has not been saved into a Favourited or Default folder yet`,
-        );
+        // console.warn(
+        //   `Lesson Plan ${name} has not been saved into a Favourited or Default folder yet`,
+        // );
         return false;
       }
     } catch (e) {
-      console.error('isLessonPlanFavourited error: ', e);
+      // console.error('isLessonPlanFavourited error: ', e);
     }
   },
 
@@ -253,7 +253,7 @@ const LessonPlanService = {
       // rename the lesson plan .json file inside the copied lesson plan directory
       await deleteFile(`${destPath}/${name}.json`);
     } catch (e) {
-      console.error('Error copyLessonPlan: ', e);
+      // console.error('Error copyLessonPlan: ', e);
     }
   },
 
@@ -293,7 +293,7 @@ const LessonPlanService = {
 
       return lpInfo;
     } catch (e) {
-      console.error('Error getAllLessonPlanNames: ', e);
+      // console.error('Error getAllLessonPlanNames: ', e);
     }
   },
 
@@ -307,22 +307,22 @@ const LessonPlanService = {
       let favouritedExists = await checkFileExists(MAINDIRECTORY + '/Default');
 
       if (defaultExists && favouritedExists) {
-        console.log('initializeEmptyDirectories: Directories already exist.');
+        // console.log('initializeEmptyDirectories: Directories already exist.');
         return;
       }
 
       if (!defaultExists) {
         makeDirectory(MAINDIRECTORY + '/Default/');
-        console.log('initializeEmptyDirectories: Created Default directory.');
+        // console.log('initializeEmptyDirectories: Created Default directory.');
       }
       if (!favouritedExists) {
         makeDirectory(MAINDIRECTORY + '/Favourited/');
-        console.log(
-          'initializeEmptyDirectories: Created Favourited directory.',
-        );
+        // console.log(
+        //   'initializeEmptyDirectories: Created Favourited directory.',
+        // );
       }
     } catch (e) {
-      console.error('Error initializing directories: ', e);
+      // console.error('Error initializing directories: ', e);
     }
   },
 
@@ -344,7 +344,7 @@ const LessonPlanService = {
 
       await deleteFile(oldpath);
     } catch (e) {
-      console.error('Error favourite: ', e);
+      // console.error('Error favourite: ', e);
     }
   },
 
@@ -364,7 +364,7 @@ const LessonPlanService = {
       await copyDir(oldpath, newpath);
       await deleteFile(oldpath);
     } catch (e) {
-      console.error('Error unfavourite: ', e);
+      // console.error('Error unfavourite: ', e);
     }
   },
 
@@ -395,7 +395,7 @@ const LessonPlanService = {
         return true;
       }
     } catch (e) {
-      console.error('Error isLPNameUnique: ', e);
+      // console.error('Error isLPNameUnique: ', e);
     }
   },
 
@@ -426,7 +426,7 @@ const LessonPlanService = {
 
       return images;
     } catch (e) {
-      console.error('Error getLessonPlanImages: ', e);
+      // console.error('Error getLessonPlanImages: ', e);
       return [];
     }
   },
@@ -448,13 +448,13 @@ const LessonPlanService = {
         const files = await readDirectory(path);
         return files.length === 0;
       } else {
-        console.log(
-          `isLessonPlanDirectoryEmpty: ${name} directory does not exist`,
-        );
+        // console.log(
+        //   `isLessonPlanDirectoryEmpty: ${name} directory does not exist`,
+        // );
         return false;
       }
     } catch (e) {
-      console.error('Error isLessonPlanDirectoryEmpty: ', e);
+      // console.error('Error isLessonPlanDirectoryEmpty: ', e);
     }
   },
 };

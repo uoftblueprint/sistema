@@ -8,11 +8,11 @@ import RNFS from 'react-native-fs';
 export async function readDirectory(dirpath) {
   return RNFS.readdir(dirpath)
     .then(result => {
-      console.log(`GOT RESULT: ${dirpath}`);
+      // console.log(`GOT RESULT: ${dirpath}`);
       return result;
     })
     .catch(err => {
-      console.error(`RNFS readDirectory ${dirpath}: ${err.message}`);
+      // console.error(`RNFS readDirectory ${dirpath}: ${err.message}`);
     });
 }
 
@@ -24,11 +24,11 @@ export async function readDirectory(dirpath) {
 export async function readDDirectory(dirpath) {
   return RNFS.readDir(dirpath)
     .then(result => {
-      console.log(`GOT RESULT: ${dirpath}`);
+      // console.log(`GOT RESULT: ${dirpath}`);
       return result;
     })
     .catch(err => {
-      console.error(`RNFS readDDirectory ${dirpath}: ${err.message}`);
+      // console.error(`RNFS readDDirectory ${dirpath}: ${err.message}`);
     });
 }
 
@@ -40,11 +40,11 @@ export async function readDDirectory(dirpath) {
 export async function readFile(filepath) {
   return RNFS.readFile(filepath)
     .then(result => {
-      console.log('GOT FILE: ', filepath);
+      // console.log('GOT FILE: ', filepath);
       return result;
     })
     .catch(err => {
-      console.error(`RNFS readFile: ${err.message}`);
+      // console.error(`RNFS readFile: ${err.message}`);
     });
 }
 
@@ -61,10 +61,10 @@ export async function writeFile(isImage, filepath, content) {
 
   return RNFS.writeFile(filepath, data, encoding)
     .then(success => {
-      console.log(`FILE WRITTEN!: ${filepath}`);
+      // console.log(`FILE WRITTEN!: ${filepath}`);
     })
     .catch(err => {
-      console.error(`RNFS writeFile: ${err.message}`);
+      // console.error(`RNFS writeFile: ${err.message}`);
     });
 }
 
@@ -78,11 +78,11 @@ export async function deleteFile(filepath) {
   return (
     RNFS.unlink(filepath)
       .then(() => {
-        console.log(`FILE DELETED!: ${filepath}`);
+        // console.log(`FILE DELETED!: ${filepath}`);
       })
       // `unlink` will throw an error, if the item to unlink does not exist
       .catch(err => {
-        console.error(`RNFS deleteFile: ${err.message}`);
+        // console.error(`RNFS deleteFile: ${err.message}`);
       })
   );
 }
@@ -95,10 +95,10 @@ export async function deleteFile(filepath) {
 export async function moveFile(oldpath, newpath) {
   return RNFS.moveFile(oldpath, newpath)
     .then(() => {
-      console.log(`FILE MOVED TO: ${newpath}`);
+      // console.log(`FILE MOVED TO: ${newpath}`);
     })
     .catch(err => {
-      console.error(`RNFS moveFile: ${err.message}`);
+      // console.error(`RNFS moveFile: ${err.message}`);
     });
 }
 
@@ -111,14 +111,14 @@ export async function checkFileExists(path) {
   return RNFS.exists(path)
     .then(result => {
       if (result) {
-        console.log(`FILE EXISTS ${path}`);
+        // console.log(`FILE EXISTS ${path}`);
       } else {
-        console.log(`FILE DOES NOT EXIST ${path}`);
+        // console.log(`FILE DOES NOT EXIST ${path}`);
       }
       return result;
     })
     .catch(err => {
-      console.error(`RNFS checkFileExists: ${err.message}`);
+      // console.error(`RNFS checkFileExists: ${err.message}`);
     });
 }
 
@@ -130,10 +130,10 @@ export async function checkFileExists(path) {
 export async function makeDirectory(dirPath) {
   return RNFS.mkdir(dirPath)
     .then(() => {
-      console.log(`DIRECTORY MADE: ${dirPath}`);
+      // console.log(`DIRECTORY MADE: ${dirPath}`);
     })
     .catch(err => {
-      console.error(`RNFS makeDirectory: ${err.message}`);
+      // console.error(`RNFS makeDirectory: ${err.message}`);
     });
 }
 
@@ -162,7 +162,7 @@ export async function copyDir(dirpath, destpath) {
       }
     }
   } catch (e) {
-    console.error(`RNFS copyDir: ${e.message}`);
+    // console.error(`RNFS copyDir: ${e.message}`);
   }
 }
 
@@ -177,9 +177,9 @@ export async function copyDir(dirpath, destpath) {
 export async function copyFile(filepath, destpath) {
   return RNFS.copyFile(filepath, destpath)
     .then(() => {
-      console.log(`FILE COPIED! ${filepath} => ${destpath}`);
+      // console.log(`FILE COPIED! ${filepath} => ${destpath}`);
     })
     .catch(err => {
-      console.error(`RNFS copyFile: ${err.message}`);
+      // console.error(`RNFS copyFile: ${err.message}`);
     });
 }

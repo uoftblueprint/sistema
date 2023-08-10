@@ -46,7 +46,7 @@ const SaveButton = ({
               );
               if (!isUnique) {
                 setLoading(false);
-                console.log('Duplicate name detected, aborting save.');
+                // console.log('Duplicate name detected, aborting save.');
                 setError(ERROR.DUPLICATE_NAME);
                 return;
               }
@@ -65,7 +65,7 @@ const SaveButton = ({
                 await LessonPlanService.saveLessonPlan(lessonPlanObj, false);
               }
             } catch (e) {
-              console.error('Error saving lesson plan: ', e);
+              // console.error('Error saving lesson plan: ', e);
               setError(ERROR.SAVING);
               return;
             }

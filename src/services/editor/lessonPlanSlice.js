@@ -129,7 +129,7 @@ export const lessonPlanSlice = createSlice({
     },
 
     reset: () => {
-      console.log('Reseting redux...');
+      // console.log('Reseting redux...');
       return {
         lessonPlanName: '',
         initialLessonPlanName: '',
@@ -167,9 +167,9 @@ export const getLessonSection = (state, sectionName) => {
   try {
     return state[sectionName];
   } catch {
-    console.error(
-      `getLessonSection: Could not grab lesson plan section ${sectionName} from redux.`,
-    );
+    // console.error(
+    //   `getLessonSection: Could not grab lesson plan section ${sectionName} from redux.`,
+    // );
     return [];
   }
 };
@@ -178,9 +178,9 @@ export const getLessonPlanName = state => {
   try {
     return state.lessonPlanName;
   } catch {
-    console.error(
-      'getLessonPlanName: Could not grab lesson plan name from redux.',
-    );
+    // console.error(
+    //   'getLessonPlanName: Could not grab lesson plan name from redux.',
+    // );
     return '';
   }
 };
@@ -211,7 +211,7 @@ export const getLessonPlan = state => {
       [SectionName.notes]: state[SectionName.notes],
     };
   } catch {
-    console.error('getLessonPlan: Could not grab lesson plan from redux.');
+    // console.error('getLessonPlan: Could not grab lesson plan from redux.');
     return {};
   }
 };
