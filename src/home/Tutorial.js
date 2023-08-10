@@ -115,7 +115,7 @@ const Tutorial = ({ navigation }) => {
             onPress={endTutorial} 
             style={{marginBottom: Platform.OS === 'ios' ? '10%' : '20%'}}
             color={'blue'}>
-              <Text style={TextStyle.label}>Let's Go!</Text>
+              <Text style={TextStyle.label}>Let's go!</Text>
             </SistemaButton>)
         : (<View style={styles.paginationContainer}>
             {Array(0, 1, 2, 3, 4, 5).map(num => {

@@ -18,7 +18,7 @@ const Welcome = ({ navigation }) => {
       <View style={styles.appname}>
         <Text style={[TextStyle.h1, {textAlign: 'center'}]}>Welcome to Sistema Toronto LEARN!</Text>
       </View>
-      <SistemaButton onPress={beginTutorial}><Text style={TextStyle.body}>Let's Get Started</Text></SistemaButton>
+      <SistemaButton onPress={beginTutorial}><Text style={TextStyle.body}>Let's get started</Text></SistemaButton>
     </SafeAreaView>
   );
 };
