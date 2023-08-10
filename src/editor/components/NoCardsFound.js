@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import ErrorAlert from '../../../assets/errorAlert.svg';
+import ErrorAlert from '../../../assets/icons/errorAlert.svg';
 
 import { useDispatch } from 'react-redux';
 import { addToSection } from '../../services/editor/lessonPlanSlice';

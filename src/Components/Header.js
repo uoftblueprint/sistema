@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import SistemaButton from '../Components/SistemaButton';
 import SistemaLogo from '../../assets/sistemaLogo.svg';
-import BackArrow from '../../assets/backArrow.svg';
-import InfoIcon from '../../assets/infoIcon.svg';
-import GearIcon from '../../assets/gearIcon.svg';
+import BackArrow from '../../assets/icons/backArrow.svg';
+import InfoIcon from '../../assets/icons/infoIcon.svg';
+import GearIcon from '../../assets/icons/gearIcon.svg';
 import Overlay from './Overlay';
 import { STACK_SCREENS as SETTINGS_SCREENS } from '../settings/constants';
 import { TextStyle } from '../Styles.config';
 import { verticalScale } from 'react-native-size-matters';
-import Circle from '../../assets/circle.svg';
+import Circle from '../../assets/icons/circle.svg';
 import { AppColors } from '../Styles.config';
 
 const Header = ({ navigation, isHome, showBackButton }) => {

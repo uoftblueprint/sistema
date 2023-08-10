@@ -1,5 +1,5 @@
 import './src/services/ignoreWarnings'; // Keep at top
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import {
@@ -7,10 +7,12 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   useSafeAreaInsets,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
+
 import HomeNavigator from './src/home/HomeNavigator';
 import EditorNavigator from './src/editor/EditorNavigator';
 import LibraryNavigator from './src/library/LibraryNavigator';
@@ -18,16 +20,20 @@ import SettingsNavigator from './src/settings/SettingsNavigator';
 import { STACK_SCREENS as SETTINGS_STACK } from './src/settings/constants';
 import { STACK_SCREENS as LIBRARY_STACK } from './src/library/constants';
 import { STACK_SCREENS as EDITOR_STACK } from './src/editor/constants';
+import Loading from './src/home/Loading';
+import Tutorial from './src/home/Tutorial';
+import Welcome from './src/home/Welcome';
 
 import { Provider } from 'react-redux';
 import configureStore from './src/services/configureStore';
 
-import LibraryNavIcon from './assets/libraryNavIcon.svg';
-import HomeNavIcon from './assets/homeNavIcon.svg';
-import LessonPlanEditorNavIcon from './assets/lessonPlanEditorNavIcon.svg';
+import LibraryNavIcon from './assets/icons/libraryNavIcon.svg';
+import HomeNavIcon from './assets/icons/homeNavIcon.svg';
+import LessonPlanEditorNavIcon from './assets/icons/lessonPlanEditorNavIcon.svg';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ActivityCardService from './src/services/ActivityCardService';
+import LessonPlanService from './src/services/LessonPlanService';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,7 +46,10 @@ const queryClient = new QueryClient({
 });
 
 const STACK_SCREENS = {
+  TABS: 'TabsNavigator',
   HOME: 'HomeNavigator',
+  TUTORIAL: 'Tutorial',
+  WELCOME: 'Welcome',
   EDITOR: EDITOR_STACK.NAVIGATOR,
   LIBRARY: LIBRARY_STACK.NAVIGATOR,
   SETTINGS: SETTINGS_STACK.NAVIGATOR
@@ -72,13 +81,11 @@ const tabIcon = (iconSVG, isFocused) => {
 
 const Tab = createBottomTabNavigator();
 
-const MainNavigator = () => {
-  const navigationRef = useNavigationContainerRef();
+const TabsNavigator = () => {
   const insets = useSafeAreaInsets();
 
-  return (
-    <NavigationContainer ref={navigationRef} independent={true}>
-      <Tab.Navigator
+  return  (
+    <Tab.Navigator
         initialRouteName={STACK_SCREENS.HOME}
         screenOptions={{
           tabBarActiveBackgroundColor: '#B8CFE4',
@@ -125,6 +132,33 @@ const MainNavigator = () => {
           }}
         />
       </Tab.Navigator>
+  )
+}
+
+const Stack = createStackNavigator();
+
+const MainNavigator = ({displayTutorial}) => {
+  const navigationRef = useNavigationContainerRef();
+
+  return (
+    <NavigationContainer ref={navigationRef} independent={true}>
+      <Stack.Navigator
+        initialRouteName={displayTutorial ? STACK_SCREENS.WELCOME : STACK_SCREENS.TABS}
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen
+            name={STACK_SCREENS.WELCOME}
+            component={Welcome}
+          />
+        <Stack.Screen
+            name={STACK_SCREENS.TUTORIAL}
+            component={Tutorial}
+          />
+        <Stack.Screen 
+          name={STACK_SCREENS.TABS} 
+          component={TabsNavigator} 
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
@@ -142,15 +176,35 @@ const styles = StyleSheet.create({
 });
 
 const App = () => {
-  queryClient.prefetchQuery({
-    queryKey: ['activityCards'],
-    queryFn: ActivityCardService.getAllActivityCards,
-  });
+  // State variables for displaying onboarding screens
+  const [shouldDisplayTutorial, setShouldDisplayTutorial] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const welcomeSetup = async () => {
+    LessonPlanService.isUserOnboarded().then((res) => {
+      setShouldDisplayTutorial(!res);
+    }).then(() => {
+      queryClient.prefetchQuery({
+        queryKey: ['activityCards'],
+        queryFn: ActivityCardService.getAllActivityCards,
+      });
+    }).finally(() => {
+      setIsLoading(false);
+    });
+  }
+
+  useEffect(() => {
+    welcomeSetup();
+  }, []);
+
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
         <Provider store={configureStore}>
-          <MainNavigator />
+          {isLoading 
+            ? <Loading /> 
+            : <MainNavigator displayTutorial={shouldDisplayTutorial} />
+          }
         </Provider>
       </QueryClientProvider>
     </SafeAreaProvider>

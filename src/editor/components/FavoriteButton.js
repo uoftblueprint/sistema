@@ -5,8 +5,8 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import HeartIcon from '../../../assets/heartIcon.svg';
-import FavoriteIcon from '../../../assets/favoriteIcon.svg';
+import HeartIcon from '../../../assets/icons/heartIcon.svg';
+import FavoriteIcon from '../../../assets/icons/favoriteIcon.svg';
 import { OptionsMenuPadding } from '../../Styles.config';
 
 const windowWidth = Dimensions.get('window').width;

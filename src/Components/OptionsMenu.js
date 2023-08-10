@@ -2,10 +2,10 @@ import FavoriteButton from '../editor/components/FavoriteButton.js';
 import OptionHeader from './OptionHeader';
 import { useState } from 'react';
 import OptionsMenuBanner from './OptionsMenuBanner';
-import ExportIcon from '../../assets/exportIcon.svg';
-import TrashIcon from '../../assets/trashIcon.svg';
-import HeartIcon from '../../assets/heartIcon.svg';
-import CopyIcon from '../../assets/copyIcon.svg';
+import ExportIcon from '../../assets/icons/exportIcon.svg';
+import TrashIcon from '../../assets/icons/trashIcon.svg';
+import HeartIcon from '../../assets/icons/heartIcon.svg';
+import CopyIcon from '../../assets/icons/copyIcon.svg';
 import OptionsMenuButton from './OptionsMenuButton';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +17,7 @@ import {
   setFavState,
   getCurrFavState,
 } from '../services/editor/lessonPlanSlice.js';
+import { MAINDIRECTORY, ModuleType } from '../services/constants.js';
 
 const OptionsMenu = ({
   isLessonPlanEditor,
@@ -81,7 +82,23 @@ const OptionsMenu = ({
     const lpObj = isLessonPlanEditor
       ? lessonPlan // get lesson plan from redux since we're in the editor already
       : await LessonPlanService.getLessonPlan(lessonPlanName);
+
+    const pathPrefix = isCurrentlyFavorited 
+      ? MAINDIRECTORY + '/Favourited/' + lessonPlanName
+      : MAINDIRECTORY + '/Default/' + lessonPlanName;
+
+    // Add in full path (not just relative path) for the images and ACs
+    for (const [key, value] of Object.entries(lpObj)) {
+      for (i = 0; i < value.length; i++) {
+        if (value[i].type === ModuleType.activityCard
+          || value[i].type === ModuleType.image) {
+            lpObj[key][i].path = pathPrefix + lpObj[key][i].content;
+        }
+      }
+    }
+
     let pdf = await createPDF(lpObj);
+
     try {
       await Share.open({
         url: 'file://' + pdf.filePath,
