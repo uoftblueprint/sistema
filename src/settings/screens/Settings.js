@@ -25,15 +25,9 @@ const Settings = ({ navigation }) => {
         showInfoIcon={false}
         showBackButton={false}
       />
-
       <ScrollView>
         <Text style={[TextStyle.h2, styles.title]}>Settings</Text>
         <View style={styles.buttonContainer}>
-          <IconButton
-            title={'Back Up Data'}
-            handlePress={() => console.log('hi')}>
-            <CloudUpload width={25} height={25} />
-          </IconButton>
           <IconButton
             title={'Clear App Data'}
             handlePress={() => toggleDeleteOverlay(true)}>
