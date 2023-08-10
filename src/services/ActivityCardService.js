@@ -51,7 +51,7 @@ const ActivityCardService = {
       var pathArr = [];
 
       // no new files found, return an empty array (old Activity Cards are mapped onto frontend)
-      if (files_list.length == 0) {
+      if (files_list.length === 0) {
         return [];
       }
 

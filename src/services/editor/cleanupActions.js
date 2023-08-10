@@ -45,7 +45,7 @@ const deleteUnusedImageFiles = async (lp, leaveBySave) => {
   );
   const toDelete = imgRNFS.filter(card => !imgKeep.includes(card));
 
-  if (toDelete.length != 0)
+  if (toDelete.length !== 0)
     console.log(
       'deleteUnusedImageFiles: Found the following unused images ',
       toDelete,

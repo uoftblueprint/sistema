@@ -18,7 +18,7 @@ const TemplatePolicy = ({ navigation, route }) => {
       <Text style={[TextStyle.h1, styles.title]}>{pageTitle}</Text>
       <ScrollView>
         <Text style={[TextStyle.label, styles.text]}>{pageContent}</Text>
-        {pageTitle == 'About Sistema' && (
+        {pageTitle === 'About Sistema' && (
           <View style={styles.linkContainers}>
             <LinkButton
               title={'www.sistema-toronto.ca'}

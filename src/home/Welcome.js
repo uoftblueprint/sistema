@@ -8,7 +8,7 @@ const Welcome = ({ navigation }) => {
   // TODO: navigation to tutorial.js and call to RNFS
   const beginTutorial = () => {
     navigation.navigate('Tutorial');
-  }
+  };
 
   return (
     <SafeAreaView style={styles.background}>
@@ -16,9 +16,13 @@ const Welcome = ({ navigation }) => {
         <SistemaLogo />
       </SafeAreaView>
       <View style={styles.appname}>
-        <Text style={[TextStyle.h1, {textAlign: 'center'}]}>Welcome to Sistema Toronto LEARN!</Text>
+        <Text style={[TextStyle.h1, { textAlign: 'center' }]}>
+          Welcome to Sistema Toronto LEARN!
+        </Text>
       </View>
-      <SistemaButton onPress={beginTutorial}><Text style={TextStyle.body}>Let's Get Started</Text></SistemaButton>
+      <SistemaButton onPress={beginTutorial}>
+        <Text style={TextStyle.body}>Let's Get Started</Text>
+      </SistemaButton>
     </SafeAreaView>
   );
 };

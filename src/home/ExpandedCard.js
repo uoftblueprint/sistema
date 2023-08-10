@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   Image,
-  Platform,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { readFile } from '../services/routes/Local.js';

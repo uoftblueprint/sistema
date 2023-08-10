@@ -34,6 +34,7 @@ import LessonPlanEditorNavIcon from './assets/icons/lessonPlanEditorNavIcon.svg'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ActivityCardService from './src/services/ActivityCardService';
 import LessonPlanService from './src/services/LessonPlanService';
+import { AppColors } from './src/Styles.config';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,7 +57,7 @@ const STACK_SCREENS = {
 };
 
 const tabIcon = (iconSVG, isFocused) => {
-  const tabColor = isFocused ? '#685777' : '#000000';
+  const tabColor = isFocused ? AppColors.tertiary : '#000000';
   const icon = React.createElement(iconSVG, {
     width: 32,
     height: 32,

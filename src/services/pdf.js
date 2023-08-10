@@ -50,7 +50,7 @@ const moduleInformation = (module, moduleName) => {
     } else if (element.type === ModuleType.link) {
       // Clean the link first
       let cleanLink = element.content;
-      if (cleanLink.search(/^http[s]?\:\/\//) == -1) {
+      if (cleanLink.search(/^http[s]?\:\/\//) === -1) {
         cleanLink = 'http://' + cleanLink;
       }
 
