@@ -67,13 +67,13 @@ const AddActivityCard = function ({ navigation, route }) {
   const { data: activityCards } = useQuery({
     queryKey: ['activityCards'],
     queryFn: ActivityCardService.getAllActivityCards,
-    onError: (error) => {
+    onError: error => {
       console.error('Error getting all activity cards: ' + error);
       if (error.code === 'ERR_NETWORK' && isWifiConnected) {
         // If netInfo warning was bypassed, but axios insists there's no connection
         setWifiWarningOverlay(true);
       }
-    }
+    },
   });
   const [matchSearch, setMatchSearch] = useState([]);
   const [highlightedID, setHighlightedID] = useState('');

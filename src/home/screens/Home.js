@@ -58,7 +58,7 @@ const Home = ({ navigation }) => {
     let cards = await ActivityCardService.getFeaturedActivityCards();
 
     // Show wifi error if not detected above
-    if (cards === 'no wifi') { 
+    if (cards === 'no wifi') {
       setWifiWarningOverlay(true);
       cards = [];
     }
