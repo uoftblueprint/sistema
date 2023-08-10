@@ -9,6 +9,8 @@ import {
   Platform,
 } from 'react-native';
 
+import { verticalScale, scale } from 'react-native-size-matters';
+
 import { TextStyle, AppColors } from '../Styles.config';
 
 import Video from 'react-native-video';
@@ -64,7 +66,7 @@ const Tutorial = ({ navigation }) => {
       videoSource: Vid3,
     },
     {
-      header: 'Access Sistema Curriculum Activities',
+      header: 'Utilize Sistema Activities',
       body: `Press the “Add activity cards” button to browse Sistema Toronto’s activity library. You can filter by various tags, or you can search for an activity by keyword.`,
       videoSource: Vid4,
     },
@@ -75,7 +77,7 @@ const Tutorial = ({ navigation }) => {
     },
     {
       header: 'Save and share your custom plans',
-      body: 'In the library tab, access all your past lesson plans, and favourite your most important ones. You can also export your lesson plans as PDFs to share with other teachers!',
+      body: 'In the library tab, access all your lesson plans, and favourite your most important ones. Export your lesson plans as PDFs to share with other teachers!',
       videoSource: Vid6,
     },
   ];
@@ -172,12 +174,14 @@ const styles = StyleSheet.create({
     height: '50%',
     width: '50%',
     alignSelf: 'center',
-    marginVertical: '10%',
+    marginBottom: '5%',
+    marginTop: '8%',
     borderRadius: 25,
     borderWidth: 5,
   },
   textContainer: {
     marginHorizontal: '15%',
+    marginBottom: '5%',
   },
   paginationContainer: {
     justifyContent: 'center',
