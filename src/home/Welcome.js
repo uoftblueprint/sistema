@@ -21,7 +21,7 @@ const Welcome = ({ navigation }) => {
         </Text>
       </View>
       <SistemaButton onPress={beginTutorial}>
-        <Text style={TextStyle.body}>Let's Get Started</Text>
+        <Text style={TextStyle.body}>Let's get started</Text>
       </SistemaButton>
     </SafeAreaView>
   );
