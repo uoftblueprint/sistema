@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Overlay from './Overlay';
 import SistemaButton from './SistemaButton';
-import NoWifiIcon from '../../assets/cloudOfflineOutline';
+import NoWifiIcon from '../../assets/icons/cloudOfflineOutline';
 import { verticalScale, scale } from 'react-native-size-matters';
 import { TextStyle } from '../Styles.config';
 
