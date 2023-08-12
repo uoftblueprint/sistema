@@ -21,9 +21,9 @@ export const AppColors = {
   overlay_background: 'rgba(217,217,217, 0.8)',
   light_background: '#FDFBF7',
 
-  dark: '453E3D',
+  dark: '#453E3D',
 
-  link: '0078e8',
+  link: '#0078e8',
 };
 
 export const TextStyle = StyleSheet.create({

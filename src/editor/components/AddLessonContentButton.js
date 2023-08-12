@@ -60,7 +60,7 @@ const AddLessonContentButton = ({ handleClickActions, isDisabled }) => {
         disabled={isDisabled}
         style={styles.sectionStyle}>
         <SafeAreaView style={styles.buttonStyle}>
-          <AddIcon height={'30'} width={'30'} />
+          <AddIcon height={'20'} width={'20'} />
           <View style={styles.input}>
             <Text style={TextStyle.label}>Add content</Text>
           </View>
@@ -89,17 +89,16 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.light_background,
     elevation: 5,
     borderWidth: 0.77,
-    height: verticalScale(40),
+    height: 'auto',
     borderColor: '#000',
     borderRadius: 8,
     marginVertical: 6,
     paddingHorizontal: 10,
+    paddingVertical: 12,
   },
   buttonStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
-    height: '100%',
   },
   imageStyle: {
     paddingLeft: '10%',
