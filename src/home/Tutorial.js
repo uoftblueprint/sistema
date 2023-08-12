@@ -111,19 +111,17 @@ const Tutorial = ({ navigation }) => {
             disableFocus={true}
           />
           <View style={styles.textContainer}>
-            <Text 
+            <Text
               style={[TextStyle.h1, { marginBottom: 10 }]}
               numberOfLines={2}
-              adjustsFontSizeToFit={true}
-              >
-                {header}
+              adjustsFontSizeToFit={true}>
+              {header}
             </Text>
-            <Text 
+            <Text
               style={TextStyle.body}
               numberOfLines={5}
-              adjustsFontSizeToFit={true}
-              >
-                {body}
+              adjustsFontSizeToFit={true}>
+              {body}
             </Text>
           </View>
         </View>
@@ -193,7 +191,7 @@ const styles = StyleSheet.create({
   textContainer: {
     marginHorizontal: '15%',
     marginBottom: '5%',
-    flex: 1, 
+    flex: 1,
   },
   paginationContainer: {
     justifyContent: 'center',
