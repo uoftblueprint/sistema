@@ -9,8 +9,6 @@ import {
   Platform,
 } from 'react-native';
 
-import { verticalScale, scale } from 'react-native-size-matters';
-
 import { TextStyle, AppColors } from '../Styles.config';
 
 import Video from 'react-native-video';
@@ -46,7 +44,8 @@ const Vid6 =
     : require('../../assets/tutorial/android/Tutorial6.mp4');
 
 const Tutorial = ({ navigation }) => {
-  const { width, height } = Dimensions.get('window');
+  let { width, height } = Dimensions.get('window');
+  height = height - 0.1 * height;
   const [pageIndex, setPageIndex] = useState(0);
 
   const tutorialSlides = [
@@ -112,8 +111,20 @@ const Tutorial = ({ navigation }) => {
             disableFocus={true}
           />
           <View style={styles.textContainer}>
-            <Text style={[TextStyle.h1, { marginBottom: 10 }]}>{header}</Text>
-            <Text style={TextStyle.body}>{body}</Text>
+            <Text 
+              style={[TextStyle.h1, { marginBottom: 10 }]}
+              numberOfLines={2}
+              adjustsFontSizeToFit={true}
+              >
+                {header}
+            </Text>
+            <Text 
+              style={TextStyle.body}
+              numberOfLines={5}
+              adjustsFontSizeToFit={true}
+              >
+                {body}
+            </Text>
           </View>
         </View>
       );
@@ -136,7 +147,7 @@ const Tutorial = ({ navigation }) => {
       {pageIndex === 5 ? (
         <SistemaButton
           onPress={endTutorial}
-          style={{ marginBottom: Platform.OS === 'ios' ? '10%' : '20%' }}
+          style={{ marginBottom: '10%' }}
           color={'blue'}>
           <Text style={TextStyle.label}>Let's go!</Text>
         </SistemaButton>
@@ -172,22 +183,23 @@ const styles = StyleSheet.create({
   },
   videoStyle: {
     height: '50%',
-    width: '50%',
+    width: '48%',
     alignSelf: 'center',
-    marginBottom: '5%',
-    marginTop: '8%',
     borderRadius: 25,
     borderWidth: 5,
+    marginTop: '15%',
+    marginBottom: '8%',
   },
   textContainer: {
     marginHorizontal: '15%',
     marginBottom: '5%',
+    flex: 1, 
   },
   paginationContainer: {
     justifyContent: 'center',
     width: '100%',
     flexDirection: 'row',
-    marginBottom: Platform.OS === 'ios' ? '10%' : '20%',
+    height: '10%',
   },
   dotStyle: {
     paddingHorizontal: 10,

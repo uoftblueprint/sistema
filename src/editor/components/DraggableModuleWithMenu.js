@@ -319,15 +319,14 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     marginVertical: 5,
+    paddingHorizontal: 10,
     ...Platform.select({
       ios: {
         paddingTop: 10,
         paddingBottom: 10,
-        paddingHorizontal: 10,
       },
       android: {
         paddingVertical: 0,
-        paddingHorizontal: 10,
       },
     }),
   },
