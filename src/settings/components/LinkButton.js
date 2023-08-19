@@ -4,7 +4,7 @@ import { TextStyle } from '../../Styles.config';
 
 const LinkButton = ({ title, url }) => {
   const handlePress = useCallback(() => {
-    Linking.openURL(cleanLink);
+    Linking.openURL(url);
   }, [url]);
 
   return (
