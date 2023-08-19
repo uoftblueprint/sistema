@@ -3,17 +3,12 @@ import { StyleSheet, Text, TouchableOpacity, Linking } from 'react-native';
 import { TextStyle } from '../../Styles.config';
 
 const LinkButton = ({ title, url }) => {
-  const handlePress = useCallback(async () => {
-    // Checking if the link is supported for links with custom URL scheme.
-    const supported = await Linking.canOpenURL(url);
-
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
-      await Linking.openURL(url);
-    } else {
-      // console.error(`Don't know how to open this URL: ${url}`);
+  const handlePress = useCallback(() => {
+    let cleanLink = url;
+    if (cleanLink.search(/^http[s]?\:\/\//) == -1) {
+      cleanLink = 'http://' + cleanLink;
     }
+    Linking.openURL(cleanLink)
   }, [url]);
 
   return (
