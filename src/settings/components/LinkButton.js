@@ -4,11 +4,7 @@ import { TextStyle } from '../../Styles.config';
 
 const LinkButton = ({ title, url }) => {
   const handlePress = useCallback(() => {
-    let cleanLink = url;
-    if (cleanLink.search(/^http[s]?\:\/\//) == -1) {
-      cleanLink = 'http://' + cleanLink;
-    }
-    Linking.openURL(cleanLink)
+    Linking.openURL(cleanLink);
   }, [url]);
 
   return (

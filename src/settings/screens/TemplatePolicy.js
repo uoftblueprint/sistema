@@ -22,7 +22,7 @@ const TemplatePolicy = ({ navigation, route }) => {
           <View style={styles.linkContainers}>
             <LinkButton
               title={'www.sistema-toronto.ca'}
-              url={'https://www.sistema-toronto.ca/'}
+              url={'http://www.sistema-toronto.ca/'}
             />
             <LinkButton
               title={'info@sistema-toronto.ca'}
